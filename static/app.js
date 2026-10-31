@@ -57,6 +57,7 @@ const changeOver = points => points.length > 1 ? (points.at(-1).price / points[0
 const categoryLabel = category => category === 'ram' ? T.catRam : T.catGpu;
 const categoryTag = category => category === 'ram' ? T.catRamShort : T.catGpuShort;
 const fullName = p => `${p.brand} ${p.name} · ${p.spec}`;
+const nameOf = p => (boot.lang === 'ko' && p.shortKo) || p.short;
 const productHref = p => `${esc(boot.base || '')}/${boot.lang}/${esc(p.id)}/`;
 const sourceName = source => ({danawa: T.srcDanawa, bestbuy: T.srcBestbuy, ebay: T.srcEbay}[source] || T.srcFeed);
 const bestOffer = p => (p.offers || []).find(o => !o.stale && o.stock !== 'out_of_stock' && o.price);
@@ -210,10 +211,10 @@ function spotHtml(p) {
   const key = `spot:${p.id}`;
   return `<article class="spot" data-product="${esc(p.id)}">
     <div class="spot-kicker"><span class="tag ${p.category}">${esc(categoryTag(p.category))}</span><span class="spec">${esc(fullName(p))}</span></div>
-    <h2 class="spot-title"><a class="card-title" href="${productHref(p)}" data-product="${esc(p.id)}">${esc(p.short)}</a></h2>
+    <h2 class="spot-title"><a class="card-title" href="${productHref(p)}" data-product="${esc(p.id)}">${esc(nameOf(p))}</a></h2>
     <div class="quote" data-readout="${key}">${quoteHtml(p, `<span class="quote-when">${esc(state.demo ? T.statusDemo : offerSource(bestOffer(p)))}</span>`)}</div>
     <div class="spot-changes"><span>${esc(T.change24)} ${delta(p.change, true)}</span><span>${esc(T.change7)} ${delta(p.change7, true)}</span><span>${esc(T['p' + state.period])} ${delta(changeOver(points), true)}</span></div>
-    ${chartSvg(points, {key, w: layout.spot, h: 240, axes: true, label: p.short})}
+    ${chartSvg(points, {key, w: layout.spot, h: 240, axes: true, label: nameOf(p)})}
     <div class="spot-foot"><span>${esc(T.low)} <b>${money(low)}</b></span><span>${esc(T.high)} <b>${money(high)}</b></span><span class="src">${esc(T.daysObserved)} <b>${esc(fmt('daysN', {n: p.history.length}))}</b></span></div>
   </article>`;
 }
@@ -223,10 +224,10 @@ function cardHtml(p) {
   const [low, high] = rangeOf(points);
   const key = `card:${p.id}`;
   return `<article class="card" data-product="${esc(p.id)}">
-    <div class="card-top"><a class="card-title card-name" href="${productHref(p)}" data-product="${esc(p.id)}">${esc(p.short)}</a><span class="tag ${p.category}">${esc(categoryTag(p.category))}</span></div>
+    <div class="card-top"><a class="card-title card-name" href="${productHref(p)}" data-product="${esc(p.id)}">${esc(nameOf(p))}</a><span class="tag ${p.category}">${esc(categoryTag(p.category))}</span></div>
     <p class="card-spec">${esc(fullName(p))}</p>
     <div class="quote" data-readout="${key}">${quoteHtml(p, delta(changeOver(points), true))}</div>
-    ${chartSvg(points, {key, w: layout.card, h: 92, label: p.short})}
+    ${chartSvg(points, {key, w: layout.card, h: 92, label: nameOf(p)})}
     <div class="card-foot"><span>${esc(T.low)} <b>${money(low)}</b></span><span>${esc(T.high)} <b>${money(high)}</b></span></div>
   </article>`;
 }
@@ -240,7 +241,7 @@ function rangeHtml(p) {
 function rowHtml(p) {
   const price = p.price == null ? `<span class="muted">${esc(p.observed_at ? T.stale : T.awaiting)}</span>` : `<span class="price">${money(p.price)}</span>`;
   return `<tr class="row" data-product="${esc(p.id)}">
-    <td><div class="prod"><span class="prod-icon ${p.category}">${icons[p.category]}</span><div><a class="prod-name" href="${productHref(p)}" data-product="${esc(p.id)}">${esc(p.short)}</a><span class="prod-spec">${esc(fullName(p))}</span></div></div></td>
+    <td><div class="prod"><span class="prod-icon ${p.category}">${icons[p.category]}</span><div><a class="prod-name" href="${productHref(p)}" data-product="${esc(p.id)}">${esc(nameOf(p))}</a><span class="prod-spec">${esc(fullName(p))}</span></div></div></td>
     <td class="num">${price}</td>
     <td class="num">${delta(p.change)}</td>
     <td class="num hide-sm">${delta(p.change7)}</td>
@@ -281,7 +282,7 @@ function renderCards() {
 }
 
 function renderSide() {
-  $('#side-prices').innerHTML = state.prices.products.map(p => `<li><a href="${esc(base)}/${boot.lang}/"><span class="side-name">${esc(p.short)}</span><span class="side-price">${money(p.price)}</span>${delta(p.change)}</a></li>`).join('');
+  $('#side-prices').innerHTML = state.prices.products.map(p => `<li><a href="${esc(base)}/${boot.lang}/"><span class="side-name">${esc(nameOf(p))}</span><span class="side-price">${money(p.price)}</span>${delta(p.change)}</a></li>`).join('');
 }
 
 function renderTable() {
@@ -308,6 +309,7 @@ function renderPrices() {
   charts.clear();
   renderStatus();
   renderCards();
+  renderMakers();
   renderTable();
 }
 
@@ -341,21 +343,11 @@ async function loadPrices() {
     $('#price-status-text').textContent = T.loadError;
     $('#spotlight').innerHTML = '';
     $('#cards').innerHTML = '';
+    $('#maker-rows').innerHTML = '';
     $('#rows').innerHTML = '';
     $('#table-msg').hidden = false;
     $('#table-msg').innerHTML = `${esc(T.loadError)}<button type="button" data-action="retry">${esc(T.retry)}</button>`;
   }
-}
-
-function offerHtml(o) {
-  const stock = o.stale ? T.stale : {in_stock: T.stockYes, out_of_stock: T.soldOut}[o.stock];
-  const shipping = o.shipping_amount == null ? T.shippingUnknown : o.shipping_amount === 0 ? T.freeShipping : fmt('shippingN', {v: money(o.shipping_amount)});
-  const href = safeHref(o.affiliate_url || o.url);
-  return `<tr class="${o.stale || o.stock === 'out_of_stock' ? 'muted-row' : ''}">
-    <td><span class="offer-name" title="${esc(o.title)}">${esc(o.merchant)}</span>${o.affiliate_url ? ` <span class="tag aff">${esc(T.affiliate)}</span>` : ''}<span class="offer-meta">${esc([offerSource(o), stock, fmt('checkedAt', {time: when(o.observed_at)})].filter(Boolean).join(' · '))}</span></td>
-    <td class="num"><span class="price">${money(o.amount)}</span><span class="offer-meta">${esc(shipping)}</span></td>
-    <td class="num">${href ? `<a class="buy secondary" href="${href}" target="_blank" rel="noopener noreferrer${o.affiliate_url ? ' sponsored' : ''}">${esc(T.visitSeller)}</a>` : ''}</td>
-  </tr>`;
 }
 
 function renderDetail(target = '#drawer-body') {
@@ -369,20 +361,18 @@ function renderDetail(target = '#drawer-body') {
   const checked = state.demo ? T.statusDemo : fmt('checkedAt', {time: when(p.observed_at)});
   if (target === '#drawer-body') $('#drawer-kicker').textContent = `${categoryLabel(p.category)} · ${state.prices.currency}`;
   $(target).innerHTML = `
-    <div class="d-title"><div><h2 ${target === '#drawer-body' ? 'id="drawer-title"' : ''}>${esc(p.short)}</h2><p>${esc(fullName(p))}</p></div><span class="tag ${p.category}">${esc(categoryTag(p.category))}</span></div>
+    <div class="d-title"><div><h2 ${target === '#drawer-body' ? 'id="drawer-title"' : ''}>${esc(nameOf(p))}</h2><p>${esc(fullName(p))}</p></div><span class="tag ${p.category}">${esc(categoryTag(p.category))}</span></div>
     <div class="quote d-quote" data-readout="${key}">${quoteHtml(p, `<span class="quote-when">${esc(checked)}</span>`)}</div>
     <div class="d-changes"><span>${esc(T.change24)}${delta(p.change)}</span><span>${esc(T.change7)}${delta(p.change7)}</span><span>${esc(T['p' + state.detailPeriod])}${delta(changeOver(points))}</span></div>
     <div class="segmented" role="group" aria-label="${esc(T.period)}">${[7, 30, 90].map(n => `<button type="button" data-detail-period="${n}" aria-pressed="${state.detailPeriod === n}">${esc(T['p' + n])}</button>`).join('')}</div>
-    <div class="d-chart">${chartSvg(points, {key, w: layout.detail, h: 240, axes: true, label: p.short})}</div>
+    <div class="d-chart">${chartSvg(points, {key, w: layout.detail, h: 240, axes: true, label: nameOf(p)})}</div>
     <dl class="d-stats">
       <div><dt>${esc(T.low)}</dt><dd>${money(prices.length ? Math.min(...prices) : null)}</dd></div>
       <div><dt>${esc(T.high)}</dt><dd>${money(prices.length ? Math.max(...prices) : null)}</dd></div>
       <div><dt>${esc(T.daysObserved)}</dt><dd>${esc(fmt('daysN', {n: p.history.length}))}</dd></div>
       <div><dt>${esc(T.colSellers)}</dt><dd>${bestOffer(p)?.shops ?? '—'}</dd></div>
     </dl>
-    ${coupangHtml(p)}
-    <h3 class="d-section">${esc(T.offersTitle)}</h3>
-    ${p.offers.length ? `<table class="offers"><tbody>${p.offers.slice(0, 3).map(offerHtml).join('')}</tbody></table>` : `<p class="d-empty">${esc(state.demo ? T.demoOffers : T.noOffers)}</p>`}
+    ${buyHtml(p)}
     <p class="d-note">${esc(p.category === 'gpu' ? T.gpuNote : T.ramNote)}</p>`;
 }
 
@@ -399,39 +389,73 @@ addEventListener('resize', () => {
   }, 150);
 });
 
-// Coupang Partners. A Coupang price is shown only when it came from the Partners API (p.coupangOffer);
-// otherwise the box is a plain link with Coupang's image banner and no price.
+// Where to buy: Coupang on top, then the single lowest price from the comparison source (Danawa in Korea).
+// A Coupang price appears only when it came from the Coupang Partners API (p.coupangOffer); without it
+// the Coupang row is a plain link to Coupang's search results and shows no price.
 const coupangHref = p => state.market === 'KR' && !state.demo ? safeHref(p.coupang) : null;
-function coupangOfferHtml(o) {
-  const href = safeHref(o.url), image = safeHref(o.image);
-  if (!href || !Number.isFinite(o.price) || o.price <= 0) return '';
-  return `<section class="coupang-box">
-    ${image ? `<img class="coupang-img" src="${image}" width="120" height="120" alt="" loading="lazy">` : ''}
-    <div class="coupang-copy">
-      <h3>${esc(T.coupangHead)}</h3>
-      <p class="coupang-name">${esc(o.name)}</p>
-      <p class="coupang-price"><span>${esc(T.coupangPrice)}</span><b>${money(o.price)}</b>${o.rocket ? `<span class="tag rocket">${esc(T.coupangRocket)}</span>` : ''}</p>
-      <p class="coupang-when">${esc(fmt('coupangChecked', {time: when(o.observed_at)}))}</p>
-      <a class="coupang-btn" href="${href}" target="_blank" rel="sponsored noopener noreferrer">${esc(T.coupangView)}</a>
-      <p class="coupang-note">${esc(T.coupangDisclosure)}</p>
+function sellerRow({mall, kind, name, meta, price, href, cta, sponsored, image}) {
+  const rel = `${sponsored ? 'sponsored ' : ''}noopener noreferrer`;
+  return `<li class="seller">
+    <span class="mall ${kind}">${esc(mall)}</span>
+    <div class="seller-info">
+      ${image ? `<img class="seller-img" src="${image}" width="40" height="40" alt="" loading="lazy">` : ''}
+      <div><a class="seller-name" href="${href}" target="_blank" rel="${rel}">${esc(name)}</a><span class="seller-meta">${meta}</span></div>
     </div>
-  </section>`;
+    <div class="seller-price">${price}</div>
+    <a class="go ${kind}" href="${href}" target="_blank" rel="${rel}">${esc(cta)}</a>
+  </li>`;
 }
-function coupangHtml(p) {
-  const href = coupangHref(p);
+function coupangRow(p) {
+  const link = coupangHref(p);
+  if (!link) return '';
+  const o = p.coupangOffer, offerHref = o && safeHref(o.url);
+  if (offerHref && Number.isFinite(o.price) && o.price > 0) {
+    return sellerRow({mall: T.coupangShort, kind: 'coupang', name: o.name, href: offerHref, cta: T.coupangGo, sponsored: true,
+      image: safeHref(o.image), price: `<span class="price">${money(o.price)}</span>`,
+      meta: `${o.rocket ? `<b class="rocket">${esc(T.coupangRocket)}</b> · ` : ''}${esc(fmt('coupangChecked', {time: when(o.observed_at)}))}`});
+  }
+  return sellerRow({mall: T.coupangShort, kind: 'coupang', name: fmt('coupangLine', {name: nameOf(p)}), href: link, cta: T.coupangGo,
+    sponsored: true, meta: esc(T.coupangMeta), price: `<a class="price-link" href="${link}" target="_blank" rel="sponsored noopener noreferrer">${esc(T.coupangPriceCta)}</a>`});
+}
+function bestRow(p) {
+  const o = bestOffer(p), href = o && safeHref(o.affiliate_url || o.url);
   if (!href) return '';
-  const offer = p.coupangOffer ? coupangOfferHtml(p.coupangOffer) : '';
-  if (offer) return offer;
-  const banner = safeHref(p.coupangBanner);
-  return `<section class="coupang-box">
-    ${banner ? `<iframe class="coupang-frame" src="${banner}" width="120" height="240" frameborder="0" scrolling="no" referrerpolicy="unsafe-url" loading="lazy" title="${esc(T.coupangHead)}"></iframe>` : ''}
-    <div class="coupang-copy">
-      <h3>${esc(T.coupangHead)}</h3>
-      <p>${esc(T.coupangBody)}</p>
-      <a class="coupang-btn" href="${href}" target="_blank" rel="sponsored noopener noreferrer">${esc(fmt('coupangCta', {name: p.short}))}</a>
-      <p class="coupang-note">${esc(T.coupangDisclosure)}</p>
-    </div>
-  </section>`;
+  const meta = o.source === 'danawa' ? fmt('danawaMeta', {shops: o.shops ?? '—', time: when(o.observed_at)})
+    : [offerSource(o), fmt('checkedAt', {time: when(o.observed_at)})].join(' · ');
+  return sellerRow({mall: sourceName(o.source), kind: esc(o.source), name: o.title || o.merchant, meta: esc(meta), href,
+    cta: o.source === 'danawa' ? T.danawaGo : sourceName(o.source), sponsored: Boolean(o.affiliate_url),
+    price: `<span class="price">${money(o.amount)}</span>`});
+}
+function buyHtml(p) {
+  const rows = [coupangRow(p), bestRow(p)].filter(Boolean);
+  if (!rows.length) return `<p class="d-empty">${esc(state.demo ? T.demoOffers : T.noOffers)}</p>`;
+  return `<h3 class="d-section">${esc(T.buyTitle)}</h3>
+    <ul class="sellers">${rows.join('')}</ul>
+    ${coupangHref(p) ? `<p class="buy-note">${esc(T.coupangDisclosure)}</p>` : ''}`;
+}
+
+/* Memory by maker: DDR5 desktop modules, today's lowest price for each capacity. */
+const MAKERS = ['samsung', 'hynix', 'micron', 'klevv', 'corsair', 'gskill'];
+const SIZES = [16, 32, 64];
+function makerCell(p, lowest) {
+  if (!p) return `<td class="num"><span class="muted" title="${esc(T.makerNone)}">—</span></td>`;
+  const price = p.price == null ? `<span class="muted">${esc(p.observed_at ? T.stale : T.awaiting)}</span>` : `<span class="price">${money(p.price)}</span>`;
+  const notes = [
+    p.kit ? `<span class="mk-kit">${esc(`${p.capacity / p.kit}GB×${p.kit}`)}</span>` : '',
+    p.price != null && p.price === lowest ? `<span class="tag low">${esc(T.makerLowest)}</span>` : '',
+    p.change != null ? delta(p.change) : '',
+  ].join('');
+  return `<td class="num"><a class="mk-cell" href="${productHref(p)}" data-product="${esc(p.id)}">${price}${notes ? `<span class="mk-sub">${notes}</span>` : ''}</a></td>`;
+}
+function renderMakers() {
+  const ram = state.prices.products.filter(p => p.category === 'ram' && p.generation === 'DDR5' && p.maker);
+  const lowest = Object.fromEntries(SIZES.map(size => {
+    const prices = ram.filter(p => p.capacity === size && p.price != null).map(p => p.price);
+    return [size, prices.length ? Math.min(...prices) : null];
+  }));
+  $('#maker-rows').innerHTML = MAKERS.filter(m => ram.some(p => p.maker === m)).map(m => `<tr>
+    <th scope="row">${esc(T['maker_' + m] || m)}</th>${SIZES.map(size => makerCell(ram.find(p => p.maker === m && p.capacity === size), lowest[size])).join('')}
+  </tr>`).join('');
 }
 
 function openDetail(id) {

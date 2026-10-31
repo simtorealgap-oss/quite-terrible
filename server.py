@@ -20,7 +20,7 @@ I18N = json.loads((ROOT / 'config/i18n.json').read_text())
 PAGES = {f'/{lang}/{path}': (lang, page, None) for lang in ('ko', 'en')
          for path, page in (('', 'prices'), ('news/', 'news'), ('about/', 'about'))}
 PAGES |= {f"/{lang}/{p['id']}/": (lang, 'product', p['id']) for lang in ('ko', 'en') for p in PRODUCTS}
-RAW = {'boot', 'jsonld', 'headExtra', 'prerenderRows', 'productStatic', 'relatedLinks'}
+RAW = {'boot', 'jsonld', 'headExtra', 'prerenderRows', 'makerRows', 'productStatic', 'relatedLinks'}
 # Country headers set by common CDNs/hosts. They only pick defaults; visitors can always switch.
 COUNTRY_HEADERS = ('CF-IPCountry', 'CloudFront-Viewer-Country', 'X-Vercel-IP-Country', 'X-Country-Code')
 PLACEHOLDER = re.compile(r'\{\{(\w+)\}\}')
@@ -137,7 +137,7 @@ class Handler(BaseHTTPRequestHandler):
         self.send_header('Cache-Control', 'no-store')
         self.send_header('X-Content-Type-Options', 'nosniff')
         self.send_header('Referrer-Policy', 'strict-origin-when-cross-origin')
-        self.send_header('Content-Security-Policy', "default-src 'self'; style-src 'self' https://cdn.jsdelivr.net; font-src https://cdn.jsdelivr.net; script-src 'self'; img-src 'self' data: https://thumb.wikimedia.org https://upload.wikimedia.org https://*.coupang.com https://*.coupangcdn.com; connect-src 'self'; frame-src https://coupa.ng https://*.coupang.com https://*.coupangcdn.com; base-uri 'none'; frame-ancestors 'none'")
+        self.send_header('Content-Security-Policy', "default-src 'self'; style-src 'self' https://cdn.jsdelivr.net; font-src https://cdn.jsdelivr.net; script-src 'self'; img-src 'self' data: https://thumb.wikimedia.org https://upload.wikimedia.org https://*.coupang.com https://*.coupangcdn.com; connect-src 'self'; frame-src 'none'; base-uri 'none'; frame-ancestors 'none'")
         for key, value in (headers or {}).items():
             self.send_header(key, value)
         self.end_headers()

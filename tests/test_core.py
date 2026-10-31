@@ -72,7 +72,7 @@ class Prices(unittest.TestCase):
         with self.assertRaises(ValueError):save_quotes(self.db,[self.quote(observed_at=stamp(self.at+dt.timedelta(days=1)))])
 
     def test_demo_does_not_write_live_database(self):
-        self.assertEqual(len(demo_products('US')),10)
+        self.assertEqual(len(demo_products('US')),len(PRODUCTS))
         self.assertIsNone(self.view()['price'])
 
     def test_feed_keeps_original_observation_time(self):
@@ -88,7 +88,7 @@ class Providers(unittest.TestCase):
         self.assertTrue(matches(gpu,'MSI 지포스 RTX 5070 12GB'))
         for title in ['RTX 5070 Ti 12GB','RTX 5070 12GB 중고','RTX 5070 12GB 조립PC','RTX 5070 12GB 노트북']:
             self.assertFalse(matches(gpu,title))
-        ram=PRODUCTS[1]
+        ram=next(p for p in PRODUCTS if p['id']=='samsung-ddr5-16')
         self.assertFalse(matches(ram,'삼성 DDR5 5600 16GB 2개'))
         self.assertFalse(matches(ram,'삼성 DDR5 5600 16GB ECC 서버'))
         self.assertTrue(matches(ram,'삼성전자 DDR5-5600 16GB'))
@@ -435,3 +435,41 @@ class StaticSite(unittest.TestCase):
             self.assertIn('Sitemap: https://example.github.io/quite-terrible/sitemap.xml',(out/'robots.txt').read_text())
 
 if __name__=='__main__':unittest.main()
+
+
+class BuyList(unittest.TestCase):
+    strings=json.loads((Path(__file__).resolve().parents[1]/'config/i18n.json').read_text())['ko']
+
+    def test_memory_makers_cover_each_capacity_once(self):
+        from seo import MAKERS
+        ddr5=[p for p in PRODUCTS if p['category']=='ram' and p['generation']=='DDR5']
+        self.assertTrue(all(p.get('maker') in MAKERS and p.get('coupang') and p.get('shortKo') for p in ddr5))
+        cells=[(p['maker'],p['capacity']) for p in ddr5]
+        self.assertEqual(len(cells),len(set(cells)))
+        self.assertTrue({16,32,64}<={p['capacity'] for p in ddr5})
+
+    def test_maker_table_links_each_priced_cell(self):
+        from seo import maker_rows
+        products=[p|{'price':100000+i} for i,p in enumerate(PRODUCTS)]
+        html=maker_rows(products,'ko','',self.strings)
+        self.assertEqual(html.count('<tr>'),6)
+        self.assertIn('href="/ko/hynix-ddr5-32/"',html)
+        samsung=html.split('</tr>')[0]
+        self.assertIn('삼성전자',samsung)
+        self.assertTrue(samsung.endswith('<td class="num"><span class="muted">—</span></td>'))  # no 64GB desktop module
+
+    def test_product_page_lists_coupang_then_one_danawa_price(self):
+        p=next(q for q in PRODUCTS if q['id']=='samsung-ddr5-32')
+        offers=[{'source':'danawa','title':f'모델 {n}','merchant':f'모델 {n}','amount':price,'price':price,'shops':10,'stock':'unknown',
+                 'stale':False,'url':f'https://prod.danawa.com/info/?pcode={n}','observed_at':'2026-11-01T00:05:00+00:00'}
+                for n,price in ((1,790970),(2,812000),(3,905000))]
+        text=product_static(p|{'offers':offers,'coupangOffer':None},'ko',self.strings)
+        self.assertEqual(text.count('<li class="seller">'),2)
+        self.assertLess(text.index('mall coupang'),text.index('mall danawa'))
+        self.assertIn('790,970원',text)
+        self.assertNotIn('812,000원',text)
+        self.assertIn(p['coupang'],text)
+        self.assertIn('rel="sponsored noopener noreferrer"',text)
+        self.assertIn(self.strings['coupangDisclosure'],text)
+        # Without an API price the Coupang row shows no amount at all.
+        self.assertNotIn('원',text.split('mall danawa')[0])

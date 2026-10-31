@@ -7,7 +7,7 @@
   <meta name="description" content="{{pageDesc}}">
   <meta name="color-scheme" content="light">
   <meta name="theme-color" content="#ffffff">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' https://cdn.jsdelivr.net; font-src https://cdn.jsdelivr.net; script-src 'self'; img-src 'self' data: https://thumb.wikimedia.org https://upload.wikimedia.org https://*.coupang.com https://*.coupangcdn.com; connect-src 'self'; frame-src https://coupa.ng https://*.coupang.com https://*.coupangcdn.com; base-uri 'none'">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' https://cdn.jsdelivr.net; font-src https://cdn.jsdelivr.net; script-src 'self'; img-src 'self' data: https://thumb.wikimedia.org https://upload.wikimedia.org https://*.coupang.com https://*.coupangcdn.com; connect-src 'self'; frame-src 'none'; base-uri 'none'">
   <link rel="canonical" href="{{canonical}}">
   <link rel="alternate" hreflang="ko" href="{{altKo}}">
   <link rel="alternate" hreflang="en" href="{{altEn}}">
@@ -80,9 +80,22 @@
           <button type="button" data-period="90" aria-pressed="false">{{p90}}</button>
         </div>
       </div>
+      <p class="page-sub">{{pricesSub}}</p>
       <div id="banner" class="banner" role="status" hidden></div>
       <div id="spotlight" class="spotlight" aria-label="{{spotlightLabel}}"></div>
       <div id="cards" class="cards"></div>
+      <section class="panel makers" aria-labelledby="makers-title">
+        <div class="panel-head">
+          <h2 id="makers-title">{{makerTitle}}</h2>
+          <span class="panel-note">{{makerNote}}</span>
+        </div>
+        <div class="table-wrap">
+          <table class="grid maker-grid">
+            <thead><tr><th scope="col">{{makerCol}}</th><th scope="col" class="num">16GB</th><th scope="col" class="num">32GB</th><th scope="col" class="num">64GB</th></tr></thead>
+            <tbody id="maker-rows">{{makerRows}}</tbody>
+          </table>
+        </div>
+      </section>
       <section class="panel" aria-labelledby="all-title">
         <div class="panel-head">
           <h2 id="all-title">{{allTitle}}</h2>
