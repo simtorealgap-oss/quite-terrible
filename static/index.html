@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="{{lang}}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{pageTitle}}</title>
+  <meta name="description" content="{{pageDesc}}">
+  <meta name="color-scheme" content="light dark">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self'; script-src 'self'; img-src 'self' data: https://thumb.wikimedia.org https://upload.wikimedia.org; connect-src 'self'; base-uri 'none'">
+  <link rel="alternate" hreflang="ko" href="{{altKo}}">
+  <link rel="alternate" hreflang="en" href="{{altEn}}">
+  <link rel="alternate" hreflang="x-default" href="{{base}}/">
+  <link rel="icon" href="{{base}}/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="{{base}}/styles.css">
+  <script type="application/json" id="boot">{{boot}}</script>
+  <script src="{{base}}/app.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main">{{skip}}</a>
+  <header class="topbar">
+    <div class="wrap topbar-inner">
+      <a class="brand" href="{{base}}/{{lang}}/" aria-label="{{homeLabel}}">
+        <img class="brand-mark" src="{{base}}/favicon.svg" alt="" width="26" height="26">
+        <span class="brand-name">{{brand}}</span><span class="brand-tagline">{{brandTagline}}</span>
+      </a>
+      <nav class="tabs" aria-label="{{navLabel}}">
+        <a class="tab" href="{{base}}/{{lang}}/" aria-current="{{pricesCurrent}}">{{navPrices}}</a>
+        <a class="tab" href="{{base}}/{{lang}}/news/" aria-current="{{newsCurrent}}">{{navNews}}</a>
+        <a class="tab" href="{{base}}/{{lang}}/about/" aria-current="{{aboutCurrent}}">{{navAbout}}</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="wrap">
+    <section id="page-prices" {{pricesHidden}}>
+      <div class="page-head">
+        <div class="title-row">
+          <h1>{{pricesHeading}}</h1>
+          <span class="status" id="price-status" data-state="idle"><span class="dot"></span><span id="price-status-text">{{loading}}</span></span>
+        </div>
+        <div class="controls">
+          <div class="segmented" id="period" role="group" aria-label="{{period}}">
+            <button type="button" data-period="7" aria-pressed="false">{{p7}}</button>
+            <button type="button" data-period="30" aria-pressed="true">{{p30}}</button>
+            <button type="button" data-period="90" aria-pressed="false">{{p90}}</button>
+          </div>
+        </div>
+      </div>
+      <div id="banner" class="banner" role="status" hidden></div>
+      <p class="quip"><span class="quip-lead">{{quipLead}}</span> <span class="quip-reply">{{quipReply}}</span> <a href="{{quipUrl}}" target="_blank" rel="noopener noreferrer">{{quipSource}} ↗</a></p>
+      <div id="cards" class="cards"></div>
+      <section class="panel" aria-labelledby="all-title">
+        <div class="panel-head">
+          <h2 id="all-title">{{allTitle}}</h2>
+          <div class="segmented" id="category" role="group" aria-label="{{category}}">
+            <button type="button" data-category="all" aria-pressed="true">{{catAll}}</button>
+            <button type="button" data-category="ram" aria-pressed="false">{{catRam}}</button>
+            <button type="button" data-category="gpu" aria-pressed="false">{{catGpu}}</button>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table class="grid">
+            <thead>
+              <tr>
+                <th scope="col">{{colProduct}}</th>
+                <th scope="col" class="num" aria-sort="none"><button type="button" class="th-sort" data-sort="price">{{colPrice}}</button></th>
+                <th scope="col" class="num" aria-sort="none"><button type="button" class="th-sort" data-sort="change">{{col24h}}</button></th>
+                <th scope="col" class="num hide-sm" aria-sort="none"><button type="button" class="th-sort" data-sort="change7">{{col7d}}</button></th>
+                <th scope="col" class="hide-md">{{colRange}}</th>
+                <th scope="col" class="hide-sm">{{colTrend}}</th>
+                <th scope="col" class="num hide-md">{{colSellers}}</th>
+              </tr>
+            </thead>
+            <tbody id="rows"></tbody>
+          </table>
+          <div id="table-msg" class="table-msg" role="status" hidden></div>
+        </div>
+      </section>
+    </section>
+
+    <section id="page-news" {{newsHidden}}>
+      <div class="page-head">
+        <div class="title-row">
+          <h1>{{newsHeading}}</h1>
+          <span class="status" id="news-status" data-state="idle"><span class="dot"></span><span id="news-status-text">{{loading}}</span></span>
+        </div>
+        <div class="controls">
+          <div class="segmented" id="news-category" role="group" aria-label="{{category}}">
+            <button type="button" data-news-category="all" aria-pressed="true">{{catAll}}</button>
+            <button type="button" data-news-category="ram" aria-pressed="false">{{catRam}}</button>
+            <button type="button" data-news-category="gpu" aria-pressed="false">{{catGpu}}</button>
+          </div>
+        </div>
+      </div>
+      <div class="panel news-panel"><div id="news-list" class="news-list" aria-live="polite"></div></div>
+    </section>
+
+    <section id="page-about" class="about" {{aboutHidden}}>
+      <div class="page-head"><div class="title-row"><h1>{{aboutHeading}}</h1></div></div>
+      <div class="about-grid">
+        <figure class="about-photo">
+          <a href="{{aboutPhotoPage}}" target="_blank" rel="noopener noreferrer"><img src="{{aboutPhoto}}" alt="{{aboutPhotoAlt}}" width="480" height="640" loading="lazy" referrerpolicy="no-referrer"></a>
+          <figcaption><strong>{{aboutPhotoCaption}}</strong><a href="{{licenseUrl}}" target="_blank" rel="noopener noreferrer license">{{aboutPhotoCredit}}</a></figcaption>
+        </figure>
+        <div class="about-body">
+          <blockquote class="about-quote">
+            <p>{{aboutQuote}}</p>
+            <footer>— {{aboutQuoteSource}} · <a href="{{quipUrl}}" target="_blank" rel="noopener noreferrer">{{readArticle}} ↗</a></footer>
+          </blockquote>
+          <div class="about-story">
+            <p>{{aboutP1}}</p>
+            <p>{{aboutP2}}</p>
+            <p class="about-punch">{{aboutP3}}</p>
+            <p>{{aboutP4}}</p>
+          </div>
+        </div>
+      </div>
+      <h2 class="about-rules-title">{{aboutRulesTitle}}</h2>
+      <div class="about-rules">
+        <div class="rule"><span class="rule-no">01</span><h3>{{aboutRule1T}}</h3><p>{{aboutRule1B}}</p></div>
+        <div class="rule"><span class="rule-no">02</span><h3>{{aboutRule2T}}</h3><p>{{aboutRule2B}}</p></div>
+        <div class="rule"><span class="rule-no">03</span><h3>{{aboutRule3T}}</h3><p>{{aboutRule3B}}</p></div>
+      </div>
+      <p class="about-closing">{{aboutClosing}}</p>
+      <p class="about-disclaimer">{{aboutDisclaimer}}</p>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap">
+      <p class="footer-meta"><span>© {{year}} {{brand}} · {{brandTagline}}</span><span>{{footerScope}}</span><span class="footer-joke">{{footerJoke}}</span></p>
+    </div>
+  </footer>
+
+  <dialog id="drawer" class="drawer" aria-labelledby="drawer-title">
+    <div class="drawer-head">
+      <span class="drawer-kicker" id="drawer-kicker"></span>
+      <button type="button" class="icon-btn" id="drawer-close" aria-label="{{close}}"><svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true"><path d="M5 5l10 10M15 5L5 15" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button>
+    </div>
+    <div id="drawer-body" class="drawer-body"></div>
+  </dialog>
+</body>
+</html>

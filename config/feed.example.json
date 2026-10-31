@@ -1,0 +1,19 @@
+{
+  "_note": "Schema illustration only. Do not import these dummy values into a live database. Use observed_at from the original price check, not the feed download time. USD uses cents, KRW uses won. Use null for unknown shipping. Send an out_of_stock observation when an offer disappears. IDs and currency must match config/products.json and the market.",
+  "observations": [
+    {
+      "product_id": "corsair-ddr5-32",
+      "market": "US",
+      "offer_key": "merchant-unique-sku",
+      "price": 10000,
+      "shipping": null,
+      "stock": "in_stock",
+      "merchant": "Example seller",
+      "title": "Corsair Vengeance CMK32GX5M2B6000C30",
+      "url": "https://example.com/product",
+      "affiliate_url": null,
+      "source": "authorized-merchant-feed",
+      "observed_at": "2026-10-01T12:00:00Z"
+    }
+  ]
+}
