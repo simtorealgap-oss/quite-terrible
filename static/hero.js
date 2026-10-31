@@ -95,8 +95,8 @@
         const dx = px - mx, dy = py - my, d2 = dx * dx + dy * dy;
         if (d2 < R2) {
           const f = (1 - d2 / R2) ** 2, inv = 1 / Math.sqrt(d2 + 1);
-          vx[i] += (dx * inv * 2.6 - dy * inv * 1.6 + mouse.vx * 0.35) * f * dt;  // push out, swirl, drag along
-          vy[i] += (dy * inv * 2.6 + dx * inv * 1.6 + mouse.vy * 0.35) * f * dt;
+          vx[i] += (dx * inv * 1.3 - dy * inv * 0.8 + mouse.vx * 0.18) * f * dt;  // push out, swirl, drag along
+          vy[i] += (dy * inv * 1.3 + dx * inv * 0.8 + mouse.vy * 0.18) * f * dt;
         }
       }
       vx[i] = (vx[i] - ox[i] * k * dt) * damp;
@@ -115,7 +115,7 @@
     for (let i = 0; i < count; i++) {
       if (col[i] !== current) { current = col[i]; ctx.fillStyle = PALETTE[current]; }
       const speed = Math.abs(vx[i]) + Math.abs(vy[i]);
-      const stretch = Math.min(3, 1 + speed * 0.25);  // fast particles streak like liquid
+      const stretch = Math.min(2, 1 + speed * 0.12);  // fast particles streak like liquid
       ctx.fillRect(rect.x + hx[i] * s + ox[i], rect.y + hy[i] * s + oy[i], size * stretch, size);
     }
   }
