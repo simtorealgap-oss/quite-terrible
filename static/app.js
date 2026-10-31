@@ -354,7 +354,7 @@ function offerHtml(o) {
   return `<tr class="${o.stale || o.stock === 'out_of_stock' ? 'muted-row' : ''}">
     <td><span class="offer-name" title="${esc(o.title)}">${esc(o.merchant)}</span>${o.affiliate_url ? ` <span class="tag aff">${esc(T.affiliate)}</span>` : ''}<span class="offer-meta">${esc([offerSource(o), stock, fmt('checkedAt', {time: when(o.observed_at)})].filter(Boolean).join(' · '))}</span></td>
     <td class="num"><span class="price">${money(o.amount)}</span><span class="offer-meta">${esc(shipping)}</span></td>
-    <td class="num">${href ? `<a class="buy" href="${href}" target="_blank" rel="noopener noreferrer${o.affiliate_url ? ' sponsored' : ''}">${esc(T.visitSeller)}</a>` : ''}</td>
+    <td class="num">${href ? `<a class="buy secondary" href="${href}" target="_blank" rel="noopener noreferrer${o.affiliate_url ? ' sponsored' : ''}">${esc(T.visitSeller)}</a>` : ''}</td>
   </tr>`;
 }
 
@@ -380,9 +380,9 @@ function renderDetail(target = '#drawer-body') {
       <div><dt>${esc(T.daysObserved)}</dt><dd>${esc(fmt('daysN', {n: p.history.length}))}</dd></div>
       <div><dt>${esc(T.colSellers)}</dt><dd>${bestOffer(p)?.shops ?? '—'}</dd></div>
     </dl>
-    <h3 class="d-section">${esc(T.offersTitle)}</h3>
-    ${p.offers.length ? `<table class="offers"><tbody>${p.offers.slice(0, 10).map(offerHtml).join('')}</tbody></table>` : `<p class="d-empty">${esc(state.demo ? T.demoOffers : T.noOffers)}</p>`}
     ${coupangHtml(p)}
+    <h3 class="d-section">${esc(T.offersTitle)}</h3>
+    ${p.offers.length ? `<table class="offers"><tbody>${p.offers.slice(0, 3).map(offerHtml).join('')}</tbody></table>` : `<p class="d-empty">${esc(state.demo ? T.demoOffers : T.noOffers)}</p>`}
     <p class="d-note">${esc(p.category === 'gpu' ? T.gpuNote : T.ramNote)}</p>`;
 }
 
@@ -399,15 +399,21 @@ addEventListener('resize', () => {
   }, 150);
 });
 
-// Coupang Partners link below the Danawa list. No price is shown: we do not have Coupang's price.
+// Coupang Partners links. No price is shown: we do not have Coupang's price.
+const coupangHref = p => state.market === 'KR' && !state.demo ? safeHref(p.coupang) : null;
 function coupangHtml(p) {
-  const href = state.market === 'KR' && !state.demo && safeHref(p.coupang);
+  const href = coupangHref(p);
   if (!href) return '';
-  return `<div class="coupang">
-    <div><strong>${esc(T.coupangTitle)}</strong><span>${esc(fmt('coupangBody', {name: p.short}))}</span></div>
-    <a class="coupang-btn" href="${href}" target="_blank" rel="sponsored noopener noreferrer">${esc(T.coupangCta)}</a>
-  </div>
-  <p class="coupang-note">${esc(T.coupangDisclosure)}</p>`;
+  const banner = safeHref(p.coupangBanner);
+  return `<section class="coupang-box">
+    ${banner ? `<iframe class="coupang-frame" src="${banner}" width="120" height="240" frameborder="0" scrolling="no" referrerpolicy="unsafe-url" loading="lazy" title="${esc(T.coupangHead)}"></iframe>` : ''}
+    <div class="coupang-copy">
+      <h3>${esc(T.coupangHead)}</h3>
+      <p>${esc(T.coupangBody)}</p>
+      <a class="coupang-btn" href="${href}" target="_blank" rel="sponsored noopener noreferrer">${esc(fmt('coupangCta', {name: p.short}))}</a>
+      <p class="coupang-note">${esc(T.coupangDisclosure)}</p>
+    </div>
+  </section>`;
 }
 
 function openDetail(id) {

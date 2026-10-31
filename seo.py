@@ -117,7 +117,8 @@ def prerender_row(p, lang, base, strings):
             f'<span class="prod-spec">{html.escape(full_name(p))}</span></div></div></td>'
             f'<td class="num"><span class="price">{html.escape(won(p.get("price"), lang))}</span></td>'
             '<td class="num">—</td><td class="num hide-sm">—</td><td class="hide-md"></td><td class="hide-sm"></td>'
-            f'<td class="num hide-md">{(best_offer(p) or {}).get("shops") or "—"}</td></tr>')
+            f'<td class="num hide-md">{(best_offer(p) or {}).get("shops") or "—"}</td>'
+            + '</tr>')
 
 
 def product_static(p, lang, strings):
@@ -126,16 +127,18 @@ def product_static(p, lang, strings):
         f'<tr><td><span class="offer-name">{html.escape(o["merchant"])}</span>'
         f'<span class="offer-meta">{html.escape(strings["srcDanawa"])} · {o.get("shops") or "—"}</span></td>'
         f'<td class="num"><span class="price">{html.escape(won(o.get("amount"), lang))}</span></td>'
-        f'<td class="num"><a class="buy" href="{html.escape(o["url"])}" rel="noopener noreferrer" target="_blank">{html.escape(strings["visitSeller"])}</a></td></tr>'
-        for o in p.get('offers', [])[:10] if o.get('url'))
+        f'<td class="num"><a class="buy secondary" href="{html.escape(o["url"])}" rel="noopener noreferrer" target="_blank">{html.escape(strings["visitSeller"])}</a></td></tr>'
+        for o in p.get('offers', [])[:3] if o.get('url'))
     coupang = ''
     if p.get('coupang'):
-        coupang = (f'<div class="coupang"><div><strong>{html.escape(strings["coupangTitle"])}</strong>'
-                   f'<span>{html.escape(strings["coupangBody"].format(name=p["short"]))}</span></div>'
-                   f'<a class="coupang-btn" href="{html.escape(p["coupang"])}" target="_blank" rel="sponsored noopener noreferrer">'
-                   f'{html.escape(strings["coupangCta"])}</a></div><p class="coupang-note">{html.escape(strings["coupangDisclosure"])}</p>')
+        frame = (f'<iframe class="coupang-frame" src="{html.escape(p["coupangBanner"])}" width="120" height="240" frameborder="0" '
+                 f'scrolling="no" referrerpolicy="unsafe-url" loading="lazy" title="{html.escape(strings["coupangHead"])}"></iframe>') if p.get('coupangBanner') else ''
+        coupang = (f'<section class="coupang-box">{frame}<div class="coupang-copy"><h3>{html.escape(strings["coupangHead"])}</h3>'
+                   f'<p>{html.escape(strings["coupangBody"])}</p><a class="coupang-btn" href="{html.escape(p["coupang"])}" target="_blank" '
+                   f'rel="sponsored noopener noreferrer">{html.escape(strings["coupangCta"].format(name=p["short"]))}</a>'
+                   f'<p class="coupang-note">{html.escape(strings["coupangDisclosure"])}</p></div></section>')
     table = f'<h3 class="d-section">{html.escape(strings["modelsTitle"])}</h3><table class="offers"><tbody>{rows}</tbody></table>' if rows else ''
-    return table + coupang
+    return coupang + table
 
 
 def sitemap(site, base, products, langs=('ko', 'en'), lastmod=None):
