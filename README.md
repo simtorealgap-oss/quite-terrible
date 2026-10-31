@@ -114,6 +114,8 @@ python3 server.py --update prices   # 지금 바로 한 번 수집 (예약 시�
 - 정적 호스팅은 방문자 정보를 서버에서 볼 수 없으므로 언어는 브라우저 언어(없으면 시간대), 판매 지역은 시간대(Asia/Seoul이면 한국)와 페이지 언어로 브라우저가 정합니다.
 - API 키는 저장소 Settings → Secrets → Actions에 `EBAY_CLIENT_ID`, `EBAY_CLIENT_SECRET`, `EBAY_CAMPAIGN_ID`, `BESTBUY_API_KEY`로 넣습니다.
 - 무료 Pages는 공개 저장소가 필요합니다. 코드와 수집 데이터가 공개됩니다.
+- 자기 도메인: 등록처 DNS에 A 레코드 4개(185.199.108~111.153)와 `www` CNAME(`<계정>.github.io`)을 넣고, 저장소 변수 `CUSTOM_DOMAIN`을 설정한 뒤 Pages에 도메인을 연결합니다(`gh variable set CUSTOM_DOMAIN --body quiteterrible.com`, `gh api -X PUT repos/<계정>/quite-terrible/pages -f cname=quiteterrible.com`). 사이트가 도메인 최상위로 옮겨집니다.
+- 광고: `config/ads.txt`가 있으면 사이트 최상위 `/ads.txt`로 배포됩니다.
 - 로컬에서 정적 결과 확인: `python3 build.py --base /quite-terrible --out /tmp/site/quite-terrible` 후 `/tmp/site`를 정적 서버로 엽니다.
 
 ## 검증 및 배포 경계

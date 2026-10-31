@@ -74,6 +74,9 @@ def build(out, base=''):
     (out / 'index.html').write_text(ROOT_PAGE.format(base=base))
     (out / '404.html').write_text(ROOT_PAGE.format(base=base))
     (out / '.nojekyll').write_text('')  # serve files as-is, no Jekyll processing
+    ads = ROOT / 'config/ads.txt'  # ad network seller file (AdSense etc.), must sit at the domain root
+    if ads.exists():
+        shutil.copy(ads, out / 'ads.txt')
     return out
 
 

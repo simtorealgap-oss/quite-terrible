@@ -47,7 +47,10 @@ jobs:
           git diff --cached --quiet || git commit -m "data: daily update"
           git push
       - name: Build site
-        run: python build.py --base "/${{ github.event.repository.name }}"
+        # With a custom domain (repository variable CUSTOM_DOMAIN) the site lives at the domain root.
+        run: |
+          if [ -n "${{ vars.CUSTOM_DOMAIN }}" ]; then BASE=""; else BASE="/${{ github.event.repository.name }}"; fi
+          python build.py --base "$BASE"
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
