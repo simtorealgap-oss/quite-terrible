@@ -128,7 +128,14 @@ def product_static(p, lang, strings):
         f'<td class="num"><span class="price">{html.escape(won(o.get("amount"), lang))}</span></td>'
         f'<td class="num"><a class="buy" href="{html.escape(o["url"])}" rel="noopener noreferrer" target="_blank">{html.escape(strings["visitSeller"])}</a></td></tr>'
         for o in p.get('offers', [])[:10] if o.get('url'))
-    return f'<h3 class="d-section">{html.escape(strings["modelsTitle"])}</h3><table class="offers"><tbody>{rows}</tbody></table>' if rows else ''
+    coupang = ''
+    if p.get('coupang'):
+        coupang = (f'<div class="coupang"><div><strong>{html.escape(strings["coupangTitle"])}</strong>'
+                   f'<span>{html.escape(strings["coupangBody"].format(name=p["short"]))}</span></div>'
+                   f'<a class="coupang-btn" href="{html.escape(p["coupang"])}" target="_blank" rel="sponsored noopener noreferrer">'
+                   f'{html.escape(strings["coupangCta"])}</a></div><p class="coupang-note">{html.escape(strings["coupangDisclosure"])}</p>')
+    table = f'<h3 class="d-section">{html.escape(strings["modelsTitle"])}</h3><table class="offers"><tbody>{rows}</tbody></table>' if rows else ''
+    return table + coupang
 
 
 def sitemap(site, base, products, langs=('ko', 'en'), lastmod=None):

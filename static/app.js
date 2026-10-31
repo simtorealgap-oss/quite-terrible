@@ -382,6 +382,7 @@ function renderDetail(target = '#drawer-body') {
     </dl>
     <h3 class="d-section">${esc(T.offersTitle)}</h3>
     ${p.offers.length ? `<table class="offers"><tbody>${p.offers.slice(0, 10).map(offerHtml).join('')}</tbody></table>` : `<p class="d-empty">${esc(state.demo ? T.demoOffers : T.noOffers)}</p>`}
+    ${coupangHtml(p)}
     <p class="d-note">${esc(p.category === 'gpu' ? T.gpuNote : T.ramNote)}</p>`;
 }
 
@@ -397,6 +398,17 @@ addEventListener('resize', () => {
     if ($('#drawer').open) renderDetail();
   }, 150);
 });
+
+// Coupang Partners link below the Danawa list. No price is shown: we do not have Coupang's price.
+function coupangHtml(p) {
+  const href = state.market === 'KR' && !state.demo && safeHref(p.coupang);
+  if (!href) return '';
+  return `<div class="coupang">
+    <div><strong>${esc(T.coupangTitle)}</strong><span>${esc(fmt('coupangBody', {name: p.short}))}</span></div>
+    <a class="coupang-btn" href="${href}" target="_blank" rel="sponsored noopener noreferrer">${esc(T.coupangCta)}</a>
+  </div>
+  <p class="coupang-note">${esc(T.coupangDisclosure)}</p>`;
+}
 
 function openDetail(id) {
   state.selected = id;

@@ -142,7 +142,11 @@
     "relatedTitle": "다른 부품 시세",
     "crumbLabel": "현재 위치",
     "modelsTitle": "모델별 최저가",
-    "currencySuffix": "원"
+    "currencySuffix": "원",
+    "coupangTitle": "쿠팡에서 보기",
+    "coupangBody": "쿠팡 검색 결과에서 {name} 가격과 로켓배송 여부를 확인하세요.",
+    "coupangCta": "쿠팡에서 보기 ↗",
+    "coupangDisclosure": "이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다."
   },
   "en": {
     "brand": "Quite Terrible",
@@ -287,6 +291,10 @@
     "relatedTitle": "Other parts",
     "crumbLabel": "Breadcrumb",
     "modelsTitle": "Lowest by model",
-    "currencySuffix": ""
+    "currencySuffix": "",
+    "coupangTitle": "Check on Coupang",
+    "coupangBody": "See {name} prices and Rocket delivery on Coupang (Korea).",
+    "coupangCta": "View on Coupang ↗",
+    "coupangDisclosure": "As a Coupang Partner, we earn a commission from qualifying purchases."
   }
 }
