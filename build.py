@@ -77,7 +77,11 @@ def build(out, base='', site=''):
     for name in ('app.js', 'hero.js', 'styles.css', 'favicon.svg', 'og.png'):
         shutil.copy(ROOT / 'static' / name, out / name)
     (out / 'lang.js').write_text(LANG_JS)
-    (out / 'index.html').write_text(ROOT_PAGE.format(base=base))
+    # "/" carries the full Korean price page for crawlers (no JS: Naver, link previews, verification bots);
+    # browsers are sent on to /ko/ or /en/ by lang.js before the page scripts start.
+    home = render_page('ko', 'prices', None, base=base, static=True, site=site, products=products)
+    redirect = f'  <script src="{base}/lang.js" data-base="{base}"></script>\n'
+    (out / 'index.html').write_text(home.replace('  <meta charset="utf-8">\n', '  <meta charset="utf-8">\n' + redirect, 1))
     (out / '404.html').write_text(ROOT_PAGE.format(base=base))
     (out / '.nojekyll').write_text('')  # serve files as-is, no Jekyll processing
     if site:  # absolute URLs are required in sitemaps

@@ -270,7 +270,10 @@ class StaticSite(unittest.TestCase):
                     self.assertEqual((boot['base'],boot['static'],boot['market']),('/quite-terrible',True,None))
             for name in ('prices-KR.json','prices-US.json','prices-KR-demo.json','news-ko.json','news-en.json'):
                 self.assertTrue(json.loads((out/'data'/name).read_text()))
-            self.assertIn('/quite-terrible/lang.js',(out/'index.html').read_text())
+            home=(out/'index.html').read_text()
+            self.assertIn('/quite-terrible/lang.js',home)
+            self.assertLess(home.index('lang.js'),home.index('app.js'))
+            self.assertIn('id="rows"><tr class="row">',home)
             self.assertTrue((out/'.nojekyll').exists())
             product=(out/'ko'/'rtx-5080'/'index.html').read_text()
             self.assertIn('<link rel="canonical" href="https://example.github.io/quite-terrible/ko/rtx-5080/">',product)
