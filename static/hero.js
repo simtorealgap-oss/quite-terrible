@@ -83,16 +83,10 @@
 
   // 4. Simulation.
   const mouse = {x: -1e4, y: -1e4, px: -1e4, py: -1e4, vx: 0, vy: 0, on: false};
-  let raf = 0, visible = true, calm = 0, intro = reduced ? 1 : 0;
-  function scatter() {
-    for (let i = 0; i < count; i++) {
-      const a = Math.random() * Math.PI * 2, r = 120 + Math.random() * 520;
-      ox[i] = Math.cos(a) * r; oy[i] = Math.sin(a) * r * 0.5;
-    }
-  }
+  let raf = 0, visible = true, calm = 0;
   function step(dt) {
     const s = rect.s, R = Math.max(70, 150 * Math.min(1.2, Math.max(0.6, rect.w / 1100)));
-    const R2 = R * R, k = 0.018 + 0.03 * intro, damp = Math.pow(0.9, dt);
+    const R2 = R * R, k = 0.048, damp = Math.pow(0.9, dt);
     const mx = mouse.x - rect.x, my = mouse.y - rect.y, push = mouse.on ? 1 : 0;
     let energy = 0;
     for (let i = 0; i < count; i++) {
@@ -129,13 +123,12 @@
   function frame(now) {
     const dt = Math.min(2.5, Math.max(0.3, (now - last) / 16.67));
     last = now;
-    if (intro < 1) intro = Math.min(1, intro + dt / 90);
     mouse.vx = (mouse.x - mouse.px) / dt; mouse.vy = (mouse.y - mouse.py) / dt;
     mouse.px = mouse.x; mouse.py = mouse.y;
     const energy = step(dt);
     draw();
     calm = energy < 0.02 && !mouse.on ? calm + 1 : 0;
-    if (calm > 20 && intro >= 1) { ox.fill(0); oy.fill(0); vx.fill(0); vy.fill(0); draw(); raf = 0; return; }  // settled: sleep
+    if (calm > 20) { ox.fill(0); oy.fill(0); vx.fill(0); vy.fill(0); draw(); raf = 0; return; }  // settled: sleep
     raf = visible ? requestAnimationFrame(frame) : 0;
   }
   function wake() {
@@ -157,7 +150,6 @@
   function start() {
     build();
     layout();
-    if (!reduced) { scatter(); wake(); }
     root.addEventListener('pointermove', pointer, {passive: true});
     root.addEventListener('pointerdown', pointer, {passive: true});
     root.addEventListener('pointerleave', leave, {passive: true});
