@@ -5,12 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{{pageTitle}}</title>
   <meta name="description" content="{{pageDesc}}">
-  <meta name="color-scheme" content="light dark">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self'; script-src 'self'; img-src 'self' data: https://thumb.wikimedia.org https://upload.wikimedia.org; connect-src 'self'; base-uri 'none'">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#0a0b0d">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' https://cdn.jsdelivr.net; font-src https://cdn.jsdelivr.net; script-src 'self'; img-src 'self' data: https://thumb.wikimedia.org https://upload.wikimedia.org; connect-src 'self'; base-uri 'none'">
   <link rel="alternate" hreflang="ko" href="{{altKo}}">
   <link rel="alternate" hreflang="en" href="{{altEn}}">
   <link rel="alternate" hreflang="x-default" href="{{base}}/">
   <link rel="icon" href="{{base}}/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
   <link rel="stylesheet" href="{{base}}/styles.css">
   <script type="application/json" id="boot">{{boot}}</script>
   <script src="{{base}}/app.js" defer></script>
@@ -20,34 +23,35 @@
   <header class="topbar">
     <div class="wrap topbar-inner">
       <a class="brand" href="{{base}}/{{lang}}/" aria-label="{{homeLabel}}">
-        <img class="brand-mark" src="{{base}}/favicon.svg" alt="" width="26" height="26">
-        <span class="brand-name">{{brand}}</span><span class="brand-tagline">{{brandTagline}}</span>
+        <img class="brand-mark" src="{{base}}/favicon.svg" alt="" width="28" height="28">
+        <span class="brand-text"><span class="brand-name">{{brand}}</span><span class="brand-tagline">{{brandTagline}}</span></span>
       </a>
       <nav class="tabs" aria-label="{{navLabel}}">
         <a class="tab" href="{{base}}/{{lang}}/" aria-current="{{pricesCurrent}}">{{navPrices}}</a>
         <a class="tab" href="{{base}}/{{lang}}/news/" aria-current="{{newsCurrent}}">{{navNews}}</a>
         <a class="tab" href="{{base}}/{{lang}}/about/" aria-current="{{aboutCurrent}}">{{navAbout}}</a>
       </nav>
+      <span class="topbar-note">{{updateSchedule}}</span>
     </div>
   </header>
+  <div class="ticker" id="ticker-wrap" aria-label="{{tickerLabel}}" hidden><div class="ticker-track" id="ticker"></div></div>
 
   <main id="main" class="wrap">
-    <section id="page-prices" {{pricesHidden}}>
+    <section id="page-prices" class="page" {{pricesHidden}}>
       <div class="page-head">
-        <div class="title-row">
+        <div class="page-title">
           <h1>{{pricesHeading}}</h1>
           <span class="status" id="price-status" data-state="idle"><span class="dot"></span><span id="price-status-text">{{loading}}</span></span>
         </div>
-        <div class="controls">
-          <div class="segmented" id="period" role="group" aria-label="{{period}}">
-            <button type="button" data-period="7" aria-pressed="false">{{p7}}</button>
-            <button type="button" data-period="30" aria-pressed="true">{{p30}}</button>
-            <button type="button" data-period="90" aria-pressed="false">{{p90}}</button>
-          </div>
+        <div class="segmented" id="period" role="group" aria-label="{{period}}">
+          <button type="button" data-period="7" aria-pressed="false">{{p7}}</button>
+          <button type="button" data-period="30" aria-pressed="true">{{p30}}</button>
+          <button type="button" data-period="90" aria-pressed="false">{{p90}}</button>
         </div>
       </div>
-      <div id="banner" class="banner" role="status" hidden></div>
       <p class="quip"><span class="quip-lead">{{quipLead}}</span> <span class="quip-reply">{{quipReply}}</span> <a href="{{quipUrl}}" target="_blank" rel="noopener noreferrer">{{quipSource}} ↗</a></p>
+      <div id="banner" class="banner" role="status" hidden></div>
+      <div id="spotlight" class="spotlight" aria-label="{{spotlightLabel}}"></div>
       <div id="cards" class="cards"></div>
       <section class="panel" aria-labelledby="all-title">
         <div class="panel-head">
@@ -78,25 +82,37 @@
       </section>
     </section>
 
-    <section id="page-news" {{newsHidden}}>
+    <section id="page-news" class="page" {{newsHidden}}>
       <div class="page-head">
-        <div class="title-row">
+        <div class="page-title">
           <h1>{{newsHeading}}</h1>
           <span class="status" id="news-status" data-state="idle"><span class="dot"></span><span id="news-status-text">{{loading}}</span></span>
         </div>
-        <div class="controls">
-          <div class="segmented" id="news-category" role="group" aria-label="{{category}}">
-            <button type="button" data-news-category="all" aria-pressed="true">{{catAll}}</button>
-            <button type="button" data-news-category="ram" aria-pressed="false">{{catRam}}</button>
-            <button type="button" data-news-category="gpu" aria-pressed="false">{{catGpu}}</button>
-          </div>
-        </div>
       </div>
-      <div class="panel news-panel"><div id="news-list" class="news-list" aria-live="polite"></div></div>
+      <div class="news-layout">
+        <section class="panel news-panel" aria-labelledby="news-list-title">
+          <div class="panel-head">
+            <h2 id="news-list-title">{{newsListTitle}}</h2>
+            <div class="segmented" id="news-category" role="group" aria-label="{{category}}">
+              <button type="button" data-news-category="all" aria-pressed="true">{{catAll}}</button>
+              <button type="button" data-news-category="ram" aria-pressed="false">{{catRam}}</button>
+              <button type="button" data-news-category="gpu" aria-pressed="false">{{catGpu}}</button>
+            </div>
+          </div>
+          <div id="news-list" class="news-list" aria-live="polite"></div>
+        </section>
+        <aside class="panel side" aria-labelledby="side-title">
+          <div class="panel-head">
+            <h2 id="side-title">{{sideTitle}}</h2>
+            <a class="panel-link" href="{{base}}/{{lang}}/">{{seeAll}} →</a>
+          </div>
+          <ol id="side-prices" class="side-list"></ol>
+        </aside>
+      </div>
     </section>
 
-    <section id="page-about" class="about" {{aboutHidden}}>
-      <div class="page-head"><div class="title-row"><h1>{{aboutHeading}}</h1></div></div>
+    <section id="page-about" class="page about" {{aboutHidden}}>
+      <div class="page-head"><div class="page-title"><h1>{{aboutHeading}}</h1></div></div>
       <div class="about-grid">
         <figure class="about-photo">
           <a href="{{aboutPhotoPage}}" target="_blank" rel="noopener noreferrer"><img src="{{aboutPhoto}}" alt="{{aboutPhotoAlt}}" width="480" height="640" loading="lazy" referrerpolicy="no-referrer"></a>
@@ -127,8 +143,10 @@
   </main>
 
   <footer class="footer">
-    <div class="wrap">
-      <p class="footer-meta"><span>© {{year}} {{brand}} · {{brandTagline}}</span><span>{{footerScope}}</span><span class="footer-joke">{{footerJoke}}</span></p>
+    <div class="wrap footer-inner">
+      <div class="footer-brand"><img src="{{base}}/favicon.svg" alt="" width="22" height="22"><span>{{brand}}</span><span class="footer-muted">{{brandTagline}}</span></div>
+      <p class="footer-joke">{{footerJoke}}</p>
+      <p class="footer-meta"><span>© {{year}} {{brand}}</span><span>{{footerScope}}</span></p>
     </div>
   </footer>
 

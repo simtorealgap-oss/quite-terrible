@@ -55,6 +55,7 @@ const periodPoints = (history, days) => {
 };
 const changeOver = points => points.length > 1 ? (points.at(-1).price / points[0].price - 1) * 100 : null;
 const categoryLabel = category => category === 'ram' ? T.catRam : T.catGpu;
+const categoryTag = category => category === 'ram' ? T.catRamShort : T.catGpuShort;
 const fullName = p => `${p.brand} ${p.name} · ${p.spec}`;
 const sourceName = source => ({danawa: T.srcDanawa, bestbuy: T.srcBestbuy, ebay: T.srcEbay}[source] || T.srcFeed);
 const bestOffer = p => (p.offers || []).find(o => !o.stale && o.stock !== 'out_of_stock' && o.price);
@@ -74,26 +75,25 @@ const icons = {
 const charts = new Map();
 let chartSeq = 0;
 
-function chartSvg(points, {key = '', w = 320, h = 110, label = ''} = {}) {
+function chartSvg(points, {key = '', w = 320, h = 110, axes = false, label = ''} = {}) {
   const id = `c${++chartSeq}`;
-  const top = 10, bottom = 10, padX = 4;
-  const grid = [0.2, 0.5, 0.8].map(f => {
-    const y = (top + (h - top - bottom) * f).toFixed(1);
-    return `<line class="grid-line" x1="0" x2="${w}" y1="${y}" y2="${y}"/>`;
+  const padT = 14, padB = axes ? 26 : 6, padR = axes ? 72 : 0;
+  const iw = w - padR, ih = h - padT - padB, floor = padT + ih;
+  const grid = (axes ? [0, 0.5, 1] : [1]).map(f => {
+    const y = (padT + ih * f).toFixed(1);
+    return `<line class="grid-line" x1="0" x2="${iw}" y1="${y}" y2="${y}"/>`;
   }).join('');
   if (!points.length) {
-    return `<svg class="chart" viewBox="0 0 ${w} ${h}" role="img" aria-label="${esc(T.chartEmpty)}">${grid}<text class="empty" x="${w / 2}" y="${h / 2 + 4}" text-anchor="middle">${esc(T.chartEmpty)}</text></svg>`;
+    return `<svg class="chart" viewBox="0 0 ${w} ${h}" role="img" aria-label="${esc(T.chartEmpty)}">${grid}<text class="empty" x="${iw / 2}" y="${(padT + ih / 2 + 4).toFixed(1)}" text-anchor="middle">${esc(T.chartEmpty)}</text></svg>`;
   }
   const prices = points.map(p => p.price);
   let lo = Math.min(...prices), hi = Math.max(...prices);
-  const pad = hi === lo ? Math.max(1, lo * 0.02) : (hi - lo) * 0.12;
+  const pad = hi === lo ? Math.max(1, lo * 0.04) : (hi - lo) * 0.15;
   lo -= pad; hi += pad;
   const t0 = Date.parse(points[0].at), t1 = Date.parse(points.at(-1).at);
-  const coords = points.map(p => {
-    const t = Date.parse(p.at);
-    return {t, p, x: points.length === 1 ? w / 2 : padX + (t - t0) / Math.max(1, t1 - t0) * (w - padX * 2),
-      y: top + (hi - p.price) / (hi - lo) * (h - top - bottom)};
-  });
+  const X = t => points.length === 1 ? iw - 8 : 4 + (t - t0) / Math.max(1, t1 - t0) * (iw - 12);
+  const Y = v => padT + (hi - v) / (hi - lo) * ih;
+  const coords = points.map(p => { const t = Date.parse(p.at); return {t, p, x: X(t), y: Y(p.price)}; });
   // Gaps longer than 36 hours break the line: missing days are never filled in.
   let line = '', segments = 0;
   coords.forEach((c, i) => {
@@ -101,17 +101,28 @@ function chartSvg(points, {key = '', w = 320, h = 110, label = ''} = {}) {
     if (gap) segments += 1;
     line += `${gap ? 'M' : 'L'}${c.x.toFixed(1)},${c.y.toFixed(1)}`;
   });
-  const area = segments === 1 && coords.length > 1
-    ? `<path d="${line}L${coords.at(-1).x.toFixed(1)},${h}L${coords[0].x.toFixed(1)},${h}Z" fill="url(#${id}g)"/>` : '';
   const last = coords.at(-1);
+  const area = segments === 1 && coords.length > 1
+    ? `<path d="${line}L${last.x.toFixed(1)},${floor}L${coords[0].x.toFixed(1)},${floor}Z" fill="url(#${id}g)"/>` : '';
+  // One observation is drawn as a dashed level with a note, not as a lone dot.
+  const single = points.length === 1
+    ? `<line class="baseline" x1="0" x2="${last.x.toFixed(1)}" y1="${last.y.toFixed(1)}" y2="${last.y.toFixed(1)}"/>`
+      + `<text class="note" x="0" y="${(last.y - 10).toFixed(1)}">${esc(fmt('trackingSince', {date: when(points[0].at, false)}))}</text>` : '';
+  let labels = '';
+  if (axes) {
+    labels = [hi, (hi + lo) / 2, lo].map((v, i) =>
+      `<text class="axis-label" x="${w}" y="${(padT + ih * i / 2 + 4).toFixed(1)}" text-anchor="end">${esc(money(v, true))}</text>`).join('');
+    labels += points.length > 1
+      ? `<text class="axis-label" x="0" y="${h - 6}">${esc(when(points[0].at, false))}</text><text class="axis-label" x="${iw}" y="${h - 6}" text-anchor="end">${esc(when(points.at(-1).at, false))}</text>`
+      : `<text class="axis-label" x="${iw}" y="${h - 6}" text-anchor="end">${esc(when(points[0].at, false))}</text>`;
+  }
   charts.set(id, {coords, w});
   const summary = `${label} ${when(points[0].at, false)}–${when(points.at(-1).at, false)}: ${money(Math.min(...prices))}–${money(Math.max(...prices))}`;
   return `<svg class="chart ${direction(changeOver(points))}" viewBox="0 0 ${w} ${h}" data-chart="${id}" data-key="${esc(key)}" role="img" aria-label="${esc(summary)}">`
-    + `<defs><linearGradient id="${id}g" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="currentColor" stop-opacity=".16"/><stop offset="1" stop-color="currentColor" stop-opacity="0"/></linearGradient></defs>`
-    + `${grid}${area}<path class="line" d="${line}"/>`
-    + `<circle class="last-dot" cx="${last.x.toFixed(1)}" cy="${last.y.toFixed(1)}" r="3"/>`
-    + (points.length === 1 ? `<text class="empty" x="${w / 2}" y="${(last.y + 22).toFixed(1)}" text-anchor="middle">${esc(T.firstPoint)}</text>` : '')
-    + `<g class="cursor" hidden><line class="cursor-line" y1="0" y2="${h}"/><circle class="cursor-dot" r="4"/></g></svg>`;
+    + `<defs><linearGradient id="${id}g" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="currentColor" stop-opacity=".22"/><stop offset="1" stop-color="currentColor" stop-opacity="0"/></linearGradient></defs>`
+    + `${grid}${labels}${area}${single}<path class="line" d="${line}"/>`
+    + `<circle class="last-halo" cx="${last.x.toFixed(1)}" cy="${last.y.toFixed(1)}" r="8"/><circle class="last-dot" cx="${last.x.toFixed(1)}" cy="${last.y.toFixed(1)}" r="3.5"/>`
+    + `<g class="cursor" hidden><line class="cursor-line" y1="${padT}" y2="${floor}"/><circle class="cursor-dot" r="4"/></g></svg>`;
 }
 
 function sparkSvg(points) {
@@ -171,16 +182,51 @@ function quoteHtml(p, extra) {
   return `<span class="quote-price">${money(p.price)}</span>${extra}`;
 }
 
+// Charts are drawn at their on-screen width so axis text stays at its real size on every screen.
+function columnWidth(selector, columns, inset, gap = 16) {
+  const box = $(selector)?.clientWidth || 0;
+  const count = columns.find(([query]) => matchMedia(query).matches)?.[1] ?? columns.at(-1)[1];
+  return Math.max(220, Math.floor((box - gap * (count - 1)) / count) - inset);
+}
+const layout = {spot: 640, card: 300, detail: 580};
+function measureCharts() {
+  layout.spot = columnWidth('#spotlight', [['(max-width: 860px)', 1], ['all', 2]], innerWidth <= 640 ? 34 : 42);
+  layout.card = columnWidth('#cards', [['(max-width: 640px)', 1], ['(max-width: 1100px)', 2], ['all', 4]], 34);
+  const body = $('#drawer-body');
+  const inset = innerWidth <= 640 ? 32 : 44;
+  layout.detail = Math.max(240, (body?.clientWidth || Math.min(620, innerWidth)) - inset);
+}
+
+const rangeOf = points => {
+  const prices = points.map(x => x.price);
+  return prices.length ? [Math.min(...prices), Math.max(...prices)] : [null, null];
+};
+
+// The two parts most people buy first get large charts with axes.
+function spotHtml(p) {
+  const points = periodPoints(p.history, state.period);
+  const [low, high] = rangeOf(points);
+  const key = `spot:${p.id}`;
+  return `<article class="spot" data-product="${esc(p.id)}">
+    <div class="spot-kicker"><span class="tag ${p.category}">${esc(categoryTag(p.category))}</span><span class="spec">${esc(fullName(p))}</span></div>
+    <h2 class="spot-title"><button type="button" class="card-title" data-product="${esc(p.id)}">${esc(p.short)}</button></h2>
+    <div class="quote" data-readout="${key}">${quoteHtml(p, `<span class="quote-when">${esc(state.demo ? T.statusDemo : offerSource(bestOffer(p)))}</span>`)}</div>
+    <div class="spot-changes"><span>${esc(T.change24)} ${delta(p.change, true)}</span><span>${esc(T.change7)} ${delta(p.change7, true)}</span><span>${esc(T['p' + state.period])} ${delta(changeOver(points), true)}</span></div>
+    ${chartSvg(points, {key, w: layout.spot, h: 240, axes: true, label: p.short})}
+    <div class="spot-foot"><span>${esc(T.low)} <b>${money(low)}</b></span><span>${esc(T.high)} <b>${money(high)}</b></span><span class="src">${esc(T.daysObserved)} <b>${esc(fmt('daysN', {n: p.history.length}))}</b></span></div>
+  </article>`;
+}
+
 function cardHtml(p) {
   const points = periodPoints(p.history, state.period);
-  const prices = points.map(x => x.price);
+  const [low, high] = rangeOf(points);
   const key = `card:${p.id}`;
-  const sellers = state.demo ? T.statusDemo : offerSource(bestOffer(p));
   return `<article class="card" data-product="${esc(p.id)}">
-    <div class="card-head"><div class="card-id"><button type="button" class="card-title" data-product="${esc(p.id)}">${esc(p.short)}</button><p class="card-sub">${esc(fullName(p))}</p></div><span class="tag ${p.category}">${esc(categoryLabel(p.category))}</span></div>
-    <div class="quote" data-readout="${key}">${quoteHtml(p, `${delta(changeOver(points), true)}<span class="quote-when">${esc(T['p' + state.period])}</span>`)}</div>
-    ${chartSvg(points, {key, label: p.short})}
-    <div class="card-foot"><span>${esc(T.low)} <b>${money(prices.length ? Math.min(...prices) : null)}</b></span><span>${esc(T.high)} <b>${money(prices.length ? Math.max(...prices) : null)}</b></span>${sellers ? `<span class="sellers">${esc(sellers)}</span>` : ''}</div>
+    <div class="card-top"><button type="button" class="card-title card-name" data-product="${esc(p.id)}">${esc(p.short)}</button><span class="tag ${p.category}">${esc(categoryTag(p.category))}</span></div>
+    <p class="card-spec">${esc(fullName(p))}</p>
+    <div class="quote" data-readout="${key}">${quoteHtml(p, delta(changeOver(points), true))}</div>
+    ${chartSvg(points, {key, w: layout.card, h: 92, label: p.short})}
+    <div class="card-foot"><span>${esc(T.low)} <b>${money(low)}</b></span><span>${esc(T.high)} <b>${money(high)}</b></span></div>
   </article>`;
 }
 
@@ -225,9 +271,24 @@ function renderStatus() {
 }
 
 function renderCards() {
+  measureCharts();
   const featured = state.prices.products.filter(p => p.featured).sort((a, b) => a.featured - b.featured);
-  $('#cards').innerHTML = featured.map(cardHtml).join('');
+  const spot = ['ram', 'gpu'].map(c => featured.find(p => p.category === c)).filter(Boolean);
+  $('#spotlight').innerHTML = spot.map(spotHtml).join('');
+  $('#cards').innerHTML = featured.filter(p => !spot.includes(p)).map(cardHtml).join('');
   $$('#period button').forEach(b => b.setAttribute('aria-pressed', String(Number(b.dataset.period) === state.period)));
+}
+
+function renderTicker() {
+  const items = state.prices.products.filter(p => p.price != null);
+  $('#ticker-wrap').hidden = !items.length;
+  const html = items.map(p => `<span class="tick"><span class="tick-name">${esc(p.short)}</span><span class="tick-price">${money(p.price)}</span>${delta(p.change)}</span>`).join('');
+  // Two copies make the scroll loop seamless; the copy is hidden from screen readers.
+  $('#ticker').innerHTML = html + html.replaceAll('<span class="tick">', '<span class="tick" aria-hidden="true">');
+}
+
+function renderSide() {
+  $('#side-prices').innerHTML = state.prices.products.map(p => `<li><a href="${esc(base)}/${boot.lang}/"><span class="side-name">${esc(p.short)}</span><span class="side-price">${money(p.price)}</span>${delta(p.change)}</a></li>`).join('');
 }
 
 function renderTable() {
@@ -253,24 +314,32 @@ function renderTable() {
 function renderPrices() {
   charts.clear();
   renderStatus();
+  renderTicker();
   renderCards();
   renderTable();
+}
+
+async function fetchPrices() {
+  const response = await fetch(priceUrl(), {cache: 'no-cache', signal: AbortSignal.timeout(15000)});
+  if (!response.ok) throw new Error(String(response.status));
+  const data = await response.json();
+  if (!data.demo && data.market === 'US' && !data.products.some(p => p.price != null)) {
+    state.market = 'KR';  // no US source connected yet: show real Korean prices instead of an empty page
+    return fetchPrices();
+  }
+  return data;
 }
 
 let priceRequest = 0;
 async function loadPrices() {
   const id = ++priceRequest;
-  if (!state.prices) $('#cards').innerHTML = '<div class="card skeleton"></div>'.repeat(6);
+  if (!state.prices) {
+    $('#spotlight').innerHTML = '<div class="spot skeleton"></div>'.repeat(2);
+    $('#cards').innerHTML = '<div class="card skeleton"></div>'.repeat(4);
+  }
   try {
-    const response = await fetch(priceUrl(), {cache: 'no-cache', signal: AbortSignal.timeout(15000)});
-    if (!response.ok) throw new Error(String(response.status));
-    const data = await response.json();
+    const data = await fetchPrices();
     if (id !== priceRequest) return;
-    if (!data.demo && data.market === 'US' && !data.products.some(p => p.price != null)) {
-      state.market = 'KR';  // no US source connected yet: show real Korean prices instead of an empty page
-      loadPrices();
-      return;
-    }
     state.prices = data;
     $('#table-msg').hidden = true;
     renderPrices();
@@ -278,6 +347,7 @@ async function loadPrices() {
     if (id !== priceRequest) return;
     $('#price-status').dataset.state = 'error';
     $('#price-status-text').textContent = T.loadError;
+    $('#spotlight').innerHTML = '';
     $('#cards').innerHTML = '';
     $('#rows').innerHTML = '';
     $('#table-msg').hidden = false;
@@ -299,17 +369,18 @@ function offerHtml(o) {
 function renderDetail() {
   const p = state.prices?.products.find(x => x.id === state.selected);
   if (!p) return;
+  measureCharts();
   const points = periodPoints(p.history, state.detailPeriod);
   const prices = points.map(x => x.price);
   const key = `detail:${p.id}`;
   const checked = state.demo ? T.statusDemo : fmt('checkedAt', {time: when(p.observed_at)});
   $('#drawer-kicker').textContent = `${categoryLabel(p.category)} · ${state.prices.currency}`;
   $('#drawer-body').innerHTML = `
-    <div class="d-title"><div><h2 id="drawer-title">${esc(p.short)}</h2><p>${esc(fullName(p))}</p></div><span class="tag ${p.category}">${esc(categoryLabel(p.category))}</span></div>
+    <div class="d-title"><div><h2 id="drawer-title">${esc(p.short)}</h2><p>${esc(fullName(p))}</p></div><span class="tag ${p.category}">${esc(categoryTag(p.category))}</span></div>
     <div class="quote d-quote" data-readout="${key}">${quoteHtml(p, `<span class="quote-when">${esc(checked)}</span>`)}</div>
     <div class="d-changes"><span>${esc(T.change24)}${delta(p.change)}</span><span>${esc(T.change7)}${delta(p.change7)}</span><span>${esc(T['p' + state.detailPeriod])}${delta(changeOver(points))}</span></div>
     <div class="segmented" role="group" aria-label="${esc(T.period)}">${[7, 30, 90].map(n => `<button type="button" data-detail-period="${n}" aria-pressed="${state.detailPeriod === n}">${esc(T['p' + n])}</button>`).join('')}</div>
-    <div class="d-chart">${chartSvg(points, {key, w: 560, h: 220, label: p.short})}${points.length ? `<div class="axis"><span>${esc(when(points[0].at, false))}</span><span>${esc(when(points.at(-1).at, false))}</span></div>` : ''}</div>
+    <div class="d-chart">${chartSvg(points, {key, w: layout.detail, h: 240, axes: true, label: p.short})}</div>
     <dl class="d-stats">
       <div><dt>${esc(T.low)}</dt><dd>${money(prices.length ? Math.min(...prices) : null)}</dd></div>
       <div><dt>${esc(T.high)}</dt><dd>${money(prices.length ? Math.max(...prices) : null)}</dd></div>
@@ -321,11 +392,23 @@ function renderDetail() {
     <p class="d-note">${esc(p.category === 'gpu' ? T.gpuNote : T.ramNote)}</p>`;
 }
 
+let resizeTimer = 0;
+addEventListener('resize', () => {
+  clearTimeout(resizeTimer);
+  resizeTimer = setTimeout(() => {
+    if (state.page !== 'prices' || !state.prices) return;
+    charts.clear();
+    renderCards();
+    if ($('#drawer').open) renderDetail();
+  }, 150);
+});
+
 function openDetail(id) {
   state.selected = id;
   state.detailPeriod = 90;
-  renderDetail();
+  // Open first so the chart can be drawn at the drawer's real width.
   if (!$('#drawer').open) $('#drawer').showModal();
+  renderDetail();
 }
 
 /* News page */
@@ -354,9 +437,9 @@ function renderNews() {
   $('#news-list').innerHTML = [...groups].map(([key, list]) => {
     const date = new Date(list[0].published_at);
     const prefix = key === today ? `${T.today} · ` : key === yesterday ? `${T.yesterday} · ` : '';
-    return `<section class="news-day"><h2>${esc(prefix + dayLabel.format(date))}</h2><ol class="news-items">${list.map(n => {
+    return `<section class="news-day"><h3>${esc(prefix + dayLabel.format(date))}</h3><ol class="news-items">${list.map(n => {
       const href = safeHref(n.url);
-      return `<li class="news-item"><time class="news-time" datetime="${esc(n.published_at)}">${esc(timeLabel.format(new Date(n.published_at)))}</time><div>${href ? `<a class="news-title" href="${href}" target="_blank" rel="noopener noreferrer">${esc(n.title)}</a>` : `<span class="news-title">${esc(n.title)}</span>`}<div class="news-meta"><span class="tag ${n.category}">${esc(categoryLabel(n.category))}</span><span>${esc(n.publisher)}</span></div></div></li>`;
+      return `<li class="news-item"><time class="news-time" datetime="${esc(n.published_at)}">${esc(timeLabel.format(new Date(n.published_at)))}</time><div class="news-body">${href ? `<a class="news-title" href="${href}" target="_blank" rel="noopener noreferrer">${esc(n.title)}</a>` : `<span class="news-title">${esc(n.title)}</span>`}<div class="news-meta"><span class="tag ${n.category}">${esc(categoryTag(n.category))}</span><span>${esc(n.publisher)}</span></div></div></li>`;
     }).join('')}</ol></section>`;
   }).join('');
 }
@@ -419,6 +502,8 @@ $('#drawer').addEventListener('click', event => {
 
 if (state.page === 'news') {
   loadNews();
+  // The news page shows today's prices beside the headlines, and the ticker above them.
+  fetchPrices().then(data => { state.prices = data; renderTicker(); renderSide(); }).catch(() => {});
 } else if (state.page === 'prices') {
   loadPrices();
 }

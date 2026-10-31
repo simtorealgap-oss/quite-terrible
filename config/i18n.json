@@ -111,7 +111,16 @@
     "aboutClosing": "데이터센터와 싸우려는 건 아닙니다. 이길 수 없으니까요. 언제 사면 덜 아픈지 알고 싶을 뿐입니다.",
     "aboutDisclaimer": "이 사이트는 샘 올트먼, OpenAI와 아무 관련이 없습니다.",
     "readArticle": "기사 보기",
-    "srcEbay": "eBay"
+    "srcEbay": "eBay",
+    "updateSchedule": "매일 오전 9시 업데이트",
+    "tickerLabel": "전체 시세 요약",
+    "newsListTitle": "최신 기사",
+    "sideTitle": "오늘의 시세",
+    "seeAll": "전체 시세",
+    "trackingSince": "{date}부터 기록 중 · 매일 09:00 KST 갱신",
+    "spotlightLabel": "주요 부품",
+    "catRamShort": "메모리",
+    "catGpuShort": "GPU"
   },
   "en": {
     "brand": "Quite Terrible",
@@ -225,6 +234,15 @@
     "aboutClosing": "We’re not trying to beat the data centers. We can’t. We just want to know when buying hurts a little less.",
     "aboutDisclaimer": "Not affiliated with Sam Altman or OpenAI.",
     "readArticle": "Read the article",
-    "srcEbay": "eBay"
+    "srcEbay": "eBay",
+    "updateSchedule": "Updated daily · 09:00 KST",
+    "tickerLabel": "Price summary",
+    "newsListTitle": "Latest",
+    "sideTitle": "Today’s prices",
+    "seeAll": "All prices",
+    "trackingSince": "Tracking since {date} · updates daily 09:00 KST",
+    "spotlightLabel": "Key parts",
+    "catRamShort": "Memory",
+    "catGpuShort": "GPU"
   }
 }
