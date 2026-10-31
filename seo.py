@@ -58,7 +58,7 @@ def seo_context(lang, page, strings, products, base='', site='', product_id=None
 
     if page == 'prices':
         title = strings['seoPricesTitle']
-        lead = [p for p in priced if p['id'] in ('corsair-ddr5-32', 'samsung-ddr5-16', 'rtx-5080', 'rtx-5070', 'rtx-5090')]
+        lead = [p for p in priced if p['id'] in ('samsung-ddr5-32', 'samsung-ddr5-16', 'rtx-5080', 'rtx-5070', 'rtx-5090')]
         desc = (strings['seoPricesDesc'].format(prices=', '.join(f"{p['short']} {won(p['price'], lang)}" for p in lead))
                 if lead else strings['seoPricesDescEmpty'])
         graph.append({'@type': 'ItemList', 'name': strings['pricesHeading'], 'itemListElement': [
