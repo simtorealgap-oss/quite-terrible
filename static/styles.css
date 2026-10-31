@@ -223,7 +223,7 @@ th[aria-sort="descending"] .th-sort::after { content: " ↓"; }
 .table-msg button, .news-empty button { margin-left: 8px; padding: 4px 10px; border: 1px solid var(--line-2); border-radius: 7px; background: var(--panel-2); font-size: 13px; font-weight: 600; }
 
 /* News: list + today's prices sidebar */
-.news-layout { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 16px; align-items: start; }
+#page-news { max-width: 880px; margin-inline: auto; }
 .news-day h3 { margin: 0; padding: 10px 20px; border-bottom: 1px solid var(--line); background: var(--sunk); font-size: 12px; font-weight: 700; letter-spacing: .02em; color: var(--text-3); }
 .news-items { margin: 0; padding: 0; list-style: none; }
 .news-item { display: grid; grid-template-columns: 72px minmax(0, 1fr); gap: 16px; padding: 16px 20px; border-bottom: 1px solid var(--line); position: relative; cursor: pointer; }
@@ -358,7 +358,6 @@ th[aria-sort="descending"] .th-sort::after { content: " ↓"; }
 
 @media (max-width: 1100px) {
   .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .news-layout { grid-template-columns: minmax(0, 1fr) 300px; }
 }
 @media (max-width: 1000px) {
   .hide-md { display: none; }
@@ -369,7 +368,6 @@ th[aria-sort="descending"] .th-sort::after { content: " ↓"; }
 @media (max-width: 860px) {
   .spotlight { grid-template-columns: 1fr; }
   .product-layout { grid-template-columns: 1fr; }
-  .news-layout { grid-template-columns: 1fr; }
   .side { position: static; }
 }
 @media (max-width: 640px) {

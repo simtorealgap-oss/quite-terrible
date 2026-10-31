@@ -281,10 +281,6 @@ function renderCards() {
   $$('#period button').forEach(b => b.setAttribute('aria-pressed', String(Number(b.dataset.period) === state.period)));
 }
 
-function renderSide() {
-  $('#side-prices').innerHTML = state.prices.products.map(p => `<li><a href="${esc(base)}/${boot.lang}/"><span class="side-name">${esc(nameOf(p))}</span><span class="side-price">${money(p.price)}</span>${delta(p.change)}</a></li>`).join('');
-}
-
 function renderTable() {
   let list = state.prices.products.filter(p => state.category === 'all' || p.category === state.category);
   if (state.sort) {
@@ -565,8 +561,6 @@ if (state.page === 'product') {
   fetchPrices().then(data => { state.prices = data; renderDetail('#product-detail'); }).catch(() => {});
 } else if (state.page === 'news') {
   loadNews();
-  // The news page shows today's prices beside the headlines.
-  fetchPrices().then(data => { state.prices = data; renderSide(); }).catch(() => {});
 } else if (state.page === 'prices') {
   loadPrices();
 }
