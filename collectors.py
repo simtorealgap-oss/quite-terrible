@@ -1,8 +1,9 @@
-"""Daily price sources (Danawa; eBay, Best Buy and feeds when configured) and language-specific news headlines."""
+"""Daily price sources (Danawa; Coupang, eBay, Best Buy and feeds when configured) and language-specific news headlines."""
 import datetime as dt
 import base64
 import email.utils
 import hashlib
+import hmac
 import html
 import json
 import os
@@ -43,6 +44,17 @@ MIN_SHOPS = 3      # one- or two-shop listings are often stale or mispriced
 BESTBUY_API = 'https://api.bestbuy.com/v1/products'
 EBAY_TOKEN = 'https://api.ebay.com/identity/v1/oauth2/token'
 EBAY_SEARCH = 'https://api.ebay.com/buy/browse/v1/item_summary/search?'
+# Coupang Partners Open API, products/search, as documented at https://partners.coupang.com/#help/open-api
+# (checked 2026-11-01). The docs' Base URL is .../openapi/v1/; one example on the same page leaves out "v1",
+# the official deeplink sample keeps it. Search allows at most 50 calls a minute, and reaching a limit
+# locks the API for 24 hours. We make one call per product a day, a few seconds apart.
+COUPANG_API = 'https://api-gateway.coupang.com'
+COUPANG_SEARCH = '/v2/providers/affiliate_open_api/apis/openapi/v1/products/search'
+COUPANG_DELAY = 3
+COUPANG_COOLDOWN = 3600  # repeated manual runs within an hour leave the Coupang API alone
+COUPANG_HOSTS = ('coupang.com', 'coupangcdn.com')
+# Pre-built PCs and accessories carry a card's name in their titles too.
+COUPANG_GPU_JUNK = re.compile(r'컴퓨터|본체|게이밍\s*pc|미니\s*pc|지지대|브라켓|bracket|라이저|riser|케이블|cable', re.I)
 # Box-only, parts and accessory listings are where fake "deals" hide on eBay.
 EBAY_JUNK = re.compile(r'box only|empty box|for parts|not working|broken|read desc|bracket|backplate|shroud|'
                        r'cooler|heatsink|water ?block|replacement fan|cable|adapter|riser|repair', re.I)
@@ -153,6 +165,57 @@ def ebay_quotes(product, data, at=None, limit=10):
     return sorted(rows.values(), key=lambda r: r['price'])[:limit]
 
 
+def coupang_authorization(method, path, query, access_key, secret_key, at=None):
+    """Authorization header from the Partners API guide: HMAC-SHA256 (hex) of
+    signed-date (yyMMdd'T'HHmmss'Z', GMT) + method + path + query string (without "?")."""
+    signed = (at or now()).astimezone(UTC).strftime('%y%m%dT%H%M%SZ')
+    signature = hmac.new(secret_key.encode(), (signed + method + path + query).encode(), hashlib.sha256).hexdigest()
+    return f'CEA algorithm=HmacSHA256, access-key={access_key}, signed-date={signed}, signature={signature}'
+
+
+def coupang_search(product, access_key, secret_key):
+    query = urllib.parse.urlencode({'keyword': product['coupangSearch']['keyword'], 'limit': 10},
+                                   quote_via=urllib.parse.quote)
+    headers = {'Authorization': coupang_authorization('GET', COUPANG_SEARCH, query, access_key, secret_key),
+               'Content-Type': 'application/json;charset=UTF-8'}
+    return json.loads(fetch(f'{COUPANG_API}{COUPANG_SEARCH}?{query}', headers))
+
+
+def coupang_link(value):
+    """Links and images must point at Coupang's own domains."""
+    host = urllib.parse.urlsplit(value).hostname if safe_url(value) else None
+    return bool(host) and any(host == h or host.endswith('.' + h) for h in COUPANG_HOSTS)
+
+
+def coupang_quotes(product, data, at=None, limit=10):
+    """products/search response: {"rCode": "0", "data": {"productData": [{productId, productName,
+    productPrice, productImage, productUrl, isRocket, isFreeShipping, ...}]}}. Sold-out items are not returned."""
+    if not isinstance(data, dict) or str(data.get('rCode')) != '0' or not isinstance(data.get('data'), dict):
+        raise ValueError('Coupang API returned no results')
+    config, rule, rows = product['coupangSearch'], rule_for(product, 'coupangSearch'), {}
+    for item in data['data'].get('productData') or []:
+        title, url, image = clean_text(item.get('productName')), item.get('productUrl'), item.get('productImage')
+        try:
+            amount = round(float(item.get('productPrice')))
+        except (TypeError, ValueError, OverflowError):
+            continue
+        if amount < config.get('min', 1) or not item.get('productId') or not coupang_link(url) or not matches(rule, title):
+            continue
+        if product['category'] == 'gpu' and COUPANG_GPU_JUNK.search(title):
+            continue
+        rows[str(item['productId'])] = {'product_id': product['id'], 'market': 'KR', 'offer_key': str(item['productId']),
+            'price': amount, 'shipping': 0 if item.get('isFreeShipping') is True else None, 'stock': 'in_stock',
+            'merchant': 'Coupang', 'title': title[:200], 'url': url, 'affiliate_url': url,
+            'image': image if coupang_link(image) else None, 'rocket': item.get('isRocket') is True,
+            'source': 'coupang', 'observed_at': at or stamp()}
+    return sorted(rows.values(), key=lambda r: r['price'])[:limit]
+
+
+def coupang_due(db):
+    row = db.execute("SELECT attempted_at FROM runs WHERE job='prices:coupang'").fetchone()
+    return row is None or (now() - parse_time(row['attempted_at'])).total_seconds() >= COUPANG_COOLDOWN
+
+
 def error_name(exc):
     # Never log request URLs/headers: providers may put credentials in them.
     return f'HTTPError {exc.code}' if isinstance(exc, urllib.error.HTTPError) else type(exc).__name__
@@ -180,6 +243,12 @@ def update_prices(db, sleep=time.sleep):
     outcomes = [collect(db, 'danawa', PRODUCTS,
         lambda p: danawa_products(fetch(DANAWA_SEARCH + urllib.parse.urlencode({'query': p['danawa']['query']}))),
         lambda p, items, at: danawa_quotes(p, items, at), sleep, DANAWA_DELAY)]
+    # Coupang prices come only from the Partners API (final approval required); without keys nothing is called.
+    coupang_key, coupang_secret = os.getenv('COUPANG_ACCESS_KEY'), os.getenv('COUPANG_SECRET_KEY')
+    if coupang_key and coupang_secret and coupang_due(db):
+        outcomes.append(collect(db, 'coupang', [p for p in PRODUCTS if p.get('coupangSearch')],
+            lambda p: coupang_search(p, coupang_key, coupang_secret),
+            lambda p, data, at: coupang_quotes(p, data, at), sleep, COUPANG_DELAY))
     ebay_id, ebay_secret = os.getenv('EBAY_CLIENT_ID'), os.getenv('EBAY_CLIENT_SECRET')
     if ebay_id and ebay_secret:
         try:
@@ -221,6 +290,8 @@ def import_feed(db, data):
         raise ValueError('Expected an observations array')
     if len(data['observations']) > 10000:
         raise ValueError('Feed too large')
+    if any(isinstance(row, dict) and row.get('source') == 'coupang' for row in data['observations']):
+        raise ValueError('Coupang prices come only from the Coupang Partners API')
     return save_quotes(db, data['observations'])
 
 

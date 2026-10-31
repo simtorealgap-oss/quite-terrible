@@ -149,7 +149,11 @@
     "coupangShort": "쿠팡",
     "coupangCard": "쿠팡에서 보기 ↗",
     "colBuy": "구매",
-    "coupangHead": "쿠팡에서 바로 사기"
+    "coupangHead": "쿠팡에서 바로 사기",
+    "coupangPrice": "쿠팡 판매가",
+    "coupangRocket": "로켓배송",
+    "coupangChecked": "{time} 쿠팡 파트너스 API로 확인 · 가격은 바뀔 수 있습니다",
+    "coupangView": "쿠팡에서 보기 →"
   },
   "en": {
     "brand": "Quite Terrible",
@@ -301,6 +305,10 @@
     "coupangShort": "Coupang",
     "coupangCard": "View on Coupang ↗",
     "colBuy": "Buy",
-    "coupangHead": "Buy on Coupang"
+    "coupangHead": "Buy on Coupang",
+    "coupangPrice": "Coupang price",
+    "coupangRocket": "Rocket delivery",
+    "coupangChecked": "Checked {time} via the Coupang Partners API · prices can change",
+    "coupangView": "View on Coupang →"
   }
 }

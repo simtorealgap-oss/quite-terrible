@@ -11,7 +11,7 @@ import threading
 import urllib.parse
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
-from store import ROOT, PRODUCTS, STALE_SECONDS, session, product_view, demo_products, stamp, now, parse_time
+from store import ROOT, PRODUCTS, STALE_SECONDS, session, product_view, coupang_offer, demo_products, stamp, now, parse_time
 from collectors import update_prices, update_news, import_feed
 from seo import seo_context
 
@@ -112,7 +112,10 @@ def render_page(lang, page, market, base='', static=False, site='', product=None
 def prices_payload(market, demo=False):
     with session() as db:
         products = demo_products(market) if demo else [product_view(db, p, market) for p in PRODUCTS]
-        runs = [dict(r) for r in db.execute("SELECT * FROM runs WHERE job LIKE 'prices:%'")]
+        for item, p in zip(products, PRODUCTS):
+            # Coupang's own price from its Partners API, shown beside (never inside) the price comparison.
+            item['coupangOffer'] = coupang_offer(db, p) if market == 'KR' and not demo else None
+        runs = [dict(r) for r in db.execute("SELECT * FROM runs WHERE job LIKE 'prices:%' AND job!='prices:coupang'")]
     return {'market': market, 'currency': 'KRW' if market == 'KR' else 'USD', 'demo': demo,
             'generated_at': stamp(), 'products': products, 'runs': runs}
 
@@ -134,7 +137,7 @@ class Handler(BaseHTTPRequestHandler):
         self.send_header('Cache-Control', 'no-store')
         self.send_header('X-Content-Type-Options', 'nosniff')
         self.send_header('Referrer-Policy', 'strict-origin-when-cross-origin')
-        self.send_header('Content-Security-Policy', "default-src 'self'; style-src 'self' https://cdn.jsdelivr.net; font-src https://cdn.jsdelivr.net; script-src 'self'; img-src 'self' data: https://thumb.wikimedia.org https://upload.wikimedia.org; connect-src 'self'; frame-src https://coupa.ng https://*.coupang.com https://*.coupangcdn.com; base-uri 'none'; frame-ancestors 'none'")
+        self.send_header('Content-Security-Policy', "default-src 'self'; style-src 'self' https://cdn.jsdelivr.net; font-src https://cdn.jsdelivr.net; script-src 'self'; img-src 'self' data: https://thumb.wikimedia.org https://upload.wikimedia.org https://*.coupang.com https://*.coupangcdn.com; connect-src 'self'; frame-src https://coupa.ng https://*.coupang.com https://*.coupangcdn.com; base-uri 'none'; frame-ancestors 'none'")
         for key, value in (headers or {}).items():
             self.send_header(key, value)
         self.end_headers()

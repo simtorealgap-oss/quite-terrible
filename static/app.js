@@ -399,11 +399,29 @@ addEventListener('resize', () => {
   }, 150);
 });
 
-// Coupang Partners links. No price is shown: we do not have Coupang's price.
+// Coupang Partners. A Coupang price is shown only when it came from the Partners API (p.coupangOffer);
+// otherwise the box is a plain link with Coupang's image banner and no price.
 const coupangHref = p => state.market === 'KR' && !state.demo ? safeHref(p.coupang) : null;
+function coupangOfferHtml(o) {
+  const href = safeHref(o.url), image = safeHref(o.image);
+  if (!href || !Number.isFinite(o.price) || o.price <= 0) return '';
+  return `<section class="coupang-box">
+    ${image ? `<img class="coupang-img" src="${image}" width="120" height="120" alt="" loading="lazy">` : ''}
+    <div class="coupang-copy">
+      <h3>${esc(T.coupangHead)}</h3>
+      <p class="coupang-name">${esc(o.name)}</p>
+      <p class="coupang-price"><span>${esc(T.coupangPrice)}</span><b>${money(o.price)}</b>${o.rocket ? `<span class="tag rocket">${esc(T.coupangRocket)}</span>` : ''}</p>
+      <p class="coupang-when">${esc(fmt('coupangChecked', {time: when(o.observed_at)}))}</p>
+      <a class="coupang-btn" href="${href}" target="_blank" rel="sponsored noopener noreferrer">${esc(T.coupangView)}</a>
+      <p class="coupang-note">${esc(T.coupangDisclosure)}</p>
+    </div>
+  </section>`;
+}
 function coupangHtml(p) {
   const href = coupangHref(p);
   if (!href) return '';
+  const offer = p.coupangOffer ? coupangOfferHtml(p.coupangOffer) : '';
+  if (offer) return offer;
   const banner = safeHref(p.coupangBanner);
   return `<section class="coupang-box">
     ${banner ? `<iframe class="coupang-frame" src="${banner}" width="120" height="240" frameborder="0" scrolling="no" referrerpolicy="unsafe-url" loading="lazy" title="${esc(T.coupangHead)}"></iframe>` : ''}

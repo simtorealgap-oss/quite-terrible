@@ -129,8 +129,18 @@ def product_static(p, lang, strings):
         f'<td class="num"><span class="price">{html.escape(won(o.get("amount"), lang))}</span></td>'
         f'<td class="num"><a class="buy secondary" href="{html.escape(o["url"])}" rel="noopener noreferrer" target="_blank">{html.escape(strings["visitSeller"])}</a></td></tr>'
         for o in p.get('offers', [])[:3] if o.get('url'))
-    coupang = ''
-    if p.get('coupang'):
+    coupang, offer = '', p.get('coupangOffer')
+    if p.get('coupang') and offer:  # a Coupang price only ever comes from the Partners API
+        image = (f'<img class="coupang-img" src="{html.escape(offer["image"])}" width="120" height="120" alt="" loading="lazy">'
+                 if offer.get('image') else '')
+        rocket = f'<span class="tag rocket">{html.escape(strings["coupangRocket"])}</span>' if offer.get('rocket') else ''
+        checked = strings['coupangChecked'].format(time=when_text(offer['observed_at'], lang))
+        coupang = (f'<section class="coupang-box">{image}<div class="coupang-copy"><h3>{html.escape(strings["coupangHead"])}</h3>'
+                   f'<p class="coupang-name">{html.escape(offer["name"])}</p><p class="coupang-price"><span>{html.escape(strings["coupangPrice"])}</span>'
+                   f'<b>{html.escape(won(offer["price"], lang))}</b>{rocket}</p><p class="coupang-when">{html.escape(checked)}</p>'
+                   f'<a class="coupang-btn" href="{html.escape(offer["url"])}" target="_blank" rel="sponsored noopener noreferrer">'
+                   f'{html.escape(strings["coupangView"])}</a><p class="coupang-note">{html.escape(strings["coupangDisclosure"])}</p></div></section>')
+    elif p.get('coupang'):
         frame = (f'<iframe class="coupang-frame" src="{html.escape(p["coupangBanner"])}" width="120" height="240" frameborder="0" '
                  f'scrolling="no" referrerpolicy="unsafe-url" loading="lazy" title="{html.escape(strings["coupangHead"])}"></iframe>') if p.get('coupangBanner') else ''
         coupang = (f'<section class="coupang-box">{frame}<div class="coupang-copy"><h3>{html.escape(strings["coupangHead"])}</h3>'

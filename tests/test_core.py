@@ -4,9 +4,13 @@ import tempfile
 import unittest
 from pathlib import Path
 from unittest.mock import patch
-from store import connect, save_quotes, product_view, PRODUCTS, stamp, now, demo_products
-from collectors import danawa_products, danawa_quotes, bestbuy_quotes, ebay_quotes, matches, parse_news, update_news, update_prices, import_feed
-from server import preferred_lang, default_market, render_page, prices_due
+from store import connect, save_quotes, product_view, coupang_offer, PRODUCTS, stamp, now, demo_products
+from collectors import (danawa_products, danawa_quotes, bestbuy_quotes, ebay_quotes, coupang_quotes, coupang_authorization,
+    matches, parse_news, update_news, update_prices, import_feed, COUPANG_SEARCH)
+from server import preferred_lang, default_market, render_page, prices_due, prices_payload
+from seo import product_static
+
+NO_COUPANG={'COUPANG_ACCESS_KEY':'','COUPANG_SECRET_KEY':''}
 
 
 class Prices(unittest.TestCase):
@@ -168,7 +172,7 @@ class SevenDay(unittest.TestCase):
         waits=[]
         with tempfile.TemporaryDirectory() as directory:
             with connect(Path(directory)/'test.db') as db:
-                with patch('collectors.fetch',side_effect=fake_fetch), patch.dict('os.environ',{},clear=False):
+                with patch('collectors.fetch',side_effect=fake_fetch), patch.dict('os.environ',NO_COUPANG):
                     import os; os.environ.pop('BESTBUY_API_KEY',None); os.environ.pop('PRICE_FEED_URL',None)
                     result=update_prices(db,sleep=waits.append)
                 self.assertEqual(len(calls),len(PRODUCTS))
@@ -204,7 +208,7 @@ class SevenDay(unittest.TestCase):
             return page
         with tempfile.TemporaryDirectory() as directory:
             with connect(Path(directory)/'test.db') as db:
-                env={'EBAY_CLIENT_ID':'id','EBAY_CLIENT_SECRET':'secret','BESTBUY_API_KEY':'','PRICE_FEED_URL':''}
+                env={'EBAY_CLIENT_ID':'id','EBAY_CLIENT_SECRET':'secret','BESTBUY_API_KEY':'','PRICE_FEED_URL':''}|NO_COUPANG
                 with patch('collectors.fetch',side_effect=fake_fetch), patch.dict('os.environ',env):
                     update_prices(db,sleep=lambda s:None)
         token=[c for c in calls if 'oauth2/token' in c[0]]
@@ -227,6 +231,152 @@ class SevenDay(unittest.TestCase):
                 db.execute("update runs set attempted_at='2026-11-01T00:30:00+00:00',state='error'")
                 self.assertFalse(prices_due(db,dt.datetime(2026,11,1,9,45,tzinfo=kst),9))
                 self.assertTrue(prices_due(db,dt.datetime(2026,11,1,10,31,tzinfo=kst),9))
+
+
+def danawa_page(price=2539000,code='9'):
+    flight=json.dumps('1:{"products":[{"productSeq":"%s","productName":"GIGABYTE 지포스 RTX 5080 D7 16GB","bundleName":"","minPrice":%d,"shopCount":30,"categorySeq3":972,"priceCompareStatusType":"가격비교"}]}'%(code,price))[1:-1]
+    return f'<script>self.__next_f.push([1,"{flight}"])</script>'.encode()
+
+
+def coupang_item(i,name,price,rocket=False,free=False,url=None,image=None):
+    return {'keyword':'x','rank':i,'isRocket':rocket,'isFreeShipping':free,'productId':1000+i,'productName':name,'productPrice':price,
+            'productImage':image or f'https://ads-partners.coupang.com/image1/{i}','productUrl':url or f'https://link.coupang.com/re/AFFSDP?itemId={i}'}
+
+
+class Coupang(unittest.TestCase):
+    def setUp(self):
+        self.tmp=tempfile.TemporaryDirectory()
+        self.db=connect(Path(self.tmp.name)/'test.sqlite3')
+        self.at=now().replace(microsecond=0)
+        self.gpu=next(p for p in PRODUCTS if p['id']=='rtx-5080')
+
+    def tearDown(self):
+        self.db.close()
+        self.tmp.cleanup()
+
+    def row(self,price,key='c1',at=None,**kwargs):
+        return {'product_id':'rtx-5080','market':'KR','offer_key':key,'price':price,'shipping':None,'stock':'in_stock',
+                'merchant':'Coupang','title':'ASUS PRIME 지포스 RTX 5080 O16G','url':'https://link.coupang.com/re/AFFSDP?itemId=1',
+                'affiliate_url':'https://link.coupang.com/re/AFFSDP?itemId=1','image':'https://ads-partners.coupang.com/image1/a',
+                'rocket':True,'source':'coupang','observed_at':stamp(at or self.at),**kwargs}
+
+    def test_signature_follows_partners_api_guide(self):
+        kst=dt.timezone(dt.timedelta(hours=9))
+        header=coupang_authorization('GET',COUPANG_SEARCH,'keyword=RTX%205080&limit=10','test-access','test-secret',
+                                     dt.datetime(2026,11,1,9,5,9,tzinfo=kst))
+        # HMAC-SHA256 of "261101T000509Z" + "GET" + path + query, checked with openssl.
+        self.assertEqual(header,'CEA algorithm=HmacSHA256, access-key=test-access, signed-date=261101T000509Z, '
+                                'signature=11bf2d3ded360b5f9a5a23f60365524f90d2804518c8144592709f2f8aeb7e88')
+        self.assertEqual(COUPANG_SEARCH,'/v2/providers/affiliate_open_api/apis/openapi/v1/products/search')
+
+    def test_parsing_keeps_matching_coupang_listings_only(self):
+        data={'rCode':'0','rMessage':'','data':{'landingUrl':'https://link.coupang.com/re/AFFSRP','productData':[
+            coupang_item(1,'ASUS PRIME 지포스 RTX 5080 O16G OC D7 16GB',2885140,rocket=True),
+            coupang_item(2,'MSI 지포스 RTX 5080 벤투스 3X OC D7 16GB',2790000.0,free=True,image='https://evil.example/a.png'),
+            coupang_item(3,'RTX 5080 16GB 그래픽카드 지지대',15000),
+            coupang_item(4,'게이밍 컴퓨터 i7 RTX 5080 16GB 본체',3500000),
+            coupang_item(5,'MSI 지포스 RTX 5080 16GB 중고',2000000),
+            coupang_item(6,'GIGABYTE 지포스 RTX 5070 Ti 16GB',1900000),
+            coupang_item(7,'PNY 지포스 RTX 5080 16GB',2100000,url='https://evil.example/item'),
+            coupang_item(8,'ZOTAC 지포스 RTX 5080 16GB','n/a'),
+            coupang_item(9,'ZOTAC 지포스 RTX 5080 16GB',None)]}}
+        rows=coupang_quotes(self.gpu,data,stamp(self.at))
+        self.assertEqual([(r['offer_key'],r['price'],r['rocket'],r['shipping']) for r in rows],[('1002',2790000,False,0),('1001',2885140,True,None)])
+        self.assertIsNone(rows[0]['image'])
+        self.assertEqual(rows[1]['image'],'https://ads-partners.coupang.com/image1/1')
+        self.assertTrue(all(r['source']=='coupang' and r['url']==r['affiliate_url'] for r in rows))
+        self.assertEqual(save_quotes(self.db,rows),2)
+        with self.assertRaises(ValueError):coupang_quotes(self.gpu,{'rCode':'400','rMessage':'bad'})
+        ram=next(p for p in PRODUCTS if p['id']=='samsung-ddr5-16')
+        data={'rCode':'0','data':{'productData':[coupang_item(1,'삼성전자 DDR5 PC5-44800 16GB 데스크탑 메모리',89000),
+            coupang_item(2,'삼성전자 DDR5-5600 16GB x 2개',170000),coupang_item(3,'삼성전자 노트북 DDR5-5600 16GB',85000)]}}
+        self.assertEqual([r['offer_key'] for r in coupang_quotes(ram,data)],['1001'])
+
+    def test_no_keys_means_no_coupang_requests(self):
+        calls=[]
+        def fake_fetch(url,headers=None,data=None):
+            calls.append(url)
+            return danawa_page()
+        for env in ({'COUPANG_ACCESS_KEY':'','COUPANG_SECRET_KEY':''},{'COUPANG_ACCESS_KEY':'key','COUPANG_SECRET_KEY':''}):
+            with patch('collectors.fetch',side_effect=fake_fetch), patch.dict('os.environ',env|{'BESTBUY_API_KEY':'','PRICE_FEED_URL':'','EBAY_CLIENT_ID':''}):
+                result=update_prices(self.db,sleep=lambda s:None)
+            self.assertNotIn('coupang',[r['source'] for r in result])
+        self.assertFalse([u for u in calls if 'coupang' in u])
+        self.assertIsNone(self.db.execute("select 1 from runs where job='prices:coupang'").fetchone())
+
+    def test_signed_search_for_each_product_then_cooldown(self):
+        calls,waits=[],[]
+        listing={'rCode':'0','rMessage':'','data':{'productData':[coupang_item(1,'ASUS PRIME 지포스 RTX 5080 O16G OC D7 16GB',2885140,rocket=True)]}}
+        def fake_fetch(url,headers=None,data=None):
+            calls.append((url,headers))
+            return json.dumps(listing).encode() if url.startswith('https://api-gateway.coupang.com/') else danawa_page()
+        env={'COUPANG_ACCESS_KEY':'ak','COUPANG_SECRET_KEY':'sk','BESTBUY_API_KEY':'','PRICE_FEED_URL':'','EBAY_CLIENT_ID':''}
+        with patch('collectors.fetch',side_effect=fake_fetch), patch.dict('os.environ',env):
+            result=update_prices(self.db,sleep=waits.append)
+            update_prices(self.db,sleep=waits.append)  # within the hour: Danawa again, Coupang left alone
+        searches=[c for c in calls if 'api-gateway.coupang.com' in c[0]]
+        searchable=[p for p in PRODUCTS if p.get('coupangSearch')]
+        self.assertEqual(len(searches),len(searchable))
+        self.assertEqual(waits.count(3),len(searchable)-1)
+        import hmac,hashlib,urllib.parse
+        for url,headers in searches:
+            parts=urllib.parse.urlsplit(url)
+            self.assertEqual(parts.path,COUPANG_SEARCH)
+            self.assertIn('limit=10',parts.query)
+            signed=headers['Authorization'].split('signed-date=')[1].split(',')[0]
+            expected=hmac.new(b'sk',(signed+'GET'+parts.path+parts.query).encode(),hashlib.sha256).hexdigest()
+            self.assertTrue(headers['Authorization'].startswith('CEA algorithm=HmacSHA256, access-key=ak, '))
+            self.assertTrue(headers['Authorization'].endswith(f'signature={expected}'))
+        self.assertIn('keyword=%EC%A7%80%ED%8F%AC%EC%8A%A4%20RTX%205080%2016GB',next(u for u,_ in searches if '5080' in urllib.parse.unquote(u)))
+        coupang=next(r for r in result if r['source']=='coupang')
+        self.assertEqual(coupang['matched']['rtx-5080'],1)
+        self.assertEqual(self.db.execute("select state from runs where job='prices:coupang'").fetchone()[0],'ok')
+        self.assertEqual(coupang_offer(self.db,self.gpu)['price'],2885140)
+        self.assertEqual(product_view(self.db,self.gpu,'KR')['price'],2539000)
+
+    def test_danawa_price_history_and_stats_ignore_coupang(self):
+        danawa={'product_id':'rtx-5080','market':'KR','offer_key':'9','price':2539000,'shipping':None,'stock':'in_stock',
+                'merchant':'GIGABYTE','title':'GIGABYTE RTX 5080','url':'https://prod.danawa.com/info/?pcode=9','source':'danawa','shops':30}
+        save_quotes(self.db,[danawa|{'observed_at':stamp(self.at-dt.timedelta(days=1))},danawa|{'observed_at':stamp(self.at)}])
+        before=product_view(self.db,self.gpu,'KR',self.at)
+        save_quotes(self.db,[self.row(1990000,'old',self.at-dt.timedelta(days=1)),self.row(2885140,'c1'),
+                             self.row(2700000,'c2',rocket=False),self.row(None,'c3',stock='out_of_stock')])
+        after=product_view(self.db,self.gpu,'KR',self.at)
+        for key in ('price','change','change7','history','low30','high30','merchant_count','observed_at','offers'):
+            self.assertEqual(after[key],before[key],key)
+        self.assertTrue(all(o['source']=='danawa' for o in after['offers']))
+        offer=coupang_offer(self.db,self.gpu,self.at)
+        # Latest check only: yesterday's cheaper listing may be sold out now.
+        self.assertEqual((offer['price'],offer['rocket'],offer['name']),(2700000,False,'ASUS PRIME 지포스 RTX 5080 O16G'))
+        self.assertIsNone(coupang_offer(self.db,self.gpu,self.at+dt.timedelta(hours=37)))
+        self.assertIsNone(coupang_offer(self.db,PRODUCTS[0],self.at))
+
+    def test_payload_exposes_coupang_offer_for_live_korean_prices_only(self):
+        save_quotes(self.db,[self.row(2885140)])
+        record=__import__('store').record_run
+        record(self.db,'prices:coupang','error','HTTPError 429')
+        with patch.dict('os.environ',{'RAMPRICE_DB':str(Path(self.tmp.name)/'test.sqlite3')}):
+            kr,us,demo=prices_payload('KR'),prices_payload('US'),prices_payload('KR',demo=True)
+        item=next(p for p in kr['products'] if p['id']=='rtx-5080')
+        self.assertEqual((item['coupangOffer']['price'],item['coupangOffer']['url']),(2885140,'https://link.coupang.com/re/AFFSDP?itemId=1'))
+        self.assertIsNone(item['price'])  # no Danawa price: the Coupang price is not the site's price
+        self.assertTrue(all(p['coupangOffer'] is None for p in us['products']+demo['products']))
+        self.assertNotIn('prices:coupang',[r['job'] for r in kr['runs']])
+
+    def test_feed_cannot_supply_coupang_prices(self):
+        with self.assertRaises(ValueError):import_feed(self.db,{'observations':[self.row(1000000)]})
+        self.assertIsNone(coupang_offer(self.db,self.gpu))
+
+    def test_product_page_shows_api_price_or_plain_link(self):
+        strings=json.loads((Path(__file__).resolve().parents[1]/'config/i18n.json').read_text())['ko']
+        offer={'name':'ASUS PRIME 지포스 RTX 5080 O16G','price':2885140,'url':'https://link.coupang.com/re/AFFSDP?itemId=1',
+               'image':'https://ads-partners.coupang.com/image1/a','rocket':True,'free_shipping':False,'observed_at':'2026-11-01T00:05:00+00:00'}
+        text=product_static(self.gpu|{'coupangOffer':offer},'ko',strings)
+        for part in ('2,885,140원','로켓배송','11월 1일 9시 쿠팡 파트너스 API로 확인','href="https://link.coupang.com/re/AFFSDP?itemId=1"',strings['coupangDisclosure']):
+            self.assertIn(part,text)
+        plain=product_static(self.gpu|{'coupangOffer':None},'ko',strings)
+        self.assertNotIn('원',plain.split('coupang-note')[0].replace(strings['coupangDisclosure'],''))
+        self.assertIn(self.gpu['coupang'],plain)
 
 
 class Locale(unittest.TestCase):
