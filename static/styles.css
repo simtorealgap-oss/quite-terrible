@@ -71,15 +71,6 @@ a { color: inherit; }
 .tab:hover { color: var(--text); }
 .tab[aria-current="page"] { color: var(--text); border-bottom-color: var(--brand); }
 
-/* Ticker tape */
-.ticker { overflow: hidden; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); background: var(--sunk); }
-.ticker-track { display: flex; width: max-content; animation: ticker 60s linear infinite; }
-.ticker:hover .ticker-track { animation-play-state: paused; }
-.tick { display: inline-flex; align-items: baseline; gap: 8px; padding: 9px 22px; border-right: 1px solid var(--line); font-size: 13px; white-space: nowrap; }
-.tick-name { font-weight: 600; color: var(--text-2); }
-.tick-price { font-weight: 700; font-variant-numeric: tabular-nums; }
-@keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-
 /* Hero: the reason this site exists, over a RAM stick made of particles */
 .hero { position: relative; overflow: hidden; isolation: isolate; display: flex; flex-direction: column; justify-content: flex-end; height: clamp(420px, 58vh, 540px); background: var(--hero-bg); touch-action: pan-y; }
 .hero-canvas { position: absolute; inset: 0; z-index: 0; width: 100%; height: 100%; display: block; }
@@ -371,7 +362,5 @@ th[aria-sort="descending"] .th-sort::after { content: " ↓"; }
 }
 @media (prefers-reduced-motion: reduce) {
   .hero-hint::before { animation: none; }
-  .ticker { overflow-x: auto; }
-  .ticker-track { animation: none; }
   .spot, .card { transition: none; }
 }

@@ -280,14 +280,6 @@ function renderCards() {
   $$('#period button').forEach(b => b.setAttribute('aria-pressed', String(Number(b.dataset.period) === state.period)));
 }
 
-function renderTicker() {
-  const items = state.prices.products.filter(p => p.price != null);
-  $('#ticker-wrap').hidden = !items.length;
-  const html = items.map(p => `<span class="tick"><span class="tick-name">${esc(p.short)}</span><span class="tick-price">${money(p.price)}</span>${delta(p.change)}</span>`).join('');
-  // Two copies make the scroll loop seamless; the copy is hidden from screen readers.
-  $('#ticker').innerHTML = html + html.replaceAll('<span class="tick">', '<span class="tick" aria-hidden="true">');
-}
-
 function renderSide() {
   $('#side-prices').innerHTML = state.prices.products.map(p => `<li><a href="${esc(base)}/${boot.lang}/"><span class="side-name">${esc(p.short)}</span><span class="side-price">${money(p.price)}</span>${delta(p.change)}</a></li>`).join('');
 }
@@ -315,7 +307,6 @@ function renderTable() {
 function renderPrices() {
   charts.clear();
   renderStatus();
-  renderTicker();
   renderCards();
   renderTable();
 }
@@ -511,11 +502,11 @@ $('#drawer').addEventListener('click', event => {
 if (state.page === 'product') {
   state.selected = boot.product;
   state.detailPeriod = 90;
-  fetchPrices().then(data => { state.prices = data; renderTicker(); renderDetail('#product-detail'); }).catch(() => {});
+  fetchPrices().then(data => { state.prices = data; renderDetail('#product-detail'); }).catch(() => {});
 } else if (state.page === 'news') {
   loadNews();
-  // The news page shows today's prices beside the headlines, and the ticker above them.
-  fetchPrices().then(data => { state.prices = data; renderTicker(); renderSide(); }).catch(() => {});
+  // The news page shows today's prices beside the headlines.
+  fetchPrices().then(data => { state.prices = data; renderSide(); }).catch(() => {});
 } else if (state.page === 'prices') {
   loadPrices();
 }
