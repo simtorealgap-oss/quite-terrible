@@ -57,6 +57,7 @@ const changeOver = points => points.length > 1 ? (points.at(-1).price / points[0
 const categoryLabel = category => category === 'ram' ? T.catRam : T.catGpu;
 const categoryTag = category => category === 'ram' ? T.catRamShort : T.catGpuShort;
 const fullName = p => `${p.brand} ${p.name} · ${p.spec}`;
+const productHref = p => `${esc(boot.base || '')}/${boot.lang}/${esc(p.id)}/`;
 const sourceName = source => ({danawa: T.srcDanawa, bestbuy: T.srcBestbuy, ebay: T.srcEbay}[source] || T.srcFeed);
 const bestOffer = p => (p.offers || []).find(o => !o.stale && o.stock !== 'out_of_stock' && o.price);
 const offerSource = o => o ? `${sourceName(o.source)}${o.shops ? ` · ${fmt('sellersN', {n: o.shops})}` : ''}` : '';
@@ -209,7 +210,7 @@ function spotHtml(p) {
   const key = `spot:${p.id}`;
   return `<article class="spot" data-product="${esc(p.id)}">
     <div class="spot-kicker"><span class="tag ${p.category}">${esc(categoryTag(p.category))}</span><span class="spec">${esc(fullName(p))}</span></div>
-    <h2 class="spot-title"><button type="button" class="card-title" data-product="${esc(p.id)}">${esc(p.short)}</button></h2>
+    <h2 class="spot-title"><a class="card-title" href="${productHref(p)}" data-product="${esc(p.id)}">${esc(p.short)}</a></h2>
     <div class="quote" data-readout="${key}">${quoteHtml(p, `<span class="quote-when">${esc(state.demo ? T.statusDemo : offerSource(bestOffer(p)))}</span>`)}</div>
     <div class="spot-changes"><span>${esc(T.change24)} ${delta(p.change, true)}</span><span>${esc(T.change7)} ${delta(p.change7, true)}</span><span>${esc(T['p' + state.period])} ${delta(changeOver(points), true)}</span></div>
     ${chartSvg(points, {key, w: layout.spot, h: 240, axes: true, label: p.short})}
@@ -222,7 +223,7 @@ function cardHtml(p) {
   const [low, high] = rangeOf(points);
   const key = `card:${p.id}`;
   return `<article class="card" data-product="${esc(p.id)}">
-    <div class="card-top"><button type="button" class="card-title card-name" data-product="${esc(p.id)}">${esc(p.short)}</button><span class="tag ${p.category}">${esc(categoryTag(p.category))}</span></div>
+    <div class="card-top"><a class="card-title card-name" href="${productHref(p)}" data-product="${esc(p.id)}">${esc(p.short)}</a><span class="tag ${p.category}">${esc(categoryTag(p.category))}</span></div>
     <p class="card-spec">${esc(fullName(p))}</p>
     <div class="quote" data-readout="${key}">${quoteHtml(p, delta(changeOver(points), true))}</div>
     ${chartSvg(points, {key, w: layout.card, h: 92, label: p.short})}
@@ -239,7 +240,7 @@ function rangeHtml(p) {
 function rowHtml(p) {
   const price = p.price == null ? `<span class="muted">${esc(p.observed_at ? T.stale : T.awaiting)}</span>` : `<span class="price">${money(p.price)}</span>`;
   return `<tr class="row" data-product="${esc(p.id)}">
-    <td><div class="prod"><span class="prod-icon ${p.category}">${icons[p.category]}</span><div><button type="button" class="prod-name" data-product="${esc(p.id)}">${esc(p.short)}</button><span class="prod-spec">${esc(fullName(p))}</span></div></div></td>
+    <td><div class="prod"><span class="prod-icon ${p.category}">${icons[p.category]}</span><div><a class="prod-name" href="${productHref(p)}" data-product="${esc(p.id)}">${esc(p.short)}</a><span class="prod-spec">${esc(fullName(p))}</span></div></div></td>
     <td class="num">${price}</td>
     <td class="num">${delta(p.change)}</td>
     <td class="num hide-sm">${delta(p.change7)}</td>
@@ -366,17 +367,18 @@ function offerHtml(o) {
   </tr>`;
 }
 
-function renderDetail() {
+function renderDetail(target = '#drawer-body') {
   const p = state.prices?.products.find(x => x.id === state.selected);
   if (!p) return;
   measureCharts();
+  if (target !== '#drawer-body') layout.detail = Math.max(240, $(target).clientWidth - (innerWidth <= 640 ? 32 : 44));
   const points = periodPoints(p.history, state.detailPeriod);
   const prices = points.map(x => x.price);
   const key = `detail:${p.id}`;
   const checked = state.demo ? T.statusDemo : fmt('checkedAt', {time: when(p.observed_at)});
-  $('#drawer-kicker').textContent = `${categoryLabel(p.category)} · ${state.prices.currency}`;
-  $('#drawer-body').innerHTML = `
-    <div class="d-title"><div><h2 id="drawer-title">${esc(p.short)}</h2><p>${esc(fullName(p))}</p></div><span class="tag ${p.category}">${esc(categoryTag(p.category))}</span></div>
+  if (target === '#drawer-body') $('#drawer-kicker').textContent = `${categoryLabel(p.category)} · ${state.prices.currency}`;
+  $(target).innerHTML = `
+    <div class="d-title"><div><h2 ${target === '#drawer-body' ? 'id="drawer-title"' : ''}>${esc(p.short)}</h2><p>${esc(fullName(p))}</p></div><span class="tag ${p.category}">${esc(categoryTag(p.category))}</span></div>
     <div class="quote d-quote" data-readout="${key}">${quoteHtml(p, `<span class="quote-when">${esc(checked)}</span>`)}</div>
     <div class="d-changes"><span>${esc(T.change24)}${delta(p.change)}</span><span>${esc(T.change7)}${delta(p.change7)}</span><span>${esc(T['p' + state.detailPeriod])}${delta(changeOver(points))}</span></div>
     <div class="segmented" role="group" aria-label="${esc(T.period)}">${[7, 30, 90].map(n => `<button type="button" data-detail-period="${n}" aria-pressed="${state.detailPeriod === n}">${esc(T['p' + n])}</button>`).join('')}</div>
@@ -396,8 +398,10 @@ let resizeTimer = 0;
 addEventListener('resize', () => {
   clearTimeout(resizeTimer);
   resizeTimer = setTimeout(() => {
-    if (state.page !== 'prices' || !state.prices) return;
+    if (!state.prices) return;
     charts.clear();
+    if (state.page === 'product') { renderDetail('#product-detail'); return; }
+    if (state.page !== 'prices') return;
     renderCards();
     if ($('#drawer').open) renderDetail();
   }, 150);
@@ -439,7 +443,7 @@ function renderNews() {
     const prefix = key === today ? `${T.today} · ` : key === yesterday ? `${T.yesterday} · ` : '';
     return `<section class="news-day"><h3>${esc(prefix + dayLabel.format(date))}</h3><ol class="news-items">${list.map(n => {
       const href = safeHref(n.url);
-      return `<li class="news-item"><time class="news-time" datetime="${esc(n.published_at)}">${esc(timeLabel.format(new Date(n.published_at)))}</time><div class="news-body">${href ? `<a class="news-title" href="${href}" target="_blank" rel="noopener noreferrer">${esc(n.title)}</a>` : `<span class="news-title">${esc(n.title)}</span>`}<div class="news-meta"><span class="tag ${n.category}">${esc(categoryTag(n.category))}</span><span>${esc(n.publisher)}</span></div></div></li>`;
+      return `<li class="news-item"><time class="news-time" datetime="${esc(n.published_at)}">${esc(timeLabel.format(new Date(n.published_at)))}</time><div class="news-body">${href ? `<a class="news-title" href="${href}" target="_blank" rel="noopener noreferrer">${esc(n.title)}<span class="news-out" aria-hidden="true"> ↗</span></a>` : `<span class="news-title">${esc(n.title)}</span>`}<div class="news-meta"><span class="tag ${n.category}">${esc(categoryTag(n.category))}</span><span>${esc(n.publisher)}</span></div></div></li>`;
     }).join('')}</ol></section>`;
   }).join('');
 }
@@ -466,7 +470,7 @@ document.addEventListener('click', event => {
   if ((el = pick('[data-period]'))) { state.period = Number(el.dataset.period); charts.clear(); renderCards(); renderTable(); return; }
   if ((el = pick('[data-detail-period]'))) {
     state.detailPeriod = Number(el.dataset.detailPeriod);
-    renderDetail();
+    renderDetail(state.page === 'product' ? '#product-detail' : '#drawer-body');
     $(`[data-detail-period="${state.detailPeriod}"]`)?.focus();
     return;
   }
@@ -490,8 +494,12 @@ document.addEventListener('click', event => {
     loadPrices();
     return;
   }
-  if (pick('a')) return;
-  if ((el = pick('[data-product]')) && state.prices) openDetail(el.dataset.product);
+  const link = pick('a');
+  if (link && !(link.dataset.product && state.page === 'prices' && !event.metaKey && !event.ctrlKey && !event.shiftKey && !event.altKey)) return;
+  if ((el = pick('[data-product]')) && state.prices && state.page === 'prices') {
+    event.preventDefault();
+    openDetail(el.dataset.product);
+  }
 });
 
 $('#drawer-close').addEventListener('click', () => $('#drawer').close());
@@ -500,7 +508,11 @@ $('#drawer').addEventListener('click', event => {
   if (event.target === event.currentTarget && (event.clientX < box.left || event.clientX > box.right)) event.currentTarget.close();
 });
 
-if (state.page === 'news') {
+if (state.page === 'product') {
+  state.selected = boot.product;
+  state.detailPeriod = 90;
+  fetchPrices().then(data => { state.prices = data; renderTicker(); renderDetail('#product-detail'); }).catch(() => {});
+} else if (state.page === 'news') {
   loadNews();
   // The news page shows today's prices beside the headlines, and the ticker above them.
   fetchPrices().then(data => { state.prices = data; renderTicker(); renderSide(); }).catch(() => {});

@@ -260,7 +260,7 @@ class StaticSite(unittest.TestCase):
     def test_build_writes_every_page_with_base_path_and_data(self):
         from build import build
         with tempfile.TemporaryDirectory() as directory:
-            out=build(Path(directory)/'dist','/quite-terrible')
+            out=build(Path(directory)/'dist','/quite-terrible','https://example.github.io')
             for lang in ('ko','en'):
                 for path in ('','news/','about/'):
                     text=(out/lang/path/'index.html').read_text()
@@ -272,5 +272,13 @@ class StaticSite(unittest.TestCase):
                 self.assertTrue(json.loads((out/'data'/name).read_text()))
             self.assertIn('/quite-terrible/lang.js',(out/'index.html').read_text())
             self.assertTrue((out/'.nojekyll').exists())
+            product=(out/'ko'/'rtx-5080'/'index.html').read_text()
+            self.assertIn('<link rel="canonical" href="https://example.github.io/quite-terrible/ko/rtx-5080/">',product)
+            self.assertIn('RTX 5080',product.split('<title>',1)[1].split('</title>',1)[0])
+            ld=json.loads(product.split('application/ld+json">',1)[1].split('</script>',1)[0])
+            self.assertIn('Product',[g['@type'] for g in ld['@graph']])
+            site=(out/'sitemap.xml').read_text()
+            self.assertIn('https://example.github.io/quite-terrible/en/rtx-5080/',site)
+            self.assertIn('Sitemap: https://example.github.io/quite-terrible/sitemap.xml',(out/'robots.txt').read_text())
 
 if __name__=='__main__':unittest.main()

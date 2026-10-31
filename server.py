@@ -13,11 +13,14 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from store import ROOT, PRODUCTS, STALE_SECONDS, session, product_view, demo_products, stamp, now, parse_time
 from collectors import update_prices, update_news, import_feed
+from seo import seo_context
 
 LANGS = ('ko', 'en')
 I18N = json.loads((ROOT / 'config/i18n.json').read_text())
-PAGES = {f'/{lang}/{path}': (lang, page) for lang in ('ko', 'en')
+PAGES = {f'/{lang}/{path}': (lang, page, None) for lang in ('ko', 'en')
          for path, page in (('', 'prices'), ('news/', 'news'), ('about/', 'about'))}
+PAGES |= {f"/{lang}/{p['id']}/": (lang, 'product', p['id']) for lang in ('ko', 'en') for p in PRODUCTS}
+RAW = {'boot', 'jsonld', 'headExtra', 'prerenderRows', 'productStatic', 'relatedLinks'}
 # Country headers set by common CDNs/hosts. They only pick defaults; visitors can always switch.
 COUNTRY_HEADERS = ('CF-IPCountry', 'CloudFront-Viewer-Country', 'X-Vercel-IP-Country', 'X-Country-Code')
 PLACEHOLDER = re.compile(r'\{\{(\w+)\}\}')
@@ -86,24 +89,23 @@ def prices_due(db, at=None, hour=None):
     return parse_time(row['succeeded_at']).astimezone(KST).date() < at.date() and at.hour >= hour
 
 
-def render_page(lang, page, market, base='', static=False):
+def render_page(lang, page, market, base='', static=False, site='', product=None, products=None):
     strings = I18N[lang]
-    suffix = '' if page == 'prices' else f'{page}/'
-    context = strings | {
-        'lang': lang, 'pageTitle': strings[f'{page}PageTitle'], 'pageDesc': strings[f'{page}PageDesc'],
-        'base': base, 'altKo': f'{base}/ko/{suffix}', 'altEn': f'{base}/en/{suffix}', 'year': str(now().year),
-        'koCurrent': str(lang == 'ko').lower(), 'enCurrent': str(lang == 'en').lower(),
-    }
-    for name in ('prices', 'news', 'about'):
-        context[f'{name}Current'] = 'page' if page == name else 'false'
+    if products is None:
+        products = prices_payload('KR')['products']
+    context = strings | {'lang': lang, 'base': base, 'year': str(now().year)}
+    context |= seo_context(lang, page, strings, products, base=base, site=site, product_id=product)
+    for name in ('prices', 'news', 'about', 'product'):
+        context[f'{name}Current'] = 'page' if page == name or (name == 'prices' and page == 'product') else 'false'
         context[f'{name}Hidden'] = '' if page == name else 'hidden'
     # JSON inside <script type="application/json"> is data, not code; escape "<" so it cannot close the tag.
-    boot = json.dumps({'lang': lang, 'page': page, 'market': market, 'base': base, 'static': static, 't': strings},
-                      ensure_ascii=False).replace('<', '\\u003c')
+    boot = json.dumps({'lang': lang, 'page': page, 'market': market, 'base': base, 'static': static,
+                       'product': product, 't': strings}, ensure_ascii=False).replace('<', '\\u003c')
+    context['boot'] = boot
 
     def fill(match):
         key = match.group(1)
-        return boot if key == 'boot' else html.escape(context[key])
+        return context[key] if key in RAW else html.escape(str(context[key]))
     return PLACEHOLDER.sub(fill, (ROOT / 'static/index.html').read_text())
 
 
@@ -165,11 +167,11 @@ class Handler(BaseHTTPRequestHandler):
             self.redirect(301, f'{path}/{keep}')
             return
         if path in PAGES:
-            lang, page = PAGES[path]
+            lang, page, product = PAGES[path]
             market = default_market(country, lang)
             if market == 'US' and not has_prices('US'):
                 market = 'KR'  # no US source connected yet: show real Korean prices instead of an empty page
-            self.send(200, render_page(lang, page, market).encode(), 'text/html; charset=utf-8')
+            self.send(200, render_page(lang, page, market, product=product).encode(), 'text/html; charset=utf-8')
             return
         if path in ('/api/prices', '/api/news'):
             market, lang = query.get('market', ['KR'])[0], query.get('lang', ['ko'])[0]
@@ -183,7 +185,7 @@ class Handler(BaseHTTPRequestHandler):
             return
         # Explicit static allowlist: never serve .env, config, SQLite, tests or Python source.
         name = path.removeprefix('/')
-        if name not in ('app.js', 'styles.css', 'favicon.svg'):
+        if name not in ('app.js', 'hero.js', 'styles.css', 'favicon.svg', 'og.png'):
             self.send(404, b'Not found', 'text/plain')
             return
         self.send(200, (ROOT / 'static' / name).read_bytes(), mimetypes.guess_type(name)[0] or 'application/octet-stream')

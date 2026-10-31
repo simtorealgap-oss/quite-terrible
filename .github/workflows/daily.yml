@@ -48,9 +48,15 @@ jobs:
           git push
       - name: Build site
         # With a custom domain (repository variable CUSTOM_DOMAIN) the site lives at the domain root.
+        env:
+          GOOGLE_SITE_VERIFICATION: ${{ vars.GOOGLE_SITE_VERIFICATION }}
+          NAVER_SITE_VERIFICATION: ${{ vars.NAVER_SITE_VERIFICATION }}
         run: |
-          if [ -n "${{ vars.CUSTOM_DOMAIN }}" ]; then BASE=""; else BASE="/${{ github.event.repository.name }}"; fi
-          python build.py --base "$BASE"
+          if [ -n "${{ vars.CUSTOM_DOMAIN }}" ]; then
+            python build.py --base "" --site-url "https://${{ vars.CUSTOM_DOMAIN }}"
+          else
+            python build.py --base "/${{ github.event.repository.name }}" --site-url "https://${{ github.repository_owner }}.github.io"
+          fi
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:

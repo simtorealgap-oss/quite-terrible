@@ -9,7 +9,8 @@ import json
 import shutil
 from pathlib import Path
 from store import ROOT
-from server import LANGS, render_page, prices_payload, news_payload
+from server import LANGS, PRODUCTS, render_page, prices_payload, news_payload
+from seo import sitemap, robots
 
 PAGES = (('prices', ''), ('news', 'news/'), ('about', 'about/'))
 
@@ -51,8 +52,9 @@ def write_json(path, data):
     path.write_text(json.dumps(data, ensure_ascii=False, allow_nan=False, separators=(',', ':')))
 
 
-def build(out, base=''):
-    base = base.rstrip('/')
+def build(out, base='', site=''):
+    base, site = base.rstrip('/'), site.rstrip('/')
+    products = prices_payload('KR')['products']  # prices baked into pages for search engines
     if out.exists():
         shutil.rmtree(out)
     for lang in LANGS:
@@ -60,7 +62,11 @@ def build(out, base=''):
             target = out / lang / path / 'index.html'
             target.parent.mkdir(parents=True, exist_ok=True)
             # market=None: the browser picks the market (see pickMarket in app.js).
-            target.write_text(render_page(lang, page, None, base=base, static=True))
+            target.write_text(render_page(lang, page, None, base=base, static=True, site=site, products=products))
+        for p in PRODUCTS:
+            target = out / lang / p['id'] / 'index.html'
+            target.parent.mkdir(parents=True, exist_ok=True)
+            target.write_text(render_page(lang, 'product', None, base=base, static=True, site=site, product=p['id'], products=products))
     data = out / 'data'
     data.mkdir()
     for market in ('KR', 'US'):
@@ -68,12 +74,15 @@ def build(out, base=''):
         write_json(data / f'prices-{market}-demo.json', prices_payload(market, demo=True))
     for lang in LANGS:
         write_json(data / f'news-{lang}.json', news_payload(lang))
-    for name in ('app.js', 'styles.css', 'favicon.svg'):
+    for name in ('app.js', 'hero.js', 'styles.css', 'favicon.svg', 'og.png'):
         shutil.copy(ROOT / 'static' / name, out / name)
     (out / 'lang.js').write_text(LANG_JS)
     (out / 'index.html').write_text(ROOT_PAGE.format(base=base))
     (out / '404.html').write_text(ROOT_PAGE.format(base=base))
     (out / '.nojekyll').write_text('')  # serve files as-is, no Jekyll processing
+    if site:  # absolute URLs are required in sitemaps
+        (out / 'sitemap.xml').write_text(sitemap(site, base, products))
+        (out / 'robots.txt').write_text(robots(site, base))
     ads = ROOT / 'config/ads.txt'  # ad network seller file (AdSense etc.), must sit at the domain root
     if ads.exists():
         shutil.copy(ads, out / 'ads.txt')
@@ -84,8 +93,9 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--base', default='', help='URL path prefix, e.g. /quite-terrible')
     parser.add_argument('--out', type=Path, default=ROOT / 'dist')
+    parser.add_argument('--site-url', default='', help='e.g. https://quiteterrible.com (enables sitemap.xml and robots.txt)')
     args = parser.parse_args()
-    print(build(args.out, args.base))
+    print(build(args.out, args.base, args.site_url))
 
 
 if __name__ == '__main__':

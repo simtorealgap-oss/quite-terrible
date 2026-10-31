@@ -5,18 +5,32 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{{pageTitle}}</title>
   <meta name="description" content="{{pageDesc}}">
-  <meta name="color-scheme" content="dark">
-  <meta name="theme-color" content="#0a0b0d">
+  <meta name="color-scheme" content="light">
+  <meta name="theme-color" content="#ffffff">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' https://cdn.jsdelivr.net; font-src https://cdn.jsdelivr.net; script-src 'self'; img-src 'self' data: https://thumb.wikimedia.org https://upload.wikimedia.org; connect-src 'self'; base-uri 'none'">
+  <link rel="canonical" href="{{canonical}}">
   <link rel="alternate" hreflang="ko" href="{{altKo}}">
   <link rel="alternate" hreflang="en" href="{{altEn}}">
-  <link rel="alternate" hreflang="x-default" href="{{base}}/">
+  <link rel="alternate" hreflang="x-default" href="{{altDefault}}">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="{{brand}}">
+  <meta property="og:title" content="{{pageTitle}}">
+  <meta property="og:description" content="{{pageDesc}}">
+  <meta property="og:url" content="{{canonical}}">
+  <meta property="og:image" content="{{ogImage}}">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:locale" content="{{ogLocale}}">
+  <meta name="twitter:card" content="summary_large_image">
+  {{headExtra}}
+  <script type="application/ld+json">{{jsonld}}</script>
   <link rel="icon" href="{{base}}/favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
   <link rel="stylesheet" href="{{base}}/styles.css">
   <script type="application/json" id="boot">{{boot}}</script>
   <script src="{{base}}/app.js" defer></script>
+  <script src="{{base}}/hero.js" defer></script>
 </head>
 <body>
   <a class="skip" href="#main">{{skip}}</a>
@@ -34,10 +48,29 @@
       <span class="topbar-note">{{updateSchedule}}</span>
     </div>
   </header>
+  <section class="hero" id="hero" aria-labelledby="hero-title" {{pricesHidden}}>
+    <div class="hero-backdrop" aria-hidden="true">DRAM</div>
+    <canvas class="hero-canvas" id="hero-canvas" aria-hidden="true"></canvas>
+    <p class="hero-hint" id="hero-hint" data-touch="{{heroHintTouch}}" aria-hidden="true">{{heroHint}}</p>
+    <div class="wrap hero-content" id="hero-content">
+      <div>
+        <p class="hero-eyebrow">{{heroEyebrow}}</p>
+        <h2 class="hero-title" id="hero-title"><span>{{heroLine1}}</span><span class="hero-accent">{{heroLine2}}</span></h2>
+      </div>
+      <div class="hero-aside">
+        <p class="hero-body">{{heroBody}}</p>
+        <p class="hero-source">— {{heroSource}} · <a href="{{quipUrl}}" target="_blank" rel="noopener noreferrer">{{readArticle}} ↗</a></p>
+        <div class="hero-ctas">
+          <a class="hero-btn" href="#prices">{{heroCta}} <span aria-hidden="true">↓</span></a>
+          <a class="hero-link" href="{{base}}/{{lang}}/about/">{{heroCta2}} <span aria-hidden="true">→</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
   <div class="ticker" id="ticker-wrap" aria-label="{{tickerLabel}}" hidden><div class="ticker-track" id="ticker"></div></div>
 
   <main id="main" class="wrap">
-    <section id="page-prices" class="page" {{pricesHidden}}>
+    <section id="prices" class="page page-prices" {{pricesHidden}}>
       <div class="page-head">
         <div class="page-title">
           <h1>{{pricesHeading}}</h1>
@@ -49,7 +82,6 @@
           <button type="button" data-period="90" aria-pressed="false">{{p90}}</button>
         </div>
       </div>
-      <p class="quip"><span class="quip-lead">{{quipLead}}</span> <span class="quip-reply">{{quipReply}}</span> <a href="{{quipUrl}}" target="_blank" rel="noopener noreferrer">{{quipSource}} ↗</a></p>
       <div id="banner" class="banner" role="status" hidden></div>
       <div id="spotlight" class="spotlight" aria-label="{{spotlightLabel}}"></div>
       <div id="cards" class="cards"></div>
@@ -75,7 +107,7 @@
                 <th scope="col" class="num hide-md">{{colSellers}}</th>
               </tr>
             </thead>
-            <tbody id="rows"></tbody>
+            <tbody id="rows">{{prerenderRows}}</tbody>
           </table>
           <div id="table-msg" class="table-msg" role="status" hidden></div>
         </div>
@@ -111,34 +143,45 @@
       </div>
     </section>
 
+    <section id="page-product" class="page product" {{productHidden}}>
+      <nav class="crumbs" aria-label="{{crumbLabel}}"><a href="{{base}}/{{lang}}/">{{navPrices}}</a><span aria-hidden="true">›</span><span>{{productCategory}}</span></nav>
+      <div class="page-head"><div class="page-title"><h1>{{productHeading}}</h1></div></div>
+      <p class="product-lead">{{productLead}}</p>
+      <div class="product-layout">
+        <div class="panel product-panel"><div id="product-detail" class="drawer-body">{{productStatic}}</div></div>
+        <aside class="panel side" aria-labelledby="related-title">
+          <div class="panel-head"><h2 id="related-title">{{relatedTitle}}</h2><a class="panel-link" href="{{base}}/{{lang}}/">{{seeAll}} →</a></div>
+          <ul class="side-list related-list">{{relatedLinks}}</ul>
+        </aside>
+      </div>
+    </section>
+
     <section id="page-about" class="page about" {{aboutHidden}}>
-      <div class="page-head"><div class="page-title"><h1>{{aboutHeading}}</h1></div></div>
-      <div class="about-grid">
-        <figure class="about-photo">
-          <a href="{{aboutPhotoPage}}" target="_blank" rel="noopener noreferrer"><img src="{{aboutPhoto}}" alt="{{aboutPhotoAlt}}" width="480" height="640" loading="lazy" referrerpolicy="no-referrer"></a>
-          <figcaption><strong>{{aboutPhotoCaption}}</strong><a href="{{licenseUrl}}" target="_blank" rel="noopener noreferrer license">{{aboutPhotoCredit}}</a></figcaption>
-        </figure>
-        <div class="about-body">
-          <blockquote class="about-quote">
-            <p>{{aboutQuote}}</p>
-            <footer>— {{aboutQuoteSource}} · <a href="{{quipUrl}}" target="_blank" rel="noopener noreferrer">{{readArticle}} ↗</a></footer>
-          </blockquote>
-          <div class="about-story">
-            <p>{{aboutP1}}</p>
-            <p>{{aboutP2}}</p>
-            <p class="about-punch">{{aboutP3}}</p>
-            <p>{{aboutP4}}</p>
+      <div class="about-wrap">
+        <div class="page-head"><div class="page-title"><h1>{{aboutHeading}}</h1></div></div>
+        <figure class="about-quote">
+          <a class="about-photo" href="{{aboutPhotoPage}}" target="_blank" rel="noopener noreferrer"><img src="{{aboutPhoto}}" alt="{{aboutPhotoAlt}}" width="132" height="168" loading="lazy" referrerpolicy="no-referrer"></a>
+          <div>
+            <blockquote><p>{{aboutQuote}}</p></blockquote>
+            <figcaption>— {{aboutQuoteSource}} · <a href="{{quipUrl}}" target="_blank" rel="noopener noreferrer">{{readArticle}} ↗</a>
+              <span class="about-credit">{{aboutPhotoCaption}} · <a href="{{licenseUrl}}" target="_blank" rel="noopener noreferrer license">{{aboutPhotoCredit}}</a></span></figcaption>
           </div>
+        </figure>
+        <div class="about-story">
+          <p>{{aboutP1}}</p>
+          <p>{{aboutP2}}</p>
+          <p class="about-punch">{{aboutP3}}</p>
+          <p>{{aboutP4}}</p>
         </div>
+        <h2 class="about-rules-title">{{aboutRulesTitle}}</h2>
+        <div class="about-rules">
+          <div class="rule"><span class="rule-no">01</span><h3>{{aboutRule1T}}</h3><p>{{aboutRule1B}}</p></div>
+          <div class="rule"><span class="rule-no">02</span><h3>{{aboutRule2T}}</h3><p>{{aboutRule2B}}</p></div>
+          <div class="rule"><span class="rule-no">03</span><h3>{{aboutRule3T}}</h3><p>{{aboutRule3B}}</p></div>
+        </div>
+        <p class="about-closing">{{aboutClosing}}</p>
+        <p class="about-disclaimer">{{aboutDisclaimer}}</p>
       </div>
-      <h2 class="about-rules-title">{{aboutRulesTitle}}</h2>
-      <div class="about-rules">
-        <div class="rule"><span class="rule-no">01</span><h3>{{aboutRule1T}}</h3><p>{{aboutRule1B}}</p></div>
-        <div class="rule"><span class="rule-no">02</span><h3>{{aboutRule2T}}</h3><p>{{aboutRule2B}}</p></div>
-        <div class="rule"><span class="rule-no">03</span><h3>{{aboutRule3T}}</h3><p>{{aboutRule3B}}</p></div>
-      </div>
-      <p class="about-closing">{{aboutClosing}}</p>
-      <p class="about-disclaimer">{{aboutDisclaimer}}</p>
     </section>
   </main>
 
