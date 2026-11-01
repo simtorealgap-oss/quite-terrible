@@ -36,34 +36,36 @@
   /* Sprites: rows of palette keys ('.' is transparent). */
   const STICK = ['KKKKKKKKK', 'KacbcbcaK', 'KbbbbbbbK', 'KgKgKgKgK'];
   const STICK_PAL = {K: C.K, a: C.pcb2, b: C.pcb1, c: C.chip, g: C.gold};
+  // The boss: a caricature in the spirit of the 'quite terrible' quote. Tousled light-brown hair with a
+  // side part, fair skin, big round eyes, a pleased little smile, a plain gray crewneck sweater.
   const BOSS = [
     '.....KKKKKK.....',
-    '....KhhhhhhK....',
-    '...KhHhhhhhhK...',
-    '...KHhhhhhhHK...',
-    '...KhsssssshK...',
-    '...KsKssssKsK...',
-    '...KssssssssK...',
-    '...KSsssmmssK...',
-    '....KSssssSK....',
+    '....KdhhHHhK....',
+    '...KdhhHHHhhK...',
+    '..KdhhhhHhhhdK..',
+    '..KdhsssshhhdK..',
+    '..KdssssssshdK..',
+    '..KsbbssssbbsK..',
+    '..KswesssswesK..',
+    '..KswesssswesK..',
+    '..KSssssSssmSK..',
+    '...KSsmmmssSK...',
+    '....KSSssSSK....',
     '.....KKSSKK.....',
-    '...KK2222222KK..',
-    '..K22333333222K.',
-    '.K2233333333221K',
-    '.K22K3333333K21K',
-    '.K22K3333333K21K',
-    '.K22K3322223K21K',
-    '.KssK2222222KssK',
+    '...KK222222KK...',
+    '..K2233333322K..',
+    '.K223333333322K.',
+    '.K22K3333333K2K.',
+    '.KssK3322223KsK.',
     '..KKK2222222KKK.',
     '....KjjjjjjjK...',
-    '....KjjJKJjjK...',
     '....KjjK.KjjK...',
     '....KjjK.KjjK...',
     '...KOOOK.KOOOK..',
     '...KKKKK.KKKKK..',
   ];
-  const BOSS_PAL = {K: C.K, h: '#4a3324', H: '#6b4a33', s: C.skin1, S: C.skin2, m: '#b5524a',
-    1: '#3a3f4c', 2: '#565c6b', 3: '#7b8293', j: '#34436a', J: '#25304d', O: '#e9e9e9'};
+  const BOSS_PAL = {K: C.K, d: '#5c3a26', h: '#8a5a3c', H: '#a8754f', s: '#f6d3b8', S: '#e3b394', b: '#5c3a26',
+    w: '#ffffff', e: '#2b3a55', m: '#c4675c', 1: '#5f6878', 2: '#7d8696', 3: '#9aa2b1', j: '#34436a', J: '#25304d', O: '#e9e9e9'};
   const PERSON = [
     '..KKKK..',
     '.KhhhhK.',
@@ -433,6 +435,7 @@
   function drawBoss(c) {
     const by = gy - BOSS.length;
     sprite(c, BOSS, bossX, by, BOSS_PAL);
+    if (bubble?.angry) { px(c, '#f08a7a', bossX + 3, by + 9, 2, 1); px(c, '#f08a7a', bossX + 11, by + 9, 2, 1); }
     if (grab > 0) {  // reaching for the belt
       px(c, C.K, bossX - 3, by + 13, 4, 3); px(c, C.skin1, bossX - 2, by + 14, 2, 1);
     }
