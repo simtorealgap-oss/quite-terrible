@@ -6,11 +6,37 @@
       "desc": "AI 데이터센터와 HBM 수요, 생산 전환, DDR4 단종까지. 램 가격이 오르는 이유를 쉽게 정리하고 오늘 시세와 최신 뉴스를 함께 보여 줍니다.",
       "lead": "요즘 PC를 맞추려다 램 가격을 보고 놀란 분이 많습니다. 램값이 오르는 이유는 한 가지가 아니라 몇 가지가 겹쳐 있습니다.",
       "sections": [
-        {"h": "1. AI 데이터센터가 메모리를 먼저 가져갑니다", "p": ["AI 서버는 엄청난 양의 메모리를 씁니다. 메모리 회사 입장에서는 데이터센터용 제품이 더 많이, 더 비싸게 팔리기 때문에 공급이 그쪽으로 먼저 갑니다.", "그 결과 PC용 램처럼 일반 소비자가 사는 제품은 남은 물량을 나눠 갖게 되고, 가격이 오르기 쉽습니다."]},
-        {"h": "2. HBM으로 생산 라인이 옮겨 갑니다", "p": ["AI 가속기에 들어가는 HBM(고대역폭 메모리)은 같은 웨이퍼로 일반 D램보다 훨씬 높은 값을 받을 수 있습니다. 삼성전자·SK하이닉스·마이크론 같은 회사들이 생산 능력을 HBM과 서버용 D램 쪽으로 돌리면, PC용 DDR5에 쓸 생산량은 그만큼 줄어듭니다."]},
-        {"h": "3. DDR4는 단종 수순입니다", "p": ["메모리 회사들은 오래된 DDR4 생산을 줄이고 있습니다. 공급이 줄어드는 속도가 수요가 줄어드는 속도보다 빠르면, 오래된 규격인데도 가격이 오르는 일이 생깁니다."]},
-        {"h": "4. 계약 가격이 오르면 소매가는 늦게 따라옵니다", "p": ["메모리 가격은 먼저 대형 고객과의 계약 가격(고정거래가격)에서 움직이고, 몇 주에서 몇 달 뒤 쇼핑몰 가격에 반영됩니다. 뉴스에서 'D램 고정거래가격 상승'이 보이면 소매가도 곧 따라 오를 가능성이 큽니다."]},
-        {"h": "그래서 언제 사야 할까?", "p": ["가격을 정확히 맞히는 방법은 없습니다. 다만 매일 최저가를 기록해 두면, 지금 가격이 최근 한 달 중 비싼 편인지 싼 편인지는 알 수 있습니다. 아래 오늘 시세와 각 제품의 30일 최저·최고를 참고하세요."]}
+        {
+          "h": "1. AI 데이터센터가 메모리를 먼저 가져갑니다",
+          "p": [
+            "AI 서버는 엄청난 양의 메모리를 씁니다. 메모리 회사 입장에서는 데이터센터용 제품이 더 많이, 더 비싸게 팔리기 때문에 공급이 그쪽으로 먼저 갑니다.",
+            "그 결과 PC용 램처럼 일반 소비자가 사는 제품은 남은 물량을 나눠 갖게 되고, 가격이 오르기 쉽습니다."
+          ]
+        },
+        {
+          "h": "2. HBM으로 생산 라인이 옮겨 갑니다",
+          "p": [
+            "AI 가속기에 들어가는 HBM(고대역폭 메모리)은 같은 웨이퍼로 일반 D램보다 훨씬 높은 값을 받을 수 있습니다. 삼성전자·SK하이닉스·마이크론 같은 회사들이 생산 능력을 HBM과 서버용 D램 쪽으로 돌리면, PC용 DDR5에 쓸 생산량은 그만큼 줄어듭니다."
+          ]
+        },
+        {
+          "h": "3. DDR4는 단종 수순입니다",
+          "p": [
+            "메모리 회사들은 오래된 DDR4 생산을 줄이고 있습니다. 공급이 줄어드는 속도가 수요가 줄어드는 속도보다 빠르면, 오래된 규격인데도 가격이 오르는 일이 생깁니다."
+          ]
+        },
+        {
+          "h": "4. 계약 가격이 오르면 소매가는 늦게 따라옵니다",
+          "p": [
+            "메모리 가격은 먼저 대형 고객과의 계약 가격(고정거래가격)에서 움직이고, 몇 주에서 몇 달 뒤 쇼핑몰 가격에 반영됩니다. 뉴스에서 'D램 고정거래가격 상승'이 보이면 소매가도 곧 따라 오를 가능성이 큽니다."
+          ]
+        },
+        {
+          "h": "그래서 언제 사야 할까?",
+          "p": [
+            "가격을 정확히 맞히는 방법은 없습니다. 다만 매일 최저가를 기록해 두면, 지금 가격이 최근 한 달 중 비싼 편인지 싼 편인지는 알 수 있습니다. 아래 오늘 시세와 각 제품의 30일 최저·최고를 참고하세요."
+          ]
+        }
       ]
     },
     "en": {
@@ -18,11 +44,37 @@
       "desc": "AI data centers, HBM demand, production shifts and the end of DDR4: why RAM keeps getting more expensive, with today's prices and the latest news.",
       "lead": "If you priced out a PC recently, the RAM line probably made you wince. There isn't one reason prices are rising; several pile on top of each other.",
       "sections": [
-        {"h": "1. AI data centers get served first", "p": ["AI servers use enormous amounts of memory. Data center buyers order more and pay more, so supply goes to them first.", "Consumer products such as desktop RAM share what is left, which pushes prices up."]},
-        {"h": "2. Production moves to HBM", "p": ["HBM, the high-bandwidth memory on AI accelerators, earns far more per wafer than ordinary DRAM. When Samsung, SK hynix and Micron shift capacity to HBM and server DRAM, less is left for desktop DDR5."]},
-        {"h": "3. DDR4 is being phased out", "p": ["Memory makers are winding down DDR4. When supply shrinks faster than demand, even an old standard can get more expensive."]},
-        {"h": "4. Contract prices move first, retail follows", "p": ["Memory prices move first in contracts with big customers and reach store shelves weeks or months later. Headlines about rising DRAM contract prices usually mean retail prices will follow."]},
-        {"h": "So when should you buy?", "p": ["Nobody can call the bottom. But with a daily record of the lowest price you can at least see whether today's price is high or low for the past month. Check today's prices and each product's 30-day low and high below."]}
+        {
+          "h": "1. AI data centers get served first",
+          "p": [
+            "AI servers use enormous amounts of memory. Data center buyers order more and pay more, so supply goes to them first.",
+            "Consumer products such as desktop RAM share what is left, which pushes prices up."
+          ]
+        },
+        {
+          "h": "2. Production moves to HBM",
+          "p": [
+            "HBM, the high-bandwidth memory on AI accelerators, earns far more per wafer than ordinary DRAM. When Samsung, SK hynix and Micron shift capacity to HBM and server DRAM, less is left for desktop DDR5."
+          ]
+        },
+        {
+          "h": "3. DDR4 is being phased out",
+          "p": [
+            "Memory makers are winding down DDR4. When supply shrinks faster than demand, even an old standard can get more expensive."
+          ]
+        },
+        {
+          "h": "4. Contract prices move first, retail follows",
+          "p": [
+            "Memory prices move first in contracts with big customers and reach store shelves weeks or months later. Headlines about rising DRAM contract prices usually mean retail prices will follow."
+          ]
+        },
+        {
+          "h": "So when should you buy?",
+          "p": [
+            "Nobody can call the bottom. But with a daily record of the lowest price you can at least see whether today's price is high or low for the past month. Check today's prices and each product's 30-day low and high below."
+          ]
+        }
       ]
     },
     "ja": {
@@ -30,11 +82,37 @@
       "desc": "AIデータセンターとHBM需要、生産シフト、DDR4の終息。メモリ価格が上がる理由をわかりやすくまとめ、今日の相場と最新ニュースも紹介します。",
       "lead": "最近PCを組もうとしてメモリの値段に驚いた方も多いはず。値上がりの理由はひとつではなく、いくつかが重なっています。",
       "sections": [
-        {"h": "1. AIデータセンターが先にメモリを確保", "p": ["AIサーバーは大量のメモリを使います。データセンター向けはたくさん、しかも高く売れるので、供給はまずそちらに回ります。", "その結果、PC用メモリのような一般向け製品は残りを分け合うことになり、価格が上がりやすくなります。"]},
-        {"h": "2. 生産ラインがHBMへ", "p": ["AIアクセラレーターに使われるHBM(広帯域メモリ)は、同じウェハーでも一般のDRAMよりはるかに高く売れます。サムスン・SKハイニックス・マイクロンが生産能力をHBMやサーバー用DRAMに振り向けると、PC用DDR5に回る量はその分減ります。"]},
-        {"h": "3. DDR4は生産終了へ", "p": ["メモリメーカーは古いDDR4の生産を減らしています。供給の減り方が需要の減り方より速いと、古い規格でも値上がりすることがあります。"]},
-        {"h": "4. 契約価格が先、店頭価格は後から", "p": ["メモリ価格はまず大口顧客との契約価格で動き、数週間から数か月遅れて店頭価格に反映されます。「DRAM契約価格上昇」のニュースが出たら、店頭価格もやがて上がる可能性が高いです。"]},
-        {"h": "では、いつ買えばいい?", "p": ["底値を当てる方法はありません。ただ、毎日の最安値を記録しておけば、今の価格が直近1か月で高いか安いかはわかります。下の今日の相場と各製品の30日最安・最高を参考にしてください。"]}
+        {
+          "h": "1. AIデータセンターが先にメモリを確保",
+          "p": [
+            "AIサーバーは大量のメモリを使います。データセンター向けはたくさん、しかも高く売れるので、供給はまずそちらに回ります。",
+            "その結果、PC用メモリのような一般向け製品は残りを分け合うことになり、価格が上がりやすくなります。"
+          ]
+        },
+        {
+          "h": "2. 生産ラインがHBMへ",
+          "p": [
+            "AIアクセラレーターに使われるHBM(広帯域メモリ)は、同じウェハーでも一般のDRAMよりはるかに高く売れます。サムスン・SKハイニックス・マイクロンが生産能力をHBMやサーバー用DRAMに振り向けると、PC用DDR5に回る量はその分減ります。"
+          ]
+        },
+        {
+          "h": "3. DDR4は生産終了へ",
+          "p": [
+            "メモリメーカーは古いDDR4の生産を減らしています。供給の減り方が需要の減り方より速いと、古い規格でも値上がりすることがあります。"
+          ]
+        },
+        {
+          "h": "4. 契約価格が先、店頭価格は後から",
+          "p": [
+            "メモリ価格はまず大口顧客との契約価格で動き、数週間から数か月遅れて店頭価格に反映されます。「DRAM契約価格上昇」のニュースが出たら、店頭価格もやがて上がる可能性が高いです。"
+          ]
+        },
+        {
+          "h": "では、いつ買えばいい?",
+          "p": [
+            "底値を当てる方法はありません。ただ、毎日の最安値を記録しておけば、今の価格が直近1か月で高いか安いかはわかります。下の今日の相場と各製品の30日最安・最高を参考にしてください。"
+          ]
+        }
       ]
     }
   },
@@ -45,9 +123,29 @@
       "desc": "DDR5와 DDR4의 속도·전압·호환성 차이와 오늘 가격 비교. 새로 조립할 때와 업그레이드할 때 어떤 램을 사야 하는지 정리했습니다.",
       "lead": "DDR5와 DDR4는 이름만 비슷할 뿐 서로 꽂을 수 없는 다른 규격입니다. 무엇을 살지는 가격보다 먼저 메인보드가 정합니다.",
       "sections": [
-        {"h": "핵심 차이", "p": ["속도: DDR4는 보통 3200MT/s 안팎, DDR5는 4800~6000MT/s 이상으로 시작합니다.", "전압: DDR4는 1.2V, DDR5는 1.1V로 조금 낮습니다. DDR5는 전원 관리 칩(PMIC)이 램 모듈 위에 있습니다.", "구조: DDR5는 모듈 하나가 두 개의 독립 채널처럼 동작하고, 칩 안에 오류 정정(온다이 ECC) 기능이 있습니다.", "호환성: 홈 위치가 달라 DDR4 자리에 DDR5를 꽂을 수 없고, 그 반대도 안 됩니다."]},
-        {"h": "내 PC에는 뭐가 맞을까?", "p": ["AMD 라이젠 7000·9000 시리즈(AM5)는 DDR5만 씁니다. 라이젠 5000 이하(AM4)는 DDR4만 씁니다.", "인텔 12~14세대는 메인보드에 따라 DDR4나 DDR5 중 하나를 씁니다. 메인보드 모델명이나 설명서에서 꼭 확인하세요. 인텔 코어 울트라(200S 시리즈)는 DDR5를 씁니다."]},
-        {"h": "추천", "p": ["새로 조립한다면 DDR5를 고르는 게 맞습니다. 최신 CPU와 메인보드가 모두 DDR5 기준이고, 앞으로도 오래 씁니다.", "이미 DDR4 PC를 쓰고 있고 용량만 늘리고 싶다면 DDR4를 사면 됩니다. 램 때문에 메인보드와 CPU까지 바꿀 필요는 없습니다."]}
+        {
+          "h": "핵심 차이",
+          "p": [
+            "속도: DDR4는 보통 3200MT/s 안팎, DDR5는 4800~6000MT/s 이상으로 시작합니다.",
+            "전압: DDR4는 1.2V, DDR5는 1.1V로 조금 낮습니다. DDR5는 전원 관리 칩(PMIC)이 램 모듈 위에 있습니다.",
+            "구조: DDR5는 모듈 하나가 두 개의 독립 채널처럼 동작하고, 칩 안에 오류 정정(온다이 ECC) 기능이 있습니다.",
+            "호환성: 홈 위치가 달라 DDR4 자리에 DDR5를 꽂을 수 없고, 그 반대도 안 됩니다."
+          ]
+        },
+        {
+          "h": "내 PC에는 뭐가 맞을까?",
+          "p": [
+            "AMD 라이젠 7000·9000 시리즈(AM5)는 DDR5만 씁니다. 라이젠 5000 이하(AM4)는 DDR4만 씁니다.",
+            "인텔 12~14세대는 메인보드에 따라 DDR4나 DDR5 중 하나를 씁니다. 메인보드 모델명이나 설명서에서 꼭 확인하세요. 인텔 코어 울트라(200S 시리즈)는 DDR5를 씁니다."
+          ]
+        },
+        {
+          "h": "추천",
+          "p": [
+            "새로 조립한다면 DDR5를 고르는 게 맞습니다. 최신 CPU와 메인보드가 모두 DDR5 기준이고, 앞으로도 오래 씁니다.",
+            "이미 DDR4 PC를 쓰고 있고 용량만 늘리고 싶다면 DDR4를 사면 됩니다. 램 때문에 메인보드와 CPU까지 바꿀 필요는 없습니다."
+          ]
+        }
       ]
     },
     "en": {
@@ -55,9 +153,29 @@
       "desc": "Speed, voltage and compatibility differences between DDR5 and DDR4, with today's prices side by side. Which RAM to buy for a new build or an upgrade.",
       "lead": "DDR5 and DDR4 sound alike but are different standards that do not fit the same slots. Your motherboard decides before the price does.",
       "sections": [
-        {"h": "The key differences", "p": ["Speed: DDR4 usually runs around 3200 MT/s; DDR5 starts at 4800–6000 MT/s and goes higher.", "Voltage: DDR4 runs at 1.2 V, DDR5 at 1.1 V, and DDR5 moves power management (the PMIC) onto the module.", "Design: each DDR5 module works like two independent channels and has on-die error correction (on-die ECC).", "Compatibility: the notch is in a different place, so DDR5 will not go into a DDR4 slot, and vice versa."]},
-        {"h": "Which one fits your PC?", "p": ["AMD Ryzen 7000 and 9000 (AM5) use DDR5 only. Ryzen 5000 and older (AM4) use DDR4 only.", "Intel 12th to 14th gen support either DDR4 or DDR5 depending on the motherboard, so check its model or manual. Intel Core Ultra (200S) uses DDR5."]},
-        {"h": "What we'd do", "p": ["For a new build, pick DDR5. Current CPUs and motherboards are built around it and it will last.", "If you already have a DDR4 PC and just need more capacity, buy DDR4. There's no need to replace the motherboard and CPU for RAM."]}
+        {
+          "h": "The key differences",
+          "p": [
+            "Speed: DDR4 usually runs around 3200 MT/s; DDR5 starts at 4800–6000 MT/s and goes higher.",
+            "Voltage: DDR4 runs at 1.2 V, DDR5 at 1.1 V, and DDR5 moves power management (the PMIC) onto the module.",
+            "Design: each DDR5 module works like two independent channels and has on-die error correction (on-die ECC).",
+            "Compatibility: the notch is in a different place, so DDR5 will not go into a DDR4 slot, and vice versa."
+          ]
+        },
+        {
+          "h": "Which one fits your PC?",
+          "p": [
+            "AMD Ryzen 7000 and 9000 (AM5) use DDR5 only. Ryzen 5000 and older (AM4) use DDR4 only.",
+            "Intel 12th to 14th gen support either DDR4 or DDR5 depending on the motherboard, so check its model or manual. Intel Core Ultra (200S) uses DDR5."
+          ]
+        },
+        {
+          "h": "What we'd do",
+          "p": [
+            "For a new build, pick DDR5. Current CPUs and motherboards are built around it and it will last.",
+            "If you already have a DDR4 PC and just need more capacity, buy DDR4. There's no need to replace the motherboard and CPU for RAM."
+          ]
+        }
       ]
     },
     "ja": {
@@ -65,10 +183,337 @@
       "desc": "DDR5とDDR4の速度・電圧・互換性の違いと今日の価格比較。新しく組むとき、増設するときにどちらのメモリを買うべきかまとめました。",
       "lead": "DDR5とDDR4は名前は似ていますが、同じスロットには挿せない別の規格です。何を買うかは、価格より先にマザーボードが決めます。",
       "sections": [
-        {"h": "主な違い", "p": ["速度:DDR4は3200MT/s前後が一般的、DDR5は4800~6000MT/s以上から始まります。", "電圧:DDR4は1.2V、DDR5は1.1Vとやや低く、DDR5は電源管理チップ(PMIC)をモジュール上に搭載しています。", "構造:DDR5はモジュール1枚が独立した2つのチャネルのように動作し、チップ内のエラー訂正(オンダイECC)を備えています。", "互換性:切り欠きの位置が違うため、DDR4のスロットにDDR5は挿せず、その逆もできません。"]},
-        {"h": "自分のPCにはどっち?", "p": ["AMD Ryzen 7000・9000シリーズ(AM5)はDDR5のみ。Ryzen 5000以前(AM4)はDDR4のみです。", "インテル第12~14世代はマザーボードによってDDR4かDDR5のどちらかを使います。マザーボードの型番や説明書で必ず確認してください。インテル Core Ultra(200Sシリーズ)はDDR5です。"]},
-        {"h": "おすすめ", "p": ["新しく組むならDDR5を選びましょう。最新のCPUとマザーボードはDDR5が前提で、長く使えます。", "すでにDDR4のPCを使っていて容量だけ増やしたいなら、DDR4を買えば十分です。メモリのためにマザーボードやCPUまで替える必要はありません。"]}
+        {
+          "h": "主な違い",
+          "p": [
+            "速度:DDR4は3200MT/s前後が一般的、DDR5は4800~6000MT/s以上から始まります。",
+            "電圧:DDR4は1.2V、DDR5は1.1Vとやや低く、DDR5は電源管理チップ(PMIC)をモジュール上に搭載しています。",
+            "構造:DDR5はモジュール1枚が独立した2つのチャネルのように動作し、チップ内のエラー訂正(オンダイECC)を備えています。",
+            "互換性:切り欠きの位置が違うため、DDR4のスロットにDDR5は挿せず、その逆もできません。"
+          ]
+        },
+        {
+          "h": "自分のPCにはどっち?",
+          "p": [
+            "AMD Ryzen 7000・9000シリーズ(AM5)はDDR5のみ。Ryzen 5000以前(AM4)はDDR4のみです。",
+            "インテル第12~14世代はマザーボードによってDDR4かDDR5のどちらかを使います。マザーボードの型番や説明書で必ず確認してください。インテル Core Ultra(200Sシリーズ)はDDR5です。"
+          ]
+        },
+        {
+          "h": "おすすめ",
+          "p": [
+            "新しく組むならDDR5を選びましょう。最新のCPUとマザーボードはDDR5が前提で、長く使えます。",
+            "すでにDDR4のPCを使っていて容量だけ増やしたいなら、DDR4を買えば十分です。メモリのためにマザーボードやCPUまで替える必要はありません。"
+          ]
+        }
       ]
+    }
+  },
+  "rtx-5090-worth": {
+    "updated": "2026-11-01",
+    "kind": "gpu",
+    "ko": {
+      "title": "RTX 5090 한 대 값이면 뭘 살 수 있을까?",
+      "desc": "RTX 5090 한 대 가격으로 RTX 5060, RTX 5070, DDR5 32GB 램을 몇 개나 살 수 있는지 오늘 최저가로 계산해 봤습니다.",
+      "lead": "그래픽카드 끝판왕 RTX 5090. 성능만큼 가격도 끝판왕입니다. 그 돈이면 다른 걸 얼마나 살 수 있는지, 오늘 최저가로 직접 계산해 봤습니다.",
+      "sections": [
+        {
+          "h": "왜 이렇게 비쌀까?",
+          "p": [
+            "RTX 5090은 32GB GDDR7 메모리를 단 최상위 카드입니다. 게임뿐 아니라 AI 모델을 직접 돌리려는 사람들까지 같은 카드를 찾다 보니 수요가 공급을 앞서기 쉽습니다.",
+            "결국 가격표는 성능표가 아니라 수요표에 가깝습니다."
+          ]
+        },
+        {
+          "h": "계산 방법",
+          "p": [
+            "아래 숫자는 오늘 수집한 각 제품의 최저가로 나눈 값입니다. 소수점은 버렸고, 매일 아침 가격이 바뀌면 이 계산도 함께 바뀝니다."
+          ]
+        }
+      ],
+      "fill": {
+        "h": "오늘 RTX 5090 한 대 값({price})으로 살 수 있는 것",
+        "item": "{name} {n}개 (1개 {each})"
+      }
+    },
+    "en": {
+      "title": "What else could you buy for one RTX 5090?",
+      "desc": "How many RTX 5060s, RTX 5070s or 32GB DDR5 sticks one RTX 5090 is worth, worked out from today's lowest prices.",
+      "lead": "The RTX 5090 is the top of the line, and its price is too. Here is how much else the same money buys, worked out from today's lowest prices.",
+      "sections": [
+        {
+          "h": "Why so expensive?",
+          "p": [
+            "The RTX 5090 is the flagship card with 32GB of GDDR7. Gamers and people running AI models locally want the same card, so demand easily outruns supply.",
+            "The price tag reads less like a spec sheet and more like a demand chart."
+          ]
+        },
+        {
+          "h": "How we count",
+          "p": [
+            "Each number below is the RTX 5090's lowest price today divided by the other product's lowest price, rounded down. When prices move in the morning, so do these."
+          ]
+        }
+      ],
+      "fill": {
+        "h": "What one RTX 5090 ({price}) buys today",
+        "item": "{n} × {name} ({each} each)"
+      }
+    },
+    "ja": {
+      "title": "RTX 5090 1枚の値段で何が買える?",
+      "desc": "RTX 5090 1枚の価格で、RTX 5060やRTX 5070、DDR5 32GBメモリがいくつ買えるか、今日の最安値で計算してみました。",
+      "lead": "グラボの頂点、RTX 5090。性能だけでなく値段も頂点です。同じお金で他に何がどれだけ買えるのか、今日の最安値で計算してみました。",
+      "sections": [
+        {
+          "h": "なぜこんなに高い?",
+          "p": [
+            "RTX 5090は32GBのGDDR7メモリを積んだ最上位カードです。ゲーマーだけでなく、AIモデルを手元で動かしたい人も同じカードを求めるため、需要が供給を上回りがちです。",
+            "値札はスペック表というより需要表に近いのです。"
+          ]
+        },
+        {
+          "h": "計算方法",
+          "p": [
+            "下の数字は、今日のRTX 5090の最安値を各製品の最安値で割って小数点以下を切り捨てたものです。毎朝価格が変わると、この計算も変わります。"
+          ]
+        }
+      ],
+      "fill": {
+        "h": "今日のRTX 5090 1枚分({price})で買えるもの",
+        "item": "{name} {n}個(1個 {each})"
+      }
+    }
+  },
+  "rtx-50-lineup": {
+    "updated": "2026-11-01",
+    "kind": "gpu",
+    "ko": {
+      "title": "RTX 5060부터 5090까지, VRAM 1GB 값으로 줄 세우기",
+      "desc": "RTX 50 시리즈 그래픽카드를 오늘 최저가와 VRAM 1GB당 가격으로 비교하고, 해상도·용도별로 어떤 등급이 맞는지 정리했습니다.",
+      "lead": "그래픽카드를 고를 때 가장 헷갈리는 건 \"어디까지 사야 하나\"입니다. RTX 50 시리즈를 오늘 가격과 VRAM 1GB당 가격으로 줄 세워 봤습니다.",
+      "sections": [
+        {
+          "h": "등급별로 이렇게 보면 쉽습니다",
+          "p": [
+            "RTX 5060(8GB): 1080p 게임을 적당한 설정으로 즐기기 좋은 입문 카드입니다.",
+            "RTX 5060 Ti(16GB)·RTX 5070(12GB): 1440p 게임의 주력 구간입니다. 최신 게임을 높은 설정으로 돌리려면 이쯤부터 편합니다.",
+            "RTX 5070 Ti·RTX 5080(16GB): 고주사율 1440p나 4K를 노리는 구간입니다.",
+            "RTX 5090(32GB): 4K 최고 설정, 그리고 AI 모델을 직접 돌리는 사람에게 필요한 카드입니다."
+          ]
+        },
+        {
+          "h": "VRAM이 왜 중요할까?",
+          "p": [
+            "VRAM은 그래픽카드 전용 메모리입니다. 고해상도 텍스처나 AI 모델은 VRAM에 다 올라가야 빠르게 돌아갑니다. 그래서 같은 값이면 VRAM이 많은 카드가 오래 버티는 경우가 많습니다.",
+            "다만 VRAM 1GB당 가격이 싸다고 무조건 좋은 건 아닙니다. 칩 성능이 다르기 때문에, 아래 표는 \"가성비 감\"을 잡는 참고용으로 보세요."
+          ]
+        }
+      ],
+      "fill": {
+        "h": "오늘 가격과 VRAM 1GB당 가격",
+        "vram": "VRAM",
+        "perGb": "VRAM 1GB당"
+      }
+    },
+    "en": {
+      "title": "RTX 5060 to 5090, lined up by price per GB of VRAM",
+      "desc": "RTX 50 series graphics cards compared by today's lowest price and price per GB of VRAM, with which tier fits which resolution and use.",
+      "lead": "The hardest part of choosing a graphics card is deciding how far up to go. Here is the RTX 50 series lined up by today's price and by price per GB of VRAM.",
+      "sections": [
+        {
+          "h": "The tiers, simply",
+          "p": [
+            "RTX 5060 (8GB): an entry card for 1080p gaming at sensible settings.",
+            "RTX 5060 Ti (16GB) and RTX 5070 (12GB): the 1440p sweet spot; comfortable for new games at high settings.",
+            "RTX 5070 Ti and RTX 5080 (16GB): high-refresh 1440p or 4K.",
+            "RTX 5090 (32GB): 4K at max settings, and the card for running AI models yourself."
+          ]
+        },
+        {
+          "h": "Why VRAM matters",
+          "p": [
+            "VRAM is the card's own memory. High-resolution textures and AI models run fast only when they fit in it, so at the same price a card with more VRAM often lasts longer.",
+            "A low price per GB is not the whole story, though: the chips differ too. Treat the table as a feel for value, not a ranking."
+          ]
+        }
+      ],
+      "fill": {
+        "h": "Today's price and price per GB of VRAM",
+        "vram": "VRAM",
+        "perGb": "Per GB of VRAM"
+      }
+    },
+    "ja": {
+      "title": "RTX 5060から5090まで、VRAM 1GBあたりの値段で並べてみた",
+      "desc": "RTX 50シリーズのグラボを今日の最安値とVRAM 1GBあたりの価格で比較し、解像度・用途別にどのクラスが合うかまとめました。",
+      "lead": "グラボ選びで一番迷うのは「どこまで買うか」。RTX 50シリーズを今日の価格とVRAM 1GBあたりの価格で並べてみました。",
+      "sections": [
+        {
+          "h": "クラス別にはこう考えると簡単",
+          "p": [
+            "RTX 5060(8GB):1080pゲームを程よい設定で楽しむ入門カード。",
+            "RTX 5060 Ti(16GB)・RTX 5070(12GB):1440pゲームの主力ゾーン。最新ゲームを高設定で遊ぶならこのあたりから快適です。",
+            "RTX 5070 Ti・RTX 5080(16GB):高リフレッシュレートの1440pや4Kを狙うゾーン。",
+            "RTX 5090(32GB):4K最高設定、そしてAIモデルを手元で動かす人のためのカード。"
+          ]
+        },
+        {
+          "h": "VRAMはなぜ大事?",
+          "p": [
+            "VRAMはグラボ専用のメモリです。高解像度のテクスチャやAIモデルはVRAMに収まってこそ速く動きます。同じ値段ならVRAMが多いカードの方が長く使えることが多いです。",
+            "ただし1GBあたりが安ければ良いとは限りません。チップの性能が違うので、下の表は「コスパの感覚」をつかむ参考にしてください。"
+          ]
+        }
+      ],
+      "fill": {
+        "h": "今日の価格とVRAM 1GBあたりの価格",
+        "vram": "VRAM",
+        "perGb": "VRAM 1GBあたり"
+      }
+    }
+  },
+  "ram-price-per-gb": {
+    "updated": "2026-11-01",
+    "kind": "ram",
+    "ko": {
+      "title": "램 1GB는 얼마일까? 제조사·용량별 GB당 가격 순위",
+      "desc": "삼성전자·SK하이닉스·마이크론·KLEVV·커세어·지스킬 DDR5 램을 1GB당 가격으로 줄 세웠습니다. 오늘 최저가로 매일 갱신됩니다.",
+      "lead": "램은 용량이 다르니 가격만 보면 비교가 어렵습니다. 그래서 모든 제품을 1GB당 가격으로 바꿔 줄을 세워 봤습니다.",
+      "sections": [
+        {
+          "h": "보는 법",
+          "p": [
+            "같은 용량이라도 제조사, 속도(5600·6000MT/s), 2개 묶음 여부에 따라 1GB 값이 꽤 차이 납니다.",
+            "보통 큰 용량이나 2개 묶음이 1GB당 더 싸지만, 요즘처럼 가격이 출렁일 때는 반대인 날도 있습니다. 표는 매일 아침 바뀝니다."
+          ]
+        }
+      ],
+      "fill": {
+        "h": "오늘 DDR5 램 1GB당 가격 순위",
+        "cap": "용량",
+        "perGb": "1GB당"
+      }
+    },
+    "en": {
+      "title": "What does 1GB of RAM cost? Price per GB by maker and size",
+      "desc": "DDR5 RAM from Samsung, SK hynix, Micron, KLEVV, Corsair and G.SKILL lined up by price per GB, updated daily from today's lowest prices.",
+      "lead": "RAM comes in different sizes, so prices alone don't compare well. Here every product is turned into a price per GB and lined up.",
+      "sections": [
+        {
+          "h": "How to read it",
+          "p": [
+            "Even at the same size, maker, speed (5600 vs 6000 MT/s) and two-stick kits change the price per GB quite a bit.",
+            "Bigger sizes and kits are usually cheaper per GB, but with prices swinging like this, some days it is the other way round. The table changes every morning."
+          ]
+        }
+      ],
+      "fill": {
+        "h": "Today's DDR5 price per GB, cheapest first",
+        "cap": "Size",
+        "perGb": "Per GB"
+      }
+    },
+    "ja": {
+      "title": "メモリ1GBはいくら?メーカー・容量別GB単価ランキング",
+      "desc": "サムスン・マイクロン・KLEVV・Corsair・G.SKILLのDDR5メモリを1GBあたりの価格で並べました。今日の最安値で毎日更新されます。",
+      "lead": "メモリは容量が違うので、値段だけでは比べにくいもの。そこで全製品を1GBあたりの価格に直して並べてみました。",
+      "sections": [
+        {
+          "h": "見方",
+          "p": [
+            "同じ容量でも、メーカー、速度(5600・6000MT/s)、2枚組かどうかで1GBあたりの値段はかなり違います。",
+            "普通は大容量や2枚組の方が1GBあたり安いですが、今のように価格が揺れる時期は逆の日もあります。表は毎朝更新されます。"
+          ]
+        }
+      ],
+      "fill": {
+        "h": "今日のDDR5メモリ GB単価ランキング",
+        "cap": "容量",
+        "perGb": "1GBあたり"
+      }
+    }
+  },
+  "chrome-tabs-ram": {
+    "updated": "2026-11-01",
+    "kind": "ram",
+    "ko": {
+      "title": "크롬 탭 87개, 램값으로 치면 얼마일까?",
+      "desc": "올트먼은 PC 램이 놀고 있다고 했지만, 크롬 탭 87개는 생각이 다릅니다. 탭 하나가 쓰는 램을 오늘 램값으로 환산해 봤습니다.",
+      "lead": "샘 올트먼은 개인 PC의 램이 대부분 놀고 있다고 했습니다. 그 말을 들은 우리 크롬 탭 87개는 동의하지 않았습니다. 그래서 탭이 쓰는 램을 돈으로 바꿔 봤습니다.",
+      "sections": [
+        {
+          "h": "탭 하나는 램을 얼마나 쓸까?",
+          "p": [
+            "사이트마다 다릅니다. 글만 있는 페이지는 수십 MB, 영상이나 웹앱이 돌아가는 탭은 수백 MB에서 1GB를 넘기기도 합니다.",
+            "여기서는 계산을 위해 탭 하나가 평균 150MB를 쓴다고 가정했습니다. 실제 사용량은 크롬의 작업 관리자(Shift+Esc)에서 확인할 수 있습니다."
+          ]
+        },
+        {
+          "h": "그래서 결론은",
+          "p": [
+            "탭을 닫으면 램값을 아끼는 셈입니다. 물론 우리는 닫지 않을 겁니다."
+          ]
+        }
+      ],
+      "fill": {
+        "h": "오늘 램값으로 계산하면",
+        "tab": "탭 1개(150MB 가정)",
+        "tabs": "탭 87개(약 {gb}GB)",
+        "basis": "기준: 오늘 가장 싼 DDR5 램의 1GB당 가격({per}, {name})"
+      }
+    },
+    "en": {
+      "title": "What do 87 Chrome tabs cost in RAM?",
+      "desc": "Altman says PC RAM sits idle. Our 87 Chrome tabs disagree. We priced the RAM one tab uses at today's RAM prices.",
+      "lead": "Sam Altman says most RAM in personal computers sits idle. Our 87 Chrome tabs heard that and disagreed. So we turned the RAM they use into money.",
+      "sections": [
+        {
+          "h": "How much RAM does a tab use?",
+          "p": [
+            "It depends on the site. A text page takes tens of MB; a tab running video or a web app can take hundreds of MB, even over 1GB.",
+            "For the sums we assume an average of 150MB per tab. You can check the real numbers in Chrome's Task Manager (Shift+Esc)."
+          ]
+        },
+        {
+          "h": "The conclusion",
+          "p": [
+            "Closing tabs saves you RAM money. We will not be closing any."
+          ]
+        }
+      ],
+      "fill": {
+        "h": "At today's RAM prices",
+        "tab": "One tab (150MB assumed)",
+        "tabs": "87 tabs (about {gb}GB)",
+        "basis": "Based on today's cheapest DDR5 price per GB ({per}, {name})"
+      }
+    },
+    "ja": {
+      "title": "Chromeのタブ87個、メモリ代に換算するといくら?",
+      "desc": "アルトマンはPCのメモリは遊んでいると言いましたが、Chromeのタブ87個は反対です。タブ1個が使うメモリを今日のメモリ価格で換算しました。",
+      "lead": "サム・アルトマンは個人PCのメモリはほとんど遊んでいると言いました。それを聞いたうちのChromeのタブ87個は納得していません。そこでタブが使うメモリをお金に換えてみました。",
+      "sections": [
+        {
+          "h": "タブ1個はメモリをどれくらい使う?",
+          "p": [
+            "サイトによって違います。文章だけのページは数十MB、動画やWebアプリが動くタブは数百MBから1GBを超えることもあります。",
+            "ここでは計算のため、タブ1個の平均を150MBと仮定しました。実際の使用量はChromeのタスクマネージャー(Shift+Esc)で確認できます。"
+          ]
+        },
+        {
+          "h": "結論",
+          "p": [
+            "タブを閉じればメモリ代の節約になります。もちろん、私たちは閉じませんが。"
+          ]
+        }
+      ],
+      "fill": {
+        "h": "今日のメモリ価格で計算すると",
+        "tab": "タブ1個(150MBと仮定)",
+        "tabs": "タブ87個(約{gb}GB)",
+        "basis": "基準:今日いちばん安いDDR5メモリの1GBあたり価格({per}、{name})"
+      }
     }
   }
 }

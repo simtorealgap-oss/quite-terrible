@@ -363,6 +363,43 @@ def guide_body(slug, lang, strings, products, news, base, money):
             if a and b:
                 out.append(f'<p>{html.escape(strings["compareSentence"].format(a=name_of(a, lang), pa=money(a["price"]), b=name_of(b, lang), pb=money(b["price"])))}</p>')
             out.append(price_table(pair, lang, strings, base, money, ('today', 'low30', 'high30')))
+    fill = g.get('fill', {})
+    if slug == 'rtx-5090-worth' and by_id.get('rtx-5090'):
+        big = by_id['rtx-5090']['price']
+        items = []
+        for pid in ('rtx-5060', 'rtx-5070', 'samsung-ddr5-32', 'samsung-ddr5-16', 'crucial-ddr5-64'):
+            q = by_id.get(pid)
+            if q and q['price']:
+                items.append(fill['item'].format(name=name_of(q, lang), n=int(big // q['price']), each=money(q['price'])))
+        out.append(f'<h2>{html.escape(fill["h"].format(price=money(big)))}</h2><ul class="guide-facts">'
+                   + ''.join(f'<li>{html.escape(x)}</li>' for x in items) + '</ul>')
+    if slug == 'rtx-50-lineup':
+        gpus = sorted((q for q in priced if q['category'] == 'gpu'), key=lambda q: q['price'] / q['capacity'])
+        if gpus:
+            rows = ''.join(f'<tr><td><a href="{html.escape(base + page_path(lang, "product", q["id"]))}">{html.escape(name_of(q, lang))}</a></td>'
+                           f'<td class="num">{q["capacity"]}GB</td><td class="num">{html.escape(money(q["price"]))}</td>'
+                           f'<td class="num">{html.escape(money(q["price"] / q["capacity"]))}</td></tr>' for q in gpus)
+            out.append(f'<h2>{html.escape(fill["h"])}</h2><div class="table-wrap"><table class="grid guide-table"><thead><tr>'
+                       f'<th>{html.escape(strings["colProduct"])}</th><th class="num">{html.escape(fill["vram"])}</th>'
+                       f'<th class="num">{html.escape(strings["colToday"])}</th><th class="num">{html.escape(fill["perGb"])}</th>'
+                       f'</tr></thead><tbody>{rows}</tbody></table></div>')
+    ddr5 = sorted((q for q in priced if q['category'] == 'ram' and q.get('generation') == 'DDR5'), key=lambda q: q['price'] / q['capacity'])
+    if slug == 'ram-price-per-gb' and ddr5:
+        rows = ''.join(f'<tr><td>{i + 1}</td><td><a href="{html.escape(base + page_path(lang, "product", q["id"]))}">{html.escape(name_of(q, lang))}</a></td>'
+                       f'<td class="num">{q["capacity"]}GB</td><td class="num">{html.escape(money(q["price"]))}</td>'
+                       f'<td class="num">{html.escape(money(q["price"] / q["capacity"]))}</td></tr>' for i, q in enumerate(ddr5))
+        out.append(f'<h2>{html.escape(fill["h"])}</h2><div class="table-wrap"><table class="grid guide-table"><thead><tr><th>#</th>'
+                   f'<th>{html.escape(strings["colProduct"])}</th><th class="num">{html.escape(fill["cap"])}</th>'
+                   f'<th class="num">{html.escape(strings["colToday"])}</th><th class="num">{html.escape(fill["perGb"])}</th>'
+                   f'</tr></thead><tbody>{rows}</tbody></table></div>')
+    if slug == 'chrome-tabs-ram' and ddr5:
+        cheap = ddr5[0]
+        per = cheap['price'] / cheap['capacity']
+        gb = round(87 * 0.15, 1)
+        out.append(f'<h2>{html.escape(fill["h"])}</h2><ul class="guide-facts">'
+                   f'<li><b>{html.escape(fill["tab"])}</b>: {html.escape(money(per * 0.15))}</li>'
+                   f'<li><b>{html.escape(fill["tabs"].format(gb=gb))}</b>: {html.escape(money(per * gb))}</li></ul>'
+                   f'<p class="guide-note">{html.escape(fill["basis"].format(per=money(per), name=name_of(cheap, lang)))}</p>')
     if slug == 'why-ram-prices-rise':
         ram = [p for p in priced if p['category'] == 'ram' and p.get('generation') == 'DDR5']
         if ram:
