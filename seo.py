@@ -73,13 +73,19 @@ def seo_context(lang, page, strings, products, base='', site='', product_id=None
     graph = [{'@type': 'WebSite', '@id': absolute('/#website'), 'name': strings['brand'], 'url': absolute('/'),
               'inLanguage': lang, 'description': strings['seoPricesDescEmpty']}]
     extra = {'productHeading': '', 'productLead': '', 'productStatic': '', 'relatedLinks': '', 'productCategory': '',
-             'prerenderRows': '', 'makerRows': ''}
+             'prerenderRows': '', 'makerRows': '', 'productFacts': ''}
 
     if page == 'prices':
         title = strings['seoPricesTitle']
-        lead = [p for p in priced if p['id'] in ('samsung-ddr5-32', 'samsung-ddr5-16', 'rtx-5080', 'rtx-5070', 'rtx-5090')]
-        desc = (strings['seoPricesDesc'].format(prices=', '.join(f"{name_of(p, lang)} {money(p['price'])}" for p in lead))
-                if lead else strings['seoPricesDescEmpty'])
+        lead = [p for p in priced if p['id'] in ('samsung-ddr5-32', 'rtx-5080', 'rtx-5070')]
+        desc = strings['seoPricesDescEmpty']
+        while lead:  # keep the description within what search results show (about 160 characters)
+            desc = strings['seoPricesDesc'].format(prices=', '.join(f"{name_of(p, lang)} {money(p['price'])}" for p in lead))
+            if len(desc) <= 160:
+                break
+            lead = lead[:-1]
+        if len(desc) > 160:
+            desc = strings['seoPricesDescEmpty']
         graph.append({'@type': 'ItemList', 'name': strings['pricesHeading'], 'itemListElement': [
             {'@type': 'ListItem', 'position': i + 1, 'item': product_ld(p, lang, absolute, currency)}
             for i, p in enumerate(priced)]})
@@ -99,6 +105,7 @@ def seo_context(lang, page, strings, products, base='', site='', product_id=None
         extra['productLead'] = strings['productLead' if has_price else 'productLeadEmpty'].format(**fmt)
         extra['productCategory'] = CATEGORY_NAMES[lang][p['category']]
         extra['productStatic'] = product_static(p, lang, strings, currency)
+        extra['productFacts'] = product_facts(p, lang, strings, money) if has_price else ''
         extra['relatedLinks'] = ''.join(
             f'<li><a href="{html.escape(base)}{page_path(lang, "product", q["id"])}"><span>{html.escape(name_of(q, lang))}</span>'
             f'<b>{html.escape(money(q.get("price")))}</b></a></li>' for q in products if q['id'] != product_id)
@@ -174,6 +181,21 @@ def seller_row(mall, kind, name, meta, price, href, cta, sponsored):
             f'<div class="seller-price">{price}</div><a class="go {kind}" href="{href}" target="_blank" rel="{rel}">{html.escape(cta)}</a></li>')
 
 
+def product_facts(p, lang, strings, money):
+    """A plain-text price summary under the chart: real numbers a reader (or a search engine) can quote."""
+    best = best_offer(p) or {}
+    source = strings[SOURCES.get(best.get('source'), ('srcDanawa',))[0]]
+    low, high = p.get('low30') or p['price'], p.get('high30') or p['price']
+    change = p.get('change7')
+    rows = [(strings['factToday'], money(p['price'])), (strings['factLow30'], money(low)), (strings['factHigh30'], money(high)),
+            (strings['factChange7'], '—' if change is None else f'{change:+.1f}%'), (strings['factSellers'], str(best.get('shops') or '—')),
+            (strings['factSpec'], full_name(p)), (strings['factSource'], source)]
+    items = ''.join(f'<div><dt>{html.escape(k)}</dt><dd>{html.escape(v)}</dd></div>' for k, v in rows)
+    text = strings['factSummary'].format(name=name_of(p, lang), low=money(low), high=money(high), source=source)
+    return (f'<section class="panel facts"><h2>{html.escape(strings["factsTitle"].format(name=name_of(p, lang)))}</h2>'
+            f'<dl class="facts-list">{items}</dl><p class="facts-text">{html.escape(text)}</p></section>')
+
+
 SOURCES = {'danawa': ('srcDanawa', 'danawaGo'), 'kakaku': ('srcKakaku', 'kakakuGo')}
 
 
@@ -224,6 +246,43 @@ def sitemap(site, base, products, langs=LANGS, lastmod=None, available=None):
             out.append('  </url>')
     out.append('</urlset>')
     return '\n'.join(out) + '\n'
+
+
+def news_rows(news, lang, strings):
+    """Latest headlines as plain HTML for crawlers that do not run JavaScript; app.js re-renders them."""
+    items = []
+    for n in (news or [])[:30]:
+        if not str(n.get('url', '')).startswith(('https://', 'http://')):
+            continue
+        at = dt.datetime.fromisoformat(n['published_at']).astimezone(KST)
+        tag = strings['catRamShort'] if n.get('category') == 'ram' else strings['catGpuShort']
+        items.append(f'<li class="news-item"><time class="news-time" datetime="{html.escape(n["published_at"])}">{at:%m-%d %H:%M}</time>'
+                     f'<div class="news-body"><a class="news-title" href="{html.escape(n["url"])}" target="_blank" rel="noopener noreferrer">'
+                     f'{html.escape(n["title"])}</a><div class="news-meta"><span class="tag {html.escape(n.get("category", ""))}">{html.escape(tag)}</span>'
+                     f'<span>{html.escape(n.get("publisher", ""))}</span></div></div></li>')
+    return f'<section class="news-day"><ol class="news-items">{"".join(items)}</ol></section>' if items else ''
+
+
+def llms_txt(site, base, by_lang):
+    """/llms.txt: a plain summary for AI search and answer engines, with today's prices per market."""
+    lines = ['# Quite Terrible', '',
+             '> Daily RAM (DDR4/DDR5) and NVIDIA GeForce RTX graphics card prices in Korea and Japan, with price history.',
+             '> Korean prices are the lowest new-item prices on Danawa; Japanese prices come from Kakaku.com. Checked every morning at 09:00 KST/JST.',
+             '', '## Pages', '',
+             f'- [Korean prices (원)]({site}{base}/ko/): 램 가격·그래픽카드 가격 오늘 시세',
+             f'- [Japanese prices (円)]({site}{base}/ja/): メモリ価格・グラボ価格 今日の相場',
+             f'- [English]({site}{base}/en/): RAM & GPU prices today',
+             f'- [About]({site}{base}/en/about/): why this site exists', '']
+    for lang, title in (('ko', 'Korea, KRW'), ('ja', 'Japan, JPY')):
+        payload = by_lang[lang]
+        priced = [p for p in payload['products'] if p.get('price') is not None]
+        if not priced:
+            continue
+        lines += [f'## Today\'s lowest prices ({title})', '']
+        lines += [f"- [{name_of(p, lang)}]({site}{base}{page_path(lang, 'product', p['id'])}): {won(p['price'], 'en', payload['currency'])}"
+                  for p in priced]
+        lines.append('')
+    return '\n'.join(lines)
 
 
 def robots(site, base):

@@ -14,7 +14,7 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from store import ROOT, PRODUCTS, MARKETS, CURRENCY, STALE_SECONDS, session, product_view, coupang_offer, demo_products, stamp, now, parse_time
 from collectors import update_prices, update_news, import_feed
-from seo import seo_context
+from seo import seo_context, news_rows
 
 LANGS = ('ko', 'en', 'ja')
 # Each page language shows one market's prices: Korea for Korean, Japan for Japanese, the US for English.
@@ -23,7 +23,8 @@ I18N = json.loads((ROOT / 'config/i18n.json').read_text())
 PAGES = {f'/{lang}/{path}': (lang, page, None) for lang in LANGS
          for path, page in (('', 'prices'), ('news/', 'news'), ('about/', 'about'))}
 PAGES |= {f"/{lang}/{p['id']}/": (lang, 'product', p['id']) for lang in LANGS for p in PRODUCTS}
-RAW = {'boot', 'jsonld', 'headExtra', 'alternates', 'prerenderRows', 'makerRows', 'productStatic', 'relatedLinks'}
+PAGE_BLOCK = re.compile(r'<!--page:(\w+)-->(.*?)<!--/page:\1-->', re.S)
+RAW = {'boot', 'jsonld', 'headExtra', 'alternates', 'prerenderRows', 'makerRows', 'productStatic', 'productFacts', 'relatedLinks', 'newsRows'}
 # Country headers set by common CDNs/hosts. They only pick defaults; visitors can always switch.
 COUNTRY_HEADERS = ('CF-IPCountry', 'CloudFront-Viewer-Country', 'X-Vercel-IP-Country', 'X-Country-Code')
 PLACEHOLDER = re.compile(r'\{\{(\w+)\}\}')
@@ -118,6 +119,7 @@ def render_page(lang, page, market, base='', static=False, site='', product=None
         currency, products = products['currency'], products['products']
     context = strings | {'lang': lang, 'base': base, 'year': str(now().year), 'v': asset_version()}
     context |= seo_context(lang, page, strings, products, base=base, site=site, product_id=product, currency=currency, alt_langs=alt_langs)
+    context['newsRows'] = news_rows(news_payload(lang)['news'], lang, strings) if page == 'news' else ''
     for name in ('prices', 'news', 'about', 'product'):
         context[f'{name}Current'] = 'page' if page == name or (name == 'prices' and page == 'product') else 'false'
         context[f'{name}Hidden'] = '' if page == name else 'hidden'
@@ -129,7 +131,11 @@ def render_page(lang, page, market, base='', static=False, site='', product=None
     def fill(match):
         key = match.group(1)
         return context[key] if key in RAW else html.escape(str(context[key]))
-    return PLACEHOLDER.sub(fill, (ROOT / 'static/index.html').read_text())
+    template = (ROOT / 'static/index.html').read_text()
+    # Only this page's own sections go into the HTML: hidden copies of the other pages would give every
+    # page several <h1>s and someone else's text in the eyes of search engines.
+    template = PAGE_BLOCK.sub(lambda m: m.group(2) if m.group(1) == page else '', template)
+    return PLACEHOLDER.sub(fill, template)
 
 
 def prices_payload(market, demo=False):

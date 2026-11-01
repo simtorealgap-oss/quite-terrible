@@ -569,3 +569,15 @@ class PricedOnly(unittest.TestCase):
         self.assertIn('hreflang="ko"', page['alternates'])
         self.assertNotIn('hreflang="en"', page['alternates'])
         self.assertNotIn(b, page['relatedLinks'])
+
+
+class SeoBasics(unittest.TestCase):
+    def test_each_page_has_one_h1_and_a_short_description(self):
+        import re as _re
+        for lang in ('ko', 'en', 'ja'):
+            for page in ('prices', 'news', 'about'):
+                html = render_page(lang, page, None, site='https://quiteterrible.com', products={'currency': 'KRW', 'products': []})
+                self.assertEqual(len(_re.findall(r'<h1[\s>]', html)), 1, (lang, page))
+                desc = _re.search(r'<meta name="description" content="([^"]*)"', html).group(1)
+                self.assertLessEqual(len(desc), 160, (lang, page))
+                self.assertNotIn('<!--page:', html)

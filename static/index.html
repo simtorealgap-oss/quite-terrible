@@ -45,7 +45,7 @@
       </nav>
     </div>
   </header>
-  <section class="hero" id="hero" aria-labelledby="hero-title" {{pricesHidden}}>
+  <!--page:prices--><section class="hero" id="hero" aria-labelledby="hero-title" {{pricesHidden}}>
     <canvas class="hero-canvas" id="hero-canvas" aria-hidden="true"></canvas>
     <div class="wrap hero-content" id="hero-content">
       <div>
@@ -59,9 +59,9 @@
       </div>
     </div>
   </section>
-
+<!--/page:prices-->
   <main id="main" class="wrap">
-    <section id="prices" class="page page-prices" {{pricesHidden}}>
+<!--page:prices-->    <section id="prices" class="page page-prices" {{pricesHidden}}>
       <div class="page-head">
         <div class="page-title">
           <h1>{{pricesHeading}}</h1>
@@ -115,9 +115,9 @@
           <div id="table-msg" class="table-msg" role="status" hidden></div>
         </div>
       </section>
-    </section>
+    </section><!--/page:prices-->
 
-    <section id="page-news" class="page" {{newsHidden}}>
+<!--page:news-->    <section id="page-news" class="page" {{newsHidden}}>
       <div class="page-head">
         <div class="page-title">
           <h1>{{newsHeading}}</h1>
@@ -134,12 +134,12 @@
               <button type="button" data-news-category="gpu" aria-pressed="false">{{catGpu}}</button>
             </div>
           </div>
-          <div id="news-list" class="news-list" aria-live="polite"></div>
+          <div id="news-list" class="news-list" aria-live="polite">{{newsRows}}</div>
         </section>
       </div>
-    </section>
+    </section><!--/page:news-->
 
-    <section id="page-product" class="page product" {{productHidden}}>
+<!--page:product-->    <section id="page-product" class="page product" {{productHidden}}>
       <nav class="crumbs" aria-label="{{crumbLabel}}"><a href="{{base}}/{{lang}}/">{{navPrices}}</a><span aria-hidden="true">›</span><span>{{productCategory}}</span></nav>
       <div class="page-head"><div class="page-title"><h1>{{productHeading}}</h1></div></div>
       <p class="product-lead">{{productLead}}</p>
@@ -150,9 +150,10 @@
           <ul class="side-list related-list">{{relatedLinks}}</ul>
         </aside>
       </div>
-    </section>
+      {{productFacts}}
+    </section><!--/page:product-->
 
-    <section id="page-about" class="page about" {{aboutHidden}}>
+<!--page:about-->    <section id="page-about" class="page about" {{aboutHidden}}>
       <div class="about-wrap">
         <div class="page-head"><div class="page-title"><h1>{{aboutHeading}}</h1></div></div>
         <figure class="about-quote">
@@ -178,7 +179,7 @@
         <p class="about-closing">{{aboutClosing}}</p>
         <p class="about-disclaimer">{{aboutDisclaimer}}</p>
       </div>
-    </section>
+    </section><!--/page:about-->
   </main>
 
   <footer class="footer">

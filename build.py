@@ -10,7 +10,7 @@ import shutil
 from pathlib import Path
 from store import ROOT
 from server import LANGS, PRODUCTS, render_page, prices_payload, news_payload, seo_products
-from seo import sitemap, robots
+from seo import sitemap, robots, llms_txt
 
 PAGES = (('prices', ''), ('news', 'news/'), ('about', 'about/'))
 
@@ -94,6 +94,7 @@ def build(out, base='', site=''):
     if site:  # absolute URLs are required in sitemaps
         (out / 'sitemap.xml').write_text(sitemap(site, base, products, langs=LANGS, available=priced))
         (out / 'robots.txt').write_text(robots(site, base))
+        (out / 'llms.txt').write_text(llms_txt(site, base, by_lang))
     ads = ROOT / 'config/ads.txt'  # ad network seller file (AdSense etc.), must sit at the domain root
     if ads.exists():
         shutil.copy(ads, out / 'ads.txt')
