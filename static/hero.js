@@ -201,7 +201,7 @@
   const IDLE = linesFor('gameLine'), ANGRY = linesFor('gameAngry'), TOSS = linesFor('gameToss');
   function say(keys, seconds, angry = false) {
     const text = pick(keys);
-    if (text) { bubble = {text, t: seconds, angry}; bubbleIn = 8 + Math.random() * 6; }
+    if (text) { bubble = {text, t: seconds, angry, at: time}; bubbleIn = 8 + Math.random() * 6; }
   }
   function arc(s, x1, y1, d, h, then) { Object.assign(s, {from: [s.x, s.y], to: [x1, y1], d, h, t: 0, then}); }
   function toPeople(s, mine) {
@@ -444,14 +444,12 @@
   const ANGRY_PAL = {...BOSS_PAL, s: '#f7b49c', S: '#e58f74', m: '#8f2a22'};
   function drawBoss(c) {
     const angry = bubble?.angry;
-    const shake = angry ? (Math.floor(time * 30) % 2 ? 1 : -1) : 0;  // trembling with rage
+    const since = angry ? time - bubble.at : 1;
+    const shake = since < 0.24 ? (Math.floor(since * 25) % 2 ? 1 : -1) : 0;  // one quick jolt, then still
     const by = gy - BOSS.length, bx = bossX + shake;
     sprite(c, angry ? BOSS_ANGRY : BOSS, bx, by, angry ? ANGRY_PAL : BOSS_PAL);
     if (angry) {
       sprite(c, ANGER_MARK, bx + 12, by - 2, {r: '#e8483c'});
-      const puff = Math.floor(time * 6) % 3;  // steam from the head
-      px(c, C.white, bx + 2 - puff, by - 2 - puff * 2, 2, 2); px(c, C.white, bx + 6 + puff, by - 3 - puff * 2, 2, 2);
-      px(c, C.smoke1, bx + 1 - puff, by - 4 - puff * 2, 2, 1);
     }
     if (grab > 0) {  // reaching for the belt
       px(c, C.K, bossX - 3, by + 13, 4, 3); px(c, C.skin1, bossX - 2, by + 14, 2, 1);
@@ -554,7 +552,7 @@
     if (bubble) {  // 16-bit dialogue box left of the boss's head
       ctx.font = `${bubble.angry ? 900 : 700} ${bubble.angry ? 14 : 12}px ${FONT}`;
       const pad = 8, w = Math.ceil(ctx.measureText(bubble.text).width) + pad * 2, h = bubble.angry ? 28 : 24;
-      const jolt = bubble.angry ? Math.round(Math.sin(time * 50) * 2) : 0;
+      const jolt = bubble.angry && time - bubble.at < 0.24 ? (Math.floor((time - bubble.at) * 25) % 2 ? 1 : -1) : 0;
       const headX = (bossX + 8) * S, headTop = y0 + (gy - BOSS.length) * S;
       let top = headTop - h - 16, left = Math.min(W - w - 8, headX - w + 18), tail = 'down';
       if (top < 54) { top = headTop + 2; left = Math.max(6, bossX * S - 10 - w); tail = 'right'; }
