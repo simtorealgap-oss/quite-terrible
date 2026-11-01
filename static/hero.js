@@ -159,6 +159,28 @@
   let record = 0;
   try { record = Math.max(0, parseInt(localStorage.getItem(RECORD), 10) || 0); } catch {}
   function saveRecord() { try { localStorage.setItem(RECORD, String(record)); } catch {} }
+  // Worldwide total: a public counter shared by every visitor (Abacus, no key; +1 per grab).
+  // Grabs are sent one at a time, a little apart, to stay well under its rate limit.
+  const COUNTER = 'https://abacus.jasoncameron.dev';
+  const COUNTER_KEY = 'quiteterrible/ram-saved-world';
+  let world = null, pending = 0, sending = false;
+  function readWorld() {
+    fetch(`${COUNTER}/get/${COUNTER_KEY}`, {cache: 'no-store'})
+      .then(r => r.status === 404 ? {value: 0} : r.ok ? r.json() : null)
+      .then(d => { if (d && Number.isFinite(d.value)) { world = d.value; draw(); } })
+      .catch(() => {});
+  }
+  function sendGrabs() {
+    if (sending || !pending) return;
+    sending = true;
+    fetch(`${COUNTER}/hit/${COUNTER_KEY}`, {cache: 'no-store'})
+      .then(r => r.ok ? r.json() : null)
+      .then(d => { if (d && Number.isFinite(d.value)) { pending -= 1; world = d.value; } })
+      .catch(() => {})
+      .finally(() => { sending = false; if (pending) setTimeout(sendGrabs, 400); });
+  }
+  readWorld();
+  setInterval(() => { if (visible && !document.hidden && !pending) readWorld(); }, 30000);
   let board = [], boardAt = 0, boardIn = 0;  // the real daily change, with a joke from the boss's world
   let sticks = [], smoke = [], popups = [], spawnIn = 0.6, tossEvery = 11, sinceToss = 0;
   let bubble = null, bubbleIn = 4, grab = 0, time = 0;
@@ -492,11 +514,9 @@
     }
     // Scoreboard over the data center.
     ctx.font = `800 11px ${FONT}`; ctx.textAlign = 'right';
-    outlined(fmt('gameCount', {ai: state.ai, people: state.people}), W - 12, small ? 54 : 14, '#2e3f63');
-    if (record) {  // lifetime total, a little celebration every 100
-      ctx.font = `800 ${record % 100 === 0 && popups.length ? 14 : 12}px ${FONT}`;
-      outlined(fmt('gameRecord', {n: record.toLocaleString(boot.lang === 'ko' ? 'ko-KR' : 'en-US')}), W - 12, small ? 70 : 30, '#16a34a');
-    }
+    const num = n => n.toLocaleString(boot.lang === 'ko' ? 'ko-KR' : 'en-US');
+    outlined(fmt('gameRecord', {n: num(record)}), W - 12, small ? 54 : 14, '#16a34a');
+    outlined(fmt('gameWorld', {n: world == null ? '…' : num(world + pending)}), W - 12, small ? 70 : 30, '#2e3f63');
     ctx.textAlign = 'center';
     ctx.font = `800 12px ${FONT}`;
     for (const p of popups) {
@@ -522,7 +542,7 @@
     }
   }
   function draw() {
-    if (!LW) return;
+    if (!LW || gy == null) return;  // not laid out yet
     drawScene();
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     ctx.clearRect(0, 0, W, H);
@@ -569,6 +589,8 @@
     state.saved += 1;
     record += 1;
     saveRecord();
+    pending += 1;
+    sendGrabs();
     popups.push({x: best.x + 4, y: best.y, t: 0});
     toPeople(best, true);
     sound('grab');

@@ -147,7 +147,7 @@ class Handler(BaseHTTPRequestHandler):
         self.send_header('Cache-Control', 'no-store')
         self.send_header('X-Content-Type-Options', 'nosniff')
         self.send_header('Referrer-Policy', 'strict-origin-when-cross-origin')
-        self.send_header('Content-Security-Policy', "default-src 'self'; style-src 'self' https://cdn.jsdelivr.net; font-src https://cdn.jsdelivr.net; script-src 'self'; img-src 'self' data: https://thumb.wikimedia.org https://upload.wikimedia.org https://*.coupang.com https://*.coupangcdn.com; connect-src 'self'; frame-src 'none'; base-uri 'none'; frame-ancestors 'none'")
+        self.send_header('Content-Security-Policy', "default-src 'self'; style-src 'self' https://cdn.jsdelivr.net; font-src https://cdn.jsdelivr.net; script-src 'self'; img-src 'self' data: https://thumb.wikimedia.org https://upload.wikimedia.org https://*.coupang.com https://*.coupangcdn.com; connect-src 'self' https://abacus.jasoncameron.dev; frame-src 'none'; base-uri 'none'; frame-ancestors 'none'")
         for key, value in (headers or {}).items():
             self.send_header(key, value)
         self.end_headers()

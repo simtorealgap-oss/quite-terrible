@@ -163,7 +163,6 @@
     "contactLabel": "문의",
     "contactEmail": "simtoreal.gap@gmail.com",
     "gamePrice": "오늘 DDR5 32GB 실제 시세 {price}",
-    "gameCount": "AI {ai} · 사람들 {people}",
     "gameHint": "데이터센터로 가는 램을 눌러 빼돌리세요",
     "gameHintTouch": "데이터센터로 가는 램을 탭해서 빼돌리세요",
     "gameSaved": "내가 빼돌린 램 {n}개",
@@ -188,7 +187,8 @@
     "gameAngry3": "꽤 끔찍하군!",
     "gameToss1": "옛다, 하나",
     "gameToss2": "이 정도면 충분하지?",
-    "gameRecord": "내가 구한 램 누적 {n}개"
+    "gameRecord": "내가 구한 램 {n}개",
+    "gameWorld": "전세계 사람들이 구한 램 {n}개"
   },
   "en": {
     "brand": "Quite Terrible",
@@ -354,7 +354,6 @@
     "contactLabel": "Contact",
     "contactEmail": "simtoreal.gap@gmail.com",
     "gamePrice": "Today's real DDR5 32GB price {price}",
-    "gameCount": "AI {ai} · People {people}",
     "gameHint": "Click a stick on its way to the data center to grab it",
     "gameHintTouch": "Tap a stick on its way to the data center to grab it",
     "gameSaved": "You grabbed {n}",
@@ -379,6 +378,7 @@
     "gameAngry3": "Quite terrible indeed!",
     "gameToss1": "Fine, have one",
     "gameToss2": "That's plenty for you",
-    "gameRecord": "Your all-time grabs: {n}"
+    "gameRecord": "RAM you saved: {n}",
+    "gameWorld": "RAM saved worldwide: {n}"
   }
 }
