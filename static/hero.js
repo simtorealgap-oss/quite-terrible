@@ -36,71 +36,81 @@
   /* Sprites: rows of palette keys ('.' is transparent). */
   const STICK = ['KKKKKKKKK', 'KacbcbcaK', 'KbbbbbbbK', 'KgKgKgKgK'];
   const STICK_PAL = {K: C.K, a: C.pcb2, b: C.pcb1, c: C.chip, g: C.gold};
-  // The boss, Gather Town style: a big round head on a short body, dot eyes and rosy cheeks.
-  // A caricature in the spirit of the 'quite terrible' quote: tousled light-brown hair with a side part,
-  // a pleased little smirk, a gray crewneck over a white collar.
+  // Gather Town style, seen slightly from above: a big head that is mostly hair, the face low on it,
+  // tiny arms and legs. The boss is a caricature in the spirit of the 'quite terrible' quote:
+  // short light-brown hair with a side part, a pleased smirk, a gray crewneck over a white collar.
   const BOSS = [
-    '....KKKKKKKKKK....',
-    '..KKhhhhHHhhhhKK..',
-    '.KhhhhHHLLHHhhhhK.',
-    '.KhhhHHLLLHHhhhhK.',
-    'KhhhhhhhhhhhhhhhhK',
-    'KhhhhhhsssssshhhhK',
-    'KhhhssssssssssshhK',
-    'KhhsssssssssssssdK',
-    'KdssssssssssssssdK',
-    'KssssKssssssKssssK',
-    'KssssKssssssKssssK',
-    'KSsbbssssssmsbbsSK',
-    'KSssssssmmmssssSSK',
-    '.KSSssssssssssSSK.',
-    '..KKSSSSSSSSSSKK..',
-    '...KKcccCCcccKK...',
-    '..K2222cCCc2222K..',
-    '.K22233333333222K.',
-    '.K2K3333333333K2K.',
-    '.K2K3333443333K2K.',
-    '.KsK1111111111KsK.',
-    '..KKKjjjjjjjjKKK..',
-    '....KjjjKKjjjK....',
-    '....KOOoKKOOoK....',
-    '....KKKKKKKKKK....',
+    '.......KKKKKKKK.......',
+    '.....KKhhhhhhhhKK.....',
+    '....KhhHHHLLHHHhhK....',
+    '...KhhHHLLLLLHHHhhK...',
+    '..KdhhHHHLLLHHHHhhdK..',
+    '..KdhhhHHHHHHHHhhhdK..',
+    '.KdhhhhhhhhhhhhhhhhdK.',
+    '.KdhhhHhhhhhhhhHhhhdK.',
+    '.KdhhhhhhhhhhhhhhhhdK.',
+    '.KdhhhhhhhhhhssshhhdK.',
+    '.KdhhhhhhhssssssshhdK.',
+    '.KdhhhhTTssssssssshdK.',
+    '.KdhhTsddssssddsshhdK.',
+    '.KdSsssKKssssKKsssSdK.',
+    '.KdSsssKwssssKwsssSdK.',
+    '.KdSsssKKssssKKsssSdK.',
+    '.KdSsbbssssssssbbsSdK.',
+    '..KdSsssssssmmsssSdK..',
+    '...KSSsssmmmsssSSK....',
+    '....KKSSSSSSSSSKK.....',
+    '.....KKcccCCcccKK.....',
+    '....K2223cCCc3222K....',
+    '...K2K3333333333K2K...',
+    '...K2K3333333333K2K...',
+    '...KsK3333443333KsK...',
+    '....KK1111111111KK....',
+    '.....KjjjjKKjjjjK.....',
+    '.....KOOOoKKOOOoK.....',
+    '.....KKKKKKKKKKKK.....',
   ];
   const BOSS_BLINK = BOSS.slice();
-  BOSS_BLINK[9] = 'KssssssssssssssssK';
-  BOSS_BLINK[10] = 'KsssKKssssssKKsssK';
+  BOSS_BLINK[13] = '.KdSssssssssssssssSdK.';
+  BOSS_BLINK[14] = '.KdSssKKKssssKKKssSdK.';
   const BOSS_ANGRY = BOSS.slice();
-  BOSS_ANGRY[8] = 'KdssKKssssssKKssdK';
-  BOSS_ANGRY[11] = 'KSssssssssssssssSK';
-  BOSS_ANGRY[12] = 'KSssssssKKKKssssSK';
-  BOSS_ANGRY[13] = '.KSSsssKssssKsSSK.';
+  BOSS_ANGRY[12] = '.KdhhTssddssddssshhdK.';
+  BOSS_ANGRY[13] = '.KdSsssKKssssKKsssSdK.';
+  BOSS_ANGRY[14] = '.KdSsssKKssssKKsssSdK.';
+  BOSS_ANGRY[16] = '.KdSssssssssssssssSdK.';
+  BOSS_ANGRY[17] = '..KdSsssKKKKKKsssSdK..';
+  BOSS_ANGRY[18] = '...KSSssKmmmmKsSSK....';
   const ANGER_MARK = ['.r.r.', 'rr.rr', '.....', 'rr.rr', '.r.r.'];  // the cartoon "vein pop"
-  const BOSS_PAL = {K: C.K, d: '#4a2e1e', h: '#7a4f34', H: '#a3704a', L: '#c99a6c', s: '#f7d6bd', S: '#e6b394', b: '#f3a39a',
-    m: '#b85a50', c: '#eef2f7', C: '#c5ccd6', j: '#2f3d5e', O: '#2b2b30', o: '#5a5a62', 1: '#4d5566', 2: '#6b7486', 3: '#8d95a6', 4: '#adb4c2'};
+  const BOSS_PAL = {K: C.K, d: '#4a2e1e', h: '#7a4f34', H: '#a3704a', L: '#c99a6c', s: '#f7d6bd', S: '#e6b394', T: '#d9a382',
+    b: '#f3a39a', w: '#ffffff', m: '#b85a50', c: '#eef2f7', C: '#c5ccd6', j: '#2f3d5e', O: '#2b2b30', o: '#5a5a62',
+    1: '#4d5566', 2: '#6b7486', 3: '#8d95a6', 4: '#adb4c2'};
   // The people: same style, smaller.
   const PERSON = [
-    '...KKKKKK...',
-    '.KKhhhhhhKK.',
-    'KhhhHHhhhhhK',
-    'KhhhhhhhhhhK',
-    'KhhsssssshhK',
-    'KhsssssssshK',
-    'KssKssssKssK',
-    'KssKssssKssK',
-    'KsbbssssbbsK',
-    '.KSssssssSK.',
-    '..KKccccKK..',
-    '.KccccccccK.',
-    'KscCccccCcsK',
-    '.KccccccccK.',
-    '.KppppppppK.',
-    '..KppKKppK..',
-    '..KOOKKOOK..',
-    '..KKKKKKKK..',
+    '....KKKKKK....',
+    '..KKhhhhhhKK..',
+    '.KhhHHLLHHhhK.',
+    'KhhhHHHHHHhhhK',
+    'KhhhhhhhhhhhhK',
+    'KhhhhhhhhhhhhK',
+    'KhhhssssssshhK',
+    'KhhTssssssThhK',
+    'KhsKKssssKKshK',
+    'KhsKwssssKwshK',
+    'KhSbbssssbbShK',
+    '.KSssmmssssSK.',
+    '..KKSSSSSSKK..',
+    '...KccCCccK...',
+    '..KcKccccKcK..',
+    '..KsKCccCKsK..',
+    '...KppppppK...',
+    '...KppKKppK...',
+    '...KOOKKOOK...',
+    '...KKKKKKKK...',
   ];
   const CHEER = PERSON.slice();
-  CHEER[11] = 'sKccccccccKs';
-  CHEER[12] = '.KcCccccCcK.';
+  CHEER[13] = '..sKccCCccKs..';
+  CHEER[14] = '..KKccccccKK..';
+  CHEER[15] = '...KCccccCK...';
   const HAIR = ['#4a3324', '#1a1c24', '#8a5a2b', '#c98a3a', '#6b6f7a'];
   const HAIR_LIGHT = ['#6b4a33', '#3a3d48', '#b07a40', '#e3a85a', '#9a9ea8'];
   const SKIN = [[C.skin1, C.skin2], ['#d9a27a', '#b9805a'], ['#a8704a', '#87553a']];
@@ -142,21 +152,21 @@
     canvas.width = Math.round(W * dpr); canvas.height = Math.round(H * dpr);
     S = W < 640 ? 2 : 3;
     const top = content ? content.offsetTop : H;
-    LH = Math.max(52, Math.min(86, Math.floor((top - 6) / S)));
+    LH = Math.max(58, Math.min(90, Math.floor((top - 6) / S)));
     LW = Math.ceil(W / S);
     y0 = Math.max(0, top - 6 - LH * S);
     off.width = LW; off.height = LH;
     gy = LH - 5;                                   // top of the ground
-    beltY = gy - 24;
+    beltY = gy - 26;
     const col = content ? content.getBoundingClientRect() : null, box = root.getBoundingClientRect();
     const link = root.querySelector('.hero-link')?.getBoundingClientRect();
     const colLeft = col ? Math.floor((col.left - box.left) / S) : 2, colRight = col ? Math.floor((col.right - box.left) / S) : LW - 2;
     const sideBySide = link && col && link.top - col.top < 40;  // wide layout: the link sits beside the headline
     colRightPx = col ? col.right - box.left : W - 12;
     fx = Math.max(2, colLeft);
-    bossX = sideBySide ? Math.round((link.left + link.width / 2 - box.left) / S) - 9 : colRight - 38 - 19;
-    dcX = Math.min(LW - 38, bossX + 19);
-    bossX = dcX - 19;
+    bossX = sideBySide ? Math.round((link.left + link.width / 2 - box.left) / S) - 11 : colRight - 38 - 23;
+    dcX = Math.min(LW - 38, bossX + 23);
+    bossX = dcX - 23;
     beltStart = fx + 44;
     const left = beltStart + 3, right = bossX - 2;
     const n = Math.max(2, Math.min(8, Math.floor((right - left) / (W < 640 ? 18 : 24))));  // fewer people on narrow screens
@@ -164,7 +174,7 @@
       jump: 0, holding: 0, hair: HAIR[(i * 3) % HAIR.length], hairLight: HAIR_LIGHT[(i * 3) % HAIR.length], skin: SKIN[(i * 2) % SKIN.length],
       shirt: SHIRT[i % SHIRT.length], phase: Math.random() * 6,
     });
-    crowd.forEach((p, i) => { p.x = Math.round(left + (i + 0.5) * (right - left) / n) - 4; });
+    crowd.forEach((p, i) => { p.x = Math.round(left + (i + 0.5) * (right - left) / n) - 7; });
     // Distant city: fixed per width so it does not flicker on resize.
     skyline = [];
     let seed = 7;
@@ -225,7 +235,7 @@
   function toPeople(s, mine) {
     const person = crowd[Math.floor(Math.random() * crowd.length)];
     s.state = 'air'; s.toPeople = true;
-    arc(s, person.x, gy - PERSON.length - 4, mine ? 0.8 : 1.0, mine ? 12 : 18, () => {
+    arc(s, person.x + 2, gy - PERSON.length - 4, mine ? 0.8 : 1.0, mine ? 12 : 18, () => {
       s.dead = true; person.jump = 0.5; person.holding = 6; state.people += 1;
     });
   }
@@ -260,7 +270,7 @@
       }
     }
     sticks = sticks.filter(s => !s.dead);
-    if (Math.random() < dt * 4) smoke.push({x: fx + 33 + Math.random() * 3, y: gy - 46, t: 0, r: 1 + Math.random()});
+    if (Math.random() < dt * 4) smoke.push({x: fx + 33 + Math.random() * 3, y: gy - 50, t: 0, r: 1 + Math.random()});
     smoke.forEach(p => { p.t += dt; p.y -= 5 * dt; p.x += 3 * dt; });
     smoke = smoke.filter(p => p.t < 3 && p.y > -6);
     clouds.forEach(cl => { cl.x += cl.speed * dt; if (cl.x > LW + 20) cl.x = -24; });
@@ -362,12 +372,12 @@
     }
   }
   function drawFactory(c) {
-    const x = fx, top = gy - 32;
+    const x = fx, top = gy - 36;
     // Smokestack.
-    brickWall(c, x + 32, gy - 46, 6, 14);
-    px(c, C.K, x + 31, gy - 47, 8, 2); px(c, C.steel2, x + 32, gy - 47, 6, 1);
-    px(c, C.white, x + 32, gy - 42, 6, 1); px(c, C.white, x + 32, gy - 39, 6, 1);
-    px(c, C.K, x + 31, gy - 46, 1, 14); px(c, C.K, x + 38, gy - 46, 1, 14);
+    brickWall(c, x + 32, gy - 50, 6, 14);
+    px(c, C.K, x + 31, gy - 51, 8, 2); px(c, C.steel2, x + 32, gy - 51, 6, 1);
+    px(c, C.white, x + 32, gy - 46, 6, 1); px(c, C.white, x + 32, gy - 43, 6, 1);
+    px(c, C.K, x + 31, gy - 50, 1, 14); px(c, C.K, x + 38, gy - 50, 1, 14);
     // Sawtooth roof with skylights.
     for (let t = 0; t < 4; t++) {
       const tx = x + t * 11;
@@ -459,17 +469,17 @@
     // Door the boss guards.
     px(c, C.K, x + 1, gy - 10, 9, 10); px(c, '#0f1524', x + 2, gy - 9, 7, 9); px(c, C.led2, x + 7, gy - 5);
   }
-  const ANGRY_PAL = {...BOSS_PAL, s: '#f7b49c', S: '#e58f74', m: '#8f2a22'};
+  const ANGRY_PAL = {...BOSS_PAL, s: '#f7b49c', S: '#e58f74', T: '#d98a70', m: '#8f2a22'};
   function drawBoss(c) {
     const angry = bubble?.angry;
     const by = gy - BOSS.length, bx = bossX;
     const blink = !angry && time % 3.7 < 0.14;
     sprite(c, angry ? BOSS_ANGRY : blink ? BOSS_BLINK : BOSS, bx, by, angry ? ANGRY_PAL : BOSS_PAL);
     if (angry) {
-      sprite(c, ANGER_MARK, bx + 14, by - 1, {r: '#e8483c'});
+      sprite(c, ANGER_MARK, bx + 17, by + 2, {r: '#e8483c'});
     }
     if (grab > 0) {  // reaching for the belt
-      px(c, C.K, bossX - 3, by + 19, 4, 3); px(c, C.skin1, bossX - 2, by + 20, 2, 1);
+      px(c, C.K, bossX, by + 23, 4, 3); px(c, C.skin1, bossX + 1, by + 24, 2, 1);
     }
   }
   function drawCrowd(c) {
@@ -477,9 +487,10 @@
       const jump = p.jump > 0 ? Math.round(Math.sin((p.jump / 0.5) * Math.PI) * 4) : 0;
       const idle = Math.sin(time * 2 + p.phase) > 0.95 ? 1 : 0;
       const y = gy - PERSON.length - jump - idle;
-      const pal = {K: C.K, h: p.hair, H: p.hairLight, s: p.skin[0], S: p.skin[1], b: '#f3a39a', c: p.shirt[0], C: p.shirt[1], p: '#3a4566', O: '#2b2b30'};
+      const pal = {K: C.K, h: p.hair, H: p.hairLight, L: p.hairLight, s: p.skin[0], S: p.skin[1], T: p.skin[1], b: '#f3a39a',
+        w: '#ffffff', m: '#9a4a40', c: p.shirt[0], C: p.shirt[1], p: '#3a4566', O: '#2b2b30'};
       sprite(c, p.jump > 0 || p.holding > 0 ? CHEER : PERSON, p.x, y, pal);
-      if (p.holding > 0) sprite(c, STICK, p.x - 1, y - 5, STICK_PAL);
+      if (p.holding > 0) sprite(c, STICK, p.x + 2, y - 5, STICK_PAL);
     }
   }
   function drawScene() {
@@ -570,7 +581,7 @@
     if (bubble) {  // 16-bit dialogue box left of the boss's head
       ctx.font = `${bubble.angry ? 900 : 700} ${bubble.angry ? 14 : 12}px ${FONT}`;
       const pad = 8, w = Math.ceil(ctx.measureText(bubble.text).width) + pad * 2, h = bubble.angry ? 28 : 24;
-      const headX = (bossX + 9) * S, headTop = y0 + (gy - BOSS.length) * S;
+      const headX = (bossX + 11) * S, headTop = y0 + (gy - BOSS.length) * S;
       let top = headTop - h - 16, left = Math.min(W - w - 8, headX - w + 18), tail = 'down';
       if (top < 54) { top = headTop + 2; left = Math.max(6, bossX * S - 10 - w); tail = 'right'; }
       left = Math.max(6, left);
