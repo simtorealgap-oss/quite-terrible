@@ -34,7 +34,7 @@
   };
 
   /* Sprites: rows of palette keys ('.' is transparent). */
-  const STICK = ['KKKKKKKKK', 'KacbcbcaK', 'KbbbbbbbK', 'KgKgKgKgK'];
+  const STICK = ['KKKKKKKKKKKKK', 'KaaaaaaaaaaaK', 'KbccbccbccbbK', 'KbccbccbccbbK', 'KbbbbbbbbbbbK', 'KgKgKgKgKgKgK'];
   const STICK_PAL = {K: C.K, a: C.pcb2, b: C.pcb1, c: C.chip, g: C.gold};
   // Gather Town style, seen slightly from above: a big head that is mostly hair, the face low on it,
   // tiny arms and legs. The boss is a caricature in the spirit of the 'quite terrible' quote:
@@ -107,10 +107,30 @@
     '...KOOKKOOK...',
     '...KKKKKKKK...',
   ];
-  const CHEER = PERSON.slice();
-  CHEER[13] = '..sKccCCccKs..';
-  CHEER[14] = '..KKccccccKK..';
-  CHEER[15] = '...KCccccCK...';
+  const CHEER_ROWS = {"13": "..sKccCCccKs..", "14": "..KKccccccKK..", "15": "...KCccccCK..."};
+  // Hairstyles: row overrides on the base person, plus extra pieces drawn around the head.
+  const HAIRSTYLES = {
+    short: {rows: {}, over: []},
+    long: {rows: {"11": "KhKSsmmsssSKhK", "12": "KhhKSSSSSSKhhK", "13": "KhhKccCCccKhhK"}, over: []},
+    bun: {rows: {}, over: [[3, -3, ["..KKKK..", ".KhHHhK.", ".KhhhhK."]]]},
+    spiky: {rows: {"0": "..K.K.KK.K.K..", "1": ".KhKhKhhKhKhK."}, over: []},
+    bald: {rows: {}, over: []},
+    pigtails: {rows: {}, over: [[-2, 6, ["KK", "hK", "hK", "hK", "KK"]], [14, 6, ["KK", "Kh", "Kh", "Kh", "KK"]]]},
+    cap: {rows: {"1": "..KKqqqqqqKK..", "2": ".KqqqQQqqqqqK.", "3": "KqqqqqqqqqqqqK", "4": "KQQQQQQQQQQQQK", "5": "KhhhhhhhhhhhhK"}, over: []},
+    afro: {rows: {"0": "...KKKKKKKK...", "1": ".KKhHhhHhhHKK.", "2": "KhHhhHhhHhhHhK", "3": "KhhHhhHhhHhhHK", "4": "KHhhHhhHhhHhhK", "5": "KhhHhhHhhHhhhK"}, over: []}
+  };
+  const STYLE_ORDER = Object.keys(HAIRSTYLES);
+  const styled = {};  // cache: style -> [standing rows, cheering rows]
+  function personRows(style, cheer) {
+    if (!styled[style]) {
+      const stand = PERSON.slice();
+      for (const [k, v] of Object.entries(HAIRSTYLES[style].rows)) stand[k] = v;
+      const up = stand.slice();
+      for (const [k, v] of Object.entries(CHEER_ROWS)) up[k] = v;
+      styled[style] = [stand, up];
+    }
+    return styled[style][cheer ? 1 : 0];
+  }
   const HAIR = ['#4a3324', '#1a1c24', '#8a5a2b', '#c98a3a', '#6b6f7a'];
   const HAIR_LIGHT = ['#6b4a33', '#3a3d48', '#b07a40', '#e3a85a', '#9a9ea8'];
   const SKIN = [[C.skin1, C.skin2], ['#d9a27a', '#b9805a'], ['#a8704a', '#87553a']];
@@ -171,7 +191,8 @@
     const left = beltStart + 3, right = bossX - 2;
     const n = Math.max(2, Math.min(8, Math.floor((right - left) / (W < 640 ? 18 : 24))));  // fewer people on narrow screens
     crowd = Array.from({length: n}, (_, i) => crowd[i] || {
-      jump: 0, holding: 0, hair: HAIR[(i * 3) % HAIR.length], hairLight: HAIR_LIGHT[(i * 3) % HAIR.length], skin: SKIN[(i * 2) % SKIN.length],
+      jump: 0, holding: 0, style: STYLE_ORDER[(i * 5 + 2) % STYLE_ORDER.length], cap: SHIRT[(i * 3 + 1) % SHIRT.length],
+      hair: HAIR[(i * 3) % HAIR.length], hairLight: HAIR_LIGHT[(i * 3) % HAIR.length], skin: SKIN[(i * 2) % SKIN.length],
       shirt: SHIRT[i % SHIRT.length], phase: Math.random() * 6,
     });
     crowd.forEach((p, i) => { p.x = Math.round(left + (i + 0.5) * (right - left) / n) - 7; });
@@ -212,11 +233,15 @@
   function sendGrabs() {
     if (sending || !pending) return;
     sending = true;
+    let wait = 400;
     fetch(`${COUNTER}/hit/${COUNTER_KEY}`, {cache: 'no-store'})
-      .then(r => r.ok ? r.json() : null)
-      .then(d => { if (d && Number.isFinite(d.value)) { pending -= 1; world = d.value; } })
-      .catch(() => {})
-      .finally(() => { sending = false; if (pending) setTimeout(sendGrabs, 400); });
+      .then(r => {
+        if (r.status === 429) wait = 10000;  // the counter's rate limit: back off, keep the grabs queued
+        return r.ok ? r.json() : null;
+      })
+      .then(d => { if (d && Number.isFinite(d.value)) { pending -= 1; world = d.value; } else if (wait < 10000) wait = 5000; })
+      .catch(() => { wait = 10000; })
+      .finally(() => { sending = false; if (pending) setTimeout(sendGrabs, wait); });
   }
   readWorld();
   setInterval(() => { if (visible && !document.hidden && !pending) readWorld(); }, 30000);
@@ -235,26 +260,27 @@
   function toPeople(s, mine) {
     const person = crowd[Math.floor(Math.random() * crowd.length)];
     s.state = 'air'; s.toPeople = true;
-    arc(s, person.x + 2, gy - PERSON.length - 4, mine ? 0.8 : 1.0, mine ? 12 : 18, () => {
+    arc(s, person.x + 1, gy - PERSON.length - 7, mine ? 0.8 : 1.0, mine ? 12 : 18, () => {
       s.dead = true; person.jump = 0.5; person.holding = 6; state.people += 1;
     });
   }
-  const pileTop = () => gy - 31 - Math.min(14, Math.floor(state.ai / 4));
+  const pileRows = () => Math.min(8, Math.floor(state.ai / 5));
+  const pileTop = () => gy - 36 - pileRows() * 3;
   function hoard(s) {
     s.state = 'air'; grab = 0.3;
-    arc(s, dcX + 14 + (state.ai % 3) * 3 - 3, pileTop() - 2, 0.5, 9, () => { s.dead = true; state.ai += 1; });
+    arc(s, dcX + 12 + (state.ai % 3) * 3 - 3, pileTop() - 4, 0.5, 9, () => { s.dead = true; state.ai += 1; });
   }
 
   function step(dt) {
     time += dt;
     if ((spawnIn -= dt) <= 0) {
       spawnIn = 1.0 + Math.random() * 0.5;
-      sticks.push({x: beltStart - 8, y: beltY - 4, state: 'belt'});
+      sticks.push({x: beltStart - 12, y: beltY - 6, state: 'belt'});
     }
     for (const s of sticks) {
       if (s.state === 'belt') {
         s.x += 15 * dt;
-        if (s.x >= bossX - 7) {
+        if (s.x >= bossX - 12) {
           if (++sinceToss >= tossEvery) {
             sinceToss = 0; tossEvery = 10 + Math.floor(Math.random() * 5);
             toPeople(s, false);
@@ -433,10 +459,10 @@
   function drawDataCenter(c) {
     const x = dcX, top = gy - 30, w = 36;
     // Hoard pile on the roof: it grows as the boss takes more.
-    const pile = Math.min(14, Math.floor(state.ai / 4));
+    const pile = pileRows();
     for (let r = 0; r <= pile; r++) {
-      const rowW = Math.max(9, 26 - r * 2), rx = x + Math.floor((w - rowW) / 2);
-      for (let i = rx; i + 9 <= rx + rowW + 1; i += 8) sprite(c, STICK, i, top - 4 - r * 2, STICK_PAL);
+      const rowW = Math.max(13, 30 - r * 3), rx = x + Math.floor((w - rowW) / 2);
+      for (let i = rx; i + 13 <= rx + rowW + 1; i += 12) sprite(c, STICK, i, top - 6 - r * 3, STICK_PAL);
     }
     // Body.
     px(c, C.K, x - 1, top - 1, w + 2, gy - top + 1);
@@ -488,9 +514,11 @@
       const idle = Math.sin(time * 2 + p.phase) > 0.95 ? 1 : 0;
       const y = gy - PERSON.length - jump - idle;
       const pal = {K: C.K, h: p.hair, H: p.hairLight, L: p.hairLight, s: p.skin[0], S: p.skin[1], T: p.skin[1], b: '#f3a39a',
-        w: '#ffffff', m: '#9a4a40', c: p.shirt[0], C: p.shirt[1], p: '#3a4566', O: '#2b2b30'};
-      sprite(c, p.jump > 0 || p.holding > 0 ? CHEER : PERSON, p.x, y, pal);
-      if (p.holding > 0) sprite(c, STICK, p.x + 2, y - 5, STICK_PAL);
+        w: '#ffffff', m: '#9a4a40', c: p.shirt[0], C: p.shirt[1], p: '#3a4566', O: '#2b2b30', q: p.cap[0], Q: p.cap[1]};
+      if (p.style === 'bald') Object.assign(pal, {h: p.skin[1], H: p.skin[0], L: '#ffffff'});
+      for (const [dx, dy, piece] of HAIRSTYLES[p.style].over) sprite(c, piece, p.x + dx, y + dy, pal);
+      sprite(c, personRows(p.style, p.jump > 0 || p.holding > 0), p.x, y, pal);
+      if (p.holding > 0) sprite(c, STICK, p.x + 1, y - 7, STICK_PAL);
     }
   }
   function drawScene() {
@@ -635,7 +663,7 @@
     let best = null, bestD = Infinity;
     for (const s of sticks) {
       if (s.toPeople) continue;
-      const dx = lx - (s.x + 4.5), dy = ly - (s.y + 2), d = dx * dx + dy * dy;
+      const dx = lx - (s.x + 6.5), dy = ly - (s.y + 3), d = dx * dx + dy * dy;
       if (Math.abs(dx) <= reach && Math.abs(dy) <= reach && d < bestD) { best = s; bestD = d; }
     }
     if (!best) return;
@@ -645,7 +673,7 @@
     saveRecord();
     pending += 1;
     sendGrabs();
-    popups.push({x: best.x + 4, y: best.y, t: 0});
+    popups.push({x: best.x + 6, y: best.y, t: 0});
     toPeople(best, true);
     sound('grab');
     if (!bubble || !bubble.angry) sound('angry');
@@ -692,7 +720,7 @@
     layout();
     if (reduced) {  // a still picture: a few sticks on the belt and a hoard on the roof
       state.ai = 32;
-      sticks = [0.2, 0.5, 0.8].map(f => ({x: beltStart + (bossX - beltStart - 10) * f, y: beltY - 4, state: 'belt'}));
+      sticks = [0.2, 0.5, 0.8].map(f => ({x: beltStart + (bossX - beltStart - 10) * f, y: beltY - 6, state: 'belt'}));
       draw();
     }
     canvas.addEventListener('pointerdown', pointer);
