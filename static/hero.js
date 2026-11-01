@@ -187,9 +187,9 @@
   let sticks = [], smoke = [], popups = [], spawnIn = 0.6, tossEvery = 11, sinceToss = 0;
   let bubble = null, bubbleIn = 4, grab = 0, time = 0;
   const pick = keys => { const list = keys.map(k => T[k]).filter(Boolean); return list[Math.floor(Math.random() * list.length)]; };
-  const IDLE = ['gameLine1', 'gameLine2', 'gameLine3', 'gameLine4', 'gameLine5', 'gameLine6'];
-  const ANGRY = ['gameAngry1', 'gameAngry2', 'gameAngry3', 'gameAngry4', 'gameAngry5'];
-  const TOSS = ['gameToss1', 'gameToss2', 'gameToss3'];
+  // Every gameLineN / gameAngryN / gameTossN string in config/i18n.json is used; add lines there.
+  const linesFor = prefix => Object.keys(T).filter(k => new RegExp(`^${prefix}\\d+$`).test(k));
+  const IDLE = linesFor('gameLine'), ANGRY = linesFor('gameAngry'), TOSS = linesFor('gameToss');
   function say(keys, seconds, angry = false) {
     const text = pick(keys);
     if (text) { bubble = {text, t: seconds, angry}; bubbleIn = 8 + Math.random() * 6; }
@@ -492,8 +492,12 @@
     const c = state.change, arrow = c == null || Math.abs(c) < 0.05 ? '' : ` ${c > 0 ? '▲' : '▼'} ${Math.abs(c).toFixed(1)}%`;
     ctx.font = `800 ${small ? 13 : 15}px ${FONT}`;
     const priceText = fmt('gamePrice', {price: money(state.real)}) + arrow;
-    const hist = state.history, bars = hist.length > 1 ? Math.min(hist.length, 14) : 0;
-    const histW = bars ? bars * 4 + 8 : 0, textW = ctx.measureText(priceText).width;
+    const hist = state.history, bars = hist.length >= 5 ? Math.min(hist.length, 14) : 0;  // only once it means something
+    const label = bars ? fmt('gameDays', {n: bars}) : '';
+    ctx.font = `700 10px ${FONT}`;
+    const labelW = bars ? ctx.measureText(label).width + 6 : 0;
+    ctx.font = `800 ${small ? 13 : 15}px ${FONT}`;
+    const histW = bars ? bars * 4 + 8 + labelW : 0, textW = ctx.measureText(priceText).width;
     outlined(priceText, cx - histW / 2, 12, '#c8352a');
     if (bars) {  // price record: one bar per recorded day, today in red
       const pts = hist.slice(-bars), lo = Math.min(...pts), hi = Math.max(...pts);
@@ -504,6 +508,9 @@
         ctx.fillStyle = i === pts.length - 1 ? '#e8483c' : '#ffffff';
         ctx.fillRect(bx + i * 4, 28 - h, 3, h - 1);
       });
+      ctx.font = `700 10px ${FONT}`; ctx.textAlign = 'left';
+      outlined(label, bx + bars * 4 + 4, 16, '#54565c');
+      ctx.textAlign = 'center';
     }
     // Second line: the hint until the first grab, then the reasons board.
     ctx.font = `700 12px ${FONT}`;
