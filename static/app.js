@@ -48,7 +48,7 @@ const direction = value => value == null || Math.abs(value) < 0.05 ? 'flat' : va
 const pct = value => value == null ? '—' : `${{up: '▲ ', down: '▼ ', flat: ''}[direction(value)]}${Math.abs(value).toFixed(1)}%`;
 const delta = (value, pill = false) => `<span class="delta ${direction(value)}${pill ? ' pill' : ''}">${pct(value)}</span>`;
 const when = (value, withTime = true) => value ? new Intl.DateTimeFormat(locale, {month: 'short', day: 'numeric',
-  ...(withTime ? {hour: 'numeric', minute: '2-digit'} : {})}).format(new Date(value)) : '—';
+  ...(withTime ? {hour: 'numeric', minute: '2-digit', hourCycle: 'h23'} : {})}).format(new Date(value)) : '—';
 const periodPoints = (history, days) => {
   const cutoff = Date.now() - days * DAY;
   return (history || []).filter(p => Date.parse(p.at) >= cutoff && Number.isFinite(p.price));
