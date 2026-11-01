@@ -300,11 +300,16 @@ def import_feed(db, data):
 
 
 NEWS_QUERIES = {
-    'en': {'ram': '(DDR5 OR DDR4) (RAM OR memory) (price OR supply OR shortage) when:7d',
-           'gpu': '(GeForce OR "RTX 50") (price OR availability OR stock) when:7d'},
-    'ko': {'ram': '(DDR5 OR DDR4) (램 OR 메모리) (가격 OR 공급 OR 품귀) when:7d',
-           'gpu': '(지포스 OR "RTX 50" OR "RTX 5070" OR "RTX 5080" OR "RTX 5090") (가격 OR 공급 OR 출시) when:7d'}
+    'en': {'ram': ['(DDR5 OR DDR4) (RAM OR memory) (price OR supply OR shortage) when:7d',
+                   '(DRAM OR HBM) (Samsung OR "SK hynix" OR Micron) (price OR supply) when:7d'],
+           'gpu': ['(GeForce OR "RTX 50") (price OR availability OR stock) when:7d',
+                   '("graphics card" OR GPU) NVIDIA price when:7d']},
+    'ko': {'ram': ['(DDR5 OR DDR4) (램 OR 메모리) (가격 OR 공급 OR 품귀) when:7d',
+                   '(D램 OR HBM) (삼성전자 OR SK하이닉스 OR 마이크론) (가격 OR 공급) when:7d'],
+           'gpu': ['(지포스 OR "RTX 50" OR "RTX 5070" OR "RTX 5080" OR "RTX 5090") (가격 OR 공급 OR 출시) when:7d',
+                   '(그래픽카드 OR 엔비디아) 가격 when:7d']}
 }
+NEWS_PER_QUERY = 15
 
 
 def parse_news(raw, lang, category, at=None):
@@ -318,7 +323,8 @@ def parse_news(raw, lang, category, at=None):
         link = item.findtext('link') or ''
         if not title or not safe_url(link):
             continue
-        relevant = r'\bDDR[45]\b|\bDRAM\b|\bRAM\b|메모리|램' if category == 'ram' else r'\bRTX\s*\d|GeForce|지포스'
+        relevant = (r'\bDDR[45]\b|\bDRAM\b|\bHBM\d?\b|\bRAM\b|메모리|램|D램|디램' if category == 'ram'
+                    else r'\bRTX\s*\d|GeForce|지포스|그래픽\s*카드|graphics card|\bGPU\b')
         if not re.search(relevant, title, re.I):
             continue
         try:
@@ -329,7 +335,7 @@ def parse_news(raw, lang, category, at=None):
             continue
         uid = hashlib.sha256((lang + '|' + title.casefold()).encode()).hexdigest()[:24]
         items.append((uid, lang, category, title, link, source or 'Google News', stamp(date), stamp(at)))
-    return sorted(items, key=lambda row: row[6], reverse=True)[:6]
+    return sorted(items, key=lambda row: row[6], reverse=True)[:NEWS_PER_QUERY]
 
 
 def update_news(db, force=False, langs=None):
@@ -337,7 +343,7 @@ def update_news(db, force=False, langs=None):
     for lang, categories in NEWS_QUERIES.items():
         if langs and lang not in langs:
             continue
-        for category, query in categories.items():
+        for category, queries in categories.items():
             job = f'news:{lang}:{category}'
             old = db.execute('SELECT * FROM runs WHERE job=?', (job,)).fetchone()
             if old and not force:
@@ -346,10 +352,12 @@ def update_news(db, force=False, langs=None):
                 cooldown = 12 * 3600 if old['state'] == 'ok' else 3600
                 if (now() - parse_time(old['attempted_at'])).total_seconds() < cooldown:
                     continue
-            params = urllib.parse.urlencode({'q': query, 'hl': 'ko' if lang == 'ko' else 'en-US',
-                'gl': 'KR' if lang == 'ko' else 'US', 'ceid': 'KR:ko' if lang == 'ko' else 'US:en'})
             try:
-                rows = parse_news(fetch('https://news.google.com/rss/search?' + params), lang, category)
+                rows = []
+                for query in ([queries] if isinstance(queries, str) else queries):
+                    params = urllib.parse.urlencode({'q': query, 'hl': 'ko' if lang == 'ko' else 'en-US',
+                        'gl': 'KR' if lang == 'ko' else 'US', 'ceid': 'KR:ko' if lang == 'ko' else 'US:en'})
+                    rows += parse_news(fetch('https://news.google.com/rss/search?' + params), lang, category)
                 with db:
                     db.executemany('INSERT OR IGNORE INTO news VALUES(?,?,?,?,?,?,?,?)', rows)
                     db.execute('DELETE FROM news WHERE published_at<?', (stamp(now()-dt.timedelta(days=30)),))

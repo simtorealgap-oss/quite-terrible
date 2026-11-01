@@ -484,7 +484,7 @@ function renderNews() {
     groups.get(key).push(item);
   }
   const dayLabel = new Intl.DateTimeFormat(locale, {month: 'long', day: 'numeric', weekday: 'short'});
-  const timeLabel = new Intl.DateTimeFormat(locale, {hour: 'numeric', minute: '2-digit'});
+  const timeLabel = new Intl.DateTimeFormat(locale, {hour: 'numeric', minute: '2-digit', hourCycle: 'h23'});
   $('#news-list').innerHTML = [...groups].map(([key, list]) => {
     const date = new Date(list[0].published_at);
     const prefix = key === today ? `${T.today} · ` : key === yesterday ? `${T.yesterday} · ` : '';

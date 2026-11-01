@@ -144,7 +144,8 @@ class Providers(unittest.TestCase):
                 with patch('collectors.fetch',return_value=b'<rss><channel></channel></rss>') as request:
                     update_news(db)
                     update_news(db)
-                    self.assertEqual(request.call_count,4)
+                    queries=sum(len(q) for c in __import__('collectors').NEWS_QUERIES.values() for q in c.values())
+                    self.assertEqual(request.call_count,queries)  # second call is inside the cooldown
                 with patch('collectors.fetch',side_effect=TimeoutError):
                     update_news(db,force=True)
                 self.assertEqual(db.execute("select count(*) from runs where state='error' and succeeded_at is not null").fetchone()[0],4)
@@ -482,3 +483,16 @@ class Regions(unittest.TestCase):
              patch('collectors.fetch',side_effect=AssertionError('no request expected')):
             self.assertEqual(update_prices(db,sleep=lambda s:None,market='US'),[])
             self.assertEqual(update_news(db,force=True,langs=['xx']),[])
+
+
+class NewsMix(unittest.TestCase):
+    def test_one_publisher_shows_at_most_two_headlines_a_day(self):
+        tmp=Path(tempfile.mkdtemp())/'n.sqlite3'
+        db=connect(tmp); at=now()
+        rows=[(f'id{i}','ko','ram',f'D램 기사 {i}','https://example.com/a','GameGPU' if i<5 else '연합뉴스',stamp(at-dt.timedelta(minutes=i)),stamp(at)) for i in range(7)]
+        with db: db.executemany('INSERT INTO news VALUES(?,?,?,?,?,?,?,?)',rows)
+        with patch.dict('os.environ',{'RAMPRICE_DB':str(tmp)}):
+            from server import news_payload
+            news=news_payload('ko')['news']
+        self.assertEqual([n['publisher'] for n in news].count('GameGPU'),2)
+        self.assertEqual([n['publisher'] for n in news].count('연합뉴스'),2)

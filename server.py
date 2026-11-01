@@ -120,13 +120,23 @@ def prices_payload(market, demo=False):
             'generated_at': stamp(), 'products': products, 'runs': runs}
 
 
+NEWS_PER_PUBLISHER_DAY = 2
+
+
 def news_payload(lang):
     with session() as db:
         # Each language has its own feed; headlines are never machine-translated.
         news = [dict(r) for r in db.execute('''SELECT * FROM news WHERE lang=? AND published_at>=?
-            ORDER BY published_at DESC LIMIT 80''', (lang, stamp(now() - dt.timedelta(days=14))))]
+            ORDER BY published_at DESC LIMIT 200''', (lang, stamp(now() - dt.timedelta(days=14))))]
         runs = [dict(r) for r in db.execute('SELECT * FROM runs WHERE job LIKE ?', (f'news:{lang}:%',))]
-    return {'lang': lang, 'news': news, 'runs': runs}
+    # At most two headlines per publisher per day, so one prolific outlet cannot fill the page.
+    seen, kept = {}, []
+    for item in news:
+        key = (item['publisher'], item['published_at'][:10])
+        seen[key] = seen.get(key, 0) + 1
+        if seen[key] <= NEWS_PER_PUBLISHER_DAY:
+            kept.append(item)
+    return {'lang': lang, 'news': kept[:80], 'runs': runs}
 
 
 class Handler(BaseHTTPRequestHandler):
