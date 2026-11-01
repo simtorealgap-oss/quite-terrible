@@ -1,6 +1,6 @@
 'use strict';
-// Hero: a pixel-art RAM tycoon. A factory makes RAM, a conveyor carries it to an AI data center where
-// the hoodie boss keeps almost all of it; now and then he tosses one stick to the people below.
+// Hero: a 16-bit style RAM tycoon. A brick factory makes RAM, a conveyor carries it to the AI boss's
+// data center where he keeps almost all of it; now and then he grudgingly tosses one to the people.
 // Click (or tap) a stick on its way to the data center to grab it for the people.
 // The caption shows today's real DDR5 32GB price (updated once a day); the game never changes it.
 // Plain Canvas 2D, no dependencies. A still frame under reduced motion.
@@ -10,85 +10,148 @@
   if (!root || root.hidden || !canvas) return;
   const ctx = canvas.getContext('2d');
   const content = document.getElementById('hero-content');
-  const hint = document.getElementById('hero-hint');
-  if (hint) hint.hidden = true;  // the hint is drawn into the scene's caption instead
   const boot = JSON.parse(document.getElementById('boot')?.textContent || '{}');
   const T = boot.t || {};
   const fmt = (key, vars = {}) => String(T[key] ?? '').replace(/\{(\w+)\}/g, (_, k) => vars[k] ?? '');
   const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const coarse = matchMedia('(hover: none), (pointer: coarse)').matches;
+  const FONT = '"Pretendard Variable", Pretendard, system-ui, sans-serif';
 
-  /* Pixel palette and sprites ('.' is transparent). */
-  const P = {
-    k: '#1d2027', g: '#3d4350', l: '#8b8e94', w: '#f2efe8', r: '#e8483c', R: '#b8352b', G: '#2f6b3a',
-    y: '#d8a944', b: '#2563eb', s: '#f1c9a5', h: '#5a3a22', H: '#2a2e37', c: '#9ad0ff', o: '#16a34a',
+  /* Palette: a warm 16-bit console look, every sprite outlined in near-black. */
+  const C = {
+    K: '#1a1c24',
+    sky1: '#9fd3f2', sky2: '#c3e5f7', sky3: '#e3f2f8', sky4: '#f6f1e4',
+    far1: '#b9cfe0', far2: '#a6bfd4', farWin: '#d9e7f2',
+    grass1: '#79b84a', grass2: '#5a9636', dirt1: '#d9c49b', dirt2: '#c6ad7f', dirt3: '#e6d6b3',
+    brick1: '#7a3529', brick2: '#a44a35', brick3: '#c86a4c', mortar: '#5e2a21',
+    roof1: '#2f3747', roof2: '#495468', roof3: '#6c7a92', glass1: '#7ec4e6', glass2: '#b9e3f5',
+    win1: '#f7b84a', win2: '#ffe08a', winOff: '#4d5668',
+    steel1: '#3d4250', steel2: '#5c6374', steel3: '#868ea0',
+    dc1: '#1f2b45', dc2: '#2e3f63', dc3: '#45598a', neon: '#ff4d5e', neon2: '#ffb3ba',
+    led1: '#39e07a', led2: '#4db8ff', led3: '#ff6b5e',
+    pcb1: '#2c7a3c', pcb2: '#49a85a', chip: '#23262e', gold: '#e8b84a',
+    skin1: '#f4cba3', skin2: '#d9a27a', white: '#ffffff', smoke1: '#e9e9ef', smoke2: '#c7c9d3',
   };
-  const STICK = ['GkGkGkG', 'GGGGGGG', 'y.y.y.y'];
+
+  /* Sprites: rows of palette keys ('.' is transparent). */
+  const STICK = ['KKKKKKKKK', 'KacbcbcaK', 'KbbbbbbbK', 'KgKgKgKgK'];
+  const STICK_PAL = {K: C.K, a: C.pcb2, b: C.pcb1, c: C.chip, g: C.gold};
   const BOSS = [
-    '...hhhhh...',
-    '..hhhhhhh..',
-    '..hssssss..',
-    '..sksssks..',
-    '..ssssss...',
-    '...srrss...',
-    '....sss....',
-    '..HHHHHHH..',
-    '.HHHHHHHHH.',
-    '.HHHwHwHHH.',
-    'HHHHHHHHHHH',
-    'HsHHHHHHHsH',
-    '.HHHHHHHHH.',
-    '.HHHHHHHHH.',
-    '..kk...kk..',
-    '..kk...kk..',
-    '.kkk...kkk.',
+    '.....KKKKKK.....',
+    '....KhhhhhhK....',
+    '...KhHhhhhhhK...',
+    '...KHhhhhhhHK...',
+    '...KhsssssshK...',
+    '...KsKssssKsK...',
+    '...KssssssssK...',
+    '...KSsssmmssK...',
+    '....KSssssSK....',
+    '.....KKSSKK.....',
+    '...KK2222222KK..',
+    '..K22333333222K.',
+    '.K2233333333221K',
+    '.K22K3333333K21K',
+    '.K22K3333333K21K',
+    '.K22K3322223K21K',
+    '.KssK2222222KssK',
+    '..KKK2222222KKK.',
+    '....KjjjjjjjK...',
+    '....KjjJKJjjK...',
+    '....KjjK.KjjK...',
+    '....KjjK.KjjK...',
+    '...KOOOK.KOOOK..',
+    '...KKKKK.KKKKK..',
   ];
-  const SHIRTS = ['#e8483c', '#2563eb', '#16a34a', '#d97706', '#7c3aed', '#0f8a4b', '#db2777'];
-  function sprite(c, rows, x, y, pal = P) {
+  const BOSS_PAL = {K: C.K, h: '#4a3324', H: '#6b4a33', s: C.skin1, S: C.skin2, m: '#b5524a',
+    1: '#3a3f4c', 2: '#565c6b', 3: '#7b8293', j: '#34436a', J: '#25304d', O: '#e9e9e9'};
+  const PERSON = [
+    '..KKKK..',
+    '.KhhhhK.',
+    '.KhsssK.',
+    '.KsKsKK.',
+    '..KssK..',
+    '.KKccKK.',
+    'KccccCCK',
+    'KscccCsK',
+    '.KccCCK.',
+    '.KppppK.',
+    '.KpKKpK.',
+    '.KK..KK.',
+  ];
+  const CHEER = PERSON.slice();
+  CHEER[5] = 'sKKccKKs'; CHEER[6] = 'KccccCCK'; CHEER[7] = '.KcccCK.';
+  const HAIR = ['#4a3324', '#1a1c24', '#8a5a2b', '#c98a3a', '#6b6f7a'];
+  const SKIN = [[C.skin1, C.skin2], ['#d9a27a', '#b9805a'], ['#a8704a', '#87553a']];
+  const SHIRT = [['#e8483c', '#b8352b'], ['#3d7be0', '#2a5bb0'], ['#3faa5a', '#2c7e42'], ['#f0a03a', '#c27a20'],
+    ['#8a5ad6', '#6a3fb0'], ['#e05a9a', '#b03f78'], ['#2fb3b0', '#20837f']];
+  const FONT3 = {  // 3x5 pixel letters for signs
+    R: ['11.', '1.1', '11.', '1.1', '1.1'], A: ['.1.', '1.1', '111', '1.1', '1.1'], M: ['1.1', '111', '111', '1.1', '1.1'],
+    I: ['111', '.1.', '.1.', '.1.', '111'],
+  };
+  function sprite(c, rows, x, y, pal, flip = false) {
     for (let j = 0; j < rows.length; j++) {
       const row = rows[j];
       for (let i = 0; i < row.length; i++) {
-        const ch = row[i];
+        const ch = row[flip ? row.length - 1 - i : i];
         if (ch === '.') continue;
         c.fillStyle = pal[ch];
         c.fillRect(x + i, y + j, 1, 1);
       }
     }
   }
-  const rect = (c, color, x, y, w, h) => { c.fillStyle = color; c.fillRect(Math.round(x), Math.round(y), w, h); };
+  const px = (c, color, x, y, w = 1, h = 1) => { c.fillStyle = color; c.fillRect(Math.round(x), Math.round(y), w, h); };
+  function word(c, text, x, y, color, scale = 1) {
+    for (const ch of text) {
+      const glyph = FONT3[ch];
+      if (glyph) glyph.forEach((row, j) => [...row].forEach((v, i) => { if (v === '1') px(c, color, x + i * scale, y + j * scale, scale, scale); }));
+      x += 4 * scale;
+    }
+  }
 
-  /* Layout: the scene sits in the band above the headline, drawn at low resolution and scaled up. */
+  /* Layout: the scene fills the band above the headline, drawn at low resolution and scaled up. */
   const off = document.createElement('canvas');
   const octx = off.getContext('2d');
-  let W = 1, H = 1, dpr = 1, S = 4, LW = 100, LH = 48, y0 = 0;
-  let gy, beltY, factoryX, beltStart, bossX, rackX, crowd = [];
+  let W = 1, H = 1, dpr = 1, S = 3, LW = 100, LH = 60, y0 = 0;
+  let gy, beltY, fx, beltStart, dcX, bossX, crowd = [], skyline = [], clouds = [];
   function layout() {
     W = root.clientWidth; H = root.clientHeight;
     dpr = Math.min(devicePixelRatio || 1, 2);
     canvas.width = Math.round(W * dpr); canvas.height = Math.round(H * dpr);
-    S = W < 640 ? 3 : 4;
+    S = W < 640 ? 2 : 3;
     const top = content ? content.offsetTop : H;
-    LH = Math.max(34, Math.min(60, Math.floor((top - 10) / S)));
+    LH = Math.max(52, Math.min(86, Math.floor((top - 6) / S)));
     LW = Math.ceil(W / S);
-    y0 = Math.max(0, top - 8 - LH * S);
+    y0 = Math.max(0, top - 6 - LH * S);
     off.width = LW; off.height = LH;
-    gy = LH - 2;
-    beltY = gy - 14;
-    factoryX = W < 640 ? 2 : Math.max(4, Math.round(LW * 0.08));
-    beltStart = factoryX + 25;
-    rackX = LW - (W < 640 ? 14 : Math.max(16, Math.round(LW * 0.08)));
-    bossX = rackX - 13;
-    const left = beltStart + 2, right = bossX - 4;
-    const n = Math.max(3, Math.min(10, Math.floor((right - left) / 8)));
-    crowd = Array.from({length: n}, (_, i) => crowd[i] || {jump: 0, shirt: SHIRTS[i % SHIRTS.length], holding: 0});
-    crowd.forEach((p, i) => { p.x = Math.round(left + (i + 0.5) * (right - left) / n) - 2; });
+    gy = LH - 5;                                   // top of the ground
+    beltY = gy - 19;
+    fx = W < 640 ? 2 : Math.max(6, Math.round(LW * 0.06));
+    beltStart = fx + 44;
+    dcX = LW - 38 - (W < 640 ? 2 : Math.max(6, Math.round(LW * 0.06)));
+    bossX = dcX - 17;
+    const left = beltStart + 3, right = bossX - 2;
+    const n = Math.max(3, Math.min(12, Math.floor((right - left) / 11)));
+    crowd = Array.from({length: n}, (_, i) => crowd[i] || {
+      jump: 0, holding: 0, hair: HAIR[(i * 3) % HAIR.length], skin: SKIN[(i * 2) % SKIN.length],
+      shirt: SHIRT[i % SHIRT.length], phase: Math.random() * 6,
+    });
+    crowd.forEach((p, i) => { p.x = Math.round(left + (i + 0.5) * (right - left) / n) - 4; });
+    // Distant city: fixed per width so it does not flicker on resize.
+    skyline = [];
+    let seed = 7;
+    const rand = () => (seed = (seed * 9301 + 49297) % 233280) / 233280;
+    for (let x = 0; x < LW;) {
+      const w = 6 + Math.floor(rand() * 10), h = 6 + Math.floor(rand() * (LH * 0.24));
+      skyline.push({x, w, h, tone: rand() > 0.5});
+      x += w + Math.floor(rand() * 3);
+    }
+    if (!clouds.length) clouds = [0.12, 0.45, 0.78].map((f, i) => ({x: f * LW, y: 4 + i * 5 % 12, speed: 1.2 + i * 0.5}));
     draw();
   }
 
   /* Game state. */
   const state = {ai: 0, people: 0, saved: 0, real: null, change: null, history: [], currency: 'KRW', touched: false};
-  // The "why is it going up" board: today's real change with a joke from the boss's world, then real headlines.
-  let board = [], boardAt = 0, boardIn = 0;
+  let board = [], boardAt = 0, boardIn = 0;  // the real daily change, with a joke from the boss's world
   let sticks = [], smoke = [], popups = [], spawnIn = 0.6, tossEvery = 11, sinceToss = 0;
   let bubble = null, bubbleIn = 4, grab = 0, time = 0;
   const pick = keys => { const list = keys.map(k => T[k]).filter(Boolean); return list[Math.floor(Math.random() * list.length)]; };
@@ -99,47 +162,35 @@
     const text = pick(keys);
     if (text) { bubble = {text, t: seconds, angry}; bubbleIn = 8 + Math.random() * 6; }
   }
-
-  function arc(s, x1, y1, d, h, then) {
-    Object.assign(s, {from: [s.x, s.y], to: [x1, y1], d, h, t: 0, then});
-  }
-  function landOn(person) {
-    person.jump = 0.45; person.holding = 6;
-  }
+  function arc(s, x1, y1, d, h, then) { Object.assign(s, {from: [s.x, s.y], to: [x1, y1], d, h, t: 0, then}); }
   function toPeople(s, mine) {
     const person = crowd[Math.floor(Math.random() * crowd.length)];
-    s.state = 'air';
-    arc(s, person.x - 1, gy - 10, mine ? 0.8 : 1.0, mine ? 10 : 16, () => {
-      s.dead = true; landOn(person); state.people += 1;
+    s.state = 'air'; s.toPeople = true;
+    arc(s, person.x - 1, gy - 17, mine ? 0.8 : 1.0, mine ? 12 : 18, () => {
+      s.dead = true; person.jump = 0.5; person.holding = 6; state.people += 1;
     });
   }
-  function rackTop() { return gy - Math.min(LH - 10, 6 + Math.floor(state.ai / 3)); }
+  const pileTop = () => gy - 31 - Math.min(14, Math.floor(state.ai / 4));
   function hoard(s) {
-    s.state = 'air';
-    grab = 0.3;
-    arc(s, rackX + 2, rackTop() - 3, 0.45, 7, () => {
-      s.dead = true; state.ai += 1;
-    });
+    s.state = 'air'; grab = 0.3;
+    arc(s, dcX + 14 + (state.ai % 3) * 3 - 3, pileTop() - 2, 0.5, 9, () => { s.dead = true; state.ai += 1; });
   }
 
   function step(dt) {
     time += dt;
-    spawnIn -= dt;
-    if (spawnIn <= 0) {
-      spawnIn = 1.05 + Math.random() * 0.5;
-      sticks.push({x: beltStart - 6, y: beltY - 3, state: 'belt'});
+    if ((spawnIn -= dt) <= 0) {
+      spawnIn = 1.0 + Math.random() * 0.5;
+      sticks.push({x: beltStart - 8, y: beltY - 4, state: 'belt'});
     }
     for (const s of sticks) {
       if (s.state === 'belt') {
-        s.x += 13 * dt;
-        if (s.x >= bossX - 6) {
-          sinceToss += 1;
-          if (sinceToss >= tossEvery) {
+        s.x += 15 * dt;
+        if (s.x >= bossX - 7) {
+          if (++sinceToss >= tossEvery) {
             sinceToss = 0; tossEvery = 10 + Math.floor(Math.random() * 5);
             toPeople(s, false);
             if (!bubble || !bubble.angry) say(TOSS, 2);
-          }
-          else hoard(s);
+          } else hoard(s);
         }
       } else if (s.state === 'air') {
         s.t += dt;
@@ -150,9 +201,10 @@
       }
     }
     sticks = sticks.filter(s => !s.dead);
-    if (Math.random() < dt * 3) smoke.push({x: factoryX + 20 + Math.random() * 2, y: gy - 27, t: 0});
-    smoke.forEach(p => { p.t += dt; p.y -= 4 * dt; p.x += 2.5 * dt; });
-    smoke = smoke.filter(p => p.t < 2.6 && p.y > -4);
+    if (Math.random() < dt * 4) smoke.push({x: fx + 33 + Math.random() * 3, y: gy - 40, t: 0, r: 1 + Math.random()});
+    smoke.forEach(p => { p.t += dt; p.y -= 5 * dt; p.x += 3 * dt; });
+    smoke = smoke.filter(p => p.t < 3 && p.y > -6);
+    clouds.forEach(cl => { cl.x += cl.speed * dt; if (cl.x > LW + 20) cl.x = -24; });
     crowd.forEach(p => { p.jump = Math.max(0, p.jump - dt); p.holding = Math.max(0, p.holding - dt); });
     popups.forEach(p => { p.t += dt; });
     popups = popups.filter(p => p.t < 1.1);
@@ -162,137 +214,295 @@
     else if ((bubbleIn -= dt) <= 0) say(IDLE, 3);
   }
 
-  /* Drawing. */
-  function drawFactory(c) {
-    const x = factoryX, top = gy - 22;
-    rect(c, P.g, x, top + 7, 24, 22 - 7);
-    for (let i = 0; i < 3; i++) for (let r = 0; r < 5; r++) rect(c, P.k, x + i * 8, top + 2 + r, r + 2, 1);  // sawtooth roof
-    rect(c, P.k, x, top + 7, 24, 1);
-    rect(c, P.k, x + 18, top - 4, 3, 11);               // chimney
-    rect(c, P.r, x + 18, top - 2, 3, 1);
-    for (let i = 0; i < 4; i++) {                         // windows, blinking
-      const on = Math.sin(time * 2 + i * 1.7) > -0.6;
-      rect(c, on ? P.c : P.l, x + 2 + i * 4, top + 10, 2, 2);
+  /* Drawing, back to front. */
+  function drawSun(c) {
+    const sx = Math.round(LW * 0.2), sy = 9, r = 5;
+    for (let j = -r; j <= r; j++) for (let i = -r; i <= r; i++) {
+      const d = i * i + j * j;
+      if (d <= r * r) px(c, d <= (r - 2) * (r - 2) ? '#ffe9a3' : '#ffd166', sx + i, sy + j);
     }
-    rect(c, P.r, x + 2, top + 15, 12, 3);                 // red sign
-    rect(c, P.w, x + 3, top + 16, 1, 1); rect(c, P.w, x + 6, top + 16, 1, 1); rect(c, P.w, x + 9, top + 16, 2, 1);
-    rect(c, P.k, x + 18, beltY - 4, 6, 5);                // hatch the belt comes out of
-    rect(c, P.k, x + 19, gy - 6, 4, 6);                   // door
+    const ray = Math.floor(time * 2) % 2;  // rays twinkle
+    for (const [dx, dy] of [[0, -1], [1, 0], [0, 1], [-1, 0], [1, 1], [-1, -1], [1, -1], [-1, 1]]) {
+      const len = dx && dy ? 7 + ray : 8 + (1 - ray);
+      px(c, '#ffd166', sx + dx * len, sy + dy * len);
+    }
+  }
+  function drawMountains(c) {
+    const base = gy - Math.round(LH * 0.18);
+    const peaks = [[0.05, 0.42], [0.27, 0.55], [0.5, 0.4], [0.7, 0.58], [0.93, 0.45]];
+    for (const [f, hf] of peaks) {
+      const cx = Math.round(f * LW), h = Math.round(LH * hf * 0.6);
+      for (let r = 0; r < h; r++) {
+        const half = Math.round((h - r) * 1.6);
+        px(c, r > h - 4 ? '#f3f6fa' : (r % 2 ? '#9fbfae' : '#a9c8b8'), cx - half, base - r, half * 2 + 1, 1);
+        px(c, '#86a997', cx - half, base - r, 1, 1);
+      }
+    }
+    px(c, '#9fbfae', 0, base, LW, gy - base);
+  }
+  function drawBirds(c) {
+    for (let i = 0; i < 3; i++) {
+      const x = ((time * (6 + i * 2) + i * LW * 0.37) % (LW + 30)) - 15, y = 6 + i * 4 + Math.sin(time * 2 + i) * 1.5;
+      const flap = Math.floor(time * 6 + i) % 2;
+      px(c, C.K, x, y + flap, 1, 1); px(c, C.K, x + 1, y + 1, 1, 1); px(c, C.K, x + 2, y + flap, 1, 1);
+    }
+  }
+  function drawTrees(c) {
+    for (let x = -2; x < LW; x += 9) {
+      const h = 5 + ((x * 13) % 4), top = gy - h;
+      px(c, '#3f7d3a', x, top + 1, 8, h - 1); px(c, '#57a046', x + 1, top, 6, 2); px(c, '#6cbb53', x + 2, top, 2, 1);
+    }
+  }
+  function drawBushes(c) {
+    const spots = [fx - 6, fx + 46, dcX - 24, dcX + 38];
+    for (const bx of spots) {
+      if (bx < -6 || bx > LW) continue;
+      px(c, C.K, bx, gy - 4, 8, 4); px(c, '#4f9a3e', bx + 1, gy - 4, 6, 4); px(c, '#6cbb53', bx + 2, gy - 4, 3, 1);
+      px(c, '#e8483c', bx + 5, gy - 3); // a berry
+    }
+    for (const lx of [Math.round(LW * 0.33), Math.round(LW * 0.62)]) {  // street lamps
+      if (lx < beltStart + 2 || lx > bossX - 4) continue;
+      px(c, C.K, lx, gy - 22, 1, 22); px(c, C.K, lx - 1, gy - 23, 4, 2); px(c, '#ffe08a', lx, gy - 22, 2, 1);
+    }
+  }
+  function drawBackdrop(c) {
+    drawSun(c);
+    drawMountains(c);
+    for (const b of skyline) {
+      const top = gy - b.h;
+      px(c, b.tone ? C.far1 : C.far2, b.x, top, b.w, b.h);
+      for (let y = top + 2; y < gy - 2; y += 3) for (let x = b.x + 1; x < b.x + b.w - 1; x += 2) {
+        if ((x * 7 + y * 3) % 5 === 0) px(c, C.farWin, x, y);
+      }
+    }
+    for (const cl of clouds) {
+      const x = Math.round(cl.x), y = cl.y;
+      px(c, C.white, x + 3, y, 8, 1); px(c, C.white, x + 1, y + 1, 14, 2); px(c, C.white, x, y + 3, 18, 2);
+      px(c, C.smoke1, x + 1, y + 5, 16, 1);
+    }
+    drawBirds(c);
+    drawTrees(c);
+  }
+  function drawGround(c) {
+    px(c, C.grass1, 0, gy, LW, 1); px(c, C.grass2, 0, gy + 1, LW, 1);
+    px(c, C.dirt1, 0, gy + 2, LW, LH - gy - 2);
+    for (let x = (Math.floor(time * 0) % 4); x < LW; x += 4) px(c, C.dirt3, x, gy + 3);
+    for (let x = 2; x < LW; x += 7) px(c, C.dirt2, x, gy + 4);
+  }
+  function brickWall(c, x, y, w, h) {
+    px(c, C.brick2, x, y, w, h);
+    for (let j = 0; j < h; j++) {
+      if (j % 3 === 2) { px(c, C.mortar, x, y + j, w, 1); continue; }
+      const offset = Math.floor(j / 3) % 2 ? 2 : 0;
+      for (let i = offset; i < w; i += 5) px(c, C.mortar, x + i, y + j);
+      if (j % 3 === 0) for (let i = offset + 1; i < w; i += 5) px(c, C.brick3, x + i, y + j, 3, 1);
+    }
+  }
+  function drawFactory(c) {
+    const x = fx, top = gy - 26;
+    // Smokestack.
+    brickWall(c, x + 32, gy - 40, 6, 14);
+    px(c, C.K, x + 31, gy - 41, 8, 2); px(c, C.steel2, x + 32, gy - 41, 6, 1);
+    px(c, C.white, x + 32, gy - 36, 6, 1); px(c, C.white, x + 32, gy - 33, 6, 1);
+    px(c, C.K, x + 31, gy - 40, 1, 14); px(c, C.K, x + 38, gy - 40, 1, 14);
+    // Sawtooth roof with skylights.
+    for (let t = 0; t < 4; t++) {
+      const tx = x + t * 11;
+      for (let r = 0; r < 7; r++) {
+        px(c, r === 0 ? C.roof3 : C.roof2, tx, top - r, 10 - Math.floor(r * 1.4), 1);
+        px(c, C.K, tx + 10 - Math.floor(r * 1.4), top - r, 1, 1);
+      }
+      px(c, C.glass1, tx + 9, top - 6, 1, 6); px(c, C.glass2, tx + 10, top - 5, 1, 5);
+      px(c, C.K, tx, top - 7, 2, 1);
+    }
+    px(c, C.roof1, x, top, 44, 2); px(c, C.K, x - 1, top + 2, 46, 1);
+    // Brick hall.
+    brickWall(c, x, top + 3, 44, gy - top - 3);
+    px(c, C.brick3, x, top + 3, 1, gy - top - 3); px(c, C.brick1, x + 43, top + 3, 1, gy - top - 3);
+    px(c, C.K, x - 1, top + 2, 1, gy - top - 2); px(c, C.K, x + 44, top + 2, 1, gy - top - 2);
+    // Windows with flickering light.
+    for (let i = 0; i < 4; i++) {
+      const wx = x + 3 + i * 7, wy = top + 6, on = Math.sin(time * 1.7 + i * 2.1) > -0.7;
+      px(c, C.K, wx - 1, wy - 1, 6, 6);
+      px(c, on ? C.win1 : C.winOff, wx, wy, 4, 4);
+      if (on) px(c, C.win2, wx, wy, 2, 2);
+      px(c, C.K, wx + 2, wy, 1, 4); px(c, C.K, wx, wy + 2, 4, 1);
+    }
+    // Sign plate "RAM".
+    px(c, C.K, x + 3, gy - 13, 17, 9); px(c, '#d23b30', x + 4, gy - 12, 15, 7); px(c, '#f05a4a', x + 4, gy - 12, 15, 1);
+    word(c, 'RAM', x + 6, gy - 11, C.white);
+    // Shutter door.
+    px(c, C.K, x + 22, gy - 12, 10, 12); px(c, C.steel2, x + 23, gy - 11, 8, 11);
+    for (let y = gy - 10; y < gy; y += 2) px(c, C.steel1, x + 23, y, 8, 1);
+    px(c, C.steel3, x + 23, gy - 11, 8, 1);
+    // Hatch the belt comes out of, with a warning stripe.
+    px(c, C.K, x + 37, beltY - 6, 8, 8); px(c, '#14161c', x + 38, beltY - 5, 6, 6);
+    for (let i = 0; i < 6; i += 2) { px(c, '#f2c230', x + 38 + i, beltY - 6, 1, 1); }
+    // Pipe.
+    px(c, C.steel2, x + 41, top + 3, 2, beltY - top - 9); px(c, C.steel3, x + 41, top + 3, 1, beltY - top - 9);
   }
   function drawBelt(c) {
-    rect(c, P.k, beltStart - 1, beltY, bossX - beltStart + 2, 2);
-    const shift = Math.floor(time * 13) % 4;
-    for (let x = beltStart + shift; x < bossX; x += 4) rect(c, P.l, x, beltY, 1, 1);
-    for (const lx of [beltStart + 1, bossX - 2]) rect(c, P.g, lx, beltY + 2, 1, gy - beltY - 2);
-  }
-  function drawRack(c) {
-    const topY = rackTop();
-    rect(c, P.k, rackX, topY, 11, gy - topY);
-    for (let y = topY + 2; y < gy - 1; y += 3) {
-      rect(c, P.g, rackX + 1, y, 9, 2);
-      const blink = Math.sin(time * 6 + y) > 0;
-      rect(c, blink ? P.o : P.l, rackX + 8, y, 1, 1);
-      rect(c, Math.sin(time * 4 + y * 2) > 0.3 ? P.b : P.g, rackX + 6, y, 1, 1);
+    const len = bossX - beltStart + 2;
+    px(c, C.K, beltStart - 1, beltY - 1, len + 1, 5);
+    px(c, C.steel2, beltStart, beltY, len - 1, 3);
+    px(c, C.steel3, beltStart, beltY, len - 1, 1);
+    const shift = Math.floor(time * 15) % 6;
+    for (let x = beltStart + shift; x < beltStart + len - 2; x += 6) px(c, C.steel1, x, beltY + 1, 2, 1);
+    // Rollers and legs.
+    for (let x = beltStart + 3; x < beltStart + len - 3; x += 9) {
+      px(c, C.K, x - 1, beltY + 3, 4, 2); px(c, C.steel3, x, beltY + 3, 2, 1);
     }
-    rect(c, P.r, rackX, topY - 1, 11, 1);
-    sprite(c, STICK, rackX + 2, topY - 4);                 // the latest stick on top of the pile
+    for (const lx of [beltStart + 2, beltStart + len - 5]) {
+      px(c, C.K, lx - 1, beltY + 4, 4, gy - beltY - 4); px(c, C.steel2, lx, beltY + 4, 2, gy - beltY - 4);
+      px(c, C.steel3, lx, beltY + 4, 1, gy - beltY - 4);
+    }
+  }
+  function drawDataCenter(c) {
+    const x = dcX, top = gy - 30, w = 36;
+    // Hoard pile on the roof: it grows as the boss takes more.
+    const pile = Math.min(14, Math.floor(state.ai / 4));
+    for (let r = 0; r <= pile; r++) {
+      const rowW = Math.max(9, 26 - r * 2), rx = x + Math.floor((w - rowW) / 2);
+      for (let i = rx; i + 9 <= rx + rowW + 1; i += 8) sprite(c, STICK, i, top - 4 - r * 2, STICK_PAL);
+    }
+    // Body.
+    px(c, C.K, x - 1, top - 1, w + 2, gy - top + 1);
+    px(c, C.dc2, x, top, w, gy - top);
+    for (let i = 4; i < w; i += 8) px(c, C.dc1, x + i, top + 1, 1, gy - top - 1);
+    px(c, C.dc3, x, top, w, 1); px(c, C.dc3, x, top, 1, gy - top);
+    // Rooftop fans.
+    for (const fxo of [3, w - 9]) {
+      px(c, C.K, x + fxo, top - 3, 6, 3); px(c, C.steel2, x + fxo + 1, top - 2, 4, 1);
+      const spin = Math.floor(time * 10) % 2;
+      px(c, C.steel3, x + fxo + 1 + spin * 2, top - 3, 2, 1);
+    }
+    // Neon "AI" sign.
+    const glow = 0.75 + Math.sin(time * 5) * 0.25;
+    c.globalAlpha = glow;
+    px(c, C.K, x + 10, top + 3, 16, 11); px(c, '#3a1020', x + 11, top + 4, 14, 9);
+    word(c, 'AI', x + 13, top + 5, C.neon, 1);
+    word(c, 'AI', x + 13, top + 5, C.neon2, 1);
+    px(c, C.neon, x + 12, top + 11, 12, 1);
+    c.globalAlpha = 1;
+    // Server windows with blinking LEDs.
+    for (let row = 0; row < 2; row++) for (let col = 0; col < 4; col++) {
+      const wx = x + 3 + col * 8, wy = top + 16 + row * 6;
+      px(c, C.K, wx - 1, wy - 1, 7, 5); px(c, C.dc1, wx, wy, 5, 3);
+      const k = row * 4 + col;
+      px(c, Math.sin(time * 7 + k) > 0 ? C.led1 : C.dc3, wx + 1, wy + 1);
+      px(c, Math.sin(time * 5 + k * 2) > 0.2 ? C.led2 : C.dc3, wx + 3, wy + 1);
+      if (k % 3 === 0) px(c, Math.sin(time * 3 + k) > 0.6 ? C.led3 : C.dc3, wx + 2, wy + 2);
+    }
+    // Door the boss guards.
+    px(c, C.K, x + 1, gy - 10, 9, 10); px(c, '#0f1524', x + 2, gy - 9, 7, 9); px(c, C.led2, x + 7, gy - 5);
   }
   function drawBoss(c) {
     const by = gy - BOSS.length;
-    sprite(c, BOSS, bossX, by);
-    if (grab > 0) rect(c, P.s, bossX - 2, by + 9, 2, 1);  // reaching for the belt
+    sprite(c, BOSS, bossX, by, BOSS_PAL);
+    if (grab > 0) {  // reaching for the belt
+      px(c, C.K, bossX - 3, by + 13, 4, 3); px(c, C.skin1, bossX - 2, by + 14, 2, 1);
+    }
   }
   function drawCrowd(c) {
     for (const p of crowd) {
-      const lift = p.jump > 0 ? Math.round(Math.sin((p.jump / 0.45) * Math.PI) * 3) : 0;
-      const y = gy - 7 - lift;
-      rect(c, P.s, p.x + 1, y, 2, 2);
-      rect(c, p.shirt, p.x, y + 2, 4, 3);
-      rect(c, P.k, p.x + 1, y + 5, 1, 2 - (lift ? 1 : 0)); rect(c, P.k, p.x + 2, y + 5, 1, 2 - (lift ? 1 : 0));
-      if (p.holding > 0) sprite(c, STICK, p.x - 2, y - 4);
+      const jump = p.jump > 0 ? Math.round(Math.sin((p.jump / 0.5) * Math.PI) * 4) : 0;
+      const idle = Math.sin(time * 2 + p.phase) > 0.95 ? 1 : 0;
+      const y = gy - PERSON.length - jump - idle;
+      const pal = {K: C.K, h: p.hair, s: p.skin[0], c: p.shirt[0], C: p.shirt[1], p: '#3a4566'};
+      sprite(c, p.jump > 0 || p.holding > 0 ? CHEER : PERSON, p.x, y, pal);
+      if (p.holding > 0) sprite(c, STICK, p.x - 1, y - 5, STICK_PAL);
     }
   }
   function drawScene() {
     const c = octx;
     c.clearRect(0, 0, LW, LH);
-    rect(c, '#d9d6cf', 0, gy, LW, LH - gy);
+    drawBackdrop(c);
     for (const p of smoke) {
-      c.globalAlpha = Math.max(0, 0.5 - p.t / 6);
-      rect(c, P.l, p.x, p.y, 2 + Math.floor(p.t), 2 + Math.floor(p.t));
+      const size = Math.round(2 + p.t * 1.6 + p.r);
+      c.globalAlpha = Math.max(0, 0.85 - p.t / 3.2);
+      px(c, C.smoke2, p.x, p.y + 1, size, size);
+      px(c, C.smoke1, p.x, p.y, size, size - 1);
     }
     c.globalAlpha = 1;
+    drawGround(c);
+    drawBushes(c);
     drawFactory(c);
+    drawDataCenter(c);
     drawBelt(c);
-    drawRack(c);
     drawBoss(c);
     drawCrowd(c);
-    for (const s of sticks) sprite(c, STICK, Math.round(s.x), Math.round(s.y));
+    for (const s of sticks) sprite(c, STICK, Math.round(s.x), Math.round(s.y), STICK_PAL);
+  }
+
+  /* Sky behind everything, in 16-bit bands; text drawn crisp over the pixels. */
+  function drawSky() {
+    const bands = [C.sky1, C.sky2, C.sky3, C.sky4];
+    const bottom = y0 + gy * S, step = Math.ceil(bottom / bands.length);
+    bands.forEach((color, i) => { ctx.fillStyle = color; ctx.fillRect(0, i * step, W, step + 1); });
+    ctx.fillStyle = C.dirt1;
+    ctx.fillRect(0, y0 + LH * S - 1, W, H - (y0 + LH * S) + 1);
   }
   const money = value => value == null ? '…' : new Intl.NumberFormat(boot.lang === 'ko' ? 'ko-KR' : 'en-US',
     {style: 'currency', currency: state.currency, maximumFractionDigits: 0}).format(value);
+  function outlined(text, x, y, fill) {
+    ctx.lineWidth = 3; ctx.strokeStyle = 'rgba(255,255,255,.85)'; ctx.lineJoin = 'round';
+    ctx.strokeText(text, x, y);
+    ctx.fillStyle = fill; ctx.fillText(text, x, y);
+  }
   function drawText() {
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'top';
-    const cx = W / 2;
-    ctx.font = '800 14px "Pretendard Variable", Pretendard, system-ui, sans-serif';
-    ctx.fillStyle = '#e8483c';
-    const small = W < 640;
+    const small = W < 640, cx = W / 2;
+    ctx.textAlign = 'center'; ctx.textBaseline = 'top';
     const c = state.change, arrow = c == null || Math.abs(c) < 0.05 ? '' : ` ${c > 0 ? '▲' : '▼'} ${Math.abs(c).toFixed(1)}%`;
-    ctx.font = `800 ${small ? 13 : 14}px "Pretendard Variable", Pretendard, system-ui, sans-serif`;
+    ctx.font = `800 ${small ? 13 : 15}px ${FONT}`;
     const priceText = fmt('gamePrice', {price: money(state.real)}) + arrow;
     const hist = state.history, bars = hist.length > 1 ? Math.min(hist.length, 14) : 0;
     const histW = bars ? bars * 4 + 8 : 0, textW = ctx.measureText(priceText).width;
-    ctx.fillText(priceText, cx - histW / 2, 12);
-    if (bars) {  // price record: one bar per day, today in red
+    outlined(priceText, cx - histW / 2, 12, '#c8352a');
+    if (bars) {  // price record: one bar per recorded day, today in red
       const pts = hist.slice(-bars), lo = Math.min(...pts), hi = Math.max(...pts);
       const bx = cx - histW / 2 + textW / 2 + 8;
       pts.forEach((v, i) => {
         const h = 4 + (hi === lo ? 6 : Math.round((v - lo) / (hi - lo) * 10));
-        ctx.fillStyle = i === pts.length - 1 ? '#e8483c' : '#c9c6bf';
-        ctx.fillRect(bx + i * 4, 26 - h, 3, h);
+        ctx.fillStyle = C.K; ctx.fillRect(bx + i * 4 - 1, 27 - h, 5, h + 1);
+        ctx.fillStyle = i === pts.length - 1 ? '#e8483c' : '#ffffff';
+        ctx.fillRect(bx + i * 4, 28 - h, 3, h - 1);
       });
     }
-    // Second line: the hint until the first grab, then the reasons board (fading between items).
-    ctx.font = '600 12px "Pretendard Variable", Pretendard, system-ui, sans-serif';
+    // Second line: the hint until the first grab, then the reasons board.
+    ctx.font = `700 12px ${FONT}`;
     if (!state.touched || !board.length) {
-      ctx.fillStyle = '#8b8e94';
-      ctx.fillText((coarse ? T.gameHintTouch : T.gameHint) || '', cx, 32);
+      outlined((coarse ? T.gameHintTouch : T.gameHint) || '', cx, 34, '#3d4350');
     } else {
       const item = board[boardAt], fade = Math.min(1, boardIn / 0.4, (6 - boardIn) / 0.4);
       ctx.globalAlpha = Math.max(0, Math.min(1, fade));
-      ctx.font = '600 12px "Pretendard Variable", Pretendard, system-ui, sans-serif';
-      ctx.fillStyle = item.news ? '#2563eb' : '#141414';
-      let text = item.text;
-      const max = Math.min(W - 40, small ? W - 24 : W * 0.56);
-      while (ctx.measureText(text).width > max && text.length > 8) text = text.slice(0, -2);
-      if (text !== item.text) text = text.trimEnd() + '…';
-      ctx.fillText(text, cx, 32);
+      outlined(item.text, cx, 34, '#1a1c24');
       ctx.globalAlpha = 1;
     }
-    // Scoreboard, small, over the data center: what the boss took, what reached people.
-    ctx.font = '700 11px "Pretendard Variable", Pretendard, system-ui, sans-serif';
-    ctx.textAlign = 'right';
-    ctx.fillStyle = '#54565c';
-    ctx.fillText(fmt('gameCount', {ai: state.ai, people: state.people}), W - 12, y0 + (gy - 14) * S - 34 > 50 ? y0 + 6 : 52);
+    // Scoreboard over the data center.
+    ctx.font = `800 11px ${FONT}`; ctx.textAlign = 'right';
+    outlined(fmt('gameCount', {ai: state.ai, people: state.people}), W - 12, small ? 54 : 14, '#2e3f63');
     ctx.textAlign = 'center';
-    // Popups over rescued sticks.
-    ctx.font = '800 12px "Pretendard Variable", Pretendard, system-ui, sans-serif';
+    ctx.font = `800 12px ${FONT}`;
     for (const p of popups) {
       ctx.globalAlpha = 1 - p.t / 1.1;
-      ctx.fillStyle = '#16a34a';
-      ctx.fillText(T.gameSavedPop || '+1', p.x * S, y0 + (p.y - p.t * 6) * S - 14);
+      outlined(T.gameSavedPop || '+1', p.x * S, y0 + (p.y - p.t * 6) * S - 14, '#16a34a');
     }
     ctx.globalAlpha = 1;
-    if (bubble) {  // speech bubble left of the boss's head
-      ctx.font = `${bubble.angry ? 800 : 700} 12px "Pretendard Variable", Pretendard, system-ui, sans-serif`;
-      const pad = 8, w = ctx.measureText(bubble.text).width + pad * 2, h = 24;
-      const right = bossX * S - 6, top = y0 + (gy - BOSS.length) * S - 4;
-      const left = Math.max(6, right - w);
-      ctx.fillStyle = bubble.angry ? '#fff1ef' : '#ffffff'; ctx.strokeStyle = bubble.angry ? '#e8483c' : '#1d2027'; ctx.lineWidth = 2;
-      ctx.beginPath(); ctx.roundRect(left, top, w, h, 6); ctx.fill(); ctx.stroke();
-      ctx.beginPath(); ctx.moveTo(right - 2, top + 8); ctx.lineTo(right + 6, top + 13); ctx.lineTo(right - 2, top + 17); ctx.fill();
-      ctx.fillStyle = bubble.angry ? '#b8352b' : '#1d2027'; ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
-      ctx.fillText(bubble.text, left + pad, top + h / 2 + 1);
+    if (bubble) {  // 16-bit dialogue box left of the boss's head
+      ctx.font = `${bubble.angry ? 800 : 700} 12px ${FONT}`;
+      const pad = 8, w = Math.ceil(ctx.measureText(bubble.text).width) + pad * 2, h = 24;
+      const headX = (bossX + 8) * S, headTop = y0 + (gy - BOSS.length) * S;
+      let top = headTop - h - 16, left = Math.min(W - w - 8, headX - w + 18), tail = 'down';
+      if (top < 54) { top = headTop + 2; left = Math.max(6, bossX * S - 10 - w); tail = 'right'; }
+      left = Math.max(6, left);
+      ctx.fillStyle = C.K; ctx.fillRect(left - 2, top - 2, w + 4, h + 4);
+      ctx.fillStyle = bubble.angry ? '#fff1ef' : '#ffffff'; ctx.fillRect(left, top, w, h);
+      ctx.fillStyle = bubble.angry ? '#ffd2cc' : '#e8eef6'; ctx.fillRect(left, top + h - 3, w, 3);
+      ctx.fillStyle = C.K;
+      if (tail === 'down') { ctx.fillRect(headX - 4, top + h + 2, 4, 4); ctx.fillRect(headX - 1, top + h + 7, 3, 3); }
+      else { ctx.fillRect(left + w + 2, top + 8, 4, 4); ctx.fillRect(left + w + 6, top + 11, 3, 3); }
+      ctx.fillStyle = bubble.angry ? '#c8352a' : C.K; ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
+      ctx.fillText(bubble.text, left + pad, top + h / 2);
     }
   }
   function draw() {
@@ -300,27 +510,51 @@
     drawScene();
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     ctx.clearRect(0, 0, W, H);
+    drawSky();
     ctx.imageSmoothingEnabled = false;
     ctx.drawImage(off, 0, y0, LW * S, LH * S);
     drawText();
+  }
+
+  /* 16-bit style sound: square-wave blips made on the fly. Plays only after a click or tap. */
+  let audio = null;
+  function tone(freq, start, length, type = 'square', volume = 0.05, slide = 0) {
+    const osc = audio.createOscillator(), gain = audio.createGain(), t = audio.currentTime + start;
+    osc.type = type;
+    osc.frequency.setValueAtTime(freq, t);
+    if (slide) osc.frequency.linearRampToValueAtTime(freq + slide, t + length);
+    gain.gain.setValueAtTime(volume, t);
+    gain.gain.exponentialRampToValueAtTime(0.0001, t + length);
+    osc.connect(gain).connect(audio.destination);
+    osc.start(t); osc.stop(t + length + 0.02);
+  }
+  function sound(kind) {
+    try {
+      audio = audio || new (window.AudioContext || window.webkitAudioContext)();
+      if (audio.state === 'suspended') audio.resume();
+      if (kind === 'grab') { tone(988, 0, 0.07); tone(1319, 0.07, 0.16); }          // coin: B5 then E6
+      if (kind === 'angry') { tone(196, 0.12, 0.12, 'square', 0.035, -40); tone(147, 0.25, 0.18, 'square', 0.035, -30); }
+    } catch {}
   }
 
   /* Clicking a stick on its way to the data center sends it to the people. */
   function pointer(event) {
     const b = canvas.getBoundingClientRect();
     const lx = (event.clientX - b.left) / S, ly = (event.clientY - b.top - y0) / S;
-    const reach = event.pointerType === 'touch' ? 7 : 5;
+    const reach = (event.pointerType === 'touch' ? 24 : 16) / S;
     let best = null, bestD = Infinity;
     for (const s of sticks) {
-      if (s.state === 'air' && s.then && s.to[0] < bossX) continue;  // already going to the people
-      const dx = lx - (s.x + 3.5), dy = ly - (s.y + 1.5), d = dx * dx + dy * dy;
+      if (s.toPeople) continue;
+      const dx = lx - (s.x + 4.5), dy = ly - (s.y + 2), d = dx * dx + dy * dy;
       if (Math.abs(dx) <= reach && Math.abs(dy) <= reach && d < bestD) { best = s; bestD = d; }
     }
     if (!best) return;
     state.touched = true;
     state.saved += 1;
-    popups.push({x: best.x + 3, y: best.y, t: 0});
+    popups.push({x: best.x + 4, y: best.y, t: 0});
     toPeople(best, true);
+    sound('grab');
+    if (!bubble || !bubble.angry) sound('angry');
     say(ANGRY, 2.2, true);  // the boss does not like sharing
     grab = 0.3;
     wake();
@@ -339,6 +573,15 @@
     raf = requestAnimationFrame(frame);
   }
 
+  /* Reasons board: the real daily change, each time with a different joke. */
+  function buildBoard() {
+    board = [];
+    if (state.real == null) return;
+    const c = state.change, dir = c == null || Math.abs(c) < 0.05 ? 'Flat' : c > 0 ? 'Up' : 'Down';
+    const change = dir === 'Flat' ? T.gameNoChange : fmt('gameChange', {pct: `${c > 0 ? '▲' : '▼'} ${Math.abs(c).toFixed(1)}%`});
+    [1, 2, 3].map(n => T[`gameWhy${dir}${n}`]).filter(Boolean).forEach(j => board.push({text: `${change} · ${j}`}));
+    boardAt = 0; boardIn = 6;
+  }
   document.addEventListener('qt:prices', event => {
     const data = event.detail || {};
     const p = (data.products || []).find(x => x.id === 'samsung-ddr5-32');
@@ -351,37 +594,11 @@
     draw();
   });
 
-  /* Reasons board: the real daily change gets a joke; real headlines follow, marked as news. */
-  let headlines = [];
-  function buildBoard() {
-    const items = [];
-    if (state.real != null) {
-      const c = state.change, dir = c == null || Math.abs(c) < 0.05 ? 'Flat' : c > 0 ? 'Up' : 'Down';
-      const jokes = [1, 2, 3].map(n => T[`gameWhy${dir}${n}`]).filter(Boolean);
-      const change = dir === 'Flat' ? T.gameNoChange : fmt('gameChange', {pct: `${c > 0 ? '▲' : '▼'} ${Math.abs(c).toFixed(1)}%`});
-      jokes.forEach(j => items.push({text: `${change} · ${j}`}));
-    }
-    headlines.slice(0, 4).forEach(h => items.push({text: `📰 ${h.title} — ${h.publisher}`, news: true}));
-    // Alternate: joke, news, joke, news...
-    const jokesOnly = items.filter(i => !i.news), news = items.filter(i => i.news);
-    board = [];
-    for (let i = 0; i < Math.max(jokesOnly.length, news.length); i++) {
-      if (jokesOnly[i]) board.push(jokesOnly[i]);
-      if (news[i]) board.push(news[i]);
-    }
-    boardAt = 0; boardIn = 6;
-  }
-  const newsUrl = boot.static ? `${boot.base || ''}/data/news-${boot.lang}.json` : `/api/news?lang=${boot.lang}`;
-  fetch(newsUrl, {cache: 'no-cache'}).then(r => r.ok ? r.json() : null).then(data => {
-    headlines = (data?.news || []).filter(n => n.category === 'ram');
-    buildBoard();
-  }).catch(() => {});
-
   function start() {
     layout();
-    if (reduced) {  // a still picture: a few sticks on the belt and some already hoarded
-      state.ai = 24;
-      sticks = [0.2, 0.5, 0.8].map(f => ({x: beltStart + (bossX - beltStart - 8) * f, y: beltY - 3, state: 'belt'}));
+    if (reduced) {  // a still picture: a few sticks on the belt and a hoard on the roof
+      state.ai = 32;
+      sticks = [0.2, 0.5, 0.8].map(f => ({x: beltStart + (bossX - beltStart - 10) * f, y: beltY - 4, state: 'belt'}));
       draw();
     }
     canvas.addEventListener('pointerdown', pointer);
@@ -394,5 +611,5 @@
     document.addEventListener('visibilitychange', wake);
     wake();
   }
-  (document.fonts ? document.fonts.load('800 14px "Pretendard Variable"').catch(() => {}) : Promise.resolve()).then(start, start);
+  (document.fonts ? document.fonts.load(`800 14px "Pretendard Variable"`).catch(() => {}) : Promise.resolve()).then(start, start);
 })();
