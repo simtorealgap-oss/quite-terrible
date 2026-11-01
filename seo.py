@@ -417,7 +417,7 @@ def guide_body(slug, lang, strings, products, news, base, money):
 def news_rows(news, lang, strings):
     """Latest headlines as plain HTML for crawlers that do not run JavaScript; app.js re-renders them."""
     items = []
-    for n in (news or [])[:30]:
+    for n in (news or [])[:20]:
         if not str(n.get('url', '')).startswith(('https://', 'http://')):
             continue
         at = dt.datetime.fromisoformat(n['published_at']).astimezone(KST)

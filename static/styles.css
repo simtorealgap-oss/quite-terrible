@@ -225,6 +225,9 @@ th[aria-sort="descending"] .th-sort::after { content: " ↓"; }
 /* News: list + today's prices sidebar */
 #page-news { max-width: 880px; margin-inline: auto; }
 .news-day h3 { margin: 0; padding: 10px 20px; border-bottom: 1px solid var(--line); background: var(--sunk); font-size: 12px; font-weight: 700; letter-spacing: .02em; color: var(--text-3); }
+.news-more { padding: 14px 20px; border-top: 1px solid var(--line); text-align: center; }
+.news-more button { min-height: 40px; padding: 8px 22px; border: 1px solid var(--line-2); border-radius: 999px; background: var(--panel-2); color: var(--text); font-size: 14px; font-weight: 650; cursor: pointer; }
+.news-more button:hover { background: var(--panel); border-color: var(--text-3); }
 .news-items { margin: 0; padding: 0; list-style: none; }
 .news-item { display: grid; grid-template-columns: 72px minmax(0, 1fr); gap: 16px; padding: 16px 20px; border-bottom: 1px solid var(--line); position: relative; cursor: pointer; }
 .news-title::after { content: ""; position: absolute; inset: 0; }  /* the whole row is the link */

@@ -256,7 +256,8 @@
     "reportLead": "{first}부터 {last}까지 매일 아침 확인한 최저가로 만든 리포트입니다. 매일 자동으로 갱신됩니다.",
     "reportFew": "기록이 쌓일수록 한 달 흐름이 더 정확해집니다.",
     "compareSentence": "오늘 기준 {a}는 {pa}, {b}는 {pb}입니다.",
-    "adLabel": "광고"
+    "adLabel": "광고",
+    "newsMore": "뉴스 {n}개 더 보기"
   },
   "en": {
     "brand": "Quite Terrible",
@@ -515,7 +516,8 @@
     "reportLead": "Built from the lowest prices we checked every morning from {first} to {last}. It updates itself daily.",
     "reportFew": "The month gets clearer as more days are recorded.",
     "compareSentence": "Today the {a} costs {pa} and the {b} costs {pb}.",
-    "adLabel": "Advertisement"
+    "adLabel": "Advertisement",
+    "newsMore": "Show {n} more"
   },
   "ja": {
     "brand": "Quite Terrible",
@@ -774,6 +776,7 @@
     "reportLead": "{first}から{last}まで毎朝確認した最安値で作ったレポートです。毎日自動で更新されます。",
     "reportFew": "記録が増えるほど、1か月の流れがより正確になります。",
     "compareSentence": "今日の時点で{a}は{pa}、{b}は{pb}です。",
-    "adLabel": "広告"
+    "adLabel": "広告",
+    "newsMore": "さらに{n}件表示"
   }
 }

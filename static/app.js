@@ -7,6 +7,7 @@ const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
 const esc = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'}[c]));
 const fmt = (key, vars = {}) => String(T[key] ?? key).replace(/\{(\w+)\}/g, (_, name) => vars[name] ?? '');
 const DAY = 86400000;
+const NEWS_PAGE = 20;  // headlines per "more" click
 const query = new URLSearchParams(location.search);
 // The server picks the market from the visitor's country. A static host cannot, so the browser
 // decides: Korea time zone or Korean page means Korean prices, otherwise US prices.
@@ -42,6 +43,7 @@ const state = {
   sort: null,
   sortDir: 1,
   newsCategory: 'all',
+  newsLimit: NEWS_PAGE,
   prices: null,
   news: null,
   selected: null,
@@ -484,7 +486,8 @@ function renderNews() {
   $('#news-status').dataset.state = failed ? 'error' : lastOk ? 'live' : 'idle';
   $('#news-status-text').textContent = failed ? fmt('newsDelayed', {time: when(lastOk)}) : lastOk ? fmt('newsUpdated', {time: when(lastOk)}) : T.newsPending;
   $$('#news-category button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.newsCategory === state.newsCategory)));
-  const items = news.filter(n => state.newsCategory === 'all' || n.category === state.newsCategory);
+  const all = news.filter(n => state.newsCategory === 'all' || n.category === state.newsCategory);
+  const items = all.slice(0, state.newsLimit);  // a page at a time; "more" opens the next
   if (!items.length) {
     $('#news-list').innerHTML = `<p class="news-empty">${esc(lastOk ? T.newsEmpty : T.newsPending)}</p>`;
     return;
@@ -509,7 +512,8 @@ function renderNews() {
       const href = safeHref(n.url);
       return ad + `<li class="news-item"><time class="news-time" datetime="${esc(n.published_at)}">${esc(timeLabel.format(new Date(n.published_at)))}</time><div class="news-body">${href ? `<a class="news-title" href="${href}" target="_blank" rel="noopener noreferrer">${esc(n.title)}<span class="news-out" aria-hidden="true"> ↗</span></a>` : `<span class="news-title">${esc(n.title)}</span>`}<div class="news-meta"><span class="tag ${n.category}">${esc(categoryTag(n.category))}</span><span>${esc(n.publisher)}</span></div></div></li>`;
     }).join('')}</ol></section>`;
-  }).join('');
+  }).join('') + (all.length > items.length
+    ? `<div class="news-more"><button type="button" data-action="news-more">${esc(fmt('newsMore', {n: Math.min(NEWS_PAGE, all.length - items.length)}))}</button></div>` : '');
   fillAds($('#news-list'));
 }
 
@@ -540,7 +544,7 @@ document.addEventListener('click', event => {
     return;
   }
   if ((el = pick('[data-category]'))) { state.category = el.dataset.category; renderTable(); return; }
-  if ((el = pick('[data-news-category]'))) { state.newsCategory = el.dataset.newsCategory; renderNews(); return; }
+  if ((el = pick('[data-news-category]'))) { state.newsCategory = el.dataset.newsCategory; state.newsLimit = NEWS_PAGE; renderNews(); return; }
   if ((el = pick('[data-sort]'))) {
     const key = el.dataset.sort;
     if (state.sort !== key) [state.sort, state.sortDir] = [key, 1];
@@ -550,6 +554,13 @@ document.addEventListener('click', event => {
     return;
   }
   const action = pick('[data-action]')?.dataset.action;
+  if (action === 'news-more') {
+    const at = $$('#news-list .news-item').length;
+    state.newsLimit += NEWS_PAGE;
+    renderNews();
+    $$('#news-list .news-item')[at]?.querySelector('a')?.focus({preventScroll: true});  // keyboard users land on the first new one
+    return;
+  }
   if (action === 'retry') { state.page === 'news' ? loadNews() : loadPrices(); return; }
   if (action === 'demo' || action === 'live') {
     state.demo = action === 'demo';
