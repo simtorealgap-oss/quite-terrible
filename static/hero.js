@@ -140,10 +140,13 @@
     skyline = [];
     let seed = 7;
     const rand = () => (seed = (seed * 9301 + 49297) % 233280) / 233280;
-    for (let x = 0; x < LW;) {
-      const w = 6 + Math.floor(rand() * 10), h = 6 + Math.floor(rand() * (LH * 0.24));
-      skyline.push({x, w, h, tone: rand() > 0.5});
-      x += w + Math.floor(rand() * 3);
+    for (const far of [true, false]) {  // far row (taller, paler), then near row
+      for (let x = -4 - Math.floor(rand() * 6); x < LW;) {
+        const w = 12 + Math.floor(rand() * 12);
+        const h = Math.round((far ? LH * 0.36 : LH * 0.22) * (0.65 + rand() * 0.5));
+        skyline.push({x, w, h, far, kind: Math.floor(rand() * 4), seed: Math.floor(rand() * 100)});
+        x += w + (far ? 1 : 2 + Math.floor(rand() * 4));
+      }
     }
     if (!clouds.length) clouds = [0.12, 0.45, 0.78].map((f, i) => ({x: f * LW, y: 4 + i * 5 % 12, speed: 1.2 + i * 0.5}));
     draw();
@@ -151,6 +154,11 @@
 
   /* Game state. */
   const state = {ai: 0, people: 0, saved: 0, real: null, change: null, history: [], currency: 'KRW', touched: false};
+  // Clicker record: how many sticks this visitor has ever grabbed, kept in this browser only.
+  const RECORD = 'qt-rescued';
+  let record = 0;
+  try { record = Math.max(0, parseInt(localStorage.getItem(RECORD), 10) || 0); } catch {}
+  function saveRecord() { try { localStorage.setItem(RECORD, String(record)); } catch {} }
   let board = [], boardAt = 0, boardIn = 0;  // the real daily change, with a joke from the boss's world
   let sticks = [], smoke = [], popups = [], spawnIn = 0.6, tossEvery = 11, sinceToss = 0;
   let bubble = null, bubbleIn = 4, grab = 0, time = 0;
@@ -227,30 +235,11 @@
       px(c, '#ffd166', sx + dx * len, sy + dy * len);
     }
   }
-  function drawMountains(c) {
-    const base = gy - Math.round(LH * 0.18);
-    const peaks = [[0.05, 0.42], [0.27, 0.55], [0.5, 0.4], [0.7, 0.58], [0.93, 0.45]];
-    for (const [f, hf] of peaks) {
-      const cx = Math.round(f * LW), h = Math.round(LH * hf * 0.6);
-      for (let r = 0; r < h; r++) {
-        const half = Math.round((h - r) * 1.6);
-        px(c, r > h - 4 ? '#f3f6fa' : (r % 2 ? '#9fbfae' : '#a9c8b8'), cx - half, base - r, half * 2 + 1, 1);
-        px(c, '#86a997', cx - half, base - r, 1, 1);
-      }
-    }
-    px(c, '#9fbfae', 0, base, LW, gy - base);
-  }
   function drawBirds(c) {
     for (let i = 0; i < 3; i++) {
       const x = ((time * (6 + i * 2) + i * LW * 0.37) % (LW + 30)) - 15, y = 6 + i * 4 + Math.sin(time * 2 + i) * 1.5;
       const flap = Math.floor(time * 6 + i) % 2;
       px(c, C.K, x, y + flap, 1, 1); px(c, C.K, x + 1, y + 1, 1, 1); px(c, C.K, x + 2, y + flap, 1, 1);
-    }
-  }
-  function drawTrees(c) {
-    for (let x = -2; x < LW; x += 9) {
-      const h = 5 + ((x * 13) % 4), top = gy - h;
-      px(c, '#3f7d3a', x, top + 1, 8, h - 1); px(c, '#57a046', x + 1, top, 6, 2); px(c, '#6cbb53', x + 2, top, 2, 1);
     }
   }
   function drawBushes(c) {
@@ -265,23 +254,46 @@
       px(c, C.K, lx, gy - 22, 1, 22); px(c, C.K, lx - 1, gy - 23, 4, 2); px(c, '#ffe08a', lx, gy - 22, 2, 1);
     }
   }
+  // A horizon packed with data centers: server halls, cooling towers, blinking racks, "AI" signs.
+  function drawServerHall(c, b) {
+    const top = gy - b.h, x = b.x, w = b.w;
+    const body = b.far ? '#9fb2c8' : '#6f84a3', dark = b.far ? '#8ea2ba' : '#5a6d8c', edge = b.far ? '#b7c7d8' : '#8aa0bf';
+    const ledOn = b.far ? ['#d6f5e0', '#d4ecff'] : [C.led1, C.led2];
+    px(c, body, x, top, w, b.h);
+    px(c, edge, x, top, w, 1);
+    for (let i = 3; i < w - 1; i += 6) px(c, dark, x + i, top + 2, 1, b.h - 2);  // panel seams
+    // Rows of rack lights; a few blink.
+    for (let y = top + 3; y < gy - 2; y += 3) for (let i = x + 1; i < x + w - 1; i += 2) {
+      const k = (i * 7 + y * 13 + b.seed) % 11;
+      if (k > 3) continue;
+      const blink = k === 0 ? Math.sin(time * 4 + i + y) > 0 : true;
+      px(c, blink ? ledOn[k % 2] : dark, i, y);
+    }
+    // Roof gear by building kind: cooling fans, a cooling tower, an antenna, or an "AI" sign.
+    if (b.kind === 0) {
+      for (let i = x + 2; i < x + w - 4; i += 6) { px(c, dark, i, top - 2, 4, 2); px(c, edge, i + (Math.floor(time * 8) % 2) * 2, top - 2, 2, 1); }
+    } else if (b.kind === 1) {
+      const tw = Math.min(8, w - 4), tx = x + 2;
+      for (let r = 0; r < 7; r++) { const inset = r < 3 ? 2 - r : r > 4 ? r - 4 : 0; px(c, b.far ? '#c7d4e2' : '#a9b9cf', tx + inset, top - 7 + r, tw - inset * 2, 1); }
+      px(c, C.smoke1, tx + 2, top - 9 - (Math.floor(time * 2) % 2), tw - 4, 2);  // vapor
+    } else if (b.kind === 2) {
+      px(c, dark, x + w - 4, top - 8, 1, 8); px(c, Math.sin(time * 3 + b.seed) > 0 ? C.led3 : dark, x + w - 4, top - 9);
+    } else if (!b.far && w >= 14) {
+      px(c, '#2a1a2e', x + 2, top - 6, 11, 6);
+      c.globalAlpha = 0.7 + Math.sin(time * 4 + b.seed) * 0.3;
+      word(c, 'AI', x + 4, top - 6, C.neon);
+      c.globalAlpha = 1;
+    }
+  }
   function drawBackdrop(c) {
     drawSun(c);
-    drawMountains(c);
-    for (const b of skyline) {
-      const top = gy - b.h;
-      px(c, b.tone ? C.far1 : C.far2, b.x, top, b.w, b.h);
-      for (let y = top + 2; y < gy - 2; y += 3) for (let x = b.x + 1; x < b.x + b.w - 1; x += 2) {
-        if ((x * 7 + y * 3) % 5 === 0) px(c, C.farWin, x, y);
-      }
-    }
+    for (const b of skyline) drawServerHall(c, b);
     for (const cl of clouds) {
       const x = Math.round(cl.x), y = cl.y;
       px(c, C.white, x + 3, y, 8, 1); px(c, C.white, x + 1, y + 1, 14, 2); px(c, C.white, x, y + 3, 18, 2);
       px(c, C.smoke1, x + 1, y + 5, 16, 1);
     }
     drawBirds(c);
-    drawTrees(c);
   }
   function drawGround(c) {
     px(c, C.grass1, 0, gy, LW, 1); px(c, C.grass2, 0, gy + 1, LW, 1);
@@ -481,6 +493,10 @@
     // Scoreboard over the data center.
     ctx.font = `800 11px ${FONT}`; ctx.textAlign = 'right';
     outlined(fmt('gameCount', {ai: state.ai, people: state.people}), W - 12, small ? 54 : 14, '#2e3f63');
+    if (record) {  // lifetime total, a little celebration every 100
+      ctx.font = `800 ${record % 100 === 0 && popups.length ? 14 : 12}px ${FONT}`;
+      outlined(fmt('gameRecord', {n: record.toLocaleString(boot.lang === 'ko' ? 'ko-KR' : 'en-US')}), W - 12, small ? 70 : 30, '#16a34a');
+    }
     ctx.textAlign = 'center';
     ctx.font = `800 12px ${FONT}`;
     for (const p of popups) {
@@ -551,6 +567,8 @@
     if (!best) return;
     state.touched = true;
     state.saved += 1;
+    record += 1;
+    saveRecord();
     popups.push({x: best.x + 4, y: best.y, t: 0});
     toPeople(best, true);
     sound('grab');
