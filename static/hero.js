@@ -64,6 +64,15 @@
     '...KOOOK.KOOOK..',
     '...KKKKK.KKKKK..',
   ];
+  const BOSS_ANGRY = BOSS.slice();
+  BOSS_ANGRY[5] = '..KdbssssssbdK..';
+  BOSS_ANGRY[6] = '..KssbbssbbssK..';
+  BOSS_ANGRY[7] = '..KsKesssseKsK..';
+  BOSS_ANGRY[8] = '..KssssssssssK..';
+  BOSS_ANGRY[9] = '..KSssssSsssSK..';
+  BOSS_ANGRY[10] = '...KSsKKKKsSK...';
+  BOSS_ANGRY[11] = '....KSmmmmSK....';
+  const ANGER_MARK = ['.r.r.', 'rr.rr', '.....', 'rr.rr', '.r.r.'];  // the cartoon "vein pop"
   const BOSS_PAL = {K: C.K, d: '#5c3a26', h: '#8a5a3c', H: '#a8754f', s: '#f6d3b8', S: '#e3b394', b: '#5c3a26',
     w: '#ffffff', e: '#2b3a55', m: '#c4675c', 1: '#5f6878', 2: '#7d8696', 3: '#9aa2b1', j: '#34436a', J: '#25304d', O: '#e9e9e9'};
   const PERSON = [
@@ -432,10 +441,18 @@
     // Door the boss guards.
     px(c, C.K, x + 1, gy - 10, 9, 10); px(c, '#0f1524', x + 2, gy - 9, 7, 9); px(c, C.led2, x + 7, gy - 5);
   }
+  const ANGRY_PAL = {...BOSS_PAL, s: '#f7b49c', S: '#e58f74', m: '#8f2a22'};
   function drawBoss(c) {
-    const by = gy - BOSS.length;
-    sprite(c, BOSS, bossX, by, BOSS_PAL);
-    if (bubble?.angry) { px(c, '#f08a7a', bossX + 3, by + 9, 2, 1); px(c, '#f08a7a', bossX + 11, by + 9, 2, 1); }
+    const angry = bubble?.angry;
+    const shake = angry ? (Math.floor(time * 30) % 2 ? 1 : -1) : 0;  // trembling with rage
+    const by = gy - BOSS.length, bx = bossX + shake;
+    sprite(c, angry ? BOSS_ANGRY : BOSS, bx, by, angry ? ANGRY_PAL : BOSS_PAL);
+    if (angry) {
+      sprite(c, ANGER_MARK, bx + 12, by - 2, {r: '#e8483c'});
+      const puff = Math.floor(time * 6) % 3;  // steam from the head
+      px(c, C.white, bx + 2 - puff, by - 2 - puff * 2, 2, 2); px(c, C.white, bx + 6 + puff, by - 3 - puff * 2, 2, 2);
+      px(c, C.smoke1, bx + 1 - puff, by - 4 - puff * 2, 2, 1);
+    }
     if (grab > 0) {  // reaching for the belt
       px(c, C.K, bossX - 3, by + 13, 4, 3); px(c, C.skin1, bossX - 2, by + 14, 2, 1);
     }
@@ -535,12 +552,13 @@
     }
     ctx.globalAlpha = 1;
     if (bubble) {  // 16-bit dialogue box left of the boss's head
-      ctx.font = `${bubble.angry ? 800 : 700} 12px ${FONT}`;
-      const pad = 8, w = Math.ceil(ctx.measureText(bubble.text).width) + pad * 2, h = 24;
+      ctx.font = `${bubble.angry ? 900 : 700} ${bubble.angry ? 14 : 12}px ${FONT}`;
+      const pad = 8, w = Math.ceil(ctx.measureText(bubble.text).width) + pad * 2, h = bubble.angry ? 28 : 24;
+      const jolt = bubble.angry ? Math.round(Math.sin(time * 50) * 2) : 0;
       const headX = (bossX + 8) * S, headTop = y0 + (gy - BOSS.length) * S;
       let top = headTop - h - 16, left = Math.min(W - w - 8, headX - w + 18), tail = 'down';
       if (top < 54) { top = headTop + 2; left = Math.max(6, bossX * S - 10 - w); tail = 'right'; }
-      left = Math.max(6, left);
+      left = Math.max(6, left) + jolt;
       ctx.fillStyle = C.K; ctx.fillRect(left - 2, top - 2, w + 4, h + 4);
       ctx.fillStyle = bubble.angry ? '#fff1ef' : '#ffffff'; ctx.fillRect(left, top, w, h);
       ctx.fillStyle = bubble.angry ? '#ffd2cc' : '#e8eef6'; ctx.fillRect(left, top + h - 3, w, 3);
@@ -605,7 +623,7 @@
     toPeople(best, true);
     sound('grab');
     if (!bubble || !bubble.angry) sound('angry');
-    say(ANGRY, 2.2, true);  // the boss does not like sharing
+    say(ANGRY, 2.8, true);  // the boss does not like sharing
     grab = 0.3;
     wake();
   }
