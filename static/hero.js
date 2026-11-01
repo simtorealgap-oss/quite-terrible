@@ -136,10 +136,15 @@
     off.width = LW; off.height = LH;
     gy = LH - 5;                                   // top of the ground
     beltY = gy - 19;
-    fx = W < 640 ? 2 : Math.max(6, Math.round(LW * 0.06));
-    beltStart = fx + 44;
-    dcX = LW - 38 - (W < 640 ? 2 : Math.max(6, Math.round(LW * 0.06)));
+    const col = content ? content.getBoundingClientRect() : null, box = root.getBoundingClientRect();
+    const link = root.querySelector('.hero-link')?.getBoundingClientRect();
+    const colLeft = col ? Math.floor((col.left - box.left) / S) : 2, colRight = col ? Math.floor((col.right - box.left) / S) : LW - 2;
+    const sideBySide = link && col && link.top - col.top < 40;  // wide layout: the link sits beside the headline
+    fx = Math.max(2, colLeft);
+    bossX = sideBySide ? Math.round((link.left + link.width / 2 - box.left) / S) - 8 : colRight - 38 - 17;
+    dcX = Math.min(LW - 38, bossX + 17);
     bossX = dcX - 17;
+    beltStart = fx + 44;
     const left = beltStart + 3, right = bossX - 2;
     const n = Math.max(2, Math.min(8, Math.floor((right - left) / (W < 640 ? 18 : 24))));  // fewer people on narrow screens
     crowd = Array.from({length: n}, (_, i) => crowd[i] || {
@@ -444,9 +449,7 @@
   const ANGRY_PAL = {...BOSS_PAL, s: '#f7b49c', S: '#e58f74', m: '#8f2a22'};
   function drawBoss(c) {
     const angry = bubble?.angry;
-    const since = angry ? time - bubble.at : 1;
-    const shake = since < 0.24 ? (Math.floor(since * 25) % 2 ? 1 : -1) : 0;  // one quick jolt, then still
-    const by = gy - BOSS.length, bx = bossX + shake;
+    const by = gy - BOSS.length, bx = bossX;
     sprite(c, angry ? BOSS_ANGRY : BOSS, bx, by, angry ? ANGRY_PAL : BOSS_PAL);
     if (angry) {
       sprite(c, ANGER_MARK, bx + 12, by - 2, {r: '#e8483c'});
@@ -552,11 +555,10 @@
     if (bubble) {  // 16-bit dialogue box left of the boss's head
       ctx.font = `${bubble.angry ? 900 : 700} ${bubble.angry ? 14 : 12}px ${FONT}`;
       const pad = 8, w = Math.ceil(ctx.measureText(bubble.text).width) + pad * 2, h = bubble.angry ? 28 : 24;
-      const jolt = bubble.angry && time - bubble.at < 0.24 ? (Math.floor((time - bubble.at) * 25) % 2 ? 1 : -1) : 0;
       const headX = (bossX + 8) * S, headTop = y0 + (gy - BOSS.length) * S;
       let top = headTop - h - 16, left = Math.min(W - w - 8, headX - w + 18), tail = 'down';
       if (top < 54) { top = headTop + 2; left = Math.max(6, bossX * S - 10 - w); tail = 'right'; }
-      left = Math.max(6, left) + jolt;
+      left = Math.max(6, left);
       ctx.fillStyle = C.K; ctx.fillRect(left - 2, top - 2, w + 4, h + 4);
       ctx.fillStyle = bubble.angry ? '#fff1ef' : '#ffffff'; ctx.fillRect(left, top, w, h);
       ctx.fillStyle = bubble.angry ? '#ffd2cc' : '#e8eef6'; ctx.fillRect(left, top + h - 3, w, 3);
