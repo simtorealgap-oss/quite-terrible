@@ -105,6 +105,7 @@ def seo_context(lang, page, strings, products, base='', site='', product_id=None
         title = f'{title} | {strings["brand"]}'
         extra['guideHtml'] = guide_body(product_id, lang, strings, products, news, base, money)
         others = [s for s in guide_slugs() if s != product_id]
+        extra['guideHtml'] += '{{AD}}'  # replaced with the ad slot by render_page
         extra['guideHtml'] += f'<h2>{html.escape(strings["guideMore"])}</h2><ul class="guide-more">' + ''.join(
             f'<li><a href="{html.escape(base + page_path(lang, "guide", s))}">{html.escape(guide_meta(s, lang, strings)[0])}</a></li>' for s in others) + '</ul>'
         modified = (GUIDES.get(product_id) or {}).get('updated') or dt.date.today().isoformat()

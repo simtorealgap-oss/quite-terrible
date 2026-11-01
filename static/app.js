@@ -19,6 +19,15 @@ function pickMarket() {
   return zone === 'Asia/Seoul' ? 'KR' : zone === 'Asia/Tokyo' ? 'JP' : 'US';
 }
 const base = boot.base || '';
+// Google AdSense (only when configured): each <ins class="adsbygoogle"> is filled once.
+function fillAds(root = document) {
+  if (!boot.ads) return;
+  $$('ins.adsbygoogle:not([data-filled])', root).forEach(el => {
+    el.dataset.filled = '1';
+    try { (window.adsbygoogle = window.adsbygoogle || []).push({}); } catch {}
+  });
+}
+const adHtml = () => boot.ads && boot.ads.slot ? `<li class="ad-slot news-ad" aria-label="${esc(T.adLabel)}"><span class="ad-label">${esc(T.adLabel)}</span><ins class="adsbygoogle" data-ad-client="${esc(boot.ads.client)}" data-ad-slot="${esc(boot.ads.slot)}" data-ad-format="fluid" data-ad-layout-key="-fb+5w+4e-db+86"></ins></li>` : '';
 const priceUrl = () => boot.static
   ? `${base}/data/prices-${state.market}${state.demo ? '-demo' : ''}.json`
   : `/api/prices?market=${state.market}${state.demo ? '&demo=1' : ''}`;
@@ -490,14 +499,18 @@ function renderNews() {
   }
   const dayLabel = new Intl.DateTimeFormat(locale, {month: 'long', day: 'numeric', weekday: 'short'});
   const timeLabel = new Intl.DateTimeFormat(locale, {hour: 'numeric', minute: '2-digit', hourCycle: 'h23'});
+  let shown = 0;
   $('#news-list').innerHTML = [...groups].map(([key, list]) => {
     const date = new Date(list[0].published_at);
     const prefix = key === today ? `${T.today} · ` : key === yesterday ? `${T.yesterday} · ` : '';
     return `<section class="news-day"><h3>${esc(prefix + dayLabel.format(date))}</h3><ol class="news-items">${list.map(n => {
+      shown += 1;
+      const ad = shown % 8 === 0 ? adHtml() : '';  // an ad after every 8 headlines
       const href = safeHref(n.url);
-      return `<li class="news-item"><time class="news-time" datetime="${esc(n.published_at)}">${esc(timeLabel.format(new Date(n.published_at)))}</time><div class="news-body">${href ? `<a class="news-title" href="${href}" target="_blank" rel="noopener noreferrer">${esc(n.title)}<span class="news-out" aria-hidden="true"> ↗</span></a>` : `<span class="news-title">${esc(n.title)}</span>`}<div class="news-meta"><span class="tag ${n.category}">${esc(categoryTag(n.category))}</span><span>${esc(n.publisher)}</span></div></div></li>`;
+      return ad + `<li class="news-item"><time class="news-time" datetime="${esc(n.published_at)}">${esc(timeLabel.format(new Date(n.published_at)))}</time><div class="news-body">${href ? `<a class="news-title" href="${href}" target="_blank" rel="noopener noreferrer">${esc(n.title)}<span class="news-out" aria-hidden="true"> ↗</span></a>` : `<span class="news-title">${esc(n.title)}</span>`}<div class="news-meta"><span class="tag ${n.category}">${esc(categoryTag(n.category))}</span><span>${esc(n.publisher)}</span></div></div></li>`;
     }).join('')}</ol></section>`;
   }).join('');
+  fillAds($('#news-list'));
 }
 
 async function loadNews() {
@@ -569,3 +582,4 @@ if (state.page === 'product') {
 } else if (state.page === 'prices') {
   loadPrices();
 }
+fillAds();

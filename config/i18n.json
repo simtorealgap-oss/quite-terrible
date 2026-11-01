@@ -255,7 +255,8 @@
     "reportDesc": "{year}년 {month}월 DDR5 램과 RTX 그래픽카드의 최저가, 이달 최저·최고와 변동을 실제 수집 데이터로 정리한 월간 리포트입니다.",
     "reportLead": "{first}부터 {last}까지 매일 아침 확인한 최저가로 만든 리포트입니다. 매일 자동으로 갱신됩니다.",
     "reportFew": "기록이 쌓일수록 한 달 흐름이 더 정확해집니다.",
-    "compareSentence": "오늘 기준 {a}는 {pa}, {b}는 {pb}입니다."
+    "compareSentence": "오늘 기준 {a}는 {pa}, {b}는 {pb}입니다.",
+    "adLabel": "광고"
   },
   "en": {
     "brand": "Quite Terrible",
@@ -513,7 +514,8 @@
     "reportDesc": "Lowest prices, month lows and highs and changes for DDR5 RAM and RTX graphics cards in {monthName} {year}, from our daily price data.",
     "reportLead": "Built from the lowest prices we checked every morning from {first} to {last}. It updates itself daily.",
     "reportFew": "The month gets clearer as more days are recorded.",
-    "compareSentence": "Today the {a} costs {pa} and the {b} costs {pb}."
+    "compareSentence": "Today the {a} costs {pa} and the {b} costs {pb}.",
+    "adLabel": "Advertisement"
   },
   "ja": {
     "brand": "Quite Terrible",
@@ -771,6 +773,7 @@
     "reportDesc": "{year}年{month}月のDDR5メモリとRTXグラボの最安値、今月の最安・最高と変動を実際の収集データでまとめた月間レポートです。",
     "reportLead": "{first}から{last}まで毎朝確認した最安値で作ったレポートです。毎日自動で更新されます。",
     "reportFew": "記録が増えるほど、1か月の流れがより正確になります。",
-    "compareSentence": "今日の時点で{a}は{pa}、{b}は{pb}です。"
+    "compareSentence": "今日の時点で{a}は{pa}、{b}は{pb}です。",
+    "adLabel": "広告"
   }
 }

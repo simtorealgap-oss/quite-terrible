@@ -7,7 +7,7 @@
   <meta name="description" content="{{pageDesc}}">
   <meta name="color-scheme" content="light">
   <meta name="theme-color" content="#ffffff">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' https://cdn.jsdelivr.net; font-src https://cdn.jsdelivr.net; script-src 'self'; img-src 'self' data: https://thumb.wikimedia.org https://upload.wikimedia.org https://*.coupang.com https://*.coupangcdn.com; connect-src 'self' https://abacus.jasoncameron.dev; frame-src 'none'; base-uri 'none'">
+  <meta http-equiv="Content-Security-Policy" content="{{csp}}">
   <link rel="canonical" href="{{canonical}}">
   {{alternates}}
   <meta property="og:type" content="website">
@@ -21,6 +21,7 @@
   <meta property="og:locale" content="{{ogLocale}}">
   <meta name="twitter:card" content="summary_large_image">
   {{headExtra}}
+  {{adsHead}}
   <script type="application/ld+json">{{jsonld}}</script>
   <link rel="icon" href="{{base}}/favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
@@ -116,6 +117,7 @@
           <div id="table-msg" class="table-msg" role="status" hidden></div>
         </div>
       </section>
+      {{adSlot}}
     </section><!--/page:prices-->
 
 <!--page:news-->    <section id="page-news" class="page" {{newsHidden}}>
@@ -152,6 +154,7 @@
         </aside>
       </div>
       {{productFacts}}
+      {{adSlot}}
     </section><!--/page:product-->
 
 <!--page:guides--><section id="page-guides" class="page guides">
@@ -189,6 +192,7 @@
         </div>
         <p class="about-closing">{{aboutClosing}}</p>
         <p class="about-disclaimer">{{aboutDisclaimer}}</p>
+        {{adSlot}}
       </div>
     </section><!--/page:about-->
   </main>

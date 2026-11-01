@@ -9,7 +9,7 @@ import json
 import shutil
 from pathlib import Path
 from store import ROOT
-from server import LANGS, PRODUCTS, render_page, prices_payload, news_payload, seo_products
+from server import LANGS, PRODUCTS, render_page, prices_payload, news_payload, seo_products, ads_config
 from seo import sitemap, robots, llms_txt, guide_slugs
 
 PAGES = (('prices', ''), ('news', 'news/'), ('about', 'about/'), ('guides', 'guides/'))
@@ -99,9 +99,12 @@ def build(out, base='', site=''):
         (out / 'sitemap.xml').write_text(sitemap(site, base, products, langs=LANGS, available=priced))
         (out / 'robots.txt').write_text(robots(site, base))
         (out / 'llms.txt').write_text(llms_txt(site, base, by_lang))
-    ads = ROOT / 'config/ads.txt'  # ad network seller file (AdSense etc.), must sit at the domain root
+    # Ad network seller file, at the domain root: config/ads.txt if present, else AdSense's line from ADSENSE_CLIENT.
+    ads = ROOT / 'config/ads.txt'
     if ads.exists():
         shutil.copy(ads, out / 'ads.txt')
+    elif ads_config():
+        (out / 'ads.txt').write_text(f"google.com, {ads_config()['client'].removeprefix('ca-')}, DIRECT, f08c47fec0942fa0\n")
     return out
 
 

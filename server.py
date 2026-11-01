@@ -25,7 +25,7 @@ PAGES = {f'/{lang}/{path}': (lang, page, None) for lang in LANGS
 PAGES |= {f'/{lang}/guides/{slug}/': (lang, 'guide', slug) for lang in LANGS for slug in guide_slugs()}
 PAGES |= {f"/{lang}/{p['id']}/": (lang, 'product', p['id']) for lang in LANGS for p in PRODUCTS}
 PAGE_BLOCK = re.compile(r'<!--page:(\w+)-->(.*?)<!--/page:\1-->', re.S)
-RAW = {'boot', 'jsonld', 'headExtra', 'alternates', 'prerenderRows', 'makerRows', 'productStatic', 'productFacts', 'relatedLinks', 'newsRows', 'guideList', 'guideHtml'}
+RAW = {'boot', 'jsonld', 'headExtra', 'alternates', 'prerenderRows', 'makerRows', 'productStatic', 'productFacts', 'relatedLinks', 'newsRows', 'guideList', 'guideHtml', 'adsHead', 'adSlot', 'csp'}
 # Country headers set by common CDNs/hosts. They only pick defaults; visitors can always switch.
 COUNTRY_HEADERS = ('CF-IPCountry', 'CloudFront-Viewer-Country', 'X-Vercel-IP-Country', 'X-Country-Code')
 PLACEHOLDER = re.compile(r'\{\{(\w+)\}\}')
@@ -94,6 +94,39 @@ def prices_due(db, at=None, hour=None):
     return parse_time(row['succeeded_at']).astimezone(KST).date() < at.date() and at.hour >= hour
 
 
+def ads_config():
+    """Google AdSense, off unless the publisher id is set (repository variable ADSENSE_CLIENT, ca-pub-…).
+    ADSENSE_SLOT is a display ad unit id; without it only the AdSense script loads (for site review)."""
+    client = os.getenv('ADSENSE_CLIENT', '').strip()
+    if not re.fullmatch(r'ca-pub-\d{10,20}', client):
+        return None
+    slot = os.getenv('ADSENSE_SLOT', '').strip()
+    return {'client': client, 'slot': slot if re.fullmatch(r'\d{6,20}', slot) else ''}
+
+
+AD_HOSTS = ('https://pagead2.googlesyndication.com https://*.googlesyndication.com https://*.doubleclick.net '
+            'https://*.google.com https://*.gstatic.com https://*.adtrafficquality.google')
+
+
+def csp(ads):
+    """Content Security Policy; with ads on, Google's ad hosts are allowed for scripts, frames and images."""
+    policy = "default-src 'self'; style-src 'self' https://cdn.jsdelivr.net; font-src https://cdn.jsdelivr.net; script-src 'self'; img-src 'self' data: https://thumb.wikimedia.org https://upload.wikimedia.org https://*.coupang.com https://*.coupangcdn.com; connect-src 'self' https://abacus.jasoncameron.dev; frame-src 'none'; base-uri 'none'"
+    if not ads:
+        return policy
+    policy = policy.replace("script-src 'self'", "script-src 'self' " + AD_HOSTS)
+    policy = policy.replace("img-src 'self'", "img-src 'self' " + AD_HOSTS)
+    policy = policy.replace("connect-src 'self'", "connect-src 'self' " + AD_HOSTS)
+    return policy.replace("frame-src 'none'", "frame-src " + AD_HOSTS)
+
+
+def ad_slot(ads, label):
+    if not ads or not ads['slot']:
+        return ''
+    return (f'<aside class="ad-slot" aria-label="{html.escape(label)}"><span class="ad-label">{html.escape(label)}</span>'
+            f'<ins class="adsbygoogle" data-ad-client="{ads["client"]}" data-ad-slot="{ads["slot"]}" '
+            'data-ad-format="auto" data-full-width-responsive="true"></ins></aside>')
+
+
 def asset_version():
     """Short hash of the scripts and styles, added to their URLs so browsers fetch new versions at once
     (GitHub Pages lets browsers cache files for 10 minutes)."""
@@ -121,13 +154,19 @@ def render_page(lang, page, market, base='', static=False, site='', product=None
     context = strings | {'lang': lang, 'base': base, 'year': str(now().year), 'v': asset_version()}
     context |= seo_context(lang, page, strings, products, base=base, site=site, product_id=product, currency=currency, alt_langs=alt_langs,
                            news=news_payload(lang)['news'] if page == 'guide' else None)
+    ads = ads_config()
+    context['csp'] = csp(ads)
+    context['adsHead'] = (f'<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client={ads["client"]}" '
+                          'crossorigin="anonymous"></script>') if ads else ''
+    context['adSlot'] = ad_slot(ads, strings['adLabel'])
+    context['guideHtml'] = context.get('guideHtml', '').replace('{{AD}}', context['adSlot'])
     context['newsRows'] = news_rows(news_payload(lang)['news'], lang, strings) if page == 'news' else ''
     for name in ('prices', 'news', 'about', 'product', 'guides'):
         context[f'{name}Current'] = 'page' if page == name or (name == 'prices' and page == 'product') or (name == 'guides' and page == 'guide') else 'false'
         context[f'{name}Hidden'] = '' if page == name else 'hidden'
     # JSON inside <script type="application/json"> is data, not code; escape "<" so it cannot close the tag.
     boot = json.dumps({'lang': lang, 'page': page, 'market': market, 'base': base, 'static': static,
-                       'product': product, 't': strings}, ensure_ascii=False).replace('<', '\\u003c')
+                       'product': product, 't': strings, 'ads': ads_config()}, ensure_ascii=False).replace('<', '\\u003c')
     context['boot'] = boot
 
     def fill(match):
@@ -178,7 +217,7 @@ class Handler(BaseHTTPRequestHandler):
         self.send_header('Cache-Control', 'no-store')
         self.send_header('X-Content-Type-Options', 'nosniff')
         self.send_header('Referrer-Policy', 'strict-origin-when-cross-origin')
-        self.send_header('Content-Security-Policy', "default-src 'self'; style-src 'self' https://cdn.jsdelivr.net; font-src https://cdn.jsdelivr.net; script-src 'self'; img-src 'self' data: https://thumb.wikimedia.org https://upload.wikimedia.org https://*.coupang.com https://*.coupangcdn.com; connect-src 'self' https://abacus.jasoncameron.dev; frame-src 'none'; base-uri 'none'; frame-ancestors 'none'")
+        self.send_header('Content-Security-Policy', csp(ads_config()) + "; frame-ancestors 'none'")
         for key, value in (headers or {}).items():
             self.send_header(key, value)
         self.end_headers()

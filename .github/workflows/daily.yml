@@ -56,6 +56,8 @@ jobs:
         env:
           GOOGLE_SITE_VERIFICATION: ${{ vars.GOOGLE_SITE_VERIFICATION }}
           NAVER_SITE_VERIFICATION: ${{ vars.NAVER_SITE_VERIFICATION }}
+          ADSENSE_CLIENT: ${{ vars.ADSENSE_CLIENT }}
+          ADSENSE_SLOT: ${{ vars.ADSENSE_SLOT }}
         run: |
           if [ -n "${{ vars.CUSTOM_DOMAIN }}" ]; then
             python build.py --base "" --site-url "https://${{ vars.CUSTOM_DOMAIN }}"
