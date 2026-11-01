@@ -413,3 +413,4 @@ th[aria-sort="descending"] .th-sort::after { content: " ↓"; }
   .hero-hint::before { animation: none; }
   .spot, .card { transition: none; }
 }
+.footer-mail { color: inherit; text-underline-offset: 3px; }

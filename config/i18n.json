@@ -163,7 +163,9 @@
     "maker_micron": "마이크론",
     "maker_klevv": "KLEVV",
     "maker_corsair": "커세어",
-    "maker_gskill": "지스킬"
+    "maker_gskill": "지스킬",
+    "contactLabel": "문의",
+    "contactEmail": "simtoreal.gap@gmail.com"
   },
   "en": {
     "brand": "Quite Terrible",
@@ -329,6 +331,8 @@
     "maker_micron": "Micron (Crucial)",
     "maker_klevv": "KLEVV",
     "maker_corsair": "Corsair",
-    "maker_gskill": "G.SKILL"
+    "maker_gskill": "G.SKILL",
+    "contactLabel": "Contact",
+    "contactEmail": "simtoreal.gap@gmail.com"
   }
 }
