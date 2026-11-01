@@ -11,10 +11,12 @@ const query = new URLSearchParams(location.search);
 // The server picks the market from the visitor's country. A static host cannot, so the browser
 // decides: Korea time zone or Korean page means Korean prices, otherwise US prices.
 function pickMarket() {
-  if (['KR', 'US'].includes(boot.market)) return boot.market;
+  if (['KR', 'US', 'JP'].includes(boot.market)) return boot.market;
+  if (boot.lang === 'ko') return 'KR';
+  if (boot.lang === 'ja') return 'JP';
   let zone = '';
   try { zone = Intl.DateTimeFormat().resolvedOptions().timeZone; } catch {}
-  return zone === 'Asia/Seoul' || boot.lang === 'ko' ? 'KR' : 'US';
+  return zone === 'Asia/Seoul' ? 'KR' : zone === 'Asia/Tokyo' ? 'JP' : 'US';
 }
 const base = boot.base || '';
 const priceUrl = () => boot.static
@@ -35,14 +37,15 @@ const state = {
   news: null,
   selected: null,
 };
-const locale = boot.lang === 'ko' ? 'ko-KR' : 'en-US';
+const locale = {ko: 'ko-KR', ja: 'ja-JP'}[boot.lang] || 'en-US';
+const CURRENCY = {KR: 'KRW', JP: 'JPY', US: 'USD'};
 
 const money = (value, compact = false) => {
   if (value == null) return '—';
-  const krw = state.market === 'KR';
-  return new Intl.NumberFormat(locale, {style: 'currency', currency: krw ? 'KRW' : 'USD',
+  const currency = CURRENCY[state.market] || 'USD', digits = currency === 'USD' ? 2 : 0;
+  return new Intl.NumberFormat(locale, {style: 'currency', currency,
     ...(compact ? {notation: 'compact', maximumFractionDigits: 1}
-      : {minimumFractionDigits: krw ? 0 : 2, maximumFractionDigits: krw ? 0 : 2})}).format(value);
+      : {minimumFractionDigits: digits, maximumFractionDigits: digits})}).format(value);
 };
 const direction = value => value == null || Math.abs(value) < 0.05 ? 'flat' : value > 0 ? 'up' : 'down';
 const pct = value => value == null ? '—' : `${{up: '▲ ', down: '▼ ', flat: ''}[direction(value)]}${Math.abs(value).toFixed(1)}%`;
@@ -59,7 +62,7 @@ const categoryTag = category => category === 'ram' ? T.catRamShort : T.catGpuSho
 const fullName = p => `${p.brand} ${p.name} · ${p.spec}`;
 const nameOf = p => (boot.lang === 'ko' && p.shortKo) || p.short;
 const productHref = p => `${esc(boot.base || '')}/${boot.lang}/${esc(p.id)}/`;
-const sourceName = source => ({danawa: T.srcDanawa, bestbuy: T.srcBestbuy, ebay: T.srcEbay}[source] || T.srcFeed);
+const sourceName = source => ({danawa: T.srcDanawa, kakaku: T.srcKakaku, bestbuy: T.srcBestbuy, ebay: T.srcEbay}[source] || T.srcFeed);
 const bestOffer = p => (p.offers || []).find(o => !o.stale && o.stock !== 'out_of_stock' && o.price);
 const offerSource = o => o ? `${sourceName(o.source)}${o.shops ? ` · ${fmt('sellersN', {n: o.shops})}` : ''}` : '';
 const safeHref = value => {
@@ -261,7 +264,7 @@ function renderStatus() {
   if (data.demo) [kind, label] = ['demo', T.statusDemo];
   else if (failed) [kind, label] = ['error', fmt('statusError', {time: when(lastOk)})];
   else if (priced) [kind, label] = ['live', fmt('statusLive', {time: when(last)})];
-  label += ` · ${state.market === 'KR' ? T.marketKR : T.marketUS}`;
+  label += ` · ${T['market' + state.market] || state.market}`;
   $('#price-status').dataset.state = kind;
   $('#price-status-text').textContent = label;
   const banner = $('#banner');
@@ -313,8 +316,8 @@ async function fetchPrices() {
   const response = await fetch(priceUrl(), {cache: 'no-cache', signal: AbortSignal.timeout(15000)});
   if (!response.ok) throw new Error(String(response.status));
   const data = await response.json();
-  if (!data.demo && data.market === 'US' && !data.products.some(p => p.price != null)) {
-    state.market = 'KR';  // no US source connected yet: show real Korean prices instead of an empty page
+  if (!data.demo && data.market !== 'KR' && !data.products.some(p => p.price != null)) {
+    state.market = 'KR';  // no source for this market yet: show real Korean prices instead of an empty page
     return fetchPrices();
   }
   return data;
@@ -417,10 +420,10 @@ function coupangRow(p) {
 function bestRow(p) {
   const o = bestOffer(p), href = o && safeHref(o.affiliate_url || o.url);
   if (!href) return '';
-  const meta = o.source === 'danawa' ? fmt('danawaMeta', {shops: o.shops ?? '—', time: when(o.observed_at)})
+  const meta = ['danawa', 'kakaku'].includes(o.source) ? fmt('danawaMeta', {shops: o.shops ?? '—', time: when(o.observed_at)})
     : [offerSource(o), fmt('checkedAt', {time: when(o.observed_at)})].join(' · ');
   return sellerRow({mall: sourceName(o.source), kind: esc(o.source), name: o.title || o.merchant, meta: esc(meta), href,
-    cta: o.source === 'danawa' ? T.danawaGo : sourceName(o.source), sponsored: Boolean(o.affiliate_url),
+    cta: {danawa: T.danawaGo, kakaku: T.kakakuGo}[o.source] || sourceName(o.source), sponsored: Boolean(o.affiliate_url),
     price: `<span class="price">${money(o.amount)}</span>`});
 }
 function buyHtml(p) {

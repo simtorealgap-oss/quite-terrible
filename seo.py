@@ -6,13 +6,21 @@ import json
 import os
 
 KST = dt.timezone(dt.timedelta(hours=9))
-CATEGORY_NAMES = {'ko': {'ram': '메모리', 'gpu': '그래픽카드'}, 'en': {'ram': 'Memory', 'gpu': 'Graphics cards'}}
+CATEGORY_NAMES = {'ko': {'ram': '메모리', 'gpu': '그래픽카드'}, 'en': {'ram': 'Memory', 'gpu': 'Graphics cards'},
+                  'ja': {'ram': 'メモリ', 'gpu': 'グラフィックボード'}}
+LANGS = ('ko', 'en', 'ja')
+OG_LOCALE = {'ko': 'ko_KR', 'en': 'en_US', 'ja': 'ja_JP'}
 
 
-def won(value, lang):
+def won(value, lang, currency='KRW'):
+    """A price as people write it: 790,970원 / ₩790,970, 79,800円 / ¥79,800, $1,234.56."""
     if value is None:
         return '—'
+    if currency == 'USD':
+        return f'${value:,.2f}'
     amount = f'{round(value):,}'
+    if currency == 'JPY':
+        return f'{amount}円' if lang == 'ja' else f'¥{amount}'
     return f'{amount}원' if lang == 'ko' else f'₩{amount}'
 
 
@@ -38,7 +46,11 @@ def when_text(stamp, lang):
     if not stamp:
         return ''
     at = dt.datetime.fromisoformat(stamp).astimezone(KST)
-    return f'{at.month}월 {at.day}일 {at.hour}시' if lang == 'ko' else at.strftime('%b %-d, %H:00 KST')
+    if lang == 'ko':
+        return f'{at.month}월 {at.day}일 {at.hour}시'
+    if lang == 'ja':
+        return f'{at.month}月{at.day}日 {at.hour}時'
+    return at.strftime('%b %-d, %H:00 KST')
 
 
 def json_ld(data):
@@ -46,12 +58,12 @@ def json_ld(data):
     return json.dumps(data, ensure_ascii=False, separators=(',', ':')).replace('<', '\\u003c')
 
 
-def seo_context(lang, page, strings, products, base='', site='', product_id=None):
-    """Extra template values. `products` are product views for the Korean market (may be empty)."""
+def seo_context(lang, page, strings, products, base='', site='', product_id=None, currency='KRW'):
+    """Extra template values. `products` are product views for the page's market, priced in `currency`."""
     absolute = lambda path: f'{site}{base}{path}'
     path = page_path(lang, page, product_id)
-    other = page_path('en' if lang == 'ko' else 'ko', page, product_id)
-    alt = {lang: absolute(path), ('en' if lang == 'ko' else 'ko'): absolute(other)}
+    alt = {code: absolute(page_path(code, page, product_id)) for code in LANGS}
+    money = lambda value: won(value, lang, currency)
     by_id = {p['id']: p for p in products}
     priced = [p for p in products if p.get('price') is not None]
     title, desc = strings.get(f'{page}PageTitle', ''), strings.get(f'{page}PageDesc', '')
@@ -63,18 +75,18 @@ def seo_context(lang, page, strings, products, base='', site='', product_id=None
     if page == 'prices':
         title = strings['seoPricesTitle']
         lead = [p for p in priced if p['id'] in ('samsung-ddr5-32', 'samsung-ddr5-16', 'rtx-5080', 'rtx-5070', 'rtx-5090')]
-        desc = (strings['seoPricesDesc'].format(prices=', '.join(f"{name_of(p, lang)} {won(p['price'], lang)}" for p in lead))
+        desc = (strings['seoPricesDesc'].format(prices=', '.join(f"{name_of(p, lang)} {money(p['price'])}" for p in lead))
                 if lead else strings['seoPricesDescEmpty'])
         graph.append({'@type': 'ItemList', 'name': strings['pricesHeading'], 'itemListElement': [
-            {'@type': 'ListItem', 'position': i + 1, 'item': product_ld(p, lang, absolute)}
+            {'@type': 'ListItem', 'position': i + 1, 'item': product_ld(p, lang, absolute, currency)}
             for i, p in enumerate(priced)]})
-        extra['prerenderRows'] = ''.join(prerender_row(p, lang, base, strings) for p in products)
-        extra['makerRows'] = maker_rows(products, lang, base, strings)
+        extra['prerenderRows'] = ''.join(prerender_row(p, lang, base, strings, currency) for p in products)
+        extra['makerRows'] = maker_rows(products, lang, base, strings, currency)
 
     if page == 'product':
         p = by_id[product_id]
         offer = best_offer(p)
-        name, price = name_of(p, lang), won(p.get('price'), lang)
+        name, price = name_of(p, lang), money(p.get('price'))
         fmt = {'name': name, 'price': price, 'full': full_name(p), 'shops': (offer or {}).get('shops') or '—',
                'when': when_text(p.get('observed_at'), lang)}
         has_price = p.get('price') is not None
@@ -83,11 +95,11 @@ def seo_context(lang, page, strings, products, base='', site='', product_id=None
         extra['productHeading'] = strings['productHeading'].format(**fmt)
         extra['productLead'] = strings['productLead' if has_price else 'productLeadEmpty'].format(**fmt)
         extra['productCategory'] = CATEGORY_NAMES[lang][p['category']]
-        extra['productStatic'] = product_static(p, lang, strings)
+        extra['productStatic'] = product_static(p, lang, strings, currency)
         extra['relatedLinks'] = ''.join(
             f'<li><a href="{html.escape(base)}{page_path(lang, "product", q["id"])}"><span>{html.escape(name_of(q, lang))}</span>'
-            f'<b>{html.escape(won(q.get("price"), lang))}</b></a></li>' for q in products if q['id'] != product_id)
-        graph.append(product_ld(p, lang, absolute))
+            f'<b>{html.escape(money(q.get("price")))}</b></a></li>' for q in products if q['id'] != product_id)
+        graph.append(product_ld(p, lang, absolute, currency))
         graph.append({'@type': 'BreadcrumbList', 'itemListElement': [
             {'@type': 'ListItem', 'position': 1, 'name': strings['navPrices'], 'item': absolute(f'/{lang}/')},
             {'@type': 'ListItem', 'position': 2, 'name': name, 'item': absolute(path)}]})
@@ -97,30 +109,31 @@ def seo_context(lang, page, strings, products, base='', site='', product_id=None
         if os.getenv(env):
             head.append(f'<meta name="{name}" content="{html.escape(os.environ[env])}">')
     return extra | {
-        'pageTitle': title, 'pageDesc': desc, 'canonical': alt[lang], 'altKo': alt['ko'], 'altEn': alt['en'],
-        'altDefault': absolute('/'), 'ogImage': absolute('/og.png'), 'ogLocale': 'ko_KR' if lang == 'ko' else 'en_US',
+        'pageTitle': title, 'pageDesc': desc, 'canonical': alt[lang], 'altKo': alt['ko'], 'altEn': alt['en'], 'altJa': alt['ja'],
+        'altDefault': absolute('/'), 'ogImage': absolute('/og.png'), 'ogLocale': OG_LOCALE[lang],
         'headExtra': '\n  '.join(head), 'jsonld': json_ld({'@context': 'https://schema.org', '@graph': graph}),
     }
 
 
-def product_ld(p, lang, absolute):
+def product_ld(p, lang, absolute, currency='KRW'):
     offers = [o for o in p.get('offers', []) if not o.get('stale') and o.get('price')]
     data = {'@type': 'Product', 'name': name_of(p, lang) if p['category'] == 'ram' else f"{p['brand']} {p['name']}", 'description': full_name(p),
             'brand': {'@type': 'Brand', 'name': p['brand']}, 'category': CATEGORY_NAMES[lang][p['category']],
             'url': absolute(page_path(lang, 'product', p['id'])), 'image': absolute('/og.png')}
     if p.get('price') is not None:
-        data['offers'] = {'@type': 'AggregateOffer', 'priceCurrency': 'KRW', 'lowPrice': round(p['price']),
-                          'highPrice': round(max(o['amount'] for o in offers)) if offers else round(p['price']),
+        exact = (lambda v: round(v, 2)) if currency == 'USD' else round
+        data['offers'] = {'@type': 'AggregateOffer', 'priceCurrency': currency, 'lowPrice': exact(p['price']),
+                          'highPrice': exact(max(o['amount'] for o in offers)) if offers else exact(p['price']),
                           'offerCount': len(offers) or 1, 'availability': 'https://schema.org/InStock'}
     return data
 
 
-def prerender_row(p, lang, base, strings):
+def prerender_row(p, lang, base, strings, currency='KRW'):
     """Plain rows crawlers can read; app.js replaces them with the interactive table."""
     href = html.escape(f'{base}{page_path(lang, "product", p["id"])}')
     return (f'<tr class="row"><td><div class="prod"><div><a class="prod-name" href="{href}">{html.escape(name_of(p, lang))}</a>'
             f'<span class="prod-spec">{html.escape(full_name(p))}</span></div></div></td>'
-            f'<td class="num"><span class="price">{html.escape(won(p.get("price"), lang))}</span></td>'
+            f'<td class="num"><span class="price">{html.escape(won(p.get("price"), lang, currency))}</span></td>'
             '<td class="num">—</td><td class="num hide-sm">—</td><td class="hide-md"></td><td class="hide-sm"></td>'
             f'<td class="num hide-md">{(best_offer(p) or {}).get("shops") or "—"}</td>'
             + '</tr>')
@@ -129,7 +142,7 @@ def prerender_row(p, lang, base, strings):
 MAKERS = ('samsung', 'hynix', 'micron', 'klevv', 'corsair', 'gskill')
 
 
-def maker_rows(products, lang, base, strings):
+def maker_rows(products, lang, base, strings, currency='KRW'):
     """DDR5 memory by maker and capacity, for crawlers; app.js re-renders it with live data."""
     ram = [p for p in products if p['category'] == 'ram' and p.get('generation') == 'DDR5' and p.get('maker')]
     rows = []
@@ -141,7 +154,7 @@ def maker_rows(products, lang, base, strings):
                 cells.append('<td class="num"><span class="muted">—</span></td>')
                 continue
             href = html.escape(f'{base}{page_path(lang, "product", p["id"])}')
-            cells.append(f'<td class="num"><a class="mk-cell" href="{href}"><span class="price">{html.escape(won(p.get("price"), lang))}</span></a></td>')
+            cells.append(f'<td class="num"><a class="mk-cell" href="{href}"><span class="price">{html.escape(won(p.get("price"), lang, currency))}</span></a></td>')
         if any('mk-cell' in c for c in cells):
             rows.append(f'<tr><th scope="row">{html.escape(strings["maker_" + maker])}</th>{"".join(cells)}</tr>')
     return ''.join(rows)
@@ -156,15 +169,21 @@ def seller_row(mall, kind, name, meta, price, href, cta, sponsored):
             f'<div class="seller-price">{price}</div><a class="go {kind}" href="{href}" target="_blank" rel="{rel}">{html.escape(cta)}</a></li>')
 
 
-def product_static(p, lang, strings):
-    """Where to buy, for crawlers and no-JS readers: Coupang first, then the lowest Danawa price.
-    app.js swaps in the chart and live detail. A Coupang price only ever comes from the Partners API."""
+SOURCES = {'danawa': ('srcDanawa', 'danawaGo'), 'kakaku': ('srcKakaku', 'kakakuGo')}
+
+
+def product_static(p, lang, strings, currency='KRW'):
+    """Where to buy, for crawlers and no-JS readers: on Korean prices Coupang first, then the lowest price
+    from the comparison site (Danawa in Korea, Kakaku.com in Japan). app.js swaps in the chart and live
+    detail. A Coupang price only ever comes from the Partners API."""
+    if currency != 'KRW':
+        p = {k: v for k, v in p.items() if k not in ('coupang', 'coupangOffer')}
     rows, offer = [], p.get('coupangOffer')
     if p.get('coupang') and offer:
         checked = strings['coupangChecked'].format(time=when_text(offer['observed_at'], lang))
         meta = f'{strings["coupangRocket"]} · {checked}' if offer.get('rocket') else checked
         rows.append(seller_row(strings['coupangShort'], 'coupang', offer['name'], meta,
-                               f'<span class="price">{html.escape(won(offer["price"], lang))}</span>',
+                               f'<span class="price">{html.escape(won(offer["price"], lang, currency))}</span>',
                                offer['url'], strings['coupangGo'], True))
     elif p.get('coupang'):
         link = html.escape(p['coupang'])
@@ -174,17 +193,18 @@ def product_static(p, lang, strings):
                                f'{html.escape(strings["coupangPriceCta"])}</a>', p['coupang'], strings['coupangGo'], True))
     best = best_offer(p)
     if best and best.get('url'):
+        label, go = SOURCES.get(best.get('source'), ('srcDanawa', 'danawaGo'))
         meta = strings['danawaMeta'].format(shops=best.get('shops') or '—', time=when_text(best['observed_at'], lang))
-        rows.append(seller_row(strings['srcDanawa'], 'danawa', best['title'], meta,
-                               f'<span class="price">{html.escape(won(best.get("amount"), lang))}</span>',
-                               best['url'], strings['danawaGo'], False))
+        rows.append(seller_row(strings[label], best.get('source') or 'danawa', best['title'], meta,
+                               f'<span class="price">{html.escape(won(best.get("amount"), lang, currency))}</span>',
+                               best['url'], strings[go], False))
     if not rows:
         return ''
     note = f'<p class="buy-note">{html.escape(strings["coupangDisclosure"])}</p>' if p.get('coupang') else ''
     return f'<h3 class="d-section">{html.escape(strings["buyTitle"])}</h3><ul class="sellers">{"".join(rows)}</ul>{note}'
 
 
-def sitemap(site, base, products, langs=('ko', 'en'), lastmod=None):
+def sitemap(site, base, products, langs=LANGS, lastmod=None):
     lastmod = lastmod or dt.date.today().isoformat()
     pages = [('prices', None), ('news', None), ('about', None)] + [('product', p['id']) for p in products]
     out = ['<?xml version="1.0" encoding="UTF-8"?>',

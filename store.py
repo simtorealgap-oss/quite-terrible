@@ -14,6 +14,8 @@ CATALOG = {p['id']: p for p in PRODUCTS}
 UTC = dt.timezone.utc
 # Prices are checked once each morning, so a quote stays current for 36 hours, not 24.
 STALE_SECONDS = 36 * 3600
+MARKETS = ('KR', 'US', 'JP')
+CURRENCY = {'KR': 'KRW', 'US': 'USD', 'JP': 'JPY'}
 
 
 def now():
@@ -95,7 +97,7 @@ def record_run(db, job, state, message):
 
 def validate_quote(row):
     row = dict(row)
-    if row.get('product_id') not in CATALOG or row.get('market') not in ('KR', 'US'):
+    if row.get('product_id') not in CATALOG or row.get('market') not in MARKETS:
         raise ValueError('Unknown product or market')
     for key in ('offer_key', 'source', 'merchant', 'title'):
         if not isinstance(row.get(key), str) or not row[key].strip() or len(row[key]) > 500:
@@ -224,7 +226,8 @@ def demo_products(market):
     # Generated ONLY in memory for the explicit demo route; never enters the live database.
     result = []
     for index, product in enumerate(PRODUCTS):
-        price = product['demo_us' if market == 'US' else 'demo_kr']
+        # Japan has no demo price of its own: the US price at about 150 yen to the dollar.
+        price = {'US': product['demo_us'], 'JP': round(product['demo_us'] * 150, -2)}.get(market, product['demo_kr'])
         history = []
         for day in range(90):
             factor = 1 + (89-day) * (0.0015 if index % 3 else -0.0007) + math.sin(day * .5 + index) * .014

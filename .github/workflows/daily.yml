@@ -2,7 +2,7 @@ name: Daily prices and site
 
 on:
   schedule:
-    - cron: '0 0 * * *'    # 09:00 KST: Korean prices and Korean news
+    - cron: '0 0 * * *'    # 09:00 KST = 09:00 JST: Korean and Japanese prices and news
     - cron: '0 14 * * *'   # 09:00 US Eastern (EST; 10:00 in summer): US prices and English news
   workflow_dispatch:
   push:

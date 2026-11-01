@@ -12,15 +12,17 @@ import threading
 import urllib.parse
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
-from store import ROOT, PRODUCTS, STALE_SECONDS, session, product_view, coupang_offer, demo_products, stamp, now, parse_time
+from store import ROOT, PRODUCTS, MARKETS, CURRENCY, STALE_SECONDS, session, product_view, coupang_offer, demo_products, stamp, now, parse_time
 from collectors import update_prices, update_news, import_feed
 from seo import seo_context
 
-LANGS = ('ko', 'en')
+LANGS = ('ko', 'en', 'ja')
+# Each page language shows one market's prices: Korea for Korean, Japan for Japanese, the US for English.
+LANG_MARKET = {'ko': 'KR', 'ja': 'JP', 'en': 'US'}
 I18N = json.loads((ROOT / 'config/i18n.json').read_text())
-PAGES = {f'/{lang}/{path}': (lang, page, None) for lang in ('ko', 'en')
+PAGES = {f'/{lang}/{path}': (lang, page, None) for lang in LANGS
          for path, page in (('', 'prices'), ('news/', 'news'), ('about/', 'about'))}
-PAGES |= {f"/{lang}/{p['id']}/": (lang, 'product', p['id']) for lang in ('ko', 'en') for p in PRODUCTS}
+PAGES |= {f"/{lang}/{p['id']}/": (lang, 'product', p['id']) for lang in LANGS for p in PRODUCTS}
 RAW = {'boot', 'jsonld', 'headExtra', 'prerenderRows', 'makerRows', 'productStatic', 'relatedLinks'}
 # Country headers set by common CDNs/hosts. They only pick defaults; visitors can always switch.
 COUNTRY_HEADERS = ('CF-IPCountry', 'CloudFront-Viewer-Country', 'X-Vercel-IP-Country', 'X-Country-Code')
@@ -61,13 +63,13 @@ def preferred_lang(accept_language, country=None):
             best = (weight, primary)
     if best:
         return best[1]
-    return 'ko' if country == 'KR' else 'en'
+    return {'KR': 'ko', 'JP': 'ja'}.get(country, 'en')
 
 
 def default_market(country, lang):
-    if country:
-        return 'KR' if country == 'KR' else 'US'
-    return 'KR' if lang == 'ko' else 'US'
+    if country in ('KR', 'JP'):
+        return country
+    return LANG_MARKET.get(lang, 'US') if not country else 'US'
 
 
 def has_prices(market):
@@ -99,12 +101,23 @@ def asset_version():
     return digest.hexdigest()[:10]
 
 
+def seo_products(lang):
+    """Prices baked into a page for search engines: the page language's own market, else Korea's."""
+    market = LANG_MARKET[lang]
+    if market != 'KR' and not has_prices(market):
+        market = 'KR'
+    return prices_payload(market)
+
+
 def render_page(lang, page, market, base='', static=False, site='', product=None, products=None):
     strings = I18N[lang]
     if products is None:
-        products = prices_payload('KR')['products']
+        products = seo_products(lang)
+    currency = 'KRW'
+    if isinstance(products, dict):  # a whole prices payload: its products and their currency
+        currency, products = products['currency'], products['products']
     context = strings | {'lang': lang, 'base': base, 'year': str(now().year), 'v': asset_version()}
-    context |= seo_context(lang, page, strings, products, base=base, site=site, product_id=product)
+    context |= seo_context(lang, page, strings, products, base=base, site=site, product_id=product, currency=currency)
     for name in ('prices', 'news', 'about', 'product'):
         context[f'{name}Current'] = 'page' if page == name or (name == 'prices' and page == 'product') else 'false'
         context[f'{name}Hidden'] = '' if page == name else 'hidden'
@@ -126,7 +139,7 @@ def prices_payload(market, demo=False):
             # Coupang's own price from its Partners API, shown beside (never inside) the price comparison.
             item['coupangOffer'] = coupang_offer(db, p) if market == 'KR' and not demo else None
         runs = [dict(r) for r in db.execute("SELECT * FROM runs WHERE job LIKE 'prices:%' AND job!='prices:coupang'")]
-    return {'market': market, 'currency': 'KRW' if market == 'KR' else 'USD', 'demo': demo,
+    return {'market': market, 'currency': CURRENCY[market], 'demo': demo,
             'generated_at': stamp(), 'products': products, 'runs': runs}
 
 
@@ -192,13 +205,13 @@ class Handler(BaseHTTPRequestHandler):
         if path in PAGES:
             lang, page, product = PAGES[path]
             market = default_market(country, lang)
-            if market == 'US' and not has_prices('US'):
-                market = 'KR'  # no US source connected yet: show real Korean prices instead of an empty page
+            if market != 'KR' and not has_prices(market):
+                market = 'KR'  # no source for that market yet: show real Korean prices instead of an empty page
             self.send(200, render_page(lang, page, market, product=product).encode(), 'text/html; charset=utf-8')
             return
         if path in ('/api/prices', '/api/news'):
             market, lang = query.get('market', ['KR'])[0], query.get('lang', ['ko'])[0]
-            if market not in ('KR', 'US') or lang not in LANGS:
+            if market not in MARKETS or lang not in LANGS:
                 self.send(400, b'{"error":"Invalid market or language"}', 'application/json')
                 return
             try:
@@ -238,7 +251,8 @@ def main():
     parser.add_argument('--no-worker', action='store_true')
     parser.add_argument('--update', choices=['all', 'news', 'prices'])
     parser.add_argument('--force-news', action='store_true')
-    parser.add_argument('--region', choices=['kr', 'us'], help='only Korean (Danawa, Coupang, Korean news) or US sources')
+    parser.add_argument('--region', choices=['kr', 'us'],
+                        help="'kr': Korea and Japan (both 9:00 local at 00:00 UTC) prices and news; 'us': US prices and English news")
     parser.add_argument('--import-feed', type=Path)
     args = parser.parse_args()
     with session() as db:
@@ -247,12 +261,12 @@ def main():
             return
         if args.update:
             results = {}
-            market = args.region.upper() if args.region else None
-            langs = {'KR': ['ko'], 'US': ['en']}.get(market)
+            markets = {'kr': ['KR', 'JP'], 'us': ['US']}.get(args.region, [None])
+            langs = {'kr': ['ko', 'ja'], 'us': ['en']}.get(args.region)
             if args.update in ('all', 'news'):
                 results['news'] = update_news(db, force=args.force_news, langs=langs)
             if args.update in ('all', 'prices'):
-                results['prices'] = update_prices(db, market=market)
+                results['prices'] = [o for m in markets for o in update_prices(db, market=m)]
             print(json.dumps(results, ensure_ascii=False))
             if any('error' in item for items in results.values() for item in items):
                 raise SystemExit(1)

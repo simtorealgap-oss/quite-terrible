@@ -102,6 +102,72 @@ def danawa_quotes(product, items, at=None, limit=10):
     return sorted(rows.values(), key=lambda r: r['price'])[:limit]
 
 
+KAKAKU_SEARCH = 'https://search.kakaku.com/'
+KAKAKU_DELAY = 10  # no crawl-delay in its robots.txt; same pace as Danawa
+KAKAKU_MIN_SHOPS = 1  # Japan's market is thinner: many modules are listed by a single shop
+
+
+def kakaku_products(raw):
+    """Product cards on a Kakaku.com keyword search page (Shift_JIS HTML)."""
+    text = raw.decode('cp932', 'replace') if isinstance(raw, bytes) else raw
+    items = []
+    for block in text.split('<div class="c-list1_cell p-resultItem')[1:]:
+        link = re.search(r'<p class="p-item_name">\s*<a href="(https://kakaku\.com/item/([A-Z0-9]+)/)"[^>]*>(.*?)</a>', block, re.S)
+        price = re.search(r'<em class="p-item_priceNum">([0-9,]+)', block)
+        if not link or not price:
+            continue
+        maker = re.search(r'<p class="p-item_maker">(.*?)</p>', block, re.S)
+        category = re.search(r'<p class="p-item_category">(.*?)</p>', block, re.S)
+        shops = re.search(r'p-item_shopCounts_num[^>]*>([0-9,]+)', block)
+        specs = {clean_text(k): clean_text(v) for k, v in
+                 re.findall(r'<dt class="p-item_spec_ttl">(.*?)</dt>\s*<dd class="p-item_spec_data">(.*?)</dd>', block, re.S)}
+        items.append({'code': link.group(2), 'url': link.group(1), 'name': clean_text(link.group(3)),
+                      'maker': clean_text(maker.group(1)) if maker else '', 'category': clean_text(category.group(1)) if category else '',
+                      'price': int(price.group(1).replace(',', '')), 'shops': int(shops.group(1).replace(',', '')) if shops else 0,
+                      'specs': specs})
+    return items
+
+
+def kakaku_search(product):
+    try:
+        return kakaku_products(fetch(KAKAKU_SEARCH + urllib.parse.quote(product['kakaku']['query']) + '/'))
+    except urllib.error.HTTPError as exc:
+        if exc.code == 404:  # Kakaku answers a search with no results with 404
+            return []
+        raise
+
+
+def kakaku_quotes(product, items, at=None, limit=10):
+    """Japanese prices from Kakaku.com. Memory is matched on its spec table (Kakaku lists capacity per
+    module and the module count), graphics cards on the product name, as for Danawa."""
+    config, rows = product['kakaku'], {}
+    for item in items:
+        if item['price'] <= 0 or item['shops'] < KAKAKU_MIN_SHOPS or config['category'] not in item['category']:
+            continue
+        title = f"{item['maker']} {item['name']}"
+        if re.search(r'中古|アウトレット|訳あり|ジャンク', title):
+            continue
+        if product['category'] == 'ram':
+            spec = item['specs']
+            per = re.search(r'(\d+)\s*GB', spec.get('メモリ容量(1枚あたり)', ''))
+            count = re.search(r'(\d+)\s*枚', spec.get('枚数', ''))
+            if not per or int(per.group(1)) != config['per'] or int(count.group(1) if count else 1) != config.get('count', 1):
+                continue
+            if config['standard'] not in spec.get('メモリ規格', '') or spec.get('メモリインターフェイス', '') != 'DIMM':
+                continue  # SO-DIMM is laptop memory
+            if config['speed'] not in spec.get('モジュール規格', '') or not re.search(config['maker'], item['maker'], re.I):
+                continue
+            if not all(re.search(r, title, re.I) for r in config.get('require', [])) or any(
+                    re.search(r, title, re.I) for r in config.get('reject', [])):
+                continue
+        elif not matches(rule_for(product, 'kakaku'), title):
+            continue
+        rows[item['code']] = {'product_id': product['id'], 'market': 'JP', 'offer_key': item['code'],
+            'price': item['price'], 'shipping': None, 'stock': 'unknown', 'merchant': title[:200], 'title': title,
+            'shops': item['shops'], 'url': item['url'], 'source': 'kakaku', 'observed_at': at or stamp()}
+    return sorted(rows.values(), key=lambda r: r['price'])[:limit]
+
+
 def bestbuy_quotes(product, data, at=None, limit=10):
     rule, rows = rule_for(product, 'bestbuy'), {}
     for item in data.get('products', []):
@@ -240,9 +306,12 @@ def collect(db, source, products, request, parse, sleep, delay):
 
 
 def update_prices(db, sleep=time.sleep, market=None):
-    """market='KR' (Danawa, Coupang) or 'US' (eBay, Best Buy); None runs every source."""
-    korea, us = market in (None, 'KR'), market in (None, 'US')
+    """market='KR' (Danawa, Coupang), 'JP' (Kakaku.com) or 'US' (eBay, Best Buy); None runs every source."""
+    korea, japan, us = market in (None, 'KR'), market in (None, 'JP'), market in (None, 'US')
     outcomes = []
+    if japan:
+        outcomes.append(collect(db, 'kakaku', [p for p in PRODUCTS if p.get('kakaku')], kakaku_search,
+            lambda p, items, at: kakaku_quotes(p, items, at), sleep, KAKAKU_DELAY))
     if korea:
         outcomes.append(collect(db, 'danawa', PRODUCTS,
             lambda p: danawa_products(fetch(DANAWA_SEARCH + urllib.parse.urlencode({'query': p['danawa']['query']}))),
@@ -304,6 +373,10 @@ NEWS_QUERIES = {
                    '(DRAM OR HBM) (Samsung OR "SK hynix" OR Micron) (price OR supply) when:7d'],
            'gpu': ['(GeForce OR "RTX 50") (price OR availability OR stock) when:7d',
                    '("graphics card" OR GPU) NVIDIA price when:7d']},
+    'ja': {'ram': ['(DDR5 OR DDR4) (メモリ OR メモリー) (価格 OR 値上がり OR 品薄) when:7d',
+                   '(DRAM OR HBM) (サムスン OR SKハイニックス OR マイクロン OR キオクシア) (価格 OR 供給) when:7d'],
+           'gpu': ['(GeForce OR "RTX 50" OR "RTX 5070" OR "RTX 5080" OR "RTX 5090") (価格 OR 在庫 OR 発売) when:7d',
+                   '(グラボ OR グラフィックボード OR NVIDIA) 価格 when:7d']},
     'ko': {'ram': ['(DDR5 OR DDR4) (램 OR 메모리) (가격 OR 공급 OR 품귀) when:7d',
                    '(D램 OR HBM) (삼성전자 OR SK하이닉스 OR 마이크론) (가격 OR 공급) when:7d'],
            'gpu': ['(지포스 OR "RTX 50" OR "RTX 5070" OR "RTX 5080" OR "RTX 5090") (가격 OR 공급 OR 출시) when:7d',
@@ -324,8 +397,8 @@ def parse_news(raw, lang, category, at=None):
         link = item.findtext('link') or ''
         if not title or not safe_url(link):
             continue
-        relevant = (r'\bDDR[45]\b|\bDRAM\b|\bHBM\d?\b|\bRAM\b|메모리|램|D램|디램' if category == 'ram'
-                    else r'\bRTX\s*\d|GeForce|지포스|그래픽\s*카드|graphics card|\bGPU\b')
+        relevant = (r'\bDDR[45]\b|\bDRAM\b|\bHBM\d?\b|\bRAM\b|메모리|램|D램|디램|メモリ' if category == 'ram'
+                    else r'\bRTX\s*\d|GeForce|지포스|그래픽\s*카드|graphics card|\bGPU\b|グラボ|グラフィックボード')
         if not re.search(relevant, title, re.I):
             continue
         try:
@@ -370,8 +443,8 @@ def update_news(db, force=False, langs=None, sleep=time.sleep):
                     if not first:
                         sleep(NEWS_DELAY)
                     first = False
-                    params = urllib.parse.urlencode({'q': query, 'hl': 'ko' if lang == 'ko' else 'en-US',
-                        'gl': 'KR' if lang == 'ko' else 'US', 'ceid': 'KR:ko' if lang == 'ko' else 'US:en'})
+                    hl, gl = {'ko': ('ko', 'KR'), 'ja': ('ja', 'JP')}.get(lang, ('en-US', 'US'))
+                    params = urllib.parse.urlencode({'q': query, 'hl': hl, 'gl': gl, 'ceid': f"{gl}:{hl.split('-')[0]}"})
                     rows += parse_news(news_fetch('https://news.google.com/rss/search?' + params, sleep), lang, category)
                 with db:
                     db.executemany('INSERT OR IGNORE INTO news VALUES(?,?,?,?,?,?,?,?)', rows)

@@ -148,7 +148,8 @@ class Providers(unittest.TestCase):
                     self.assertEqual(request.call_count,queries)  # second call is inside the cooldown
                 with patch('collectors.fetch',side_effect=TimeoutError):
                     update_news(db,force=True,sleep=lambda s:None)
-                self.assertEqual(db.execute("select count(*) from runs where state='error' and succeeded_at is not null").fetchone()[0],4)
+                feeds=sum(len(c) for c in __import__('collectors').NEWS_QUERIES.values())
+                self.assertEqual(db.execute("select count(*) from runs where state='error' and succeeded_at is not null").fetchone()[0],feeds)
 
 
 class SevenDay(unittest.TestCase):
@@ -175,7 +176,7 @@ class SevenDay(unittest.TestCase):
             with connect(Path(directory)/'test.db') as db:
                 with patch('collectors.fetch',side_effect=fake_fetch), patch.dict('os.environ',NO_COUPANG):
                     import os; os.environ.pop('BESTBUY_API_KEY',None); os.environ.pop('PRICE_FEED_URL',None)
-                    result=update_prices(db,sleep=waits.append)
+                    result=update_prices(db,sleep=waits.append,market='KR')
                 self.assertEqual(len(calls),len(PRODUCTS))
                 self.assertEqual(waits,[10]*(len(PRODUCTS)-1))
                 self.assertEqual(result[0]['matched']['samsung-ddr5-16'],1)
@@ -392,7 +393,9 @@ class Locale(unittest.TestCase):
 
     def test_market_follows_country_then_language(self):
         self.assertEqual(default_market('KR','en'),'KR')
-        self.assertEqual(default_market('JP','ko'),'US')
+        self.assertEqual(default_market('JP','ko'),'JP')
+        self.assertEqual(default_market('DE','ko'),'US')
+        self.assertEqual(default_market(None,'ja'),'JP')
         self.assertEqual(default_market(None,'ko'),'KR')
         self.assertEqual(default_market(None,'en'),'US')
 
@@ -496,3 +499,52 @@ class NewsMix(unittest.TestCase):
             news=news_payload('ko')['news']
         self.assertEqual([n['publisher'] for n in news].count('GameGPU'),2)
         self.assertEqual([n['publisher'] for n in news].count('연합뉴스'),2)
+
+
+class Japan(unittest.TestCase):
+    CARD = ('<div class="c-list1_cell p-resultItem s-resultItem"><p class="p-item_maker">{maker}</p>'
+            '<p class="p-item_name"><a href="https://kakaku.com/item/{code}/" class="s-targetLink">{name}</a></p>'
+            '<p class="p-item_category">{cat}</p>{specs}'
+            '<p class="p-item_price c-num">&#165;<em class="p-item_priceNum">{price}～</em></p>'
+            '<p class="p-item_shopCounts">(全<span class="p-item_shopCounts_num c-num">{shops}</span>店舗)</p></div>')
+
+    def card(self, code, maker, name, price, shops=3, cat='メモリー', **spec):
+        specs = ''.join(f'<dl class="p-item_spec"><dt class="p-item_spec_ttl">{k}</dt><dd class="p-item_spec_data">{v}</dd></dl>' for k, v in spec.items())
+        return self.CARD.format(code=code, maker=maker, name=name, cat=cat, specs=specs, price=price, shops=shops)
+
+    def test_kakaku_matches_memory_on_its_spec_table(self):
+        from collectors import kakaku_products, kakaku_quotes
+        mem = lambda per, count, iface='DIMM', speed='PC5-44800(DDR5-5600)': {'メモリ容量(1枚あたり)': f'{per}GB', '枚数': f'{count}枚',
+            'メモリ規格': 'DDR5 SDRAM', 'メモリインターフェイス': iface, 'モジュール規格': speed}
+        page = ''.join([
+            self.card('K1', 'crucial', 'CT32G56C46U5 [DDR5 PC5-44800 32GB]', '86,000', **mem(32, 1)),
+            self.card('K2', 'crucial', 'CP2K16G56C46U5 [DDR5 PC5-44800 16GB 2枚組]', '84,000', **mem(16, 2)),
+            self.card('K3', 'crucial', 'CT32G56C46S5 [SODIMM DDR5 PC5-44800 32GB]', '70,000', **mem(32, 1, 'S.O.DIMM')),
+            self.card('K4', 'マウスコンピューター', 'NEXTGEAR 32GBメモリ', '244,800', cat='ノートパソコン'),
+        ]).encode('cp932')
+        items = kakaku_products(page)
+        self.assertEqual(len(items), 4)
+        p = next(q for q in PRODUCTS if q['id'] == 'crucial-ddr5-32')
+        rows = kakaku_quotes(p, items)
+        self.assertEqual([(r['offer_key'], r['price'], r['market'], r['source']) for r in rows], [('K1', 86000, 'JP', 'kakaku')])
+        self.assertEqual(rows[0]['url'], 'https://kakaku.com/item/K1/')
+
+    def test_kakaku_matches_graphics_cards_on_the_name(self):
+        from collectors import kakaku_products, kakaku_quotes
+        page = (self.card('G1', 'MSI', 'GeForce RTX 5070 Ti 16G VENTUS 3X OC [PCIExp 16GB]', '230,800', cat='グラフィックボード・ビデオカード')
+                + self.card('G2', 'MSI', 'GeForce RTX 5070 12G VENTUS 2X OC [PCIExp 12GB]', '150,000', cat='グラフィックボード・ビデオカード')).encode('cp932')
+        p = next(q for q in PRODUCTS if q['id'] == 'rtx-5070')
+        self.assertEqual([r['offer_key'] for r in kakaku_quotes(p, kakaku_products(page))], ['G2'])
+
+    def test_japanese_pages_use_yen_and_link_every_language(self):
+        p = next(q for q in PRODUCTS if q['id'] == 'rtx-5080')
+        view = p | {'price': 331800, 'change': None, 'offers': [{'source': 'kakaku', 'title': 'ASUS PRIME-RTX5080-O16G', 'merchant': 'ASUS',
+            'amount': 331800, 'price': 331800, 'shops': 3, 'stock': 'unknown', 'stale': False, 'url': 'https://kakaku.com/item/K9/',
+            'observed_at': '2026-11-01T00:05:00+00:00'}], 'observed_at': '2026-11-01T00:05:00+00:00', 'history': []}
+        html = render_page('ja', 'product', None, product='rtx-5080', products={'currency': 'JPY', 'products': [view]}, site='https://quiteterrible.com')
+        self.assertIn('331,800円', html)
+        self.assertIn('価格.comで見る', html)
+        self.assertNotIn('coupang', html.split('id="product-detail"')[1].split('</div>')[0])
+        for lang in ('ko', 'en', 'ja'):
+            self.assertIn(f'hreflang="{lang}" href="https://quiteterrible.com/{lang}/rtx-5080/"', html)
+        self.assertIn('"priceCurrency":"JPY"', html)
