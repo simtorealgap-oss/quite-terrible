@@ -12,7 +12,7 @@ from store import ROOT
 from server import LANGS, PRODUCTS, render_page, prices_payload, news_payload, seo_products, ads_config
 from seo import sitemap, robots, llms_txt, guide_slugs
 
-PAGES = (('prices', ''), ('news', 'news/'), ('about', 'about/'), ('guides', 'guides/'))
+PAGES = (('prices', ''), ('news', 'news/'), ('about', 'about/'), ('guides', 'guides/'), ('privacy', 'privacy/'))
 
 # A static host cannot read Accept-Language, so "/" lets the browser pick: its language, then its time zone.
 LANG_JS = """(function () {

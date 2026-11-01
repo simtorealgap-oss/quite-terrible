@@ -453,3 +453,8 @@ th[aria-sort="descending"] .th-sort::after { content: " ↓"; }
 .ad-slot { display: block; margin: 28px 0 8px; padding-top: 10px; border-top: 1px solid var(--line); text-align: center; min-height: 100px; }
 .ad-label { display: block; margin-bottom: 6px; font-size: 11px; letter-spacing: .04em; color: var(--text-3); text-align: left; }
 .news-ad { list-style: none; margin: 0; padding: 12px 20px; border-bottom: 1px solid var(--line); border-top: 0; }
+
+.privacy-wrap h2 { margin: 28px 0 8px; font-size: 18px; letter-spacing: -.01em; }
+.privacy-wrap p { margin: 0 0 10px; line-height: 1.75; color: var(--text-2); word-break: keep-all; }
+.privacy-wrap a { color: var(--text); text-underline-offset: 3px; }
+.privacy-updated { font-size: 13px; color: var(--text-3) !important; }

@@ -14,18 +14,18 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from store import ROOT, PRODUCTS, MARKETS, CURRENCY, STALE_SECONDS, session, product_view, coupang_offer, demo_products, stamp, now, parse_time
 from collectors import update_prices, update_news, import_feed
-from seo import seo_context, news_rows, guide_slugs
+from seo import seo_context, news_rows, guide_slugs, privacy_html
 
 LANGS = ('ko', 'en', 'ja')
 # Each page language shows one market's prices: Korea for Korean, Japan for Japanese, the US for English.
 LANG_MARKET = {'ko': 'KR', 'ja': 'JP', 'en': 'US'}
 I18N = json.loads((ROOT / 'config/i18n.json').read_text())
 PAGES = {f'/{lang}/{path}': (lang, page, None) for lang in LANGS
-         for path, page in (('', 'prices'), ('news/', 'news'), ('about/', 'about'), ('guides/', 'guides'))}
+         for path, page in (('', 'prices'), ('news/', 'news'), ('about/', 'about'), ('guides/', 'guides'), ('privacy/', 'privacy'))}
 PAGES |= {f'/{lang}/guides/{slug}/': (lang, 'guide', slug) for lang in LANGS for slug in guide_slugs()}
 PAGES |= {f"/{lang}/{p['id']}/": (lang, 'product', p['id']) for lang in LANGS for p in PRODUCTS}
 PAGE_BLOCK = re.compile(r'<!--page:(\w+)-->(.*?)<!--/page:\1-->', re.S)
-RAW = {'boot', 'jsonld', 'headExtra', 'alternates', 'prerenderRows', 'makerRows', 'productStatic', 'productFacts', 'relatedLinks', 'newsRows', 'guideList', 'guideHtml', 'adsHead', 'adSlot', 'csp'}
+RAW = {'boot', 'jsonld', 'headExtra', 'alternates', 'prerenderRows', 'makerRows', 'productStatic', 'productFacts', 'relatedLinks', 'newsRows', 'guideList', 'guideHtml', 'adsHead', 'adSlot', 'csp', 'privacyHtml'}
 # Country headers set by common CDNs/hosts. They only pick defaults; visitors can always switch.
 COUNTRY_HEADERS = ('CF-IPCountry', 'CloudFront-Viewer-Country', 'X-Vercel-IP-Country', 'X-Country-Code')
 PLACEHOLDER = re.compile(r'\{\{(\w+)\}\}')
@@ -161,7 +161,8 @@ def render_page(lang, page, market, base='', static=False, site='', product=None
     context['adSlot'] = ad_slot(ads, strings['adLabel'])
     context['guideHtml'] = context.get('guideHtml', '').replace('{{AD}}', context['adSlot'])
     context['newsRows'] = news_rows(news_payload(lang)['news'], lang, strings) if page == 'news' else ''
-    for name in ('prices', 'news', 'about', 'product', 'guides'):
+    context['privacyHtml'] = privacy_html(lang) if page == 'privacy' else ''
+    for name in ('prices', 'news', 'about', 'product', 'guides', 'privacy'):
         context[f'{name}Current'] = 'page' if page == name or (name == 'prices' and page == 'product') or (name == 'guides' and page == 'guide') else 'false'
         context[f'{name}Hidden'] = '' if page == name else 'hidden'
     # JSON inside <script type="application/json"> is data, not code; escape "<" so it cannot close the tag.

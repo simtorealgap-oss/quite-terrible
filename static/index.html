@@ -195,13 +195,20 @@
         {{adSlot}}
       </div>
     </section><!--/page:about-->
+
+<!--page:privacy-->    <section id="page-privacy" class="page privacy" {{privacyHidden}}>
+      <div class="about-wrap privacy-wrap">
+        <div class="page-head"><div class="page-title"><h1>{{privacyHeading}}</h1></div></div>
+        {{privacyHtml}}
+      </div>
+    </section><!--/page:privacy-->
   </main>
 
   <footer class="footer">
     <div class="wrap footer-inner">
       <div class="footer-brand"><img src="{{base}}/favicon.svg" alt="" width="22" height="22"><span>{{brand}}</span><span class="footer-muted">{{brandTagline}}</span></div>
       <p class="footer-joke">{{footerJoke}}</p>
-      <p class="footer-meta"><span>© {{year}} {{brand}}</span><span>{{footerScope}}</span><span>{{contactLabel}} <a class="footer-mail" href="mailto:{{contactEmail}}">{{contactEmail}}</a></span></p>
+      <p class="footer-meta"><span>© {{year}} {{brand}}</span><span>{{footerScope}}</span><span>{{contactLabel}} <a class="footer-mail" href="mailto:{{contactEmail}}">{{contactEmail}}</a></span><a class="footer-mail" href="{{base}}/{{lang}}/privacy/">{{privacyLink}}</a></p>
     </div>
   </footer>
 

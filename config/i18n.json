@@ -257,7 +257,11 @@
     "reportFew": "기록이 쌓일수록 한 달 흐름이 더 정확해집니다.",
     "compareSentence": "오늘 기준 {a}는 {pa}, {b}는 {pb}입니다.",
     "adLabel": "광고",
-    "newsMore": "뉴스 {n}개 더 보기"
+    "newsMore": "뉴스 {n}개 더 보기",
+    "privacyPageTitle": "개인정보처리방침 | Quite Terrible",
+    "privacyPageDesc": "Quite Terrible이 수집하는 정보, 광고 쿠키(Google 애드센스), 쿠팡 파트너스 링크, 문의처를 안내합니다.",
+    "privacyHeading": "개인정보처리방침",
+    "privacyLink": "개인정보처리방침"
   },
   "en": {
     "brand": "Quite Terrible",
@@ -517,7 +521,11 @@
     "reportFew": "The month gets clearer as more days are recorded.",
     "compareSentence": "Today the {a} costs {pa} and the {b} costs {pb}.",
     "adLabel": "Advertisement",
-    "newsMore": "Show {n} more"
+    "newsMore": "Show {n} more",
+    "privacyPageTitle": "Privacy policy | Quite Terrible",
+    "privacyPageDesc": "What Quite Terrible collects, how ads and cookies (Google AdSense) work here, affiliate links, and how to contact us.",
+    "privacyHeading": "Privacy policy",
+    "privacyLink": "Privacy"
   },
   "ja": {
     "brand": "Quite Terrible",
@@ -777,6 +785,10 @@
     "reportFew": "記録が増えるほど、1か月の流れがより正確になります。",
     "compareSentence": "今日の時点で{a}は{pa}、{b}は{pb}です。",
     "adLabel": "広告",
-    "newsMore": "さらに{n}件表示"
+    "newsMore": "さらに{n}件表示",
+    "privacyPageTitle": "プライバシーポリシー | Quite Terrible",
+    "privacyPageDesc": "Quite Terribleが扱う情報、広告とCookie（Google AdSense）、アフィリエイトリンク、お問い合わせ先について。",
+    "privacyHeading": "プライバシーポリシー",
+    "privacyLink": "プライバシーポリシー"
   }
 }

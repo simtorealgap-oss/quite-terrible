@@ -1,0 +1,134 @@
+{
+  "ko": {
+    "updated": "시행일: 2026년 11월 1일",
+    "sections": [
+      [
+        "수집하는 개인정보",
+        [
+          "Quite Terrible(quiteterrible.com, 이하 \"사이트\")은 회원가입·로그인·댓글 기능이 없으며, 이름·연락처 같은 개인정보를 직접 입력받거나 저장하지 않습니다."
+        ]
+      ],
+      [
+        "브라우저에 저장하는 정보",
+        [
+          "상단 게임에서 내가 구한 램 개수는 방문자 브라우저의 로컬 저장소(localStorage)에만 저장되며 서버로 보내지 않습니다. 브라우저 설정에서 사이트 데이터를 지우면 함께 삭제됩니다.",
+          "전세계 사람들이 구한 램 합계는 익명 카운터 서비스(abacus.jasoncameron.dev)에 숫자만 더하는 방식으로 기록합니다. 이 과정에서 개인을 식별할 수 있는 정보는 보내지 않습니다."
+        ]
+      ],
+      [
+        "광고와 쿠키 (Google 애드센스)",
+        [
+          "사이트는 Google 애드센스 광고를 게재합니다. Google을 비롯한 제3자 광고 사업자는 쿠키를 사용해 방문자가 이 사이트나 다른 사이트를 방문한 기록을 바탕으로 광고를 보여줄 수 있습니다.",
+          "맞춤 광고는 <a href=\"https://adssettings.google.com\" target=\"_blank\" rel=\"noopener noreferrer\">Google 광고 설정</a>에서 끌 수 있으며, <a href=\"https://www.aboutads.info/choices/\" target=\"_blank\" rel=\"noopener noreferrer\">aboutads.info</a>에서 다른 제3자 광고 사업자의 쿠키도 거부할 수 있습니다.",
+          "Google이 데이터를 사용하는 방식은 <a href=\"https://policies.google.com/technologies/partner-sites\" target=\"_blank\" rel=\"noopener noreferrer\">Google 파트너 사이트 정책</a>에서 확인할 수 있습니다. 유럽경제지역·영국·스위스 방문자에게는 맞춤 광고 전에 동의를 먼저 받습니다."
+        ]
+      ],
+      [
+        "쿠팡 파트너스 링크",
+        [
+          "일부 구매 링크는 쿠팡 파트너스 링크이며, 이를 통해 구매가 이루어지면 사이트가 일정액의 수수료를 받습니다. 링크를 누르면 쿠팡이 자체 쿠키로 유입 경로를 기록할 수 있으며, 이는 쿠팡의 개인정보처리방침을 따릅니다."
+        ]
+      ],
+      [
+        "외부 서비스와 접속 기록",
+        [
+          "사이트는 GitHub Pages에서 제공되며, 서비스 운영과 보안을 위해 GitHub이 IP 주소 등 접속 기록을 남길 수 있습니다. 뉴스 제목은 각 언론사 원문으로 연결되며, 연결된 사이트의 개인정보 처리는 해당 사이트 방침을 따릅니다."
+        ]
+      ],
+      [
+        "문의",
+        [
+          "개인정보와 관련한 문의는 <a href=\"mailto:simtoreal.gap@gmail.com\">simtoreal.gap@gmail.com</a>으로 보내 주세요. 방침이 바뀌면 이 페이지에 시행일과 함께 알립니다."
+        ]
+      ]
+    ]
+  },
+  "en": {
+    "updated": "Effective November 1, 2026",
+    "sections": [
+      [
+        "What we collect",
+        [
+          "Quite Terrible (quiteterrible.com, \"the site\") has no accounts, sign-in or comments. We do not ask for or store personal information such as your name or contact details."
+        ]
+      ],
+      [
+        "What your browser keeps",
+        [
+          "The number of RAM sticks you rescue in the game at the top is kept only in your browser's local storage and is never sent to us. Clearing site data in your browser removes it.",
+          "The worldwide total is kept by an anonymous counter service (abacus.jasoncameron.dev) that only adds to a number. No information that identifies you is sent."
+        ]
+      ],
+      [
+        "Advertising and cookies (Google AdSense)",
+        [
+          "The site shows ads from Google AdSense. Third-party vendors, including Google, use cookies to serve ads based on your prior visits to this site or other websites.",
+          "Google's use of advertising cookies enables it and its partners to serve ads based on your visits to this site and/or other sites on the Internet. You can opt out of personalised advertising in <a href=\"https://adssettings.google.com\" target=\"_blank\" rel=\"noopener noreferrer\">Google Ads Settings</a>, and opt out of other vendors' cookies at <a href=\"https://www.aboutads.info/choices/\" target=\"_blank\" rel=\"noopener noreferrer\">aboutads.info</a>.",
+          "See <a href=\"https://policies.google.com/technologies/partner-sites\" target=\"_blank\" rel=\"noopener noreferrer\">how Google uses information from sites that use its services</a>. Visitors in the EEA, the UK and Switzerland are asked for consent before personalised ads are shown."
+        ]
+      ],
+      [
+        "Affiliate links",
+        [
+          "Some Korean buy links are Coupang Partners affiliate links; the site earns a commission when a purchase is made through them. Coupang may record the referral with its own cookies under its own privacy policy."
+        ]
+      ],
+      [
+        "Hosting and other sites",
+        [
+          "The site is served by GitHub Pages, which may log IP addresses and similar request data for operation and security. News headlines link to the original publishers, whose own policies apply."
+        ]
+      ],
+      [
+        "Contact",
+        [
+          "Questions about privacy: <a href=\"mailto:simtoreal.gap@gmail.com\">simtoreal.gap@gmail.com</a>. Changes to this policy will be posted on this page with a new effective date."
+        ]
+      ]
+    ]
+  },
+  "ja": {
+    "updated": "施行日：2026年11月1日",
+    "sections": [
+      [
+        "収集する個人情報",
+        [
+          "Quite Terrible（quiteterrible.com、以下「本サイト」）には会員登録・ログイン・コメント機能はなく、氏名や連絡先などの個人情報を入力していただくことも保存することもありません。"
+        ]
+      ],
+      [
+        "ブラウザに保存される情報",
+        [
+          "上部のゲームで救出したメモリの数は、訪問者のブラウザのローカルストレージにのみ保存され、サーバーには送信されません。ブラウザでサイトデータを削除すると消去されます。",
+          "世界の合計数は匿名カウンターサービス（abacus.jasoncameron.dev）で数値を加算するだけで記録しており、個人を特定できる情報は送信しません。"
+        ]
+      ],
+      [
+        "広告とCookie（Google AdSense）",
+        [
+          "本サイトはGoogle AdSenseの広告を掲載しています。Googleなどの第三者配信事業者はCookieを使用して、本サイトや他のサイトへの過去のアクセス情報に基づいて広告を配信します。",
+          "パーソナライズ広告は<a href=\"https://adssettings.google.com\" target=\"_blank\" rel=\"noopener noreferrer\">Googleの広告設定</a>で無効にできます。また<a href=\"https://www.aboutads.info/choices/\" target=\"_blank\" rel=\"noopener noreferrer\">aboutads.info</a>で第三者配信事業者のCookieを無効にできます。",
+          "Googleによるデータの使用については<a href=\"https://policies.google.com/technologies/partner-sites\" target=\"_blank\" rel=\"noopener noreferrer\">こちら</a>をご覧ください。"
+        ]
+      ],
+      [
+        "アフィリエイトリンク",
+        [
+          "韓国向けの一部の購入リンクはクーパン・パートナーズのアフィリエイトリンクで、購入があると本サイトが紹介料を受け取ります。クーパンは独自のCookieで紹介元を記録することがあります。"
+        ]
+      ],
+      [
+        "ホスティングと外部サイト",
+        [
+          "本サイトはGitHub Pagesで配信されており、運用とセキュリティのためにGitHubがIPアドレスなどのアクセス記録を残す場合があります。ニュースの見出しは各報道機関の元記事にリンクしており、リンク先のプライバシーポリシーが適用されます。"
+        ]
+      ],
+      [
+        "お問い合わせ",
+        [
+          "個人情報に関するお問い合わせは<a href=\"mailto:simtoreal.gap@gmail.com\">simtoreal.gap@gmail.com</a>までお送りください。本ポリシーを変更する場合は、このページで施行日とともにお知らせします。"
+        ]
+      ]
+    ]
+  }
+}

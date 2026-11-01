@@ -35,6 +35,18 @@ def name_of(p, lang):
     return (lang == 'ko' and p.get('shortKo')) or p['short']
 
 
+PRIVACY = json.loads((Path(__file__).resolve().parent / 'config/privacy.json').read_text())
+
+
+def privacy_html(lang):
+    """The privacy policy body. config/privacy.json is our own text, with links written in as HTML."""
+    doc = PRIVACY[lang]
+    parts = [f'<p class="privacy-updated">{html.escape(doc["updated"])}</p>']
+    for heading, paras in doc['sections']:
+        parts.append(f'<h2>{html.escape(heading)}</h2>' + ''.join(f'<p>{p}</p>' for p in paras))
+    return ''.join(parts)
+
+
 def page_path(lang, page, product=None):
     if page == 'product':
         return f'/{lang}/{product}/'
@@ -255,7 +267,7 @@ def product_static(p, lang, strings, currency='KRW'):
 
 def sitemap(site, base, products, langs=LANGS, lastmod=None, available=None):
     lastmod = lastmod or dt.date.today().isoformat()
-    pages = ([('prices', None), ('news', None), ('about', None), ('guides', None)] + [('guide', s) for s in guide_slugs()]
+    pages = ([('prices', None), ('news', None), ('about', None), ('guides', None), ('privacy', None)] + [('guide', s) for s in guide_slugs()]
              + [('product', p['id']) for p in products])
     out = ['<?xml version="1.0" encoding="UTF-8"?>',
            '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">']
