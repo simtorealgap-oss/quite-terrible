@@ -142,12 +142,12 @@ class Providers(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             with connect(Path(directory)/'test.db') as db:
                 with patch('collectors.fetch',return_value=b'<rss><channel></channel></rss>') as request:
-                    update_news(db)
-                    update_news(db)
+                    update_news(db,sleep=lambda s:None)
+                    update_news(db,sleep=lambda s:None)
                     queries=sum(len(q) for c in __import__('collectors').NEWS_QUERIES.values() for q in c.values())
                     self.assertEqual(request.call_count,queries)  # second call is inside the cooldown
                 with patch('collectors.fetch',side_effect=TimeoutError):
-                    update_news(db,force=True)
+                    update_news(db,force=True,sleep=lambda s:None)
                 self.assertEqual(db.execute("select count(*) from runs where state='error' and succeeded_at is not null").fetchone()[0],4)
 
 

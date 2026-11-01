@@ -310,6 +310,7 @@ NEWS_QUERIES = {
                    '(그래픽카드 OR 엔비디아) 가격 when:7d']}
 }
 NEWS_PER_QUERY = 15
+NEWS_DELAY = 5  # seconds between feed requests
 
 
 def parse_news(raw, lang, category, at=None):
@@ -338,8 +339,19 @@ def parse_news(raw, lang, category, at=None):
     return sorted(items, key=lambda row: row[6], reverse=True)[:NEWS_PER_QUERY]
 
 
-def update_news(db, force=False, langs=None):
-    results = []
+def news_fetch(url, sleep, tries=3):
+    """Google News answers bursts from shared cloud IPs with 503/429; wait and try again."""
+    for attempt in range(tries):
+        try:
+            return fetch(url)
+        except urllib.error.HTTPError as exc:
+            if exc.code not in (429, 500, 502, 503) or attempt == tries - 1:
+                raise
+            sleep(15 * (attempt + 1))
+
+
+def update_news(db, force=False, langs=None, sleep=time.sleep):
+    results, first = [], True
     for lang, categories in NEWS_QUERIES.items():
         if langs and lang not in langs:
             continue
@@ -355,9 +367,12 @@ def update_news(db, force=False, langs=None):
             try:
                 rows = []
                 for query in ([queries] if isinstance(queries, str) else queries):
+                    if not first:
+                        sleep(NEWS_DELAY)
+                    first = False
                     params = urllib.parse.urlencode({'q': query, 'hl': 'ko' if lang == 'ko' else 'en-US',
                         'gl': 'KR' if lang == 'ko' else 'US', 'ceid': 'KR:ko' if lang == 'ko' else 'US:en'})
-                    rows += parse_news(fetch('https://news.google.com/rss/search?' + params), lang, category)
+                    rows += parse_news(news_fetch('https://news.google.com/rss/search?' + params, sleep), lang, category)
                 with db:
                     db.executemany('INSERT OR IGNORE INTO news VALUES(?,?,?,?,?,?,?,?)', rows)
                     db.execute('DELETE FROM news WHERE published_at<?', (stamp(now()-dt.timedelta(days=30)),))
