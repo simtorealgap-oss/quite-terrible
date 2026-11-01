@@ -369,7 +369,7 @@ function renderDetail(target = '#drawer-body') {
       <div><dt>${esc(T.colSellers)}</dt><dd>${bestOffer(p)?.shops ?? '—'}</dd></div>
     </dl>
     ${buyHtml(p)}
-    <p class="d-note">${esc(p.category === 'gpu' ? T.gpuNote : T.ramNote)}</p>`;
+    ${p.category === 'ram' ? `<p class="d-note">${esc(T.ramNote)}</p>` : ''}`;
 }
 
 let resizeTimer = 0;

@@ -281,7 +281,6 @@ th[aria-sort="descending"] .th-sort::after { content: " ↓"; }
 .footer-brand { display: flex; align-items: center; gap: 8px; font-weight: 700; color: var(--text-2); }
 .footer-muted { font-weight: 500; color: var(--text-3); }
 .footer-joke { margin: 0; font-style: italic; }
-.footer-disclosure { flex-basis: 100%; order: 9; margin: 0; font-size: 11.5px; color: var(--text-3); }
 .footer-meta { display: flex; gap: 16px; margin: 0 0 0 auto; }
 
 /* Detail drawer */
@@ -349,7 +348,6 @@ th[aria-sort="descending"] .th-sort::after { content: " ↓"; }
 .mk-sub { display: inline-flex; align-items: center; gap: 6px; font-size: 11.5px; color: var(--text-3); }
 .mk-sub .delta { font-size: 11.5px; }
 .tag.low { color: var(--ok); }
-.page-sub { margin: -2px 0 16px; font-size: 14px; color: var(--text-2); }
 
 .buy.secondary { background: var(--panel); color: var(--text-2); border: 1px solid var(--line-2); }
 .buy.secondary:hover { background: var(--panel-2); color: var(--text); }
