@@ -335,8 +335,9 @@ def update_news(db, force=False):
             job = f'news:{lang}:{category}'
             old = db.execute('SELECT * FROM runs WHERE job=?', (job,)).fetchone()
             if old and not force:
-                # Successful feeds refresh once per 24 hours. Failures retry after one hour.
-                cooldown = 86400 if old['state'] == 'ok' else 3600
+                # The daily job runs each morning; a run in the last 12 hours (e.g. a manual one the night
+                # before) must not make the morning run skip. Failures retry after one hour.
+                cooldown = 12 * 3600 if old['state'] == 'ok' else 3600
                 if (now() - parse_time(old['attempted_at'])).total_seconds() < cooldown:
                     continue
             params = urllib.parse.urlencode({'q': query, 'hl': 'ko' if lang == 'ko' else 'en-US',
