@@ -130,7 +130,7 @@
     dcX = LW - 38 - (W < 640 ? 2 : Math.max(6, Math.round(LW * 0.06)));
     bossX = dcX - 17;
     const left = beltStart + 3, right = bossX - 2;
-    const n = Math.max(3, Math.min(12, Math.floor((right - left) / 11)));
+    const n = Math.max(2, Math.min(8, Math.floor((right - left) / (W < 640 ? 18 : 24))));  // fewer people on narrow screens
     crowd = Array.from({length: n}, (_, i) => crowd[i] || {
       jump: 0, holding: 0, hair: HAIR[(i * 3) % HAIR.length], skin: SKIN[(i * 2) % SKIN.length],
       shirt: SHIRT[i % SHIRT.length], phase: Math.random() * 6,
