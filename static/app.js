@@ -333,6 +333,7 @@ async function loadPrices() {
     state.prices = data;
     $('#table-msg').hidden = true;
     renderPrices();
+    document.dispatchEvent(new CustomEvent('qt:prices', {detail: data}));  // the hero game shows today's price
   } catch {
     if (id !== priceRequest) return;
     $('#price-status').dataset.state = 'error';

@@ -50,15 +50,12 @@
   <section class="hero" id="hero" aria-labelledby="hero-title" {{pricesHidden}}>
     <div class="hero-backdrop" aria-hidden="true">DRAM</div>
     <canvas class="hero-canvas" id="hero-canvas" aria-hidden="true"></canvas>
-    <p class="hero-hint" id="hero-hint" data-touch="{{heroHintTouch}}" aria-hidden="true">{{heroHint}}</p>
     <div class="wrap hero-content" id="hero-content">
       <div>
-        <p class="hero-eyebrow">{{heroEyebrow}}</p>
         <h2 class="hero-title" id="hero-title"><span>{{heroLine1}}</span><span class="hero-accent">{{heroLine2}}</span></h2>
+        <p class="hero-source">— {{heroSource}} · <a href="{{quipUrl}}" target="_blank" rel="noopener noreferrer">{{readArticle}} ↗</a></p>
       </div>
       <div class="hero-aside">
-        <p class="hero-body">{{heroBody}}</p>
-        <p class="hero-source">— {{heroSource}} · <a href="{{quipUrl}}" target="_blank" rel="noopener noreferrer">{{readArticle}} ↗</a></p>
         <div class="hero-ctas">
           <a class="hero-btn" href="#prices">{{heroCta}} <span aria-hidden="true">↓</span></a>
           <a class="hero-link" href="{{base}}/{{lang}}/about/">{{heroCta2}} <span aria-hidden="true">→</span></a>
