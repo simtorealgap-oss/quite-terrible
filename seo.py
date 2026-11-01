@@ -10,9 +10,9 @@ GUIDES = json.loads((Path(__file__).resolve().parent / 'config/guides.json').rea
 
 KST = dt.timezone(dt.timedelta(hours=9))
 CATEGORY_NAMES = {'ko': {'ram': '메모리', 'gpu': '그래픽카드'}, 'en': {'ram': 'Memory', 'gpu': 'Graphics cards'},
-                  'ja': {'ram': 'メモリ', 'gpu': 'グラフィックボード'}}
-LANGS = ('ko', 'en', 'ja')
-OG_LOCALE = {'ko': 'ko_KR', 'en': 'en_US', 'ja': 'ja_JP'}
+                  'ja': {'ram': 'メモリ', 'gpu': 'グラフィックボード'}, 'de': {'ram': 'Arbeitsspeicher', 'gpu': 'Grafikkarten'}}
+LANGS = ('ko', 'en', 'ja', 'de')
+OG_LOCALE = {'ko': 'ko_KR', 'en': 'en_US', 'ja': 'ja_JP', 'de': 'de_DE'}
 
 
 def won(value, lang, currency='KRW'):
@@ -67,6 +67,8 @@ def when_text(stamp, lang):
         return f'{at.month}월 {at.day}일 {at.hour}시'
     if lang == 'ja':
         return f'{at.month}月{at.day}日 {at.hour}時'
+    if lang == 'de':
+        return f'{at.day}.{at.month}., {at.hour}:00 Uhr KST'
     return at.strftime('%b %-d, %H:00 KST')
 
 
@@ -284,6 +286,7 @@ def sitemap(site, base, products, langs=LANGS, lastmod=None, available=None):
 
 
 MONTHS_EN = ('January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December')
+MONTHS_DE = ('Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember')
 
 
 def report_slug(at=None):
@@ -299,7 +302,7 @@ def guide_meta(slug, lang, strings):
     """Title and description of a guide (the monthly report's come from its year and month)."""
     if slug.startswith('report-'):
         year, month = slug.split('-')[1:]
-        vars = {'year': year, 'month': int(month), 'monthName': MONTHS_EN[int(month) - 1]}
+        vars = {'year': year, 'month': int(month), 'monthName': (MONTHS_DE if lang == 'de' else MONTHS_EN)[int(month) - 1]}
         return strings['reportTitle'].format(**vars), strings['reportDesc'].format(**vars)
     g = GUIDES[slug][lang]
     return g['title'], g['desc']
@@ -450,6 +453,7 @@ def llms_txt(site, base, by_lang):
              f'- [Korean prices (원)]({site}{base}/ko/): 램 가격·그래픽카드 가격 오늘 시세',
              f'- [Japanese prices (円)]({site}{base}/ja/): メモリ価格・グラボ価格 今日の相場',
              f'- [English]({site}{base}/en/): RAM & GPU prices today',
+             f'- [German]({site}{base}/de/): RAM- und Grafikkarten-Preise heute',
              f'- [About]({site}{base}/en/about/): why this site exists', '', '## Guides', '']
     strings_en = {'reportTitle': 'RAM & GPU prices: {monthName} {year} report', 'reportDesc': ''}
     lines += [f"- [{guide_meta(s, 'en', strings_en)[0]}]({site}{base}{page_path('en', 'guide', s)})" for s in guide_slugs()]

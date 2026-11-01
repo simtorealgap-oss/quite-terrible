@@ -562,7 +562,7 @@
     ctx.fillStyle = C.dirt1;
     ctx.fillRect(0, y0 + LH * S - 1, W, H - (y0 + LH * S) + 1);
   }
-  const money = value => value == null ? '…' : new Intl.NumberFormat(({ko: 'ko-KR', ja: 'ja-JP'}[boot.lang] || 'en-US'),
+  const money = value => value == null ? '…' : new Intl.NumberFormat(({ko: 'ko-KR', ja: 'ja-JP', de: 'de-DE'}[boot.lang] || 'en-US'),
     {style: 'currency', currency: state.currency, maximumFractionDigits: 0}).format(value);
   function outlined(text, x, y, fill) {
     ctx.lineWidth = 3; ctx.strokeStyle = 'rgba(255,255,255,.85)'; ctx.lineJoin = 'round';
@@ -607,7 +607,7 @@
     }
     // Scoreboard over the data center.
     ctx.font = `800 11px ${FONT}`; ctx.textAlign = 'right';
-    const num = n => n.toLocaleString(({ko: 'ko-KR', ja: 'ja-JP'}[boot.lang] || 'en-US'));
+    const num = n => n.toLocaleString(({ko: 'ko-KR', ja: 'ja-JP', de: 'de-DE'}[boot.lang] || 'en-US'));
     const rightX = Math.min(W - 12, colRightPx || W - 12);  // right edge of the page column
     outlined(fmt('gameRecord', {n: num(record)}), rightX, small ? 54 : 14, '#16a34a');
     outlined(fmt('gameWorld', {n: world == null ? '…' : num(world + pending)}), rightX, small ? 70 : 30, '#2e3f63');

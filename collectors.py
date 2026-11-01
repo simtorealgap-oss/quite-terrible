@@ -377,6 +377,10 @@ NEWS_QUERIES = {
                    '(DRAM OR HBM) (サムスン OR SKハイニックス OR マイクロン OR キオクシア) (価格 OR 供給) when:7d'],
            'gpu': ['(GeForce OR "RTX 50" OR "RTX 5070" OR "RTX 5080" OR "RTX 5090") (価格 OR 在庫 OR 発売) when:7d',
                    '(グラボ OR グラフィックボード OR NVIDIA) 価格 when:7d']},
+    'de': {'ram': ['(DDR5 OR DDR4) (RAM OR Arbeitsspeicher OR Speicher) (Preis OR Preise OR knapp OR teurer) when:7d',
+                   '(DRAM OR HBM) (Samsung OR "SK hynix" OR Micron) (Preis OR Preise OR Angebot) when:7d'],
+           'gpu': ['(GeForce OR "RTX 50" OR "RTX 5070" OR "RTX 5080" OR "RTX 5090") (Preis OR Preise OR lieferbar) when:7d',
+                   '(Grafikkarte OR Grafikkarten OR NVIDIA) Preis when:7d']},
     'ko': {'ram': ['(DDR5 OR DDR4) (램 OR 메모리) (가격 OR 공급 OR 품귀) when:7d',
                    '(D램 OR HBM) (삼성전자 OR SK하이닉스 OR 마이크론) (가격 OR 공급) when:7d'],
            'gpu': ['(지포스 OR "RTX 50" OR "RTX 5070" OR "RTX 5080" OR "RTX 5090") (가격 OR 공급 OR 출시) when:7d',
@@ -397,8 +401,8 @@ def parse_news(raw, lang, category, at=None):
         link = item.findtext('link') or ''
         if not title or not safe_url(link):
             continue
-        relevant = (r'\bDDR[45]\b|\bDRAM\b|\bHBM\d?\b|\bRAM\b|메모리|램|D램|디램|メモリ' if category == 'ram'
-                    else r'\bRTX\s*\d|GeForce|지포스|그래픽\s*카드|graphics card|\bGPU\b|グラボ|グラフィックボード')
+        relevant = (r'\bDDR[45]\b|\bDRAM\b|\bHBM\d?\b|\bRAM\b|메모리|램|D램|디램|メモリ|Arbeitsspeicher|Speicher' if category == 'ram'
+                    else r'\bRTX\s*\d|GeForce|지포스|그래픽\s*카드|graphics card|\bGPU\b|グラボ|グラフィックボード|Grafikkarte')
         if not re.search(relevant, title, re.I):
             continue
         try:
@@ -443,7 +447,7 @@ def update_news(db, force=False, langs=None, sleep=time.sleep):
                     if not first:
                         sleep(NEWS_DELAY)
                     first = False
-                    hl, gl = {'ko': ('ko', 'KR'), 'ja': ('ja', 'JP')}.get(lang, ('en-US', 'US'))
+                    hl, gl = {'ko': ('ko', 'KR'), 'ja': ('ja', 'JP'), 'de': ('de', 'DE')}.get(lang, ('en-US', 'US'))
                     params = urllib.parse.urlencode({'q': query, 'hl': hl, 'gl': gl, 'ceid': f"{gl}:{hl.split('-')[0]}"})
                     rows += parse_news(news_fetch('https://news.google.com/rss/search?' + params, sleep), lang, category)
                 with db:

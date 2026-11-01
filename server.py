@@ -16,9 +16,9 @@ from store import ROOT, PRODUCTS, MARKETS, CURRENCY, STALE_SECONDS, session, pro
 from collectors import update_prices, update_news, import_feed
 from seo import seo_context, news_rows, guide_slugs, privacy_html
 
-LANGS = ('ko', 'en', 'ja')
+LANGS = ('ko', 'en', 'ja', 'de')
 # Each page language shows one market's prices: Korea for Korean, Japan for Japanese, the US for English.
-LANG_MARKET = {'ko': 'KR', 'ja': 'JP', 'en': 'US'}
+LANG_MARKET = {'ko': 'KR', 'ja': 'JP', 'en': 'US', 'de': 'US'}  # no German prices yet: like English
 I18N = json.loads((ROOT / 'config/i18n.json').read_text())
 PAGES = {f'/{lang}/{path}': (lang, page, None) for lang in LANGS
          for path, page in (('', 'prices'), ('news/', 'news'), ('about/', 'about'), ('guides/', 'guides'), ('privacy/', 'privacy'))}
@@ -65,7 +65,7 @@ def preferred_lang(accept_language, country=None):
             best = (weight, primary)
     if best:
         return best[1]
-    return {'KR': 'ko', 'JP': 'ja'}.get(country, 'en')
+    return {'KR': 'ko', 'JP': 'ja', 'DE': 'de', 'AT': 'de', 'CH': 'de', 'LI': 'de'}.get(country, 'en')
 
 
 def default_market(country, lang):
@@ -310,7 +310,7 @@ def main():
         if args.update:
             results = {}
             markets = {'kr': ['KR', 'JP'], 'us': ['US']}.get(args.region, [None])
-            langs = {'kr': ['ko', 'ja'], 'us': ['en']}.get(args.region)
+            langs = {'kr': ['ko', 'ja', 'de'], 'us': ['en']}.get(args.region)
             if args.update in ('all', 'news'):
                 results['news'] = update_news(db, force=args.force_news, langs=langs)
             if args.update in ('all', 'prices'):

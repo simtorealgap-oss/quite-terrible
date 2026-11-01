@@ -130,5 +130,49 @@
         ]
       ]
     ]
+  },
+  "de": {
+    "updated": "Gültig ab 1. November 2026",
+    "sections": [
+      [
+        "Welche Daten wir erheben",
+        [
+          "Quite Terrible (quiteterrible.com, „die Website“) hat keine Benutzerkonten, keine Anmeldung und keine Kommentarfunktion. Wir fragen keine personenbezogenen Daten wie deinen Namen oder deine Kontaktdaten ab und speichern keine."
+        ]
+      ],
+      [
+        "Was dein Browser speichert",
+        [
+          "Die Zahl der RAM-Riegel, die du im Spiel oben auf der Seite rettest, wird ausschließlich im lokalen Speicher (Local Storage) deines Browsers abgelegt und nie an uns übermittelt. Wenn du die Websitedaten in deinem Browser löschst, wird sie entfernt.",
+          "Die weltweite Gesamtzahl führt ein anonymer Zählerdienst (abacus.jasoncameron.dev), der lediglich eine Zahl hochzählt. Dabei werden keine Informationen übermittelt, die dich identifizieren."
+        ]
+      ],
+      [
+        "Werbung und Cookies (Google AdSense)",
+        [
+          "Auf der Website werden Anzeigen von Google AdSense eingeblendet. Drittanbieter, einschließlich Google, verwenden Cookies, um Anzeigen auf Grundlage deiner früheren Besuche auf dieser Website oder anderen Websites zu schalten.",
+          "Mithilfe von Werbe-Cookies können Google und seine Partner Anzeigen auf Grundlage deiner Besuche auf dieser Website und/oder anderen Websites im Internet schalten. Personalisierte Werbung kannst du in den <a href=\"https://adssettings.google.com\" target=\"_blank\" rel=\"noopener noreferrer\">Google-Anzeigeneinstellungen</a> deaktivieren, Cookies anderer Anbieter unter <a href=\"https://www.aboutads.info/choices/\" target=\"_blank\" rel=\"noopener noreferrer\">aboutads.info</a>.",
+          "Hier erfährst du, <a href=\"https://policies.google.com/technologies/partner-sites\" target=\"_blank\" rel=\"noopener noreferrer\">wie Google Daten von Websites verwendet, die Google-Dienste nutzen</a>. Besucher aus dem EWR, dem Vereinigten Königreich und der Schweiz werden um ihre Einwilligung gebeten, bevor personalisierte Anzeigen ausgeliefert werden."
+        ]
+      ],
+      [
+        "Affiliate-Links",
+        [
+          "Einige koreanische Kauf-Links sind Affiliate-Links des Programms Coupang Partners; kommt über sie ein Kauf zustande, erhält die Website eine Provision. Coupang kann die Vermittlung mit eigenen Cookies gemäß seiner eigenen Datenschutzerklärung erfassen."
+        ]
+      ],
+      [
+        "Hosting und andere Websites",
+        [
+          "Die Website wird über GitHub Pages bereitgestellt; dabei können IP-Adressen und ähnliche Anfragedaten für Betrieb und Sicherheit protokolliert werden. Schlagzeilen verlinken auf die ursprünglichen Medien, für deren Seiten jeweils deren eigene Datenschutzbestimmungen gelten."
+        ]
+      ],
+      [
+        "Kontakt",
+        [
+          "Fragen zum Datenschutz: <a href=\"mailto:simtoreal.gap@gmail.com\">simtoreal.gap@gmail.com</a>. Änderungen dieser Datenschutzerklärung veröffentlichen wir auf dieser Seite mit neuem Gültigkeitsdatum."
+        ]
+      ]
+    ]
   }
 }

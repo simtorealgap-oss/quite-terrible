@@ -21,12 +21,12 @@ LANG_JS = """(function () {
   var lang = null;
   for (var i = 0; i < langs.length && !lang; i++) {
     var primary = String(langs[i]).toLowerCase().split('-')[0];
-    if (primary === 'ko' || primary === 'en' || primary === 'ja') lang = primary;
+    if (primary === 'ko' || primary === 'en' || primary === 'ja' || primary === 'de') lang = primary;
   }
   if (!lang) {
     var zone = '';
     try { zone = Intl.DateTimeFormat().resolvedOptions().timeZone; } catch (e) {}
-    lang = zone === 'Asia/Seoul' ? 'ko' : zone === 'Asia/Tokyo' ? 'ja' : 'en';
+    lang = zone === 'Asia/Seoul' ? 'ko' : zone === 'Asia/Tokyo' ? 'ja' : /^Europe\\/(Berlin|Vienna|Zurich|Vaduz|Busingen)$/.test(zone) ? 'de' : 'en';
   }
   location.replace(base + '/' + lang + '/' + location.search);
 })();
@@ -42,9 +42,10 @@ ROOT_PAGE = """<!doctype html>
   <link rel="alternate" hreflang="ko" href="{base}/ko/">
   <link rel="alternate" hreflang="en" href="{base}/en/">
   <link rel="alternate" hreflang="ja" href="{base}/ja/">
+  <link rel="alternate" hreflang="de" href="{base}/de/">
   <script src="{base}/lang.js" data-base="{base}"></script>
 </head>
-<body><p><a href="{base}/ko/">한국어</a> · <a href="{base}/en/">English</a> · <a href="{base}/ja/">日本語</a></p></body>
+<body><p><a href="{base}/ko/">한국어</a> · <a href="{base}/en/">English</a> · <a href="{base}/ja/">日本語</a> · <a href="{base}/de/">Deutsch</a></p></body>
 </html>
 """
 

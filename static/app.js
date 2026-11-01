@@ -48,7 +48,7 @@ const state = {
   news: null,
   selected: null,
 };
-const locale = {ko: 'ko-KR', ja: 'ja-JP'}[boot.lang] || 'en-US';
+const locale = {ko: 'ko-KR', ja: 'ja-JP', de: 'de-DE'}[boot.lang] || 'en-US';
 const CURRENCY = {KR: 'KRW', JP: 'JPY', US: 'USD'};
 
 const money = (value, compact = false) => {

@@ -114,6 +114,44 @@
           ]
         }
       ]
+    },
+    "de": {
+      "title": "Warum steigen die RAM-Preise? Der DDR5-Preisanstieg erklärt",
+      "desc": "KI-Rechenzentren, HBM-Nachfrage, verlagerte Produktion und das Ende von DDR4: Warum RAM immer teurer wird – mit heutigen Preisen und News.",
+      "lead": "Wer zuletzt einen PC zusammengestellt hat, ist bei der RAM-Zeile vermutlich zusammengezuckt. Es gibt nicht den einen Grund für die steigenden Preise – mehrere kommen zusammen.",
+      "sections": [
+        {
+          "h": "1. KI-Rechenzentren werden zuerst bedient",
+          "p": [
+            "KI-Server brauchen enorme Mengen Speicher. Rechenzentrumskunden bestellen mehr und zahlen mehr, also geht das Angebot zuerst an sie.",
+            "Endkundenprodukte wie Desktop-RAM teilen sich, was übrig bleibt – und das treibt die Preise nach oben."
+          ]
+        },
+        {
+          "h": "2. Die Produktion wandert zu HBM",
+          "p": [
+            "HBM, der Speicher mit hoher Bandbreite auf KI-Beschleunigern, bringt pro Wafer weit mehr ein als gewöhnlicher DRAM. Wenn Samsung, SK hynix und Micron Kapazitäten auf HBM und Server-DRAM verlagern, bleibt weniger für Desktop-DDR5."
+          ]
+        },
+        {
+          "h": "3. DDR4 läuft aus",
+          "p": [
+            "Die Speicherhersteller fahren DDR4 herunter. Schrumpft das Angebot schneller als die Nachfrage, kann selbst ein alter Standard teurer werden."
+          ]
+        },
+        {
+          "h": "4. Erst die Vertragspreise, dann der Handel",
+          "p": [
+            "Speicherpreise bewegen sich zuerst in Verträgen mit Großkunden und kommen Wochen oder Monate später im Ladenregal an. Schlagzeilen über steigende DRAM-Vertragspreise bedeuten meist: Die Endkundenpreise ziehen nach."
+          ]
+        },
+        {
+          "h": "Wann also kaufen?",
+          "p": [
+            "Den Tiefpunkt kann niemand vorhersagen. Mit einer täglichen Aufzeichnung des Bestpreises siehst du aber zumindest, ob der heutige Preis im Vergleich zum letzten Monat hoch oder niedrig ist. Unten findest du die heutigen Preise sowie das 30-Tage-Tief und -Hoch jedes Produkts."
+          ]
+        }
+      ]
     }
   },
   "ddr5-vs-ddr4": {
@@ -207,6 +245,36 @@
           ]
         }
       ]
+    },
+    "de": {
+      "title": "DDR5 vs. DDR4: Was ist der Unterschied – und was solltest du kaufen?",
+      "desc": "Takt, Spannung und Kompatibilität von DDR5 und DDR4 im Vergleich, dazu die heutigen Preise. Welcher RAM für Neubau oder Aufrüstung?",
+      "lead": "DDR5 und DDR4 klingen ähnlich, sind aber verschiedene Standards, die nicht in dieselben Steckplätze passen. Dein Mainboard entscheidet, bevor der Preis es tut.",
+      "sections": [
+        {
+          "h": "Die wichtigsten Unterschiede",
+          "p": [
+            "Geschwindigkeit: DDR4 läuft meist mit etwa 3200 MT/s, DDR5 startet bei 4800–6000 MT/s und geht darüber hinaus.",
+            "Spannung: DDR4 arbeitet mit 1,2 V, DDR5 mit 1,1 V – und DDR5 verlagert das Power-Management (den PMIC) auf das Modul.",
+            "Aufbau: Jedes DDR5-Modul arbeitet wie zwei unabhängige Kanäle und hat eine Fehlerkorrektur direkt auf dem Chip (On-Die-ECC).",
+            "Kompatibilität: Die Kerbe sitzt an einer anderen Stelle, DDR5 passt also nicht in einen DDR4-Slot – und umgekehrt."
+          ]
+        },
+        {
+          "h": "Was passt zu deinem PC?",
+          "p": [
+            "AMD Ryzen 7000 und 9000 (AM5) nutzen ausschließlich DDR5. Ryzen 5000 und älter (AM4) ausschließlich DDR4.",
+            "Intel-CPUs der 12. bis 14. Generation unterstützen je nach Mainboard DDR4 oder DDR5 – prüf also Modell oder Handbuch. Intel Core Ultra (200S) nutzt DDR5."
+          ]
+        },
+        {
+          "h": "Was wir tun würden",
+          "p": [
+            "Beim Neubau: DDR5. Aktuelle CPUs und Mainboards sind darauf ausgelegt, und damit bist du für Jahre versorgt.",
+            "Hast du schon einen DDR4-PC und brauchst nur mehr Kapazität, kauf DDR4. Für RAM musst du nicht Mainboard und CPU tauschen."
+          ]
+        }
+      ]
     }
   },
   "rtx-5090-worth": {
@@ -282,6 +350,30 @@
       "fill": {
         "h": "今日のRTX 5090 1枚分({price})で買えるもの",
         "item": "{name} {n}個(1個 {each})"
+      }
+    },
+    "de": {
+      "title": "Was könntest du dir für eine RTX 5090 sonst kaufen?",
+      "desc": "Wie viele RTX 5060, RTX 5070 oder 32-GB-DDR5-Riegel eine RTX 5090 wert ist – berechnet aus den heutigen Bestpreisen.",
+      "lead": "Die RTX 5090 ist die Spitze der Produktpalette – ihr Preis auch. So viel bekommst du für dasselbe Geld sonst, berechnet aus den heutigen Bestpreisen.",
+      "sections": [
+        {
+          "h": "Warum so teuer?",
+          "p": [
+            "Die RTX 5090 ist das Flaggschiff mit 32 GB GDDR7. Gamer und alle, die KI-Modelle lokal betreiben, wollen dieselbe Karte – die Nachfrage überholt das Angebot also mühelos.",
+            "Das Preisschild liest sich weniger wie ein Datenblatt als wie eine Nachfragekurve."
+          ]
+        },
+        {
+          "h": "So rechnen wir",
+          "p": [
+            "Jede Zahl unten ist der heutige Bestpreis der RTX 5090 geteilt durch den Bestpreis des jeweiligen Produkts, abgerundet. Ändern sich morgens die Preise, ändern sich auch diese Zahlen."
+          ]
+        }
+      ],
+      "fill": {
+        "h": "Das bekommst du heute für eine RTX 5090 ({price})",
+        "item": "{n} × {name} (je {each})"
       }
     }
   },
@@ -371,6 +463,34 @@
         "vram": "VRAM",
         "perGb": "VRAM 1GBあたり"
       }
+    },
+    "de": {
+      "title": "RTX 5060 bis 5090, sortiert nach Preis pro GB VRAM",
+      "desc": "Die RTX-50-Grafikkarten nach heutigem Bestpreis und Preis pro GB VRAM verglichen – und welche Klasse zu welcher Auflösung und Nutzung passt.",
+      "lead": "Das Schwierigste bei der Grafikkartenwahl ist die Frage, wie weit nach oben es gehen soll. Hier die RTX-50-Serie, sortiert nach heutigem Preis und nach Preis pro GB VRAM.",
+      "sections": [
+        {
+          "h": "Die Klassen, kurz gefasst",
+          "p": [
+            "RTX 5060 (8 GB): Einstiegskarte für 1080p-Gaming mit vernünftigen Einstellungen.",
+            "RTX 5060 Ti (16 GB) und RTX 5070 (12 GB): der Sweet Spot für 1440p; neue Spiele laufen komfortabel mit hohen Details.",
+            "RTX 5070 Ti und RTX 5080 (16 GB): 1440p mit hoher Bildwiederholrate oder 4K.",
+            "RTX 5090 (32 GB): 4K mit maximalen Details – und die Karte, um KI-Modelle selbst zu betreiben."
+          ]
+        },
+        {
+          "h": "Warum VRAM wichtig ist",
+          "p": [
+            "VRAM ist der eigene Speicher der Grafikkarte. Hochauflösende Texturen und KI-Modelle laufen nur dann schnell, wenn sie hineinpassen – bei gleichem Preis hält eine Karte mit mehr VRAM daher oft länger durch.",
+            "Ein niedriger Preis pro GB ist aber nicht alles: Auch die Chips unterscheiden sich. Die Tabelle vermittelt ein Gefühl für das Preis-Leistungs-Verhältnis, kein Ranking."
+          ]
+        }
+      ],
+      "fill": {
+        "h": "Heutiger Preis und Preis pro GB VRAM",
+        "vram": "VRAM",
+        "perGb": "Pro GB VRAM"
+      }
     }
   },
   "ram-price-per-gb": {
@@ -431,6 +551,25 @@
         "h": "今日のDDR5メモリ GB単価ランキング",
         "cap": "容量",
         "perGb": "1GBあたり"
+      }
+    },
+    "de": {
+      "title": "Was kostet 1 GB RAM? Preis pro GB nach Hersteller und Größe",
+      "desc": "DDR5-RAM von Samsung, SK hynix, Micron, KLEVV, Corsair und G.SKILL nach Preis pro GB sortiert, täglich aus den aktuellen Bestpreisen.",
+      "lead": "RAM gibt es in verschiedenen Größen, reine Preise lassen sich daher schlecht vergleichen. Hier wird jedes Produkt in einen Preis pro GB umgerechnet und sortiert.",
+      "sections": [
+        {
+          "h": "So liest du die Tabelle",
+          "p": [
+            "Selbst bei gleicher Größe verändern Hersteller, Takt (5600 vs. 6000 MT/s) und Kits mit zwei Riegeln den Preis pro GB deutlich.",
+            "Größere Module und Kits sind pro GB meist günstiger – bei derart schwankenden Preisen ist es an manchen Tagen aber andersherum. Die Tabelle ändert sich jeden Morgen."
+          ]
+        }
+      ],
+      "fill": {
+        "h": "DDR5-Preis pro GB heute, günstigster zuerst",
+        "cap": "Größe",
+        "perGb": "Pro GB"
       }
     }
   },
@@ -513,6 +652,32 @@
         "tab": "タブ1個(150MBと仮定)",
         "tabs": "タブ87個(約{gb}GB)",
         "basis": "基準:今日いちばん安いDDR5メモリの1GBあたり価格({per}、{name})"
+      }
+    },
+    "de": {
+      "title": "Was kosten 87 Chrome-Tabs an RAM?",
+      "desc": "Altman sagt, PC-RAM liegt brach. Unsere 87 Chrome-Tabs sehen das anders. Wir haben den RAM eines Tabs zu heutigen RAM-Preisen bewertet.",
+      "lead": "Sam Altman sagt, der meiste RAM in privaten Computern liegt brach. Unsere 87 Chrome-Tabs haben das gehört und widersprechen. Also haben wir ihren RAM-Verbrauch in Geld umgerechnet.",
+      "sections": [
+        {
+          "h": "Wie viel RAM braucht ein Tab?",
+          "p": [
+            "Kommt auf die Seite an. Eine Textseite belegt einige Dutzend MB, ein Tab mit Video oder Web-App kann Hunderte MB belegen, sogar über 1 GB.",
+            "Für die Rechnung nehmen wir im Schnitt 150 MB pro Tab an. Die echten Werte zeigt der Task-Manager von Chrome (Umschalt+Esc)."
+          ]
+        },
+        {
+          "h": "Das Fazit",
+          "p": [
+            "Tabs schließen spart RAM-Geld. Wir schließen keinen einzigen."
+          ]
+        }
+      ],
+      "fill": {
+        "h": "Zu heutigen RAM-Preisen",
+        "tab": "Ein Tab (150 MB angenommen)",
+        "tabs": "87 Tabs (etwa {gb} GB)",
+        "basis": "Basierend auf dem heute günstigsten DDR5-Preis pro GB ({per}, {name})"
       }
     }
   }
