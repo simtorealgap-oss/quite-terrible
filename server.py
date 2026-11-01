@@ -23,7 +23,7 @@ I18N = json.loads((ROOT / 'config/i18n.json').read_text())
 PAGES = {f'/{lang}/{path}': (lang, page, None) for lang in LANGS
          for path, page in (('', 'prices'), ('news/', 'news'), ('about/', 'about'))}
 PAGES |= {f"/{lang}/{p['id']}/": (lang, 'product', p['id']) for lang in LANGS for p in PRODUCTS}
-RAW = {'boot', 'jsonld', 'headExtra', 'prerenderRows', 'makerRows', 'productStatic', 'relatedLinks'}
+RAW = {'boot', 'jsonld', 'headExtra', 'alternates', 'prerenderRows', 'makerRows', 'productStatic', 'relatedLinks'}
 # Country headers set by common CDNs/hosts. They only pick defaults; visitors can always switch.
 COUNTRY_HEADERS = ('CF-IPCountry', 'CloudFront-Viewer-Country', 'X-Vercel-IP-Country', 'X-Country-Code')
 PLACEHOLDER = re.compile(r'\{\{(\w+)\}\}')
@@ -109,7 +109,7 @@ def seo_products(lang):
     return prices_payload(market)
 
 
-def render_page(lang, page, market, base='', static=False, site='', product=None, products=None):
+def render_page(lang, page, market, base='', static=False, site='', product=None, products=None, alt_langs=LANGS):
     strings = I18N[lang]
     if products is None:
         products = seo_products(lang)
@@ -117,7 +117,7 @@ def render_page(lang, page, market, base='', static=False, site='', product=None
     if isinstance(products, dict):  # a whole prices payload: its products and their currency
         currency, products = products['currency'], products['products']
     context = strings | {'lang': lang, 'base': base, 'year': str(now().year), 'v': asset_version()}
-    context |= seo_context(lang, page, strings, products, base=base, site=site, product_id=product, currency=currency)
+    context |= seo_context(lang, page, strings, products, base=base, site=site, product_id=product, currency=currency, alt_langs=alt_langs)
     for name in ('prices', 'news', 'about', 'product'):
         context[f'{name}Current'] = 'page' if page == name or (name == 'prices' and page == 'product') else 'false'
         context[f'{name}Hidden'] = '' if page == name else 'hidden'

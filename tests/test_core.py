@@ -548,3 +548,24 @@ class Japan(unittest.TestCase):
         for lang in ('ko', 'en', 'ja'):
             self.assertIn(f'hreflang="{lang}" href="https://quiteterrible.com/{lang}/rtx-5080/"', html)
         self.assertIn('"priceCurrency":"JPY"', html)
+
+
+class PricedOnly(unittest.TestCase):
+    def test_unpriced_products_get_no_page_link_or_row_in_that_language(self):
+        from seo import sitemap, seo_context
+        xml = sitemap('https://quiteterrible.com', '', PRODUCTS[:2], available={'ko': {PRODUCTS[0]['id'], PRODUCTS[1]['id']},
+                                                                                  'en': {PRODUCTS[0]['id']}, 'ja': set()})
+        a, b = PRODUCTS[0]['id'], PRODUCTS[1]['id']
+        self.assertIn(f'<loc>https://quiteterrible.com/ja/</loc>', xml)
+        self.assertNotIn(f'/ja/{a}/', xml)
+        self.assertIn(f'<loc>https://quiteterrible.com/en/{a}/</loc>', xml)
+        self.assertNotIn(f'/en/{b}/', xml)
+        strings = json.loads((Path(__file__).resolve().parents[1]/'config/i18n.json').read_text())['ja']
+        priced = [PRODUCTS[0] | {'price': 1000, 'offers': [], 'history': []}, PRODUCTS[1] | {'price': None, 'offers': [], 'history': []}]
+        ctx = seo_context('ja', 'prices', strings, priced, site='https://quiteterrible.com', currency='JPY')
+        self.assertIn(PRODUCTS[0]['id'], ctx['prerenderRows'])
+        self.assertNotIn(PRODUCTS[1]['id'], ctx['prerenderRows'])
+        page = seo_context('ja', 'product', strings, priced, site='https://quiteterrible.com', product_id=a, currency='JPY', alt_langs=['ko', 'ja'])
+        self.assertIn('hreflang="ko"', page['alternates'])
+        self.assertNotIn('hreflang="en"', page['alternates'])
+        self.assertNotIn(b, page['relatedLinks'])

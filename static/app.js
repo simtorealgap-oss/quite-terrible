@@ -333,6 +333,7 @@ async function loadPrices() {
   try {
     const data = await fetchPrices();
     if (id !== priceRequest) return;
+    if (!data.demo) data.products = data.products.filter(p => p.price != null);  // no price here: not shown at all
     state.prices = data;
     $('#table-msg').hidden = true;
     renderPrices();

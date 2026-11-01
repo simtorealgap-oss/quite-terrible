@@ -57,6 +57,8 @@ def build(out, base='', site=''):
     base, site = base.rstrip('/'), site.rstrip('/')
     by_lang = {lang: seo_products(lang) for lang in LANGS}  # prices baked into pages for search engines
     products = by_lang['ko']['products']
+    # Each language shows only the products its market has a price for; the others get no page at all.
+    priced = {lang: {p['id'] for p in by_lang[lang]['products'] if p.get('price') is not None} for lang in LANGS}
     if out.exists():
         shutil.rmtree(out)
     for lang in LANGS:
@@ -66,9 +68,12 @@ def build(out, base='', site=''):
             # market=None: the browser picks the market (see pickMarket in app.js).
             target.write_text(render_page(lang, page, None, base=base, static=True, site=site, products=by_lang[lang]))
         for p in PRODUCTS:
+            if p['id'] not in priced[lang]:
+                continue
             target = out / lang / p['id'] / 'index.html'
             target.parent.mkdir(parents=True, exist_ok=True)
-            target.write_text(render_page(lang, 'product', None, base=base, static=True, site=site, product=p['id'], products=by_lang[lang]))
+            target.write_text(render_page(lang, 'product', None, base=base, static=True, site=site, product=p['id'],
+                                          products=by_lang[lang], alt_langs=[l for l in LANGS if p['id'] in priced[l]]))
     data = out / 'data'
     data.mkdir()
     for market in ('KR', 'US', 'JP'):
@@ -87,7 +92,7 @@ def build(out, base='', site=''):
     (out / '404.html').write_text(ROOT_PAGE.format(base=base))
     (out / '.nojekyll').write_text('')  # serve files as-is, no Jekyll processing
     if site:  # absolute URLs are required in sitemaps
-        (out / 'sitemap.xml').write_text(sitemap(site, base, products, langs=LANGS))
+        (out / 'sitemap.xml').write_text(sitemap(site, base, products, langs=LANGS, available=priced))
         (out / 'robots.txt').write_text(robots(site, base))
     ads = ROOT / 'config/ads.txt'  # ad network seller file (AdSense etc.), must sit at the domain root
     if ads.exists():

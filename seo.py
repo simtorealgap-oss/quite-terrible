@@ -58,12 +58,15 @@ def json_ld(data):
     return json.dumps(data, ensure_ascii=False, separators=(',', ':')).replace('<', '\\u003c')
 
 
-def seo_context(lang, page, strings, products, base='', site='', product_id=None, currency='KRW'):
+def seo_context(lang, page, strings, products, base='', site='', product_id=None, currency='KRW', alt_langs=LANGS):
     """Extra template values. `products` are product views for the page's market, priced in `currency`."""
     absolute = lambda path: f'{site}{base}{path}'
     path = page_path(lang, page, product_id)
-    alt = {code: absolute(page_path(code, page, product_id)) for code in LANGS}
+    # Only languages where this page exists (a product page exists only where it has a price).
+    alt = {code: absolute(page_path(code, page, product_id)) for code in LANGS if code in alt_langs or code == lang}
     money = lambda value: won(value, lang, currency)
+    # Products without a price in this market are not shown at all.
+    products = [p for p in products if p.get('price') is not None or p['id'] == product_id]
     by_id = {p['id']: p for p in products}
     priced = [p for p in products if p.get('price') is not None]
     title, desc = strings.get(f'{page}PageTitle', ''), strings.get(f'{page}PageDesc', '')
@@ -109,8 +112,10 @@ def seo_context(lang, page, strings, products, base='', site='', product_id=None
         if os.getenv(env):
             head.append(f'<meta name="{name}" content="{html.escape(os.environ[env])}">')
     return extra | {
-        'pageTitle': title, 'pageDesc': desc, 'canonical': alt[lang], 'altKo': alt['ko'], 'altEn': alt['en'], 'altJa': alt['ja'],
-        'altDefault': absolute('/'), 'ogImage': absolute('/og.png'), 'ogLocale': OG_LOCALE[lang],
+        'pageTitle': title, 'pageDesc': desc, 'canonical': alt[lang],
+        'alternates': '\n  '.join([f'<link rel="alternate" hreflang="{code}" href="{html.escape(url)}">' for code, url in alt.items()]
+                                    + [f'<link rel="alternate" hreflang="x-default" href="{html.escape(absolute("/"))}">']),
+        'ogImage': absolute('/og.png'), 'ogLocale': OG_LOCALE[lang],
         'headExtra': '\n  '.join(head), 'jsonld': json_ld({'@context': 'https://schema.org', '@graph': graph}),
     }
 
@@ -204,16 +209,18 @@ def product_static(p, lang, strings, currency='KRW'):
     return f'<h3 class="d-section">{html.escape(strings["buyTitle"])}</h3><ul class="sellers">{"".join(rows)}</ul>{note}'
 
 
-def sitemap(site, base, products, langs=LANGS, lastmod=None):
+def sitemap(site, base, products, langs=LANGS, lastmod=None, available=None):
     lastmod = lastmod or dt.date.today().isoformat()
     pages = [('prices', None), ('news', None), ('about', None)] + [('product', p['id']) for p in products]
     out = ['<?xml version="1.0" encoding="UTF-8"?>',
            '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">']
     for page, pid in pages:
-        for lang in langs:
+        # A product page exists only in the languages whose market has a price for it.
+        here = [lang for lang in langs if pid is None or available is None or pid in available.get(lang, ())]
+        for lang in here:
             out.append(f'  <url><loc>{site}{base}{page_path(lang, page, pid)}</loc><lastmod>{lastmod}</lastmod>'
                        f'<changefreq>daily</changefreq>')
-            out += [f'    <xhtml:link rel="alternate" hreflang="{alt}" href="{site}{base}{page_path(alt, page, pid)}"/>' for alt in langs]
+            out += [f'    <xhtml:link rel="alternate" hreflang="{alt}" href="{site}{base}{page_path(alt, page, pid)}"/>' for alt in here]
             out.append('  </url>')
     out.append('</urlset>')
     return '\n'.join(out) + '\n'
