@@ -2,7 +2,8 @@ name: Daily prices and site
 
 on:
   schedule:
-    - cron: '0 0 * * *'   # 09:00 KST
+    - cron: '0 0 * * *'    # 09:00 KST: Korean prices and Korean news
+    - cron: '0 14 * * *'   # 09:00 US Eastern (EST; 10:00 in summer): US prices and English news
   workflow_dispatch:
   push:
     branches: [main]
@@ -38,8 +39,10 @@ jobs:
           BESTBUY_API_KEY: ${{ secrets.BESTBUY_API_KEY }}
           COUPANG_ACCESS_KEY: ${{ secrets.COUPANG_ACCESS_KEY }}
           COUPANG_SECRET_KEY: ${{ secrets.COUPANG_SECRET_KEY }}
+          REGION: ${{ github.event.schedule == '0 0 * * *' && '--region kr' || github.event.schedule == '0 14 * * *' && '--region us' || '' }}
         # A failing source is recorded in the database and shown on the site; keep publishing.
-        run: python server.py --update all || echo "::warning::Some sources failed, see output above"
+        # Each morning run refreshes its own region; a manual run refreshes both.
+        run: python server.py --update all --force-news $REGION || echo "::warning::Some sources failed, see output above"
       - name: Save collected data
         if: github.event_name != 'push'
         run: |

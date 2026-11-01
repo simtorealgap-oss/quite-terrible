@@ -473,3 +473,12 @@ class BuyList(unittest.TestCase):
         self.assertIn(self.strings['coupangDisclosure'],text)
         # Without an API price the Coupang row shows no amount at all.
         self.assertNotIn('원',text.split('mall danawa')[0])
+
+
+class Regions(unittest.TestCase):
+    def test_us_morning_run_skips_korean_sources(self):
+        db=connect(Path(tempfile.mkdtemp())/'r.sqlite3')
+        with patch.dict('os.environ',{**NO_COUPANG,'EBAY_CLIENT_ID':'','EBAY_CLIENT_SECRET':'','BESTBUY_API_KEY':'','PRICE_FEED_URL':''}), \
+             patch('collectors.fetch',side_effect=AssertionError('no request expected')):
+            self.assertEqual(update_prices(db,sleep=lambda s:None,market='US'),[])
+            self.assertEqual(update_news(db,force=True,langs=['xx']),[])

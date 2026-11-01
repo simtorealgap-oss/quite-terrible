@@ -218,6 +218,7 @@ def main():
     parser.add_argument('--no-worker', action='store_true')
     parser.add_argument('--update', choices=['all', 'news', 'prices'])
     parser.add_argument('--force-news', action='store_true')
+    parser.add_argument('--region', choices=['kr', 'us'], help='only Korean (Danawa, Coupang, Korean news) or US sources')
     parser.add_argument('--import-feed', type=Path)
     args = parser.parse_args()
     with session() as db:
@@ -226,10 +227,12 @@ def main():
             return
         if args.update:
             results = {}
+            market = args.region.upper() if args.region else None
+            langs = {'KR': ['ko'], 'US': ['en']}.get(market)
             if args.update in ('all', 'news'):
-                results['news'] = update_news(db, force=args.force_news)
+                results['news'] = update_news(db, force=args.force_news, langs=langs)
             if args.update in ('all', 'prices'):
-                results['prices'] = update_prices(db)
+                results['prices'] = update_prices(db, market=market)
             print(json.dumps(results, ensure_ascii=False))
             if any('error' in item for items in results.values() for item in items):
                 raise SystemExit(1)

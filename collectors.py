@@ -239,18 +239,22 @@ def collect(db, source, products, request, parse, sleep, delay):
     return {'source': source, 'count': count, 'matched': matched, **({} if ok else {'error': message})}
 
 
-def update_prices(db, sleep=time.sleep):
-    outcomes = [collect(db, 'danawa', PRODUCTS,
-        lambda p: danawa_products(fetch(DANAWA_SEARCH + urllib.parse.urlencode({'query': p['danawa']['query']}))),
-        lambda p, items, at: danawa_quotes(p, items, at), sleep, DANAWA_DELAY)]
+def update_prices(db, sleep=time.sleep, market=None):
+    """market='KR' (Danawa, Coupang) or 'US' (eBay, Best Buy); None runs every source."""
+    korea, us = market in (None, 'KR'), market in (None, 'US')
+    outcomes = []
+    if korea:
+        outcomes.append(collect(db, 'danawa', PRODUCTS,
+            lambda p: danawa_products(fetch(DANAWA_SEARCH + urllib.parse.urlencode({'query': p['danawa']['query']}))),
+            lambda p, items, at: danawa_quotes(p, items, at), sleep, DANAWA_DELAY))
     # Coupang prices come only from the Partners API (final approval required); without keys nothing is called.
     coupang_key, coupang_secret = os.getenv('COUPANG_ACCESS_KEY'), os.getenv('COUPANG_SECRET_KEY')
-    if coupang_key and coupang_secret and coupang_due(db):
+    if korea and coupang_key and coupang_secret and coupang_due(db):
         outcomes.append(collect(db, 'coupang', [p for p in PRODUCTS if p.get('coupangSearch')],
             lambda p: coupang_search(p, coupang_key, coupang_secret),
             lambda p, data, at: coupang_quotes(p, data, at), sleep, COUPANG_DELAY))
     ebay_id, ebay_secret = os.getenv('EBAY_CLIENT_ID'), os.getenv('EBAY_CLIENT_SECRET')
-    if ebay_id and ebay_secret:
+    if us and ebay_id and ebay_secret:
         try:
             token = ebay_token(ebay_id, ebay_secret)
         except Exception as exc:
@@ -264,14 +268,14 @@ def update_prices(db, sleep=time.sleep):
                 lambda p: json.loads(fetch(EBAY_SEARCH + urllib.parse.urlencode(ebay_params(p)), headers)),
                 lambda p, data, at: ebay_quotes(p, data, at), sleep, 1))
     key = os.getenv('BESTBUY_API_KEY')
-    if key:
+    if us and key:
         params = urllib.parse.urlencode({'apiKey': key, 'format': 'json', 'pageSize': 50, 'sort': 'salePrice.asc',
             'show': 'sku,name,salePrice,onlineAvailability,url'})
         outcomes.append(collect(db, 'bestbuy', [p for p in PRODUCTS if p.get('bestbuy')],
             lambda p: json.loads(fetch(f"{BESTBUY_API}({p['bestbuy']})?{params}")),
             lambda p, data, at: bestbuy_quotes(p, data, at), sleep, 1))
     feed = os.getenv('PRICE_FEED_URL')
-    if feed:
+    if market is None and feed:
         try:
             if not feed.startswith('https://'):
                 raise ValueError('Price feed must use HTTPS')
@@ -328,9 +332,11 @@ def parse_news(raw, lang, category, at=None):
     return sorted(items, key=lambda row: row[6], reverse=True)[:6]
 
 
-def update_news(db, force=False):
+def update_news(db, force=False, langs=None):
     results = []
     for lang, categories in NEWS_QUERIES.items():
+        if langs and lang not in langs:
+            continue
         for category, query in categories.items():
             job = f'news:{lang}:{category}'
             old = db.execute('SELECT * FROM runs WHERE job=?', (job,)).fetchone()
