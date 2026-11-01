@@ -123,6 +123,7 @@
   const off = document.createElement('canvas');
   const octx = off.getContext('2d');
   let W = 1, H = 1, dpr = 1, S = 3, LW = 100, LH = 60, y0 = 0;
+  let colRightPx = 0;
   let gy, beltY, fx, beltStart, dcX, bossX, crowd = [], skyline = [], clouds = [];
   function layout() {
     W = root.clientWidth; H = root.clientHeight;
@@ -140,6 +141,7 @@
     const link = root.querySelector('.hero-link')?.getBoundingClientRect();
     const colLeft = col ? Math.floor((col.left - box.left) / S) : 2, colRight = col ? Math.floor((col.right - box.left) / S) : LW - 2;
     const sideBySide = link && col && link.top - col.top < 40;  // wide layout: the link sits beside the headline
+    colRightPx = col ? col.right - box.left : W - 12;
     fx = Math.max(2, colLeft);
     bossX = sideBySide ? Math.round((link.left + link.width / 2 - box.left) / S) - 8 : colRight - 38 - 17;
     dcX = Math.min(LW - 38, bossX + 17);
@@ -543,8 +545,9 @@
     // Scoreboard over the data center.
     ctx.font = `800 11px ${FONT}`; ctx.textAlign = 'right';
     const num = n => n.toLocaleString(boot.lang === 'ko' ? 'ko-KR' : 'en-US');
-    outlined(fmt('gameRecord', {n: num(record)}), W - 12, small ? 54 : 14, '#16a34a');
-    outlined(fmt('gameWorld', {n: world == null ? '…' : num(world + pending)}), W - 12, small ? 70 : 30, '#2e3f63');
+    const rightX = Math.min(W - 12, colRightPx || W - 12);  // right edge of the page column
+    outlined(fmt('gameRecord', {n: num(record)}), rightX, small ? 54 : 14, '#16a34a');
+    outlined(fmt('gameWorld', {n: world == null ? '…' : num(world + pending)}), rightX, small ? 70 : 30, '#2e3f63');
     ctx.textAlign = 'center';
     ctx.font = `800 12px ${FONT}`;
     for (const p of popups) {
