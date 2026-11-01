@@ -41,6 +41,7 @@
       <nav class="tabs" aria-label="{{navLabel}}">
         <a class="tab" href="{{base}}/{{lang}}/" aria-current="{{pricesCurrent}}">{{navPrices}}</a>
         <a class="tab" href="{{base}}/{{lang}}/news/" aria-current="{{newsCurrent}}">{{navNews}}</a>
+        <a class="tab" href="{{base}}/{{lang}}/guides/" aria-current="{{guidesCurrent}}">{{navGuides}}</a>
         <a class="tab" href="{{base}}/{{lang}}/about/" aria-current="{{aboutCurrent}}">{{navAbout}}</a>
       </nav>
     </div>
@@ -152,6 +153,16 @@
       </div>
       {{productFacts}}
     </section><!--/page:product-->
+
+<!--page:guides--><section id="page-guides" class="page guides">
+      <div class="page-head"><div class="page-title"><h1>{{guidesHeading}}</h1></div></div>
+      <ul class="guide-list">{{guideList}}</ul>
+    </section><!--/page:guides-->
+
+<!--page:guide--><section id="page-guide" class="page guide">
+      <nav class="crumbs" aria-label="{{crumbLabel}}"><a href="{{base}}/{{lang}}/guides/">{{navGuides}}</a></nav>
+      <article class="guide-article">{{guideHtml}}</article>
+    </section><!--/page:guide-->
 
 <!--page:about-->    <section id="page-about" class="page about" {{aboutHidden}}>
       <div class="about-wrap">

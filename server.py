@@ -14,17 +14,18 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from store import ROOT, PRODUCTS, MARKETS, CURRENCY, STALE_SECONDS, session, product_view, coupang_offer, demo_products, stamp, now, parse_time
 from collectors import update_prices, update_news, import_feed
-from seo import seo_context, news_rows
+from seo import seo_context, news_rows, guide_slugs
 
 LANGS = ('ko', 'en', 'ja')
 # Each page language shows one market's prices: Korea for Korean, Japan for Japanese, the US for English.
 LANG_MARKET = {'ko': 'KR', 'ja': 'JP', 'en': 'US'}
 I18N = json.loads((ROOT / 'config/i18n.json').read_text())
 PAGES = {f'/{lang}/{path}': (lang, page, None) for lang in LANGS
-         for path, page in (('', 'prices'), ('news/', 'news'), ('about/', 'about'))}
+         for path, page in (('', 'prices'), ('news/', 'news'), ('about/', 'about'), ('guides/', 'guides'))}
+PAGES |= {f'/{lang}/guides/{slug}/': (lang, 'guide', slug) for lang in LANGS for slug in guide_slugs()}
 PAGES |= {f"/{lang}/{p['id']}/": (lang, 'product', p['id']) for lang in LANGS for p in PRODUCTS}
 PAGE_BLOCK = re.compile(r'<!--page:(\w+)-->(.*?)<!--/page:\1-->', re.S)
-RAW = {'boot', 'jsonld', 'headExtra', 'alternates', 'prerenderRows', 'makerRows', 'productStatic', 'productFacts', 'relatedLinks', 'newsRows'}
+RAW = {'boot', 'jsonld', 'headExtra', 'alternates', 'prerenderRows', 'makerRows', 'productStatic', 'productFacts', 'relatedLinks', 'newsRows', 'guideList', 'guideHtml'}
 # Country headers set by common CDNs/hosts. They only pick defaults; visitors can always switch.
 COUNTRY_HEADERS = ('CF-IPCountry', 'CloudFront-Viewer-Country', 'X-Vercel-IP-Country', 'X-Country-Code')
 PLACEHOLDER = re.compile(r'\{\{(\w+)\}\}')
@@ -118,10 +119,11 @@ def render_page(lang, page, market, base='', static=False, site='', product=None
     if isinstance(products, dict):  # a whole prices payload: its products and their currency
         currency, products = products['currency'], products['products']
     context = strings | {'lang': lang, 'base': base, 'year': str(now().year), 'v': asset_version()}
-    context |= seo_context(lang, page, strings, products, base=base, site=site, product_id=product, currency=currency, alt_langs=alt_langs)
+    context |= seo_context(lang, page, strings, products, base=base, site=site, product_id=product, currency=currency, alt_langs=alt_langs,
+                           news=news_payload(lang)['news'] if page == 'guide' else None)
     context['newsRows'] = news_rows(news_payload(lang)['news'], lang, strings) if page == 'news' else ''
-    for name in ('prices', 'news', 'about', 'product'):
-        context[f'{name}Current'] = 'page' if page == name or (name == 'prices' and page == 'product') else 'false'
+    for name in ('prices', 'news', 'about', 'product', 'guides'):
+        context[f'{name}Current'] = 'page' if page == name or (name == 'prices' and page == 'product') or (name == 'guides' and page == 'guide') else 'false'
         context[f'{name}Hidden'] = '' if page == name else 'hidden'
     # JSON inside <script type="application/json"> is data, not code; escape "<" so it cannot close the tag.
     boot = json.dumps({'lang': lang, 'page': page, 'market': market, 'base': base, 'static': static,

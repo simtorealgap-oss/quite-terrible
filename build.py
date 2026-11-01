@@ -10,9 +10,9 @@ import shutil
 from pathlib import Path
 from store import ROOT
 from server import LANGS, PRODUCTS, render_page, prices_payload, news_payload, seo_products
-from seo import sitemap, robots, llms_txt
+from seo import sitemap, robots, llms_txt, guide_slugs
 
-PAGES = (('prices', ''), ('news', 'news/'), ('about', 'about/'))
+PAGES = (('prices', ''), ('news', 'news/'), ('about', 'about/'), ('guides', 'guides/'))
 
 # A static host cannot read Accept-Language, so "/" lets the browser pick: its language, then its time zone.
 LANG_JS = """(function () {
@@ -67,6 +67,10 @@ def build(out, base='', site=''):
             target.parent.mkdir(parents=True, exist_ok=True)
             # market=None: the browser picks the market (see pickMarket in app.js).
             target.write_text(render_page(lang, page, None, base=base, static=True, site=site, products=by_lang[lang]))
+        for slug in guide_slugs():
+            target = out / lang / 'guides' / slug / 'index.html'
+            target.parent.mkdir(parents=True, exist_ok=True)
+            target.write_text(render_page(lang, 'guide', None, base=base, static=True, site=site, product=slug, products=by_lang[lang]))
         for p in PRODUCTS:
             if p['id'] not in priced[lang]:
                 continue

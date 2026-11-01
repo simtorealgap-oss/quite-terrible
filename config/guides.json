@@ -1,0 +1,74 @@
+{
+  "why-ram-prices-rise": {
+    "updated": "2026-11-01",
+    "ko": {
+      "title": "램값이 왜 이렇게 오를까? DDR5 가격 상승 이유 정리",
+      "desc": "AI 데이터센터와 HBM 수요, 생산 전환, DDR4 단종까지. 램 가격이 오르는 이유를 쉽게 정리하고 오늘 시세와 최신 뉴스를 함께 보여 줍니다.",
+      "lead": "요즘 PC를 맞추려다 램 가격을 보고 놀란 분이 많습니다. 램값이 오르는 이유는 한 가지가 아니라 몇 가지가 겹쳐 있습니다.",
+      "sections": [
+        {"h": "1. AI 데이터센터가 메모리를 먼저 가져갑니다", "p": ["AI 서버는 엄청난 양의 메모리를 씁니다. 메모리 회사 입장에서는 데이터센터용 제품이 더 많이, 더 비싸게 팔리기 때문에 공급이 그쪽으로 먼저 갑니다.", "그 결과 PC용 램처럼 일반 소비자가 사는 제품은 남은 물량을 나눠 갖게 되고, 가격이 오르기 쉽습니다."]},
+        {"h": "2. HBM으로 생산 라인이 옮겨 갑니다", "p": ["AI 가속기에 들어가는 HBM(고대역폭 메모리)은 같은 웨이퍼로 일반 D램보다 훨씬 높은 값을 받을 수 있습니다. 삼성전자·SK하이닉스·마이크론 같은 회사들이 생산 능력을 HBM과 서버용 D램 쪽으로 돌리면, PC용 DDR5에 쓸 생산량은 그만큼 줄어듭니다."]},
+        {"h": "3. DDR4는 단종 수순입니다", "p": ["메모리 회사들은 오래된 DDR4 생산을 줄이고 있습니다. 공급이 줄어드는 속도가 수요가 줄어드는 속도보다 빠르면, 오래된 규격인데도 가격이 오르는 일이 생깁니다."]},
+        {"h": "4. 계약 가격이 오르면 소매가는 늦게 따라옵니다", "p": ["메모리 가격은 먼저 대형 고객과의 계약 가격(고정거래가격)에서 움직이고, 몇 주에서 몇 달 뒤 쇼핑몰 가격에 반영됩니다. 뉴스에서 'D램 고정거래가격 상승'이 보이면 소매가도 곧 따라 오를 가능성이 큽니다."]},
+        {"h": "그래서 언제 사야 할까?", "p": ["가격을 정확히 맞히는 방법은 없습니다. 다만 매일 최저가를 기록해 두면, 지금 가격이 최근 한 달 중 비싼 편인지 싼 편인지는 알 수 있습니다. 아래 오늘 시세와 각 제품의 30일 최저·최고를 참고하세요."]}
+      ]
+    },
+    "en": {
+      "title": "Why are RAM prices going up? DDR5 price rises explained",
+      "desc": "AI data centers, HBM demand, production shifts and the end of DDR4: why RAM keeps getting more expensive, with today's prices and the latest news.",
+      "lead": "If you priced out a PC recently, the RAM line probably made you wince. There isn't one reason prices are rising; several pile on top of each other.",
+      "sections": [
+        {"h": "1. AI data centers get served first", "p": ["AI servers use enormous amounts of memory. Data center buyers order more and pay more, so supply goes to them first.", "Consumer products such as desktop RAM share what is left, which pushes prices up."]},
+        {"h": "2. Production moves to HBM", "p": ["HBM, the high-bandwidth memory on AI accelerators, earns far more per wafer than ordinary DRAM. When Samsung, SK hynix and Micron shift capacity to HBM and server DRAM, less is left for desktop DDR5."]},
+        {"h": "3. DDR4 is being phased out", "p": ["Memory makers are winding down DDR4. When supply shrinks faster than demand, even an old standard can get more expensive."]},
+        {"h": "4. Contract prices move first, retail follows", "p": ["Memory prices move first in contracts with big customers and reach store shelves weeks or months later. Headlines about rising DRAM contract prices usually mean retail prices will follow."]},
+        {"h": "So when should you buy?", "p": ["Nobody can call the bottom. But with a daily record of the lowest price you can at least see whether today's price is high or low for the past month. Check today's prices and each product's 30-day low and high below."]}
+      ]
+    },
+    "ja": {
+      "title": "メモリはなぜこんなに値上がり? DDR5価格高騰の理由まとめ",
+      "desc": "AIデータセンターとHBM需要、生産シフト、DDR4の終息。メモリ価格が上がる理由をわかりやすくまとめ、今日の相場と最新ニュースも紹介します。",
+      "lead": "最近PCを組もうとしてメモリの値段に驚いた方も多いはず。値上がりの理由はひとつではなく、いくつかが重なっています。",
+      "sections": [
+        {"h": "1. AIデータセンターが先にメモリを確保", "p": ["AIサーバーは大量のメモリを使います。データセンター向けはたくさん、しかも高く売れるので、供給はまずそちらに回ります。", "その結果、PC用メモリのような一般向け製品は残りを分け合うことになり、価格が上がりやすくなります。"]},
+        {"h": "2. 生産ラインがHBMへ", "p": ["AIアクセラレーターに使われるHBM(広帯域メモリ)は、同じウェハーでも一般のDRAMよりはるかに高く売れます。サムスン・SKハイニックス・マイクロンが生産能力をHBMやサーバー用DRAMに振り向けると、PC用DDR5に回る量はその分減ります。"]},
+        {"h": "3. DDR4は生産終了へ", "p": ["メモリメーカーは古いDDR4の生産を減らしています。供給の減り方が需要の減り方より速いと、古い規格でも値上がりすることがあります。"]},
+        {"h": "4. 契約価格が先、店頭価格は後から", "p": ["メモリ価格はまず大口顧客との契約価格で動き、数週間から数か月遅れて店頭価格に反映されます。「DRAM契約価格上昇」のニュースが出たら、店頭価格もやがて上がる可能性が高いです。"]},
+        {"h": "では、いつ買えばいい?", "p": ["底値を当てる方法はありません。ただ、毎日の最安値を記録しておけば、今の価格が直近1か月で高いか安いかはわかります。下の今日の相場と各製品の30日最安・最高を参考にしてください。"]}
+      ]
+    }
+  },
+  "ddr5-vs-ddr4": {
+    "updated": "2026-11-01",
+    "ko": {
+      "title": "DDR5 vs DDR4 차이, 지금 뭘 사야 할까?",
+      "desc": "DDR5와 DDR4의 속도·전압·호환성 차이와 오늘 가격 비교. 새로 조립할 때와 업그레이드할 때 어떤 램을 사야 하는지 정리했습니다.",
+      "lead": "DDR5와 DDR4는 이름만 비슷할 뿐 서로 꽂을 수 없는 다른 규격입니다. 무엇을 살지는 가격보다 먼저 메인보드가 정합니다.",
+      "sections": [
+        {"h": "핵심 차이", "p": ["속도: DDR4는 보통 3200MT/s 안팎, DDR5는 4800~6000MT/s 이상으로 시작합니다.", "전압: DDR4는 1.2V, DDR5는 1.1V로 조금 낮습니다. DDR5는 전원 관리 칩(PMIC)이 램 모듈 위에 있습니다.", "구조: DDR5는 모듈 하나가 두 개의 독립 채널처럼 동작하고, 칩 안에 오류 정정(온다이 ECC) 기능이 있습니다.", "호환성: 홈 위치가 달라 DDR4 자리에 DDR5를 꽂을 수 없고, 그 반대도 안 됩니다."]},
+        {"h": "내 PC에는 뭐가 맞을까?", "p": ["AMD 라이젠 7000·9000 시리즈(AM5)는 DDR5만 씁니다. 라이젠 5000 이하(AM4)는 DDR4만 씁니다.", "인텔 12~14세대는 메인보드에 따라 DDR4나 DDR5 중 하나를 씁니다. 메인보드 모델명이나 설명서에서 꼭 확인하세요. 인텔 코어 울트라(200S 시리즈)는 DDR5를 씁니다."]},
+        {"h": "추천", "p": ["새로 조립한다면 DDR5를 고르는 게 맞습니다. 최신 CPU와 메인보드가 모두 DDR5 기준이고, 앞으로도 오래 씁니다.", "이미 DDR4 PC를 쓰고 있고 용량만 늘리고 싶다면 DDR4를 사면 됩니다. 램 때문에 메인보드와 CPU까지 바꿀 필요는 없습니다."]}
+      ]
+    },
+    "en": {
+      "title": "DDR5 vs DDR4: what's the difference, and which should you buy?",
+      "desc": "Speed, voltage and compatibility differences between DDR5 and DDR4, with today's prices side by side. Which RAM to buy for a new build or an upgrade.",
+      "lead": "DDR5 and DDR4 sound alike but are different standards that do not fit the same slots. Your motherboard decides before the price does.",
+      "sections": [
+        {"h": "The key differences", "p": ["Speed: DDR4 usually runs around 3200 MT/s; DDR5 starts at 4800–6000 MT/s and goes higher.", "Voltage: DDR4 runs at 1.2 V, DDR5 at 1.1 V, and DDR5 moves power management (the PMIC) onto the module.", "Design: each DDR5 module works like two independent channels and has on-die error correction (on-die ECC).", "Compatibility: the notch is in a different place, so DDR5 will not go into a DDR4 slot, and vice versa."]},
+        {"h": "Which one fits your PC?", "p": ["AMD Ryzen 7000 and 9000 (AM5) use DDR5 only. Ryzen 5000 and older (AM4) use DDR4 only.", "Intel 12th to 14th gen support either DDR4 or DDR5 depending on the motherboard, so check its model or manual. Intel Core Ultra (200S) uses DDR5."]},
+        {"h": "What we'd do", "p": ["For a new build, pick DDR5. Current CPUs and motherboards are built around it and it will last.", "If you already have a DDR4 PC and just need more capacity, buy DDR4. There's no need to replace the motherboard and CPU for RAM."]}
+      ]
+    },
+    "ja": {
+      "title": "DDR5とDDR4の違いは?今買うならどっち?",
+      "desc": "DDR5とDDR4の速度・電圧・互換性の違いと今日の価格比較。新しく組むとき、増設するときにどちらのメモリを買うべきかまとめました。",
+      "lead": "DDR5とDDR4は名前は似ていますが、同じスロットには挿せない別の規格です。何を買うかは、価格より先にマザーボードが決めます。",
+      "sections": [
+        {"h": "主な違い", "p": ["速度:DDR4は3200MT/s前後が一般的、DDR5は4800~6000MT/s以上から始まります。", "電圧:DDR4は1.2V、DDR5は1.1Vとやや低く、DDR5は電源管理チップ(PMIC)をモジュール上に搭載しています。", "構造:DDR5はモジュール1枚が独立した2つのチャネルのように動作し、チップ内のエラー訂正(オンダイECC)を備えています。", "互換性:切り欠きの位置が違うため、DDR4のスロットにDDR5は挿せず、その逆もできません。"]},
+        {"h": "自分のPCにはどっち?", "p": ["AMD Ryzen 7000・9000シリーズ(AM5)はDDR5のみ。Ryzen 5000以前(AM4)はDDR4のみです。", "インテル第12~14世代はマザーボードによってDDR4かDDR5のどちらかを使います。マザーボードの型番や説明書で必ず確認してください。インテル Core Ultra(200Sシリーズ)はDDR5です。"]},
+        {"h": "おすすめ", "p": ["新しく組むならDDR5を選びましょう。最新のCPUとマザーボードはDDR5が前提で、長く使えます。", "すでにDDR4のPCを使っていて容量だけ増やしたいなら、DDR4を買えば十分です。メモリのためにマザーボードやCPUまで替える必要はありません。"]}
+      ]
+    }
+  }
+}
