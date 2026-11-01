@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Run: python3 server.py --port 8765. No third-party dependencies."""
 import argparse
+import hashlib
 import datetime as dt
 import html
 import json
@@ -89,11 +90,20 @@ def prices_due(db, at=None, hour=None):
     return parse_time(row['succeeded_at']).astimezone(KST).date() < at.date() and at.hour >= hour
 
 
+def asset_version():
+    """Short hash of the scripts and styles, added to their URLs so browsers fetch new versions at once
+    (GitHub Pages lets browsers cache files for 10 minutes)."""
+    digest = hashlib.sha256()
+    for name in ('app.js', 'hero.js', 'styles.css'):
+        digest.update((ROOT / 'static' / name).read_bytes())
+    return digest.hexdigest()[:10]
+
+
 def render_page(lang, page, market, base='', static=False, site='', product=None, products=None):
     strings = I18N[lang]
     if products is None:
         products = prices_payload('KR')['products']
-    context = strings | {'lang': lang, 'base': base, 'year': str(now().year)}
+    context = strings | {'lang': lang, 'base': base, 'year': str(now().year), 'v': asset_version()}
     context |= seo_context(lang, page, strings, products, base=base, site=site, product_id=product)
     for name in ('prices', 'news', 'about', 'product'):
         context[f'{name}Current'] = 'page' if page == name or (name == 'prices' and page == 'product') else 'false'

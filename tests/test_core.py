@@ -416,7 +416,7 @@ class StaticSite(unittest.TestCase):
                 for path in ('','news/','about/'):
                     text=(out/lang/path/'index.html').read_text()
                     self.assertNotIn('{{',text)
-                    self.assertIn('href="/quite-terrible/styles.css"',text)
+                    self.assertRegex(text,r'href="/quite-terrible/styles.css\?v=[0-9a-f]{10}"')
                     boot=json.loads(text.split('id="boot">',1)[1].split('</script>',1)[0])
                     self.assertEqual((boot['base'],boot['static'],boot['market']),('/quite-terrible',True,None))
             for name in ('prices-KR.json','prices-US.json','prices-KR-demo.json','news-ko.json','news-en.json'):
