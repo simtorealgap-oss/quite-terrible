@@ -185,9 +185,9 @@
   let sticks = [], smoke = [], popups = [], spawnIn = 0.6, tossEvery = 11, sinceToss = 0;
   let bubble = null, bubbleIn = 4, grab = 0, time = 0;
   const pick = keys => { const list = keys.map(k => T[k]).filter(Boolean); return list[Math.floor(Math.random() * list.length)]; };
-  const IDLE = ['gameLine1', 'gameLine2', 'gameLine3', 'gameLine4'];
-  const ANGRY = ['gameAngry1', 'gameAngry2', 'gameAngry3'];
-  const TOSS = ['gameToss1', 'gameToss2'];
+  const IDLE = ['gameLine1', 'gameLine2', 'gameLine3', 'gameLine4', 'gameLine5', 'gameLine6'];
+  const ANGRY = ['gameAngry1', 'gameAngry2', 'gameAngry3', 'gameAngry4', 'gameAngry5'];
+  const TOSS = ['gameToss1', 'gameToss2', 'gameToss3'];
   function say(keys, seconds, angry = false) {
     const text = pick(keys);
     if (text) { bubble = {text, t: seconds, angry}; bubbleIn = 8 + Math.random() * 6; }
