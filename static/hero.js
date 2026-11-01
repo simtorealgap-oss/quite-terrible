@@ -167,6 +167,8 @@
   let colRightPx = 0;
   let gy, beltY, fx, beltStart, dcX, bossX, crowd = [], skyline = [], clouds = [];
   function layout() {
+    // Remember where the belt was, so sticks already on it can be moved onto the new one.
+    const old = gy == null ? null : {start: beltStart, len: Math.max(1, bossX - 12 - beltStart)};
     W = root.clientWidth; H = root.clientHeight;
     dpr = Math.min(devicePixelRatio || 1, 2);
     canvas.width = Math.round(W * dpr); canvas.height = Math.round(H * dpr);
@@ -209,6 +211,16 @@
       }
     }
     if (!clouds.length) clouds = [0.12, 0.45, 0.78].map((f, i) => ({x: f * LW, y: 4 + i * 5 % 12, speed: 1.2 + i * 0.5}));
+    if (old) {
+      // Sticks on the belt keep their place along it; sticks in the air land at once.
+      const len = Math.max(1, bossX - 12 - beltStart);
+      for (const st of sticks) {
+        if (st.state === 'belt') { st.x = beltStart + (st.x - old.start) / old.len * len; st.y = beltY - 6; }
+        else if (st.state === 'air') st.then();
+      }
+      sticks = sticks.filter(st => !st.dead);
+      smoke = [];
+    }
     draw();
   }
 
@@ -264,7 +276,7 @@
       s.dead = true; person.jump = 0.5; person.holding = 6; state.people += 1;
     });
   }
-  const pileRows = () => Math.min(8, Math.floor(state.ai / 5));
+  const pileRows = () => Math.min(8, Math.floor(state.ai / 30));  // grows very slowly
   const pileTop = () => gy - 36 - pileRows() * 3;
   function hoard(s) {
     s.state = 'air'; grab = 0.3;
