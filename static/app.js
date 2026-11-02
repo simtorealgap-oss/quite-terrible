@@ -284,10 +284,19 @@ function renderStatus() {
 
 function renderCards() {
   measureCharts();
-  const featured = state.prices.products.filter(p => p.featured).sort((a, b) => a.featured - b.featured);
-  const spot = ['ram', 'gpu'].map(c => featured.find(p => p.category === c)).filter(Boolean);
+  const all = state.prices.products;
+  const featured = all.filter(p => p.featured).sort((a, b) => a.featured - b.featured);
+  // The big RAM card is a DDR5 32GB stick. Markets without the featured Samsung one (eBay, Kakaku)
+  // use another maker's 32GB, so the smaller cards below keep the same set as in Korea.
+  const ram32 = featured.find(p => p.category === 'ram' && p.capacity === 32)
+    || all.find(p => p.category === 'ram' && p.generation === 'DDR5' && p.capacity === 32);
+  const spot = [ram32 || featured.find(p => p.category === 'ram'), featured.find(p => p.category === 'gpu')].filter(Boolean);
+  const cards = featured.filter(p => !spot.includes(p));
+  // Fill the row of four: a short row looks broken.
+  const spare = all.filter(p => !spot.includes(p) && !cards.includes(p));
+  while (cards.length % 4 && spare.length) cards.push(spare.shift());
   $('#spotlight').innerHTML = spot.map(spotHtml).join('');
-  $('#cards').innerHTML = featured.filter(p => !spot.includes(p)).map(cardHtml).join('');
+  $('#cards').innerHTML = cards.map(cardHtml).join('');
   $$('#period button').forEach(b => b.setAttribute('aria-pressed', String(Number(b.dataset.period) === state.period)));
 }
 
