@@ -13,7 +13,7 @@ import urllib.parse
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from store import ROOT, PRODUCTS, MARKETS, CURRENCY, STALE_SECONDS, session, product_view, coupang_offer, demo_products, stamp, now, parse_time
-from collectors import update_prices, update_news, import_feed
+from collectors import update_prices, update_news, news_stale_langs, import_feed
 from seo import seo_context, news_rows, guide_slugs, privacy_html
 
 LANGS = ('ko', 'en', 'ja', 'de')
@@ -299,8 +299,9 @@ def main():
     parser.add_argument('--no-worker', action='store_true')
     parser.add_argument('--update', choices=['all', 'news', 'prices'])
     parser.add_argument('--force-news', action='store_true')
-    parser.add_argument('--region', choices=['kr', 'us'],
-                        help="'kr': Korea and Japan (both 9:00 local at 00:00 UTC) prices and news; 'us': US prices and English news")
+    parser.add_argument('--region', choices=['kr', 'us', 'de'],
+                        help="'kr': Korea and Japan prices and news; 'us': US prices and English news; "
+                             "'de': German news (no German price source yet)")
     parser.add_argument('--import-feed', type=Path)
     args = parser.parse_args()
     with session() as db:
@@ -309,12 +310,20 @@ def main():
             return
         if args.update:
             results = {}
-            markets = {'kr': ['KR', 'JP'], 'us': ['US']}.get(args.region, [None])
-            langs = {'kr': ['ko', 'ja', 'de'], 'us': ['en']}.get(args.region)
+            markets = {'kr': ['KR', 'JP'], 'us': ['US'], 'de': []}.get(args.region, [None])
+            langs = {'kr': ['ko', 'ja'], 'us': ['en'], 'de': ['de']}.get(args.region)
+            if langs:  # catch up on languages an earlier run could not fetch (Google News refused it)
+                langs = langs + [l for l in news_stale_langs(db) if l not in langs]
             if args.update in ('all', 'news'):
                 results['news'] = update_news(db, force=args.force_news, langs=langs)
             if args.update in ('all', 'prices'):
                 results['prices'] = [o for m in markets for o in update_prices(db, market=m)]
+            if args.update == 'all' and any('error' in r for r in results.get('news', [])):
+                # Price collection takes minutes; Google News often answers again by then.
+                retry = sorted({r['feed'].split(':')[1] for r in results['news'] if 'error' in r})
+                again = update_news(db, force=True, langs=retry)
+                done = {r['feed'] for r in again if 'error' not in r}
+                results['news'] = [r for r in results['news'] if r['feed'] not in done] + [r for r in again if 'error' not in r]
             print(json.dumps(results, ensure_ascii=False))
             if any('error' in item for items in results.values() for item in items):
                 raise SystemExit(1)

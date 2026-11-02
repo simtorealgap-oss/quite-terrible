@@ -6,12 +6,13 @@ on:
     # are set 20 minutes early at an off-peak minute: the site is usually fresh by 09:00 local time.
     - cron: '40 23 * * *'  # 08:40 KST = 08:40 JST: Korean and Japanese prices and news
     - cron: '40 13 * * *'  # 08:40 US Eastern (EST; 09:40 in summer): US prices and English news
+    - cron: '40 7 * * *'   # 08:40 in Germany (CET; 09:40 in summer): German news
   workflow_dispatch:
     inputs:
       region:
         description: 'Which prices and news to collect'
         type: choice
-        options: [all, kr, us]
+        options: [all, kr, us, de]
         default: all
   push:
     branches: [main]
@@ -47,7 +48,7 @@ jobs:
           BESTBUY_API_KEY: ${{ secrets.BESTBUY_API_KEY }}
           COUPANG_ACCESS_KEY: ${{ secrets.COUPANG_ACCESS_KEY }}
           COUPANG_SECRET_KEY: ${{ secrets.COUPANG_SECRET_KEY }}
-          REGION: ${{ github.event.schedule == '40 23 * * *' && '--region kr' || github.event.schedule == '40 13 * * *' && '--region us' || (inputs.region == 'kr' || inputs.region == 'us') && format('--region {0}', inputs.region) || '' }}
+          REGION: ${{ github.event.schedule == '40 23 * * *' && '--region kr' || github.event.schedule == '40 13 * * *' && '--region us' || github.event.schedule == '40 7 * * *' && '--region de' || (inputs.region == 'kr' || inputs.region == 'us' || inputs.region == 'de') && format('--region {0}', inputs.region) || '' }}
         # A failing source is recorded in the database and shown on the site; keep publishing.
         # Each morning run refreshes its own region; a manual run refreshes both.
         run: python server.py --update all --force-news $REGION || echo "::warning::Some sources failed, see output above"

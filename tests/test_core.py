@@ -488,6 +488,21 @@ class Regions(unittest.TestCase):
             self.assertEqual(update_news(db,force=True,langs=['xx']),[])
 
 
+class NewsBusy(unittest.TestCase):
+    def test_refused_feed_stops_the_run_and_language_is_caught_up_later(self):
+        import urllib.error, collectors
+        db=connect(Path(tempfile.mkdtemp())/'n.sqlite3')
+        busy=urllib.error.HTTPError('u',503,'busy',{},None)
+        with patch('collectors.fetch',side_effect=busy) as request:
+            out=update_news(db,force=True,langs=['ko','ja'],sleep=lambda s:None)
+        self.assertEqual(request.call_count,3)  # one feed, three tries; the rest are skipped
+        self.assertTrue(all('error' in r for r in out))
+        self.assertEqual(sorted(collectors.news_stale_langs(db)),sorted(collectors.NEWS_QUERIES))
+        with patch('collectors.fetch',return_value=b'<rss><channel></channel></rss>'):
+            update_news(db,force=True,sleep=lambda s:None)
+        self.assertEqual(collectors.news_stale_langs(db),[])
+
+
 class NewsMix(unittest.TestCase):
     def test_one_publisher_shows_at_most_two_headlines_a_day(self):
         tmp=Path(tempfile.mkdtemp())/'n.sqlite3'

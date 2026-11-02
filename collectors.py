@@ -427,13 +427,28 @@ def news_fetch(url, sleep, tries=3):
             sleep(15 * (attempt + 1))
 
 
+def news_stale_langs(db, hours=20):
+    """Languages whose news has not been fetched successfully in the last `hours` (any feed failing)."""
+    stale = []
+    for lang, categories in NEWS_QUERIES.items():
+        for category in categories:
+            row = db.execute("SELECT succeeded_at FROM runs WHERE job=?", (f'news:{lang}:{category}',)).fetchone()
+            if not row or not row['succeeded_at'] or (now() - parse_time(row['succeeded_at'])).total_seconds() > hours * 3600:
+                stale.append(lang)
+                break
+    return stale
+
+
 def update_news(db, force=False, langs=None, sleep=time.sleep):
-    results, first = [], True
+    results, first, blocked = [], True, False
     for lang, categories in NEWS_QUERIES.items():
         if langs and lang not in langs:
             continue
         for category, queries in categories.items():
             job = f'news:{lang}:{category}'
+            if blocked:  # Google is refusing this machine for now; asking again only adds minutes
+                results.append({'feed': job, 'error': 'skipped: news feed busy'})
+                continue
             old = db.execute('SELECT * FROM runs WHERE job=?', (job,)).fetchone()
             if old and not force:
                 # The daily job runs each morning; a run in the last 12 hours (e.g. a manual one the night
@@ -458,4 +473,5 @@ def update_news(db, force=False, langs=None, sleep=time.sleep):
             except Exception as exc:
                 record_run(db, job, 'error', error_name(exc))
                 results.append({'feed': job, 'error': error_name(exc)})
+                blocked = isinstance(exc, urllib.error.HTTPError) and exc.code in (429, 503)
     return results
