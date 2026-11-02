@@ -9,15 +9,11 @@ const fmt = (key, vars = {}) => String(T[key] ?? key).replace(/\{(\w+)\}/g, (_, 
 const DAY = 86400000;
 const NEWS_PAGE = 20;  // headlines per "more" click
 const query = new URLSearchParams(location.search);
-// The server picks the market from the visitor's country. A static host cannot, so the browser
-// decides: Korea time zone or Korean page means Korean prices, otherwise US prices.
+// The page language picks the market: Korean pages show won, Japanese pages yen, English and German
+// pages US dollars (no euro source yet). A visitor in Korea reading the English page gets dollars too.
 function pickMarket() {
   if (['KR', 'US', 'JP'].includes(boot.market)) return boot.market;
-  if (boot.lang === 'ko') return 'KR';
-  if (boot.lang === 'ja') return 'JP';
-  let zone = '';
-  try { zone = Intl.DateTimeFormat().resolvedOptions().timeZone; } catch {}
-  return zone === 'Asia/Seoul' ? 'KR' : zone === 'Asia/Tokyo' ? 'JP' : 'US';
+  return {ko: 'KR', ja: 'JP'}[boot.lang] || 'US';
 }
 const base = boot.base || '';
 // Google AdSense (only when configured): each <ins class="adsbygoogle"> is filled once.

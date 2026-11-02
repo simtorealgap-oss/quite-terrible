@@ -574,7 +574,7 @@
     ctx.textAlign = 'center'; ctx.textBaseline = 'top';
     const c = state.change, arrow = c == null || Math.abs(c) < 0.05 ? '' : ` ${c > 0 ? '▲' : '▼'} ${Math.abs(c).toFixed(1)}%`;
     ctx.font = `800 ${small ? 13 : 15}px ${FONT}`;
-    const priceText = fmt('gamePrice', {price: money(state.real)}) + arrow;
+    const priceText = fmt('gamePrice', {price: money(state.real), item: state.item || 'DDR5 32GB'}) + arrow;
     const hist = state.history, bars = hist.length >= 5 ? Math.min(hist.length, 14) : 0;  // only once it means something
     const label = bars ? fmt('gameDays', {n: bars}) : '';
     ctx.font = `700 10px ${FONT}`;
@@ -718,8 +718,11 @@
   }
   document.addEventListener('qt:prices', event => {
     const data = event.detail || {};
-    const p = (data.products || []).find(x => x.id === 'samsung-ddr5-32');
-    if (!p || p.price == null) return;
+    // DDR5 32GB when this market has it, else the first priced DDR5 stick (US eBay has no 32GB some days).
+    const ram = (data.products || []).filter(x => x.category === 'ram' && x.generation === 'DDR5' && x.price != null);
+    const p = ram.find(x => x.id === 'samsung-ddr5-32') || ram.find(x => x.capacity === 32) || ram[0];
+    if (!p) return;
+    state.item = `${p.generation} ${p.capacity}GB`;
     state.currency = data.currency || 'KRW';
     state.real = p.price;
     state.change = p.change;
