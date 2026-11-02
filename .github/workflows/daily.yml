@@ -2,8 +2,10 @@ name: Daily prices and site
 
 on:
   schedule:
-    - cron: '0 0 * * *'    # 09:00 KST = 09:00 JST: Korean and Japanese prices and news
-    - cron: '0 14 * * *'   # 09:00 US Eastern (EST; 10:00 in summer): US prices and English news
+    # GitHub starts scheduled runs late when many start on the hour (yesterday: 53 minutes), so these
+    # are set 20 minutes early at an off-peak minute: the site is usually fresh by 09:00 local time.
+    - cron: '40 23 * * *'  # 08:40 KST = 08:40 JST: Korean and Japanese prices and news
+    - cron: '40 13 * * *'  # 08:40 US Eastern (EST; 09:40 in summer): US prices and English news
   workflow_dispatch:
     inputs:
       region:
@@ -45,7 +47,7 @@ jobs:
           BESTBUY_API_KEY: ${{ secrets.BESTBUY_API_KEY }}
           COUPANG_ACCESS_KEY: ${{ secrets.COUPANG_ACCESS_KEY }}
           COUPANG_SECRET_KEY: ${{ secrets.COUPANG_SECRET_KEY }}
-          REGION: ${{ github.event.schedule == '0 0 * * *' && '--region kr' || github.event.schedule == '0 14 * * *' && '--region us' || (inputs.region == 'kr' || inputs.region == 'us') && format('--region {0}', inputs.region) || '' }}
+          REGION: ${{ github.event.schedule == '40 23 * * *' && '--region kr' || github.event.schedule == '40 13 * * *' && '--region us' || (inputs.region == 'kr' || inputs.region == 'us') && format('--region {0}', inputs.region) || '' }}
         # A failing source is recorded in the database and shown on the site; keep publishing.
         # Each morning run refreshes its own region; a manual run refreshes both.
         run: python server.py --update all --force-news $REGION || echo "::warning::Some sources failed, see output above"
