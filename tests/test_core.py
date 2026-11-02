@@ -167,7 +167,10 @@ class SevenDay(unittest.TestCase):
         flight=json.dumps('1:{"products":[{"productSeq":"9","productName":"삼성전자 DDR5-5600","bundleName":"16GB","minPrice":349690,"shopCount":303,"categorySeq3":221725,"priceCompareStatusType":"가격비교"}]}')[1:-1]
         page=f'<script>self.__next_f.push([1,"{flight}"])</script>'.encode()
         calls=[]
+        pages=[]
         def fake_fetch(url,headers=None):
+            if 'prod.danawa.com' in url:  # the cheapest match's product page (no price block here: kept as is)
+                pages.append(url); return b'<html></html>'
             calls.append(url)
             if len(calls)==3: raise TimeoutError  # third product fails
             return page
@@ -178,7 +181,8 @@ class SevenDay(unittest.TestCase):
                     import os; os.environ.pop('BESTBUY_API_KEY',None); os.environ.pop('PRICE_FEED_URL',None)
                     result=update_prices(db,sleep=waits.append,market='KR')
                 self.assertEqual(len(calls),len(PRODUCTS))
-                self.assertEqual(waits,[10]*(len(PRODUCTS)-1))
+                self.assertEqual(sorted(waits),sorted([10]*(len(PRODUCTS)-1)+[5]*len(pages)))
+                self.assertEqual(len(pages),1)
                 self.assertEqual(result[0]['matched']['samsung-ddr5-16'],1)
                 self.assertIn('TimeoutError',result[0]['error'])
                 self.assertEqual(db.execute("select state from runs where job='prices:danawa'").fetchone()[0],'error')
@@ -486,6 +490,21 @@ class Regions(unittest.TestCase):
              patch('collectors.fetch',side_effect=AssertionError('no request expected')):
             self.assertEqual(update_prices(db,sleep=lambda s:None,market='US'),[])
             self.assertEqual(update_news(db,force=True,langs=['xx']),[])
+
+
+class DanawaConfirm(unittest.TestCase):
+    def test_cheapest_listing_is_checked_against_its_product_page(self):
+        from collectors import danawa_confirm
+        quotes=[{'offer_key':'a','price':1820160},{'offer_key':'b','price':1994990},{'offer_key':'c','price':2539000}]
+        shown={'a':2711000,'b':2930000,'c':2539000}
+        opened=[]
+        out=danawa_confirm(quotes,lambda s:None,page_price=lambda code:(opened.append(code),shown[code])[1])
+        self.assertEqual(out[0],{'offer_key':'c','price':2539000})
+        self.assertEqual(opened,['a','b','c'])
+        # Out of checks: unchecked listings below the cheapest checked price are dropped.
+        many=[{'offer_key':str(i),'price':100+i} for i in range(12)]
+        out=danawa_confirm(many,lambda s:None,page_price=lambda code:1000+int(code))
+        self.assertEqual([r['offer_key'] for r in out],[str(i) for i in range(10)])
 
 
 class NewsBusy(unittest.TestCase):

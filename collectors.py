@@ -102,6 +102,38 @@ def danawa_quotes(product, items, at=None, limit=10):
     return sorted(rows.values(), key=lambda r: r['price'])[:limit]
 
 
+DANAWA_CONFIRM = 10  # every candidate may need its page checked (danawa_quotes keeps 10)
+DANAWA_PAGE_DELAY = 5  # prod.danawa.com robots.txt sets no crawl-delay; still go gently
+
+
+def danawa_page_price(code):
+    """The lowest price a Danawa product page shows (\"최저가\"), or None if the page layout changed."""
+    page = fetch(f'https://prod.danawa.com/info/?pcode={code}').decode('utf-8', 'replace')
+    match = re.search(r'id="intMinFee" value="([\d,]+)"', page)
+    return int(match.group(1).replace(',', '')) if match else None
+
+
+def danawa_confirm(quotes, sleep, page_price=danawa_page_price):
+    """The search list's minPrice sometimes counts an offer the product page does not show as its lowest
+    (2026-11-02: RTX 5080 listed at 1,820,160 won whose page said 2,711,000). Open the cheapest
+    candidate's page and use its price until the cheapest one is a confirmed price."""
+    confirmed = set()
+    for _ in range(DANAWA_CONFIRM):
+        quotes.sort(key=lambda r: r['price'])
+        if not quotes or quotes[0]['offer_key'] in confirmed:
+            break
+        top = quotes[0]
+        sleep(DANAWA_PAGE_DELAY)
+        shown = page_price(top['offer_key'])
+        if shown:
+            top['price'] = max(top['price'], shown)
+        confirmed.add(top['offer_key'])
+    quotes.sort(key=lambda r: r['price'])
+    # Should the checks run out, an unchecked listing may not undercut the cheapest checked price.
+    floor = min((r['price'] for r in quotes if r['offer_key'] in confirmed), default=0)
+    return [r for r in quotes if r['offer_key'] in confirmed or r['price'] >= floor]
+
+
 KAKAKU_SEARCH = 'https://search.kakaku.com/'
 KAKAKU_DELAY = 10  # no crawl-delay in its robots.txt; same pace as Danawa
 KAKAKU_MIN_SHOPS = 1  # Japan's market is thinner: many modules are listed by a single shop
@@ -315,7 +347,7 @@ def update_prices(db, sleep=time.sleep, market=None):
     if korea:
         outcomes.append(collect(db, 'danawa', PRODUCTS,
             lambda p: danawa_products(fetch(DANAWA_SEARCH + urllib.parse.urlencode({'query': p['danawa']['query']}))),
-            lambda p, items, at: danawa_quotes(p, items, at), sleep, DANAWA_DELAY))
+            lambda p, items, at: danawa_confirm(danawa_quotes(p, items, at), sleep), sleep, DANAWA_DELAY))
     # Coupang prices come only from the Partners API (final approval required); without keys nothing is called.
     coupang_key, coupang_secret = os.getenv('COUPANG_ACCESS_KEY'), os.getenv('COUPANG_SECRET_KEY')
     if korea and coupang_key and coupang_secret and coupang_due(db):

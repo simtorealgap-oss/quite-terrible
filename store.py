@@ -150,10 +150,15 @@ def product_view(db, product, market, at=None):
     # Each source offer has its own identity; a later sold-out record invalidates its old quote.
     for r in rows:
         latest[(r['source'], r['offer_key'])] = r
+    # A newer collection from the same source replaces the older one: an offer it no longer lists
+    # (sold, delisted or rejected by a stricter check) must not keep its old price for 36 hours.
+    newest = {}
+    for r in latest.values():
+        newest[r['source']] = max(newest.get(r['source'], ''), r['observed_at'])
     offers = []
     for r in latest.values():
         age = (at - parse_time(r['observed_at'])).total_seconds()
-        r['stale'] = age > STALE_SECONDS
+        r['stale'] = age > STALE_SECONDS or r['observed_at'] < newest[r['source']]
         r['amount'] = minor_to_amount(r['price'], market)
         r['shipping_amount'] = minor_to_amount(r['shipping'], market)
         offers.append(r)
