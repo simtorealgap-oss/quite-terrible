@@ -172,6 +172,9 @@ def product_view(db, product, market, at=None):
     for r in rows:
         groups.setdefault(r['observed_at'], []).append(r)
     for when, batch in groups.items():
+        # As for today's offers: a new collection from a source replaces everything it said before.
+        for source in {r['source'] for r in batch}:
+            seen = {k: v for k, v in seen.items() if k[0] != source}
         for r in batch:
             seen[(r['source'], r['offer_key'])] = r
         t = parse_time(when)
