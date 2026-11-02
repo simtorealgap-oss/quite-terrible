@@ -104,6 +104,7 @@ def danawa_quotes(product, items, at=None, limit=10):
 
 DANAWA_CONFIRM = 10  # every candidate may need its page checked (danawa_quotes keeps 10)
 DANAWA_PAGE_DELAY = 5  # prod.danawa.com robots.txt sets no crawl-delay; still go gently
+DANAWA_OUTLIER = 0.15  # cheapest more than 15% under the next card: a passing one-store deal
 
 
 def danawa_page_price(code):
@@ -116,18 +117,26 @@ def danawa_page_price(code):
 def danawa_confirm(quotes, sleep, page_price=danawa_page_price):
     """The search list's minPrice sometimes counts an offer the product page does not show as its lowest
     (2026-11-02: RTX 5080 listed at 1,820,160 won whose page said 2,711,000). Open the cheapest
-    candidate's page and use its price until the cheapest one is a confirmed price."""
-    confirmed = set()
-    for _ in range(DANAWA_CONFIRM):
+    candidates' pages and use their prices until the two cheapest are confirmed.
+
+    A lone deal far below every other card of the same chip is usually one store's short sale that is
+    gone within the hour (RTX 5070 Ti at 1,599,200 won when the next card cost 1,945,000), so a
+    cheapest price more than DANAWA_OUTLIER below the second cheapest is left out."""
+    confirmed, pages = set(), 0
+    while pages < DANAWA_CONFIRM:
         quotes.sort(key=lambda r: r['price'])
-        if not quotes or quotes[0]['offer_key'] in confirmed:
+        todo = next((r for r in quotes[:2] if r['offer_key'] not in confirmed), None)
+        if todo is None:
+            if len(quotes) > 1 and quotes[0]['price'] < quotes[1]['price'] * (1 - DANAWA_OUTLIER):
+                quotes.pop(0)
+                continue
             break
-        top = quotes[0]
         sleep(DANAWA_PAGE_DELAY)
-        shown = page_price(top['offer_key'])
+        pages += 1
+        shown = page_price(todo['offer_key'])
         if shown:
-            top['price'] = max(top['price'], shown)
-        confirmed.add(top['offer_key'])
+            todo['price'] = max(todo['price'], shown)
+        confirmed.add(todo['offer_key'])
     quotes.sort(key=lambda r: r['price'])
     # Should the checks run out, an unchecked listing may not undercut the cheapest checked price.
     floor = min((r['price'] for r in quotes if r['offer_key'] in confirmed), default=0)

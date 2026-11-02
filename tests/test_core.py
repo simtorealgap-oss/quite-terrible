@@ -505,6 +505,10 @@ class DanawaConfirm(unittest.TestCase):
         many=[{'offer_key':str(i),'price':100+i} for i in range(12)]
         out=danawa_confirm(many,lambda s:None,page_price=lambda code:1000+int(code))
         self.assertEqual([r['offer_key'] for r in out],[str(i) for i in range(10)])
+        # One store's passing deal far under every other card is left out.
+        deal=[{'offer_key':'t','price':1599200},{'offer_key':'g','price':1945000},{'offer_key':'p','price':2024980}]
+        out=danawa_confirm(deal,lambda s:None,page_price=lambda code:None)
+        self.assertEqual(out[0]['offer_key'],'g')
 
 
 class NewsBusy(unittest.TestCase):
