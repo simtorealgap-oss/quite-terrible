@@ -81,7 +81,7 @@ def build(out, base='', site=''):
                                           products=by_lang[lang], alt_langs=[l for l in LANGS if p['id'] in priced[l]]))
     data = out / 'data'
     data.mkdir()
-    for market in ('KR', 'US', 'JP'):
+    for market in ('KR', 'US', 'JP', 'DE'):
         write_json(data / f'prices-{market}.json', prices_payload(market))
         write_json(data / f'prices-{market}-demo.json', prices_payload(market, demo=True))
     for lang in LANGS:

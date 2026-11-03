@@ -18,7 +18,7 @@ from seo import seo_context, news_rows, guide_slugs, privacy_html
 
 LANGS = ('ko', 'en', 'ja', 'de')
 # Each page language shows one market's prices: Korea for Korean, Japan for Japanese, the US for English.
-LANG_MARKET = {'ko': 'KR', 'ja': 'JP', 'en': 'US', 'de': 'US'}  # no German prices yet: like English
+LANG_MARKET = {'ko': 'KR', 'ja': 'JP', 'en': 'US', 'de': 'DE'}
 I18N = json.loads((ROOT / 'config/i18n.json').read_text())
 PAGES = {f'/{lang}/{path}': (lang, page, None) for lang in LANGS
          for path, page in (('', 'prices'), ('news/', 'news'), ('about/', 'about'), ('guides/', 'guides'), ('privacy/', 'privacy'))}
@@ -71,6 +71,8 @@ def preferred_lang(accept_language, country=None):
 def default_market(country, lang):
     if country in ('KR', 'JP'):
         return country
+    if country in ('DE', 'AT', 'CH', 'LI'):
+        return 'DE'
     return LANG_MARKET.get(lang, 'US') if not country else 'US'
 
 
@@ -139,6 +141,8 @@ def asset_version():
 def seo_products(lang):
     """Prices baked into a page for search engines: the page language's own market, else Korea's."""
     market = LANG_MARKET[lang]
+    if market == 'DE' and not has_prices(market):
+        market = 'US'
     if market != 'KR' and not has_prices(market):
         market = 'KR'
     return prices_payload(market)
@@ -301,7 +305,7 @@ def main():
     parser.add_argument('--force-news', action='store_true')
     parser.add_argument('--region', choices=['kr', 'us', 'de'],
                         help="'kr': Korea and Japan prices and news; 'us': US prices and English news; "
-                             "'de': German news (no German price source yet)")
+                             "'de': German prices (eBay Germany) and news")
     parser.add_argument('--import-feed', type=Path)
     args = parser.parse_args()
     with session() as db:
@@ -310,7 +314,7 @@ def main():
             return
         if args.update:
             results = {}
-            markets = {'kr': ['KR', 'JP'], 'us': ['US'], 'de': []}.get(args.region, [None])
+            markets = {'kr': ['KR', 'JP'], 'us': ['US'], 'de': ['DE']}.get(args.region, [None])
             langs = {'kr': ['ko', 'ja'], 'us': ['en'], 'de': ['de']}.get(args.region)
             if langs:  # catch up on languages an earlier run could not fetch (Google News refused it)
                 langs = langs + [l for l in news_stale_langs(db) if l not in langs]

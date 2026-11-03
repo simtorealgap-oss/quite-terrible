@@ -1,4 +1,4 @@
-"""Small SQLite store. Amounts are integer minor units (KRW won, USD cents)."""
+"""Small SQLite store. Amounts are integer minor units (KRW won, JPY yen, USD and EUR cents)."""
 import contextlib
 import datetime as dt
 import json
@@ -14,8 +14,9 @@ CATALOG = {p['id']: p for p in PRODUCTS}
 UTC = dt.timezone.utc
 # Prices are checked once each morning, so a quote stays current for 36 hours, not 24.
 STALE_SECONDS = 36 * 3600
-MARKETS = ('KR', 'US', 'JP')
-CURRENCY = {'KR': 'KRW', 'US': 'USD', 'JP': 'JPY'}
+MARKETS = ('KR', 'US', 'JP', 'DE')
+CURRENCY = {'KR': 'KRW', 'US': 'USD', 'JP': 'JPY', 'DE': 'EUR'}
+CENTS = ('US', 'DE')  # markets whose amounts are stored in cents
 
 
 def now():
@@ -135,7 +136,7 @@ def save_quotes(db, rows):
 
 
 def minor_to_amount(value, market):
-    return value / (100 if market == 'US' else 1) if value is not None else None
+    return value / (100 if market in CENTS else 1) if value is not None else None
 
 
 def product_view(db, product, market, at=None):
@@ -235,11 +236,12 @@ def demo_products(market):
     result = []
     for index, product in enumerate(PRODUCTS):
         # Japan has no demo price of its own: the US price at about 150 yen to the dollar.
-        price = {'US': product['demo_us'], 'JP': round(product['demo_us'] * 150, -2)}.get(market, product['demo_kr'])
+        price = {'US': product['demo_us'], 'DE': round(product['demo_us'] * 0.92, 2),
+                 'JP': round(product['demo_us'] * 150, -2)}.get(market, product['demo_kr'])
         history = []
         for day in range(90):
             factor = 1 + (89-day) * (0.0015 if index % 3 else -0.0007) + math.sin(day * .5 + index) * .014
-            history.append({'at': stamp(now() - dt.timedelta(days=89-day)), 'price': round(price * factor, 2 if market == 'US' else 0)})
+            history.append({'at': stamp(now() - dt.timedelta(days=89-day)), 'price': round(price * factor, 2 if market in CENTS else 0)})
         current = history[-1]['price']
         item = {k: v for k, v in product.items() if k not in ('query', 'require', 'reject', 'demo_us', 'demo_kr')}
         result.append(item | {'price': current, 'change': round((current/history[-2]['price']-1)*100, 1),

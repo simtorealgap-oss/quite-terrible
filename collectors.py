@@ -236,15 +236,21 @@ def ebay_token(client_id, secret):
     return data['access_token']
 
 
-def ebay_params(product):
-    config = product['ebay']
+# eBay marketplace and currency per market. Germany: ebay.de, sellers in Germany, euro prices
+# (Geizhals declined new sites in 2026-11; eBay is the euro source we can use).
+EBAY_MARKETS = {'US': ('EBAY_US', 'USD'), 'DE': ('EBAY_DE', 'EUR')}
+
+
+def ebay_params(product, market='US'):
+    config, currency = product['ebay'], EBAY_MARKETS[market][1]
     return {'q': config['q'], 'category_ids': config['category'], 'sort': 'price', 'limit': 50,
-            'filter': f"conditionIds:{{1000}},buyingOptions:{{FIXED_PRICE}},itemLocationCountry:US,"
-                      f"deliveryCountry:US,price:[{config['min']}..],priceCurrency:USD"}
+            'filter': f"conditionIds:{{1000}},buyingOptions:{{FIXED_PRICE}},itemLocationCountry:{market},"
+                      f"deliveryCountry:{market},price:[{config['min']}..],priceCurrency:{currency}"}
 
 
-def ebay_quotes(product, data, at=None, limit=10):
+def ebay_quotes(product, data, at=None, limit=10, market='US'):
     config, rule, rows = product['ebay'], rule_for(product, 'ebay'), {}
+    currency = EBAY_MARKETS[market][1]
     for item in data.get('itemSummaries', []):
         title, price, seller = clean_text(item.get('title')), item.get('price') or {}, item.get('seller') or {}
         try:
@@ -252,7 +258,7 @@ def ebay_quotes(product, data, at=None, limit=10):
             score, percent = int(seller.get('feedbackScore') or 0), float(seller.get('feedbackPercentage') or 0)
         except (TypeError, ValueError):
             continue
-        if price.get('currency') != 'USD' or amount < config['min'] * 100 or str(item.get('conditionId')) != '1000':
+        if price.get('currency') != currency or amount < config['min'] * 100 or str(item.get('conditionId')) != '1000':
             continue
         if score < 100 or percent < 98 or EBAY_JUNK.search(title) or not matches(rule, title):
             continue
@@ -260,12 +266,12 @@ def ebay_quotes(product, data, at=None, limit=10):
             continue
         cost = next((o.get('shippingCost') for o in item.get('shippingOptions') or [] if o.get('shippingCost')), None)
         try:
-            shipping = round(float(cost['value']) * 100) if cost and cost.get('currency') == 'USD' else None
+            shipping = round(float(cost['value']) * 100) if cost and cost.get('currency') == currency else None
         except (TypeError, ValueError):
             shipping = None
         affiliate = item.get('itemAffiliateWebUrl')
         # Seller names are eBay user data; they are not stored.
-        rows[item['itemId']] = {'product_id': product['id'], 'market': 'US', 'offer_key': item['itemId'],
+        rows[item['itemId']] = {'product_id': product['id'], 'market': market, 'offer_key': item['itemId'],
             'price': amount, 'shipping': shipping, 'stock': 'in_stock', 'merchant': 'eBay',
             'title': title[:200], 'url': item['itemWebUrl'], 'affiliate_url': affiliate if safe_url(affiliate) else None,
             'source': 'ebay', 'observed_at': at or stamp()}
@@ -328,7 +334,7 @@ def error_name(exc):
     return f'HTTPError {exc.code}' if isinstance(exc, urllib.error.HTTPError) else type(exc).__name__
 
 
-def collect(db, source, products, request, parse, sleep, delay):
+def collect(db, source, products, request, parse, sleep, delay, job=None):
     """Fetch every product from one source; a failing product does not stop the rest."""
     at, count, matched, failed = stamp(), 0, {}, []
     for index, product in enumerate(products):
@@ -342,13 +348,15 @@ def collect(db, source, products, request, parse, sleep, delay):
             failed.append(f"{product['id']}: {error_name(exc)}")
     ok = not failed and any(matched.values())
     message = f'{count} observations' if ok else '; '.join(failed) or 'No matching products'
-    record_run(db, f'prices:{source}', 'ok' if ok else 'error', message[:500])
+    record_run(db, job or f'prices:{source}', 'ok' if ok else 'error', message[:500])
     return {'source': source, 'count': count, 'matched': matched, **({} if ok else {'error': message})}
 
 
 def update_prices(db, sleep=time.sleep, market=None):
-    """market='KR' (Danawa, Coupang), 'JP' (Kakaku.com) or 'US' (eBay, Best Buy); None runs every source."""
+    """market='KR' (Danawa, Coupang), 'JP' (Kakaku.com), 'US' (eBay, Best Buy) or 'DE' (eBay Germany);
+    None runs every source."""
     korea, japan, us = market in (None, 'KR'), market in (None, 'JP'), market in (None, 'US')
+    ebay_markets = [m for m in EBAY_MARKETS if market in (None, m)]
     outcomes = []
     if japan:
         outcomes.append(collect(db, 'kakaku', [p for p in PRODUCTS if p.get('kakaku')], kakaku_search,
@@ -364,19 +372,23 @@ def update_prices(db, sleep=time.sleep, market=None):
             lambda p: coupang_search(p, coupang_key, coupang_secret),
             lambda p, data, at: coupang_quotes(p, data, at), sleep, COUPANG_DELAY))
     ebay_id, ebay_secret = os.getenv('EBAY_CLIENT_ID'), os.getenv('EBAY_CLIENT_SECRET')
-    if us and ebay_id and ebay_secret:
+    if ebay_markets and ebay_id and ebay_secret:
         try:
             token = ebay_token(ebay_id, ebay_secret)
         except Exception as exc:
-            record_run(db, 'prices:ebay', 'error', error_name(exc))
-            outcomes.append({'source': 'ebay', 'error': error_name(exc)})
+            for m in ebay_markets:
+                job = 'prices:ebay' if m == 'US' else f'prices:ebay-{m.lower()}'
+                record_run(db, job, 'error', error_name(exc))
+                outcomes.append({'source': job.split(':')[1], 'error': error_name(exc)})
         else:
-            headers = {'Authorization': f'Bearer {token}', 'X-EBAY-C-MARKETPLACE-ID': 'EBAY_US'}
-            if os.getenv('EBAY_CAMPAIGN_ID'):  # eBay Partner Network: returns affiliate item links
-                headers['X-EBAY-C-ENDUSERCTX'] = f"affiliateCampaignId={os.environ['EBAY_CAMPAIGN_ID']}"
-            outcomes.append(collect(db, 'ebay', [p for p in PRODUCTS if p.get('ebay')],
-                lambda p: json.loads(fetch(EBAY_SEARCH + urllib.parse.urlencode(ebay_params(p)), headers)),
-                lambda p, data, at: ebay_quotes(p, data, at), sleep, 1))
+            for m in ebay_markets:
+                headers = {'Authorization': f'Bearer {token}', 'X-EBAY-C-MARKETPLACE-ID': EBAY_MARKETS[m][0]}
+                if os.getenv('EBAY_CAMPAIGN_ID'):  # eBay Partner Network: returns affiliate item links
+                    headers['X-EBAY-C-ENDUSERCTX'] = f"affiliateCampaignId={os.environ['EBAY_CAMPAIGN_ID']}"
+                job = 'prices:ebay' if m == 'US' else f'prices:ebay-{m.lower()}'
+                outcomes.append(collect(db, job.split(':')[1], [p for p in PRODUCTS if p.get('ebay')],
+                    lambda p, h=headers, m=m: json.loads(fetch(EBAY_SEARCH + urllib.parse.urlencode(ebay_params(p, m)), h)),
+                    lambda p, data, at, m=m: ebay_quotes(p, data, at, market=m), sleep, 1, job=job))
     key = os.getenv('BESTBUY_API_KEY')
     if us and key:
         params = urllib.parse.urlencode({'apiKey': key, 'format': 'json', 'pageSize': 50, 'sort': 'salePrice.asc',

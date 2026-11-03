@@ -9,11 +9,11 @@ const fmt = (key, vars = {}) => String(T[key] ?? key).replace(/\{(\w+)\}/g, (_, 
 const DAY = 86400000;
 const NEWS_PAGE = 20;  // headlines per "more" click
 const query = new URLSearchParams(location.search);
-// The page language picks the market: Korean pages show won, Japanese pages yen, English and German
-// pages US dollars (no euro source yet). A visitor in Korea reading the English page gets dollars too.
+// The page language picks the market: Korean pages show won, Japanese pages yen, German pages euros
+// (eBay Germany) and English pages US dollars. A visitor in Korea reading the English page gets dollars too.
 function pickMarket() {
-  if (['KR', 'US', 'JP'].includes(boot.market)) return boot.market;
-  return {ko: 'KR', ja: 'JP'}[boot.lang] || 'US';
+  if (['KR', 'US', 'JP', 'DE'].includes(boot.market)) return boot.market;
+  return {ko: 'KR', ja: 'JP', de: 'DE'}[boot.lang] || 'US';
 }
 const base = boot.base || '';
 // Google AdSense (only when configured): each <ins class="adsbygoogle"> is filled once.
@@ -45,11 +45,11 @@ const state = {
   selected: null,
 };
 const locale = {ko: 'ko-KR', ja: 'ja-JP', de: 'de-DE'}[boot.lang] || 'en-US';
-const CURRENCY = {KR: 'KRW', JP: 'JPY', US: 'USD'};
+const CURRENCY = {KR: 'KRW', JP: 'JPY', US: 'USD', DE: 'EUR'};
 
 const money = (value, compact = false) => {
   if (value == null) return '—';
-  const currency = CURRENCY[state.market] || 'USD', digits = currency === 'USD' ? 2 : 0;
+  const currency = CURRENCY[state.market] || 'USD', digits = currency === 'USD' || currency === 'EUR' ? 2 : 0;
   return new Intl.NumberFormat(locale, {style: 'currency', currency,
     ...(compact ? {notation: 'compact', maximumFractionDigits: 1}
       : {minimumFractionDigits: digits, maximumFractionDigits: digits})}).format(value);
@@ -333,7 +333,8 @@ async function fetchPrices() {
   if (!response.ok) throw new Error(String(response.status));
   const data = await response.json();
   if (!data.demo && data.market !== 'KR' && !data.products.some(p => p.price != null)) {
-    state.market = 'KR';  // no source for this market yet: show real Korean prices instead of an empty page
+    // No prices for this market today: German pages fall back to US dollars, the rest to Korean won.
+    state.market = state.market === 'DE' ? 'US' : 'KR';
     return fetchPrices();
   }
   return data;

@@ -21,6 +21,9 @@ def won(value, lang, currency='KRW'):
         return '—'
     if currency == 'USD':
         return f'${value:,.2f}'
+    if currency == 'EUR':
+        text = f'{value:,.2f}'
+        return text.replace(',', ' ').replace('.', ',').replace(' ', '.') + ' €' if lang == 'de' else f'€{text}'
     amount = f'{round(value):,}'
     if currency == 'JPY':
         return f'{amount}円' if lang == 'ja' else f'¥{amount}'
@@ -169,7 +172,7 @@ def product_ld(p, lang, absolute, currency='KRW'):
             'brand': {'@type': 'Brand', 'name': p['brand']}, 'category': CATEGORY_NAMES[lang][p['category']],
             'url': absolute(page_path(lang, 'product', p['id'])), 'image': absolute('/og.png')}
     if p.get('price') is not None:
-        exact = (lambda v: round(v, 2)) if currency == 'USD' else round
+        exact = (lambda v: round(v, 2)) if currency in ('USD', 'EUR') else round
         data['offers'] = {'@type': 'AggregateOffer', 'priceCurrency': currency, 'lowPrice': exact(p['price']),
                           'highPrice': exact(max(o['amount'] for o in offers)) if offers else exact(p['price']),
                           'offerCount': len(offers) or 1, 'availability': 'https://schema.org/InStock'}

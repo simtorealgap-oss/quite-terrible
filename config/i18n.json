@@ -260,7 +260,8 @@
     "privacyPageTitle": "개인정보처리방침 | Quite Terrible",
     "privacyPageDesc": "Quite Terrible이 수집하는 정보, 광고 쿠키(Google 애드센스), 쿠팡 파트너스 링크, 문의처를 안내합니다.",
     "privacyHeading": "개인정보처리방침",
-    "privacyLink": "개인정보처리방침"
+    "privacyLink": "개인정보처리방침",
+    "marketDE": "독일 · EUR"
   },
   "en": {
     "brand": "Quite Terrible",
@@ -523,7 +524,8 @@
     "privacyPageTitle": "Privacy policy | Quite Terrible",
     "privacyPageDesc": "What Quite Terrible collects, how ads and cookies (Google AdSense) work here, affiliate links, and how to contact us.",
     "privacyHeading": "Privacy policy",
-    "privacyLink": "Privacy"
+    "privacyLink": "Privacy",
+    "marketDE": "Germany · EUR"
   },
   "ja": {
     "brand": "Quite Terrible",
@@ -786,7 +788,8 @@
     "privacyPageTitle": "プライバシーポリシー | Quite Terrible",
     "privacyPageDesc": "Quite Terribleが扱う情報、広告とCookie（Google AdSense）、アフィリエイトリンク、お問い合わせ先について。",
     "privacyHeading": "プライバシーポリシー",
-    "privacyLink": "プライバシーポリシー"
+    "privacyLink": "プライバシーポリシー",
+    "marketDE": "ドイツ · EUR"
   },
   "de": {
     "brand": "Quite Terrible",
@@ -1049,6 +1052,7 @@
     "privacyPageTitle": "Datenschutzerklärung | Quite Terrible",
     "privacyPageDesc": "Was Quite Terrible erhebt, wie Werbung und Cookies (Google AdSense) hier funktionieren, Affiliate-Links und wie du uns erreichst.",
     "privacyHeading": "Datenschutzerklärung",
-    "privacyLink": "Datenschutz"
+    "privacyLink": "Datenschutz",
+    "marketDE": "Deutschland · EUR"
   }
 }

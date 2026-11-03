@@ -221,8 +221,13 @@ class SevenDay(unittest.TestCase):
         searches=[c for c in calls if 'item_summary/search' in c[0]]
         self.assertEqual(len(token),1)
         self.assertTrue(token[0][1]['Authorization'].startswith('Basic '))
-        self.assertEqual(len(searches),len(PRODUCTS))
-        self.assertTrue(all(c[1]['Authorization']=='Bearer t0k' and c[1]['X-EBAY-C-MARKETPLACE-ID']=='EBAY_US' for c in searches))
+        self.assertEqual(len(searches),2*len(PRODUCTS))  # eBay US, then eBay Germany, with one token
+        self.assertTrue(all(c[1]['Authorization']=='Bearer t0k' for c in searches))
+        us=[c for c in searches if c[1]['X-EBAY-C-MARKETPLACE-ID']=='EBAY_US']
+        de=[c for c in searches if c[1]['X-EBAY-C-MARKETPLACE-ID']=='EBAY_DE']
+        self.assertEqual((len(us),len(de)),(len(PRODUCTS),len(PRODUCTS)))
+        self.assertIn('priceCurrency%3AEUR',de[0][0])
+        self.assertIn('itemLocationCountry%3ADE',de[0][0])
         self.assertIn('conditionIds%3A%7B1000%7D',searches[0][0])
 
     def test_prices_run_each_morning_kst(self):
@@ -398,7 +403,7 @@ class Locale(unittest.TestCase):
     def test_market_follows_country_then_language(self):
         self.assertEqual(default_market('KR','en'),'KR')
         self.assertEqual(default_market('JP','ko'),'JP')
-        self.assertEqual(default_market('DE','ko'),'US')
+        self.assertEqual(default_market('DE','ko'),'DE')
         self.assertEqual(default_market(None,'ja'),'JP')
         self.assertEqual(default_market(None,'ko'),'KR')
         self.assertEqual(default_market(None,'en'),'US')
