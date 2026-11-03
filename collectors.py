@@ -243,7 +243,10 @@ EBAY_MARKETS = {'US': ('EBAY_US', 'USD'), 'DE': ('EBAY_DE', 'EUR')}
 
 def ebay_params(product, market='US'):
     config, currency = product['ebay'], EBAY_MARKETS[market][1]
-    return {'q': config['q'], 'category_ids': config['category'], 'sort': 'price', 'limit': 50,
+    query = config['q']
+    if market != 'US':  # German listings rarely say "desktop" (they write "PC" or "DIMM"); the rules still exclude laptop RAM
+        query = re.sub(r'\s*\bdesktop\b', '', query, flags=re.I)
+    return {'q': query, 'category_ids': config['category'], 'sort': 'price', 'limit': 50,
             'filter': f"conditionIds:{{1000}},buyingOptions:{{FIXED_PRICE}},itemLocationCountry:{market},"
                       f"deliveryCountry:{market},price:[{config['min']}..],priceCurrency:{currency}"}
 
