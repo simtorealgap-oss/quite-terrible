@@ -6,7 +6,7 @@ on:
     # are set 20 minutes early at an off-peak minute: the site is usually fresh by 09:00 local time.
     - cron: '40 23 * * *'  # 08:40 KST = 08:40 JST: Korean and Japanese prices and news
     - cron: '40 13 * * *'  # 08:40 US Eastern (EST; 09:40 in summer): US prices and English news
-    - cron: '40 7 * * *'   # 08:40 in Germany (CET; 09:40 in summer): German news
+    - cron: '40 7 * * *'   # 08:40 in Germany (CET; 09:40 in summer): German prices (eBay Germany) and news
   workflow_dispatch:
     inputs:
       region:
