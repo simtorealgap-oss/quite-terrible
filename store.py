@@ -153,9 +153,9 @@ def product_view(db, product, market, at=None):
         latest[(r['source'], r['offer_key'])] = r
     # A newer collection from the same source replaces the older one: an offer it no longer lists
     # (sold, delisted or rejected by a stricter check) must not keep its old price for 36 hours.
-    newest = {}
-    for r in latest.values():
-        newest[r['source']] = max(newest.get(r['source'], ''), r['observed_at'])
+    # Across the whole market: a product the new collection no longer matches loses its old price too.
+    newest = dict(db.execute('''SELECT source, MAX(observed_at) FROM prices WHERE market=? AND observed_at<=?
+        GROUP BY source''', (market, stamp(at))).fetchall())
     offers = []
     for r in latest.values():
         age = (at - parse_time(r['observed_at'])).total_seconds()
