@@ -57,7 +57,11 @@ COUPANG_HOSTS = ('coupang.com', 'coupangcdn.com')
 COUPANG_GPU_JUNK = re.compile(r'컴퓨터|본체|게이밍\s*pc|미니\s*pc|지지대|브라켓|bracket|라이저|riser|케이블|cable', re.I)
 # Box-only, parts and accessory listings are where fake "deals" hide on eBay.
 EBAY_JUNK = re.compile(r'box only|empty box|for parts|not working|broken|read desc|bracket|backplate|shroud|'
-                       r'cooler|heatsink|water ?block|replacement fan|cable|adapter|riser|repair', re.I)
+                       r'cooler|heatsink|water ?block|replacement fan|cable|adapter|riser|repair|'
+                       # Laptop memory, used or "like new" items and third-party "compatible" modules
+                       # (German listings: SO-DIMM with a hyphen, Notebook, wie neu, gebraucht, kompatibel).
+                       r'so-?dimm|laptop|notebook|wie neu|like new|gebraucht|defekt|kompatibel|compatible', re.I)
+MULTI_STICK = re.compile(r'\b[2-8]\s*[x×]\s*\d+\s*gb|\b[2-8]\s*(stück|pcs|pack)\b', re.I)
 
 
 def rule_for(product, source):
@@ -264,6 +268,8 @@ def ebay_quotes(product, data, at=None, limit=10, market='US'):
         if price.get('currency') != currency or amount < config['min'] * 100 or str(item.get('conditionId')) != '1000':
             continue
         if score < 100 or percent < 98 or EBAY_JUNK.search(title) or not matches(rule, title):
+            continue
+        if ' 1 × ' in f" {product.get('spec', '')} " and MULTI_STICK.search(title):  # a kit is not one module
             continue
         if not item.get('itemId') or not safe_url(item.get('itemWebUrl')):
             continue
