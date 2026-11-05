@@ -459,3 +459,4 @@ th[aria-sort="descending"] .th-sort::after { content: " ↓"; }
 .privacy-wrap p { margin: 0 0 10px; line-height: 1.75; color: var(--text-2); word-break: keep-all; }
 .privacy-wrap a { color: var(--text); text-underline-offset: 3px; }
 .privacy-updated { font-size: 13px; color: var(--text-3) !important; }
+.about-ps { font-size: 14.5px; color: var(--text-2); border-left: 3px solid var(--brand); padding-left: 12px; }

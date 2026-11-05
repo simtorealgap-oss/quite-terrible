@@ -3,6 +3,7 @@ canonical and alternate links, Open Graph, JSON-LD, crawlable price rows and pro
 import datetime as dt
 import html
 import json
+import re
 import os
 from pathlib import Path
 
@@ -419,16 +420,24 @@ def guide_body(slug, lang, strings, products, news, base, money):
                    f'<li><b>{html.escape(fill["tab"])}</b>: {html.escape(money(per * 0.15))}</li>'
                    f'<li><b>{html.escape(fill["tabs"].format(gb=gb))}</b>: {html.escape(money(per * gb))}</li></ul>'
                    f'<p class="guide-note">{html.escape(fill["basis"].format(per=money(per), name=name_of(cheap, lang)))}</p>')
-    if slug == 'why-ram-prices-rise':
+    if slug in ('why-ram-prices-rise', 'ram-altman'):
         ram = [p for p in priced if p['category'] == 'ram' and p.get('generation') == 'DDR5']
         if ram:
             out.append(f'<h2>{html.escape(strings["guidePricesNow"])}</h2>')
             out.append(price_table(ram, lang, strings, base, money, ('today', 'low30', 'high30')))
-        items = [n for n in (news or []) if n.get('category') == 'ram' and str(n.get('url', '')).startswith('http')][:6]
+        items = [n for n in (news or []) if n.get('category') == 'ram' and str(n.get('url', '')).startswith('http')]
+        if slug == 'ram-altman':  # headlines about him first
+            items.sort(key=lambda n: not re.search(r'altman|올트먼|올트만|アルトマン', n['title'], re.I))
+        items = items[:6]
         if items:
             out.append(f'<h2>{html.escape(strings["guideRelatedNews"])}</h2><ul class="guide-news">' + ''.join(
                 f'<li><a href="{html.escape(n["url"])}" target="_blank" rel="noopener noreferrer">{html.escape(n["title"])}</a>'
                 f' <span>{html.escape(n.get("publisher", ""))} · {html.escape(when_text(n["published_at"], lang))}</span></li>' for n in items) + '</ul>')
+    sources = GUIDES[slug].get('sources')
+    if sources:
+        out.append(f'<h2>{html.escape(strings["guideSources"])}</h2><ul class="guide-news">' + ''.join(
+            f'<li><a href="{html.escape(s["url"])}" target="_blank" rel="noopener noreferrer">{html.escape(s["name"])}</a></li>'
+            for s in sources) + '</ul>')
     return ''.join(out)
 
 

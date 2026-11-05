@@ -261,7 +261,14 @@
     "privacyPageDesc": "Quite Terrible이 수집하는 정보, 광고 쿠키(Google 애드센스), 쿠팡 파트너스 링크, 문의처를 안내합니다.",
     "privacyHeading": "개인정보처리방침",
     "privacyLink": "개인정보처리방침",
-    "marketDE": "독일 · EUR"
+    "marketDE": "독일 · EUR",
+    "aboutP5": "추신. 2026년 11월 4일, 샘 올트먼은 반발이 이어지자 X 표시 이름을 ‘Ram Altman’으로 바꿨습니다. “램 많이 가지세요, 더 만들죠”라면서요. 저희는 그 램이 언제 싸지는지 매일 아침 지켜보겠습니다.",
+    "guideSources": "참고한 기사",
+    "gameLine19": "요즘은 램 올트먼이라고 불러",
+    "gameLine20": "이름은 바꿔도 램은 안 줘",
+    "gameLine21": "더 만들 거야. 그리고 내가 가질 거야",
+    "gameAngry16": "램 올트먼 님 거라고!",
+    "gameAngry17": "개명까지 했는데 이러기야?"
   },
   "en": {
     "brand": "Quite Terrible",
@@ -525,7 +532,14 @@
     "privacyPageDesc": "What Quite Terrible collects, how ads and cookies (Google AdSense) work here, affiliate links, and how to contact us.",
     "privacyHeading": "Privacy policy",
     "privacyLink": "Privacy",
-    "marketDE": "Germany · EUR"
+    "marketDE": "Germany · EUR",
+    "aboutP5": "P.S. On November 4, 2026, after the backlash kept coming, Sam Altman changed his X display name to “Ram Altman”, saying people should have all the RAM they want and that we should build more. We will be here every morning to see when that RAM gets cheaper.",
+    "guideSources": "Sources",
+    "gameLine19": "Call me Ram Altman now",
+    "gameLine20": "New name. Same RAM policy.",
+    "gameLine21": "We'll build more. I'll keep it.",
+    "gameAngry16": "That's Ram Altman's RAM!",
+    "gameAngry17": "I changed my NAME for this?!"
   },
   "ja": {
     "brand": "Quite Terrible",
@@ -789,7 +803,14 @@
     "privacyPageDesc": "Quite Terribleが扱う情報、広告とCookie（Google AdSense）、アフィリエイトリンク、お問い合わせ先について。",
     "privacyHeading": "プライバシーポリシー",
     "privacyLink": "プライバシーポリシー",
-    "marketDE": "ドイツ · EUR"
+    "marketDE": "ドイツ · EUR",
+    "aboutP5": "追伸：2026年11月4日、反発が続く中でサム・アルトマン氏はXの表示名を「Ram Altman」に変えました。好きなだけメモリを持って、もっと作ろう、と。そのメモリがいつ安くなるのか、私たちは毎朝見届けます。",
+    "guideSources": "参考記事",
+    "gameLine19": "今はラム・アルトマンと呼べ",
+    "gameLine20": "名前は変えてもメモリはやらん",
+    "gameLine21": "もっと作る。そして私がもらう",
+    "gameAngry16": "ラム・アルトマン様のだぞ！",
+    "gameAngry17": "改名までしたのにこれか！"
   },
   "de": {
     "brand": "Quite Terrible",
@@ -1053,6 +1074,13 @@
     "privacyPageDesc": "Was Quite Terrible erhebt, wie Werbung und Cookies (Google AdSense) hier funktionieren, Affiliate-Links und wie du uns erreichst.",
     "privacyHeading": "Datenschutzerklärung",
     "privacyLink": "Datenschutz",
-    "marketDE": "Deutschland · EUR"
+    "marketDE": "Deutschland · EUR",
+    "aboutP5": "PS: Am 4. November 2026 änderte Sam Altman nach anhaltender Kritik seinen Anzeigenamen auf X in „Ram Altman“ – alle sollten so viel RAM haben, wie sie wollen, und man solle mehr bauen. Wir schauen jeden Morgen nach, wann dieser RAM billiger wird.",
+    "guideSources": "Quellen",
+    "gameLine19": "Nennt mich jetzt Ram Altman",
+    "gameLine20": "Neuer Name. Gleiche RAM-Politik.",
+    "gameLine21": "Wir bauen mehr. Ich behalte es.",
+    "gameAngry16": "Das ist Ram Altmans RAM!",
+    "gameAngry17": "Ich hab mich dafür UMBENANNT?!"
   }
 }
