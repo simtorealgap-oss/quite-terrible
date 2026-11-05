@@ -459,4 +459,12 @@ th[aria-sort="descending"] .th-sort::after { content: " ↓"; }
 .privacy-wrap p { margin: 0 0 10px; line-height: 1.75; color: var(--text-2); word-break: keep-all; }
 .privacy-wrap a { color: var(--text); text-underline-offset: 3px; }
 .privacy-updated { font-size: 13px; color: var(--text-3) !important; }
-.about-ps { font-size: 14.5px; color: var(--text-2); border-left: 3px solid var(--brand); padding-left: 12px; }
+.about-log { list-style: none; margin: 0; padding: 0 0 0 18px; border-left: 2px solid var(--line-2); }
+.about-log li { position: relative; padding: 0 0 18px 6px; }
+.about-log li::before { content: ""; position: absolute; left: -26px; top: 6px; width: 12px; height: 12px; border-radius: 50%; background: var(--panel); border: 2px solid var(--brand); }
+.about-log li:last-child::before { background: var(--brand); }
+.log-when { display: block; font-size: 12.5px; font-weight: 700; letter-spacing: .02em; color: var(--brand); }
+.about-log p { margin: 3px 0 0; font-size: 16px; line-height: 1.7; color: var(--text-2); word-break: keep-all; text-wrap: pretty; }
+.about-faq details { border-bottom: 1px solid var(--line); padding: 14px 2px; }
+.about-faq summary { cursor: pointer; font-size: 16px; font-weight: 650; color: var(--text); list-style-position: outside; }
+.about-faq details p { margin: 10px 0 2px; font-size: 15.5px; line-height: 1.75; color: var(--text-2); word-break: keep-all; }

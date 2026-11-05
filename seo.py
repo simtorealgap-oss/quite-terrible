@@ -132,6 +132,11 @@ def seo_context(lang, page, strings, products, base='', site='', product_id=None
                       'author': {'@type': 'Organization', 'name': strings['brand']}, 'publisher': {'@type': 'Organization', 'name': strings['brand']},
                       'mainEntityOfPage': absolute(path), 'image': absolute('/og.png')})
 
+    if page == 'about':  # the FAQ on the page, for search results
+        graph.append({'@type': 'FAQPage', 'inLanguage': lang, 'mainEntity': [
+            {'@type': 'Question', 'name': strings[f'aboutQ{i}'],
+             'acceptedAnswer': {'@type': 'Answer', 'text': strings[f'aboutA{i}']}} for i in range(1, 5) if strings.get(f'aboutQ{i}')]})
+
     if page == 'product':
         p = by_id[product_id]
         offer = best_offer(p)
