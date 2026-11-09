@@ -1,11 +1,7 @@
 {
-  "ram-altman": {
+  "altman-annoyed": {
     "updated": "2026-11-09",
     "sources": [
-      {
-        "name": "The Next Web",
-        "url": "https://thenextweb.com/news/sam-altman-ram-altman-memory-out-of-context-x"
-      },
       {
         "name": "Decrypt",
         "url": "https://decrypt.co/382606/sam-altman-says-its-fucking-annoying-his-ram-comments-were-taken-out-of-context"
@@ -13,6 +9,195 @@
       {
         "name": "PC Gamer",
         "url": "https://www.pcgamer.com/software/ai/sam-altman-is-annoyed-his-dram-comment-was-taken-out-of-context/"
+      },
+      {
+        "name": "TechRadar",
+        "url": "https://www.techradar.com/ai-platforms-assistants/sam-altman-backpedals-and-says-i-want-you-to-have-so-much-ram-after-backlash-but-his-ram-crisis-solution-is-unconvincing"
+      },
+      {
+        "name": "Martin Cid Magazine",
+        "url": "https://www.martincid.com/technology-sv/sam-altman-ram-dram-comment-taken-out-of-context/"
+      },
+      {
+        "name": "Futurism",
+        "url": "https://futurism.com/artificial-intelligence/sam-altman-reverses-position-ram"
+      }
+    ],
+    "ko": {
+      "title": "샘 올트먼, 결국 화났다: 램 발언 논란과 “f***ing annoying”",
+      "desc": "램 발언이 밈이 되고 일론 머스크까지 놀리자, 샘 올트먼이 욕설을 섞어 “맥락이 잘렸다”고 반박했습니다. 무엇에 화가 났고 왜 역풍이 불었는지 정리했습니다.",
+      "lead": "‘램 올트먼’으로 이름까지 바꾸며 웃어넘기는 듯했던 샘 올트먼이, 결국 욕설을 섞어 짜증을 냈습니다. 램값에 지친 사람들에게는 그 짜증마저 또 하나의 밈이 됐습니다.",
+      "sections": [
+        {
+          "h": "1. 밈이 멈추지 않았다",
+          "p": [
+            "팟캐스트 Cheeky Pint에서 나온 “개인 PC의 램은 5%만 쓰인다, 꽤 끔찍하다”는 발언은 순식간에 밈이 됐습니다. X에는 그의 램 발언을 놀리는 글이 트렌드에 오를 만큼 쏟아졌고, 상관없는 글에도 램 이야기 댓글이 달렸습니다.",
+            "일론 머스크도 X에 이 발언을 비꼬는 글을 올렸습니다. 램 하나로 AI 업계 두 거물이 또 한 번 맞붙은 셈입니다."
+          ]
+        },
+        {
+          "h": "2. 그래서 한 말: “f***ing annoying”",
+          "p": [
+            "올트먼은 X에 세상이 메모리를 넉넉히 갖길 원한다며, 이게 맥락에서 잘려 퍼진 게 “f***ing annoying”, 그러니까 정말 짜증 난다고 썼습니다.",
+            "자기는 오래전부터 메모리 생산을 크게 늘려야 한다고 주장해 왔다고도 덧붙였습니다. 같은 무렵 “램 많이 가지세요, 더 만들죠”라는 글을 올리고, 이름을 반나절 동안 ‘Ram Altman’으로 바꾸기도 했습니다."
+          ]
+        },
+        {
+          "h": "3. 정말 맥락이 잘렸을까",
+          "p": [
+            "팟캐스트 원문을 살펴본 분석에 따르면, 그는 게이밍 PC 이야기가 아니라 ‘AI를 각자 PC에서 돌리는 것(로컬 추론)’에 대한 질문에 답하고 있었습니다. 그 점에서는 맥락이 잘린 게 맞습니다.",
+            "하지만 같은 분석은 그의 결론이 여전히 ‘부족한 메모리는 데이터센터에 두는 게 낫다’였다고 짚습니다. 말을 거둬들였다기보다 포장을 바꾼 것에 가깝다는 평가입니다."
+          ]
+        },
+        {
+          "h": "4. 짜증이 역풍이 된 이유",
+          "p": [
+            "비판하는 쪽은 오픈AI 자체가 지금 메모리가 귀해진 큰 이유 중 하나라는 점을 꼬집었습니다. 메모리를 가장 많이 가져가는 쪽이 ‘맥락이 잘렸다’며 짜증을 내니, 램값을 내는 사람들에게는 공감보다 반감이 컸습니다.",
+            "“더 만들자”는 해법도 당장 가격을 내리지는 못한다는 지적이 나왔습니다. 공장을 늘리는 데는 몇 년이 걸리기 때문입니다."
+          ]
+        },
+        {
+          "h": "5. 저희 생각",
+          "p": [
+            "짜증 나는 마음은 이해합니다. 저희도 매일 아침 램값을 볼 때마다 비슷한 단어가 떠오르니까요.",
+            "아래는 오늘 기준 DDR5 최저가입니다. 누구의 말이 맞았는지는 결국 이 숫자가 알려 줄 겁니다."
+          ]
+        }
+      ]
+    },
+    "en": {
+      "title": "Sam Altman finally snapped: the RAM backlash and “f***ing annoying”",
+      "desc": "As his RAM remark turned into memes and even Elon Musk piled on, Sam Altman swore that it had been taken out of context. What set him off, and why it backfired.",
+      "lead": "After laughing it off by becoming “Ram Altman”, Sam Altman finally lost his patience and swore about it. For people tired of RAM prices, even his annoyance became another meme.",
+      "sections": [
+        {
+          "h": "1. The memes would not stop",
+          "p": [
+            "His Cheeky Pint remark — that DRAM sitting in personal computers, used 5% of the time, is “quite terrible” — became a meme almost instantly. Posts mocking it trended on X, and RAM jokes showed up under his unrelated posts.",
+            "Elon Musk mocked the remark on X too. Two AI heavyweights, sparring again, over RAM."
+          ]
+        },
+        {
+          "h": "2. What he said: “f***ing annoying”",
+          "p": [
+            "Altman posted that he wants the world to have plenty of memory and that it was “f***ing annoying” the remark had been taken out of context.",
+            "He added that he had argued for years for ramping up memory production. Around the same time he posted “i want you to have so much ram lets build more” and spent half a day as “Ram Altman”."
+          ]
+        },
+        {
+          "h": "3. Was it really out of context?",
+          "p": [
+            "One reading of the full transcript finds he was answering a question about running AI locally (local inference), not about gaming PCs. In that sense, yes, context was lost.",
+            "The same analysis notes that his conclusion still put scarce memory in data centres. Less a retraction than a repackaging."
+          ]
+        },
+        {
+          "h": "4. Why the annoyance backfired",
+          "p": [
+            "Critics pointed out that OpenAI is itself one of the main reasons memory is so scarce. The biggest buyer of memory complaining about context did not win much sympathy from the people paying for RAM.",
+            "Others noted that “build more” does nothing for prices today: new fabs take years."
+          ]
+        },
+        {
+          "h": "5. Our take",
+          "p": [
+            "We get the frustration. We think similar words every morning when we look at RAM prices.",
+            "Below are today’s lowest DDR5 prices. In the end, these numbers will say who was right."
+          ]
+        }
+      ]
+    },
+    "ja": {
+      "title": "サム・アルトマン、ついに怒る：メモリ発言炎上と「f***ing annoying」",
+      "desc": "メモリ発言がミームになり、イーロン・マスク氏までからかうと、サム・アルトマン氏は罵り言葉交じりに「文脈を切り取られた」と反論しました。何に怒り、なぜ逆風になったのか。",
+      "lead": "「ラム・アルトマン」に改名して笑い飛ばしたかに見えたサム・アルトマン氏が、ついに罵り言葉交じりに苛立ちを見せました。メモリ高騰に疲れた人々には、その苛立ちさえ新たなミームになりました。",
+      "sections": [
+        {
+          "h": "1. ミームが止まらない",
+          "p": [
+            "ポッドキャスト「Cheeky Pint」での「個人PCのメモリは5%しか使われていない、かなりひどい」という発言は、瞬く間にミームになりました。Xでは発言をからかう投稿がトレンド入りし、関係のない投稿にまでメモリのリプライが付きました。",
+            "イーロン・マスク氏もXでこの発言を皮肉りました。メモリをめぐって、AI業界の大物二人がまたぶつかった格好です。"
+          ]
+        },
+        {
+          "h": "2. 出た言葉：「f***ing annoying」",
+          "p": [
+            "アルトマン氏はXで、世界にメモリを十分に行き渡らせたいとし、それが文脈から切り取られたのは「f***ing annoying（本当に腹が立つ）」と書きました。",
+            "以前からメモリの大幅増産を訴えてきたとも付け加えています。同じ頃「好きなだけメモリを持って、もっと作ろう」と投稿し、半日だけ「Ram Altman」を名乗りました。"
+          ]
+        },
+        {
+          "h": "3. 本当に文脈を切り取られたのか",
+          "p": [
+            "ポッドキャスト全文を確認した分析によると、彼はゲーミングPCではなく「AIを各自のPCで動かすこと（ローカル推論）」についての質問に答えていました。その意味では文脈が抜け落ちたのは事実です。",
+            "ただし同じ分析は、結論が依然として「不足するメモリはデータセンターに置くべき」だったと指摘しています。撤回というより言い換えに近い、という評価です。"
+          ]
+        },
+        {
+          "h": "4. 苛立ちが逆風になった理由",
+          "p": [
+            "批判する側は、OpenAI自身がメモリ不足の大きな原因の一つだと指摘しました。メモリを最も多く使う側が「文脈を切り取られた」と苛立っても、メモリ代を払う人々の共感は得にくかったのです。",
+            "「もっと作ろう」という解決策も、今の価格は下げないという指摘がありました。工場を増やすには何年もかかるからです。"
+          ]
+        },
+        {
+          "h": "5. 私たちの考え",
+          "p": [
+            "苛立つ気持ちは分かります。私たちも毎朝メモリ価格を見るたびに、似たような言葉が浮かびますから。",
+            "下は今日のDDR5最安値です。誰が正しかったのかは、結局この数字が教えてくれるでしょう。"
+          ]
+        }
+      ]
+    },
+    "de": {
+      "title": "Sam Altman platzt der Kragen: RAM-Aufregung und „f***ing annoying“",
+      "desc": "Seine RAM-Aussage wurde zum Meme, Musk spottete – Sam Altman fluchte, man habe ihn falsch zitiert. Was ihn ärgerte und warum es nach hinten losging.",
+      "lead": "Erst lachte Sam Altman die Sache als „Ram Altman“ weg, dann riss ihm der Geduldsfaden – mit Kraftausdruck. Für alle, die von RAM-Preisen genug haben, wurde selbst sein Ärger zum nächsten Meme.",
+      "sections": [
+        {
+          "h": "1. Die Memes hörten nicht auf",
+          "p": [
+            "Seine Aussage im Podcast Cheeky Pint – DRAM in privaten PCs werde nur 5 % der Zeit genutzt, das sei „quite terrible“ – wurde sofort zum Meme. Spott darüber trendete auf X, und unter völlig anderen Beiträgen tauchten RAM-Witze auf.",
+            "Auch Elon Musk machte sich auf X darüber lustig. Zwei KI-Schwergewichte im Clinch – diesmal wegen RAM."
+          ]
+        },
+        {
+          "h": "2. Was er sagte: „f***ing annoying“",
+          "p": [
+            "Altman schrieb auf X, er wolle, dass die Welt reichlich Speicher hat, und es sei „f***ing annoying“, dass das aus dem Zusammenhang gerissen wurde.",
+            "Er fordere seit Langem, die Speicherproduktion massiv hochzufahren. Etwa zur selben Zeit postete er „i want you to have so much ram lets build more“ und hieß einen halben Tag lang „Ram Altman“."
+          ]
+        },
+        {
+          "h": "3. Wirklich aus dem Zusammenhang gerissen?",
+          "p": [
+            "Eine Auswertung des vollständigen Transkripts zeigt: Er antwortete auf eine Frage zum lokalen Ausführen von KI (lokale Inferenz), nicht zu Gaming-PCs. Insofern ging tatsächlich Kontext verloren.",
+            "Dieselbe Analyse hält aber fest, dass sein Fazit weiterhin lautete: knapper Speicher gehört ins Rechenzentrum. Eher neu verpackt als zurückgenommen."
+          ]
+        },
+        {
+          "h": "4. Warum der Ärger nach hinten losging",
+          "p": [
+            "Kritiker wiesen darauf hin, dass OpenAI selbst einer der Hauptgründe für die Speicherknappheit ist. Wenn der größte Speicherabnehmer sich über fehlenden Kontext beschwert, hält sich das Mitgefühl derer, die die RAM-Preise zahlen, in Grenzen.",
+            "Außerdem hilft „build more“ den Preisen heute nicht: Neue Fabriken brauchen Jahre."
+          ]
+        },
+        {
+          "h": "5. Unsere Meinung",
+          "p": [
+            "Den Frust verstehen wir. Uns fallen jeden Morgen beim Blick auf die RAM-Preise ähnliche Wörter ein.",
+            "Unten stehen die heutigen DDR5-Bestpreise. Wer recht hatte, zeigen am Ende diese Zahlen."
+          ]
+        }
+      ]
+    }
+  },
+  "ram-altman": {
+    "updated": "2026-11-09",
+    "sources": [
+      {
+        "name": "The Next Web",
+        "url": "https://thenextweb.com/news/sam-altman-ram-altman-memory-out-of-context-x"
       },
       {
         "name": "Windows Report",
@@ -53,7 +238,7 @@
           "h": "3. 해명: “램 많이 가지세요”",
           "p": [
             "올트먼은 발언이 맥락에서 벗어나 전달됐다며, 사람들이 원하는 만큼 램을 갖기를 바란다고 했습니다. 그러면서 “lets build more”, 그러니까 더 만들자고 덧붙였습니다.",
-            "해명 글에는 욕설도 섞였습니다. 발언이 맥락에서 잘려 퍼진 게 “f***ing annoying”, 그러니까 정말 짜증 난다고 썼습니다. 자기는 오래전부터 메모리 생산을 늘리자고 말해 왔다면서요. 다만 오픈AI 자체가 램 부족의 큰 원인 중 하나라는 점에서, 이 해명이 오히려 불을 붙였다는 반응도 있었습니다."
+            "이 일로 결국 욕설 섞인 짜증까지 냈는데, 그 이야기는 따로 정리했습니다(이야기 목록의 「샘 올트먼, 결국 화났다」)."
           ]
         },
         {
@@ -94,7 +279,7 @@
           "h": "3. The walk-back: have all the RAM you want",
           "p": [
             "Altman said the remarks were taken out of context and that he wants people to have as much RAM as they like, adding “lets build more”.",
-            "The clarification came with a swear: he wrote that it was “f***ing annoying” the remark had been taken out of context, and that he had long argued for the world to ramp up memory production. Critics noted that OpenAI itself is one of the main reasons memory is so scarce, which did not help."
+            "He later swore about it all; that part has its own story (“Sam Altman finally snapped” in the story list)."
           ]
         },
         {
@@ -135,7 +320,7 @@
           "h": "3. 釈明：「好きなだけメモリを持って」",
           "p": [
             "アルトマン氏は発言が文脈から切り離されて伝わったとし、みんなが好きなだけメモリを持てるようにしたいと述べ、「lets build more（もっと作ろう）」と付け加えました。",
-            "釈明には罵り言葉も混じっていました。発言が文脈から切り取られたのは「f***ing annoying（本当に腹が立つ）」と書き、自分は以前からメモリ増産を訴えてきたと述べています。ただ、OpenAI自身がメモリ不足の大きな原因の一つだとして、この釈明がかえって反感を買ったという声もありました。"
+            "この件では最終的に罵り言葉交じりに苛立ちを見せましたが、その話は別にまとめました（読みもの一覧の「サム・アルトマン、ついに怒る」）。"
           ]
         },
         {
@@ -176,7 +361,7 @@
           "h": "3. Die Klarstellung: Nehmt so viel RAM, wie ihr wollt",
           "p": [
             "Altman sagte, seine Worte seien aus dem Zusammenhang gerissen worden; er wolle, dass alle so viel RAM haben, wie sie möchten – und schob „lets build more“ hinterher.",
-            "Die Klarstellung kam mit Kraftausdruck: Es sei „f***ing annoying“, dass die Aussage aus dem Zusammenhang gerissen wurde; er fordere schon lange mehr Speicherproduktion. Kritiker merkten an, dass OpenAI selbst einer der Hauptgründe für die Knappheit ist – was die Sache nicht besser machte."
+            "Später fluchte er sogar darüber; das steht in einem eigenen Ratgeber („Sam Altman platzt der Kragen“)."
           ]
         },
         {
