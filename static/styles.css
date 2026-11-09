@@ -468,3 +468,6 @@ th[aria-sort="descending"] .th-sort::after { content: " ↓"; }
 .about-faq details { border-bottom: 1px solid var(--line); padding: 14px 2px; }
 .about-faq summary { cursor: pointer; font-size: 16px; font-weight: 650; color: var(--text); list-style-position: outside; }
 .about-faq details p { margin: 10px 0 2px; font-size: 15.5px; line-height: 1.75; color: var(--text-2); word-break: keep-all; }
+.about-follow { margin: 8px 0 20px; font-size: 15px; font-weight: 650; }
+.about-follow a { color: var(--brand); text-decoration: none; }
+.about-follow a:hover { text-decoration: underline; }

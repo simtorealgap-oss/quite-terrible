@@ -289,7 +289,8 @@
     "aboutQ3": "위 게임에서 램을 빼돌리면 진짜 램이 생기나요?",
     "aboutA3": "아니요. 기분만 좋아집니다. 대신 전 세계 사람들이 구한 램 개수는 진짜로 기록됩니다.",
     "aboutQ4": "램 올트먼 님이 이 사이트를 보면요?",
-    "aboutA4": "DDR5 32GB 하나만 시장에 풀어 주세요. 그래프로 바로 보여 드리겠습니다."
+    "aboutA4": "DDR5 32GB 하나만 시장에 풀어 주세요. 그래프로 바로 보여 드리겠습니다.",
+    "aboutFollow": "오늘의 램값은 X에서도 올립니다:"
   },
   "en": {
     "brand": "Quite Terrible",
@@ -581,7 +582,8 @@
     "aboutQ3": "If I steal RAM in the game up top, do I get real RAM?",
     "aboutA3": "No. You only feel better. The worldwide count of rescued sticks is real, though.",
     "aboutQ4": "What if Ram Altman reads this?",
-    "aboutA4": "Please release one DDR5 32GB stick into the wild. We will chart it immediately."
+    "aboutA4": "Please release one DDR5 32GB stick into the wild. We will chart it immediately.",
+    "aboutFollow": "Daily RAM prices on X:"
   },
   "ja": {
     "brand": "Quite Terrible",
@@ -873,7 +875,8 @@
     "aboutQ3": "上のゲームでメモリを奪うと、本物がもらえる？",
     "aboutA3": "いいえ。気分が良くなるだけです。ただし世界中で救出された数は本当に記録されます。",
     "aboutQ4": "ラム・アルトマンさんがこのサイトを見たら？",
-    "aboutA4": "DDR5 32GBを1枚だけ市場に放してください。すぐグラフにします。"
+    "aboutA4": "DDR5 32GBを1枚だけ市場に放してください。すぐグラフにします。",
+    "aboutFollow": "今日のメモリ価格はXでも："
   },
   "de": {
     "brand": "Quite Terrible",
@@ -1165,6 +1168,7 @@
     "aboutQ3": "Bekomme ich echten RAM, wenn ich im Spiel oben welchen klaue?",
     "aboutA3": "Nein. Es fühlt sich nur besser an. Die weltweite Zahl geretteter Module wird aber wirklich gezählt.",
     "aboutQ4": "Und wenn Ram Altman das hier liest?",
-    "aboutA4": "Bitte ein einziges DDR5-32-GB-Modul in die Freiheit entlassen. Wir zeichnen es sofort ins Diagramm."
+    "aboutA4": "Bitte ein einziges DDR5-32-GB-Modul in die Freiheit entlassen. Wir zeichnen es sofort ins Diagramm.",
+    "aboutFollow": "Die RAM-Preise des Tages auch auf X:"
   }
 }

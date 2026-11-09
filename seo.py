@@ -94,7 +94,9 @@ def seo_context(lang, page, strings, products, base='', site='', product_id=None
     priced = [p for p in products if p.get('price') is not None]
     title, desc = strings.get(f'{page}PageTitle', ''), strings.get(f'{page}PageDesc', '')
     graph = [{'@type': 'WebSite', '@id': absolute('/#website'), 'name': strings['brand'], 'url': absolute('/'),
-              'inLanguage': lang, 'description': strings['seoPricesDescEmpty']}]
+              'inLanguage': lang, 'description': strings['seoPricesDescEmpty'], 'publisher': {'@id': absolute('/#org')}},
+             {'@type': 'Organization', '@id': absolute('/#org'), 'name': strings['brand'], 'url': absolute('/'),
+              'logo': absolute('/favicon.svg'), 'sameAs': ['https://x.com/quiteterribleHQ']}]
     extra = {'productHeading': '', 'productLead': '', 'productStatic': '', 'relatedLinks': '', 'productCategory': '',
              'prerenderRows': '', 'makerRows': '', 'productFacts': '', 'guideList': '', 'guideHtml': ''}
 
