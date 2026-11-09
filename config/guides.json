@@ -7,6 +7,14 @@
         "url": "https://thenextweb.com/news/sam-altman-ram-altman-memory-out-of-context-x"
       },
       {
+        "name": "Decrypt",
+        "url": "https://decrypt.co/382606/sam-altman-says-its-fucking-annoying-his-ram-comments-were-taken-out-of-context"
+      },
+      {
+        "name": "PC Gamer",
+        "url": "https://www.pcgamer.com/software/ai/sam-altman-is-annoyed-his-dram-comment-was-taken-out-of-context/"
+      },
+      {
         "name": "Windows Report",
         "url": "https://windowsreport.com/sam-altmans-ram-row-takes-a-hilarious-turn-defends-his-stance-and-renames-himself-ram-altman-on-x/"
       },
@@ -44,7 +52,8 @@
         {
           "h": "3. 해명: “램 많이 가지세요”",
           "p": [
-            "올트먼은 발언이 맥락에서 벗어나 전달됐다며, 사람들이 원하는 만큼 램을 갖기를 바란다고 했습니다. 그러면서 “lets build more”, 그러니까 더 만들자고 덧붙였습니다."
+            "올트먼은 발언이 맥락에서 벗어나 전달됐다며, 사람들이 원하는 만큼 램을 갖기를 바란다고 했습니다. 그러면서 “lets build more”, 그러니까 더 만들자고 덧붙였습니다.",
+            "해명 글에는 욕설도 섞였습니다. 발언이 맥락에서 잘려 퍼진 게 “f***ing annoying”, 그러니까 정말 짜증 난다고 썼습니다. 자기는 오래전부터 메모리 생산을 늘리자고 말해 왔다면서요. 다만 오픈AI 자체가 램 부족의 큰 원인 중 하나라는 점에서, 이 해명이 오히려 불을 붙였다는 반응도 있었습니다."
           ]
         },
         {
@@ -84,7 +93,8 @@
         {
           "h": "3. The walk-back: have all the RAM you want",
           "p": [
-            "Altman said the remarks were taken out of context and that he wants people to have as much RAM as they like, adding “lets build more”."
+            "Altman said the remarks were taken out of context and that he wants people to have as much RAM as they like, adding “lets build more”.",
+            "The clarification came with a swear: he wrote that it was “f***ing annoying” the remark had been taken out of context, and that he had long argued for the world to ramp up memory production. Critics noted that OpenAI itself is one of the main reasons memory is so scarce, which did not help."
           ]
         },
         {
@@ -124,7 +134,8 @@
         {
           "h": "3. 釈明：「好きなだけメモリを持って」",
           "p": [
-            "アルトマン氏は発言が文脈から切り離されて伝わったとし、みんなが好きなだけメモリを持てるようにしたいと述べ、「lets build more（もっと作ろう）」と付け加えました。"
+            "アルトマン氏は発言が文脈から切り離されて伝わったとし、みんなが好きなだけメモリを持てるようにしたいと述べ、「lets build more（もっと作ろう）」と付け加えました。",
+            "釈明には罵り言葉も混じっていました。発言が文脈から切り取られたのは「f***ing annoying（本当に腹が立つ）」と書き、自分は以前からメモリ増産を訴えてきたと述べています。ただ、OpenAI自身がメモリ不足の大きな原因の一つだとして、この釈明がかえって反感を買ったという声もありました。"
           ]
         },
         {
@@ -164,7 +175,8 @@
         {
           "h": "3. Die Klarstellung: Nehmt so viel RAM, wie ihr wollt",
           "p": [
-            "Altman sagte, seine Worte seien aus dem Zusammenhang gerissen worden; er wolle, dass alle so viel RAM haben, wie sie möchten – und schob „lets build more“ hinterher."
+            "Altman sagte, seine Worte seien aus dem Zusammenhang gerissen worden; er wolle, dass alle so viel RAM haben, wie sie möchten – und schob „lets build more“ hinterher.",
+            "Die Klarstellung kam mit Kraftausdruck: Es sei „f***ing annoying“, dass die Aussage aus dem Zusammenhang gerissen wurde; er fordere schon lange mehr Speicherproduktion. Kritiker merkten an, dass OpenAI selbst einer der Hauptgründe für die Knappheit ist – was die Sache nicht besser machte."
           ]
         },
         {
