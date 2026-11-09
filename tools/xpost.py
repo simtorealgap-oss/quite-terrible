@@ -28,6 +28,7 @@ from server import prices_payload  # noqa: E402
 
 PICKS = ('crucial-ddr5-32', 'samsung-ddr5-32', 'samsung-ddr5-16', 'rtx-5070', 'rtx-5080', 'rtx-5090')
 SITE = 'https://quiteterrible.com/en/'
+HASHTAGS = '#DDR5 #RamAltman'  # X favours one or two; more looks like spam
 MEDIA_UPLOAD = 'https://api.x.com/2/media/upload'
 CREATE_POST = 'https://api.x.com/2/tweets'
 
@@ -73,7 +74,7 @@ CLOSERS = {'happy': 'Prices down. Even Sam is smiling.', 'smirk': 'Sam still has
 def post_text(lines, day):
     body = '\n'.join(f"{r['label']}  {money(r['price'])}  {arrow(r['change'])}" for r in lines)
     return (f"Quite terrible RAM & GPU prices, {day:%b %-d} (US, lowest new on eBay, vs 7 days ago):\n\n"
-            f"{body}\n\n{CLOSERS[mood(lines)]} {SITE}")
+            f"{body}\n\n{CLOSERS[mood(lines)]} {SITE}\n\n{HASHTAGS}")
 
 
 def draw_card(lines, day, path):
