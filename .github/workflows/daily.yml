@@ -61,7 +61,7 @@ jobs:
         if: github.event_name != 'push' && (github.event.schedule == '40 13 * * *' || inputs.region == 'us' || inputs.region == 'all')
         run: |
           pip install -q pillow
-          python tools/xpost.py --card x-card.png --archive x-posts || echo "::warning::No X card today"
+          python tools/xpost.py --card x-card.png --archive x-posts --sam || echo "::warning::No X card today"
       - name: Save collected data
         if: github.event_name != 'push'
         run: |

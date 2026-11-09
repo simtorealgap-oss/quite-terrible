@@ -432,7 +432,8 @@ def import_feed(db, data):
 
 NEWS_QUERIES = {
     'en': {'ram': ['(DDR5 OR DDR4) (RAM OR memory) (price OR supply OR shortage) when:7d',
-                   '(DRAM OR HBM) (Samsung OR "SK hynix" OR Micron) (price OR supply) when:7d'],
+                   '(DRAM OR HBM) (Samsung OR "SK hynix" OR Micron) (price OR supply) when:7d',
+                   '"Sam Altman" (RAM OR DRAM OR memory) when:7d'],  # for the "Sam watch" card (tools/xpost.py)
            'gpu': ['(GeForce OR "RTX 50") (price OR availability OR stock) when:7d',
                    '("graphics card" OR GPU) NVIDIA price when:7d']},
     'ja': {'ram': ['(DDR5 OR DDR4) (メモリ OR メモリー) (価格 OR 値上がり OR 品薄) when:7d',

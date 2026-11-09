@@ -71,6 +71,61 @@ CLOSERS = {'happy': 'Prices down. Even Sam is smiling.', 'smirk': 'Sam still has
            'sad': 'Prices up. Sam is crying into his RAM pile.', 'angry': 'Prices way up. Sam is furious. So are we.'}
 
 
+SAM_MOODS = (('angry', r'annoy|furious|angry|slam|rant|fume|snap|swear|blast|lash'),
+             ('sad', r'apolog|sorry|regret|backtrack|walks? back|revers|retract'),
+             ('happy', r'build more|deal|partner|agree|invest|so much ram|more ram'))
+SAM_CLOSERS = {'angry': 'Sam mood today: furious.', 'sad': 'Sam mood today: a little sorry.',
+               'happy': 'Sam mood today: suspiciously cheerful.', 'smirk': 'Sam mood today: still hoarding.'}
+
+
+def sam_news(day, db_path=ROOT / 'data/ramprice.sqlite3'):
+    """The newest English headline of the last day about Sam Altman and memory, or None."""
+    import sqlite3
+    since = (dt.datetime.combine(day, dt.time(), dt.timezone.utc) - dt.timedelta(hours=24)).isoformat()
+    with sqlite3.connect(db_path) as db:
+        for title, publisher, url in db.execute(
+                "SELECT title, publisher, url FROM news WHERE lang='en' AND published_at>=? ORDER BY published_at DESC", (since,)):
+            if re.search(r'altman', title, re.I) and re.search(r'\bram\b|dram|memory|hbm', title, re.I):
+                return {'title': title, 'publisher': publisher, 'url': url}
+    return None
+
+
+def censor(text):
+    """Keep headlines quotable on our account: f***, s***."""
+    return re.sub(r'\b(f)uck|\b(s)hit', lambda m: (m.group(1) or m.group(2)) + '***', text, flags=re.I)
+
+
+def sam_mood(title):
+    return next((m for m, pattern in SAM_MOODS if re.search(pattern, title, re.I)), 'smirk')
+
+
+def sam_text(item, face):
+    return (f"Sam watch 👀 \"{item['title']}\" ({item['publisher']})\n\n{SAM_CLOSERS[face]} "
+            f"RAM prices, every morning: {SITE}\n\n#RamAltman")
+
+
+def draw_sam_card(item, face, day, path):
+    from PIL import Image, ImageDraw, ImageFont
+    import textwrap
+    W, H = 1200, 675
+    img = Image.new('RGB', (W, H), '#f6f1e4')
+    d = ImageDraw.Draw(img)
+    font = lambda size: ImageFont.load_default(size=size)
+    d.rectangle([0, 0, W, 112], fill='#1a1c24')
+    d.text((48, 30), 'SAM WATCH', font=font(46), fill='#ffffff')
+    d.text((W - 48, 44), f'{day:%b %-d, %Y}', font=font(30), fill='#ffffff', anchor='ra')
+    y = 160
+    for line in textwrap.wrap(f"\u201c{item['title']}\u201d", 30)[:6]:
+        d.text((48, y), line, font=font(40), fill='#1a1c24')
+        y += 54
+    d.text((48, y + 14), f"via {item['publisher']}", font=font(28), fill='#5c6374')
+    d.text((48, H - 54), SAM_CLOSERS[face] + '  ·  quiteterrible.com', font=font(26), fill='#e8483c')
+    boss = pixel_boss(scale=9, face=face)
+    img.paste(boss, (W - boss.width - 34, H - boss.height - 36), boss)
+    img.save(path)
+    return path
+
+
 def x_length(text):
     """Length as X counts it: every link is 23 characters."""
     return len(re.sub(r'https?://\S+', 'x' * 23, text))
@@ -213,8 +268,27 @@ def main():
     parser.add_argument('--card', type=Path, default=ROOT / 'build-x-card.png')
     parser.add_argument('--post', action='store_true')
     parser.add_argument('--archive', type=Path, help='also keep <date>.png and <date>.txt in this folder (one per day)')
+    parser.add_argument('--sam', action='store_true', help='also make sam-<date>.png/.txt when there is Sam Altman memory news')
+    parser.add_argument('--headline', help='Sam watch: use this headline instead of the collected news')
+    parser.add_argument('--publisher', default='')
+    parser.add_argument('--mood', choices=['angry', 'sad', 'happy', 'smirk'])
     args = parser.parse_args()
     day = dt.datetime.now(dt.timezone(dt.timedelta(hours=-5))).date()  # the US morning run's date
+    if args.sam or args.headline:
+        item = {'title': args.headline, 'publisher': args.publisher} if args.headline else sam_news(day)
+        if item:
+            item['title'] = censor(item['title'])
+        if item and args.archive:
+            face = args.mood or sam_mood(item['title'])
+            text = sam_text(item, face)
+            if x_length(text) > 280:
+                text = text.rsplit('\n\n', 1)[0]
+            args.archive.mkdir(parents=True, exist_ok=True)
+            draw_sam_card(item, face, day, args.archive / f'sam-{day:%Y-%m-%d}.png')
+            (args.archive / f'sam-{day:%Y-%m-%d}.txt').write_text(text + '\n')
+            print(text)
+        if args.headline:
+            return
     lines, currency = rows()
     if currency != 'USD' or len(lines) < 3:
         print('Not enough US prices today; nothing to post.')
