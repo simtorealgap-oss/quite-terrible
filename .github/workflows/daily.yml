@@ -56,12 +56,19 @@ jobs:
         # A failing source is recorded in the database and shown on the site; keep publishing.
         # Each morning run refreshes its own region; a manual run refreshes both.
         run: python server.py --update all --force-news $REGION || echo "::warning::Some sources failed, see output above"
+      - name: Today's X card
+        # After US prices: x-posts/<date>.png and .txt, one per day, for posting on X by hand.
+        if: github.event_name != 'push' && (github.event.schedule == '40 13 * * *' || inputs.region == 'us' || inputs.region == 'all')
+        run: |
+          pip install -q pillow
+          python tools/xpost.py --card x-card.png --archive x-posts || echo "::warning::No X card today"
       - name: Save collected data
         if: github.event_name != 'push'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -f data/ramprice.sqlite3
+          [ -d x-posts ] && git add x-posts || true
           git diff --cached --quiet || git commit -m "data: daily update"
           git push
       - name: Post today's prices to X

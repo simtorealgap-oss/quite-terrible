@@ -1,6 +1,6 @@
 """Daily price card for X (@quiteterribleHQ): draw a PNG from today's US prices and post it.
 
-python tools/xpost.py --card out.png          # only draw the card (no keys needed)
+python tools/xpost.py --card out.png --archive x-posts   # draw the card, keep <date>.png/.txt
 python tools/xpost.py --post                  # draw and post (needs X_API_KEY, X_API_SECRET,
                                               # X_ACCESS_TOKEN, X_ACCESS_SECRET; OAuth 1.0a user context)
 Posts only to our own account. It never reads, replies to or follows anyone.
@@ -206,6 +206,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--card', type=Path, default=ROOT / 'build-x-card.png')
     parser.add_argument('--post', action='store_true')
+    parser.add_argument('--archive', type=Path, help='also keep <date>.png and <date>.txt in this folder (one per day)')
     args = parser.parse_args()
     day = dt.datetime.now(dt.timezone(dt.timedelta(hours=-5))).date()  # the US morning run's date
     lines, currency = rows()
@@ -215,6 +216,12 @@ def main():
     draw_card(lines, day, args.card)
     text = post_text(lines, day)
     print(text)
+    if args.archive:
+        import shutil
+        args.archive.mkdir(parents=True, exist_ok=True)
+        shutil.copy(args.card, args.archive / f'{day:%Y-%m-%d}.png')
+        (args.archive / f'{day:%Y-%m-%d}.txt').write_text(text + '\n')
+
     if not args.post:
         return
     keys = {k: os.getenv(k, '') for k in ('X_API_KEY', 'X_API_SECRET', 'X_ACCESS_TOKEN', 'X_ACCESS_SECRET')}
