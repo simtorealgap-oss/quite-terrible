@@ -71,9 +71,14 @@ CLOSERS = {'happy': 'Prices down. Even Sam is smiling.', 'smirk': 'Sam still has
            'sad': 'Prices up. Sam is crying into his RAM pile.', 'angry': 'Prices way up. Sam is furious. So are we.'}
 
 
+def x_length(text):
+    """Length as X counts it: every link is 23 characters."""
+    return len(re.sub(r'https?://\S+', 'x' * 23, text))
+
+
 def post_text(lines, day):
     body = '\n'.join(f"{r['label']}  {money(r['price'])}  {arrow(r['change'])}" for r in lines)
-    return (f"Quite terrible RAM & GPU prices, {day:%b %-d} (US, lowest new on eBay, vs 7 days ago):\n\n"
+    return (f"RAM & GPU prices, {day:%b %-d} · lowest new in the US (eBay), 7-day change:\n\n"
             f"{body}\n\n{CLOSERS[mood(lines)]} {SITE}\n\n{HASHTAGS}")
 
 
@@ -216,6 +221,8 @@ def main():
         return
     draw_card(lines, day, args.card)
     text = post_text(lines, day)
+    if x_length(text) > 280:  # X's limit: drop the hashtags rather than fail
+        text = text.rsplit('\n\n', 1)[0]
     print(text)
     if args.archive:
         import shutil
