@@ -59,10 +59,21 @@ def arrow(change):
     return f"{'▲' if change > 0 else '▼'}{abs(change):.1f}%"
 
 
+def mood(lines):
+    """The boss's face for the day, from the average 7-day change of the lines on the card."""
+    changes = [r['change'] for r in lines if r['change'] is not None]
+    avg = sum(changes) / len(changes) if changes else 0
+    return 'happy' if avg <= -0.5 else 'smirk' if avg < 0.5 else 'sad' if avg < 5 else 'angry'
+
+
+CLOSERS = {'happy': 'Prices down. Even Sam is smiling.', 'smirk': 'Sam still has the RAM.',
+           'sad': 'Prices up. Sam is crying into his RAM pile.', 'angry': 'Prices way up. Sam is furious. So are we.'}
+
+
 def post_text(lines, day):
     body = '\n'.join(f"{r['label']}  {money(r['price'])}  {arrow(r['change'])}" for r in lines)
     return (f"Quite terrible RAM & GPU prices, {day:%b %-d} (US, lowest new on eBay, vs 7 days ago):\n\n"
-            f"{body}\n\nSam still has the RAM. {SITE}")
+            f"{body}\n\n{CLOSERS[mood(lines)]} {SITE}")
 
 
 def draw_card(lines, day, path):
@@ -86,13 +97,50 @@ def draw_card(lines, day, path):
         d.text((740, y + 10), arrow(ch).replace('▲', '+').replace('▼', '-'), font=font(28), fill=color, anchor='ra')
         y += 76
     d.text((48, H - 54), 'vs 7 days ago  ·  quiteterrible.com', font=font(26), fill='#5c6374')
-    boss = pixel_boss(scale=9)
+    boss = pixel_boss(scale=9, face=mood(lines))
     img.paste(boss, (W - boss.width - 34, H - boss.height - 36), boss)
     img.save(path)
     return path
 
 
-def pixel_boss(scale):
+def face_rows(boss, face):
+    """Expressions drawn over the boss sprite's face (eyes at columns 7-8 and 13-14, rows 13-15)."""
+    rows = [list(r) for r in boss]
+
+    def put(y, x, ch):
+        rows[y][x] = ch
+    if face == 'happy':  # eyes closed in ^ ^, mouth open in a grin
+        for ex in (7, 13):
+            put(13, ex, 'K'); put(13, ex + 1, 'K')
+            put(14, ex, 's'); put(14, ex + 1, 's'); put(14, ex - 1, 'K'); put(14, ex + 2, 'K')
+            put(15, ex, 's'); put(15, ex + 1, 's')
+        for x in (12, 13):
+            put(17, x, 's')
+        for x in (9, 10, 11):
+            put(18, x, 's')
+        for x in range(9, 13):
+            put(17, x, 'K'); put(18, x, 'm')
+    elif face == 'sad':  # brows up in the middle, tears, a frown
+        put(12, 7, 's'); put(12, 8, 's'); put(12, 13, 's'); put(12, 14, 's')
+        put(11, 8, 'd'); put(12, 9, 'd'); put(11, 13, 'd'); put(12, 12, 'd')
+        for y in (16, 17, 18):
+            put(y, 7, 'e'); put(y, 14, 'e')
+        for x in (12, 13):
+            put(17, x, 's')
+        for x in (9, 10, 11):
+            put(18, x, 's')
+        put(17, 10, 'K'); put(17, 11, 'K'); put(18, 9, 'K'); put(18, 12, 'K')
+    elif face == 'angry':  # the game's angry face: V brows, wide eyes, shouting mouth
+        rows[12] = list('.KdhhTssddssddssshhdK.')
+        rows[13] = list('.KdSsssKKssssKKsssSdK.')
+        rows[14] = list('.KdSsssKKssssKKsssSdK.')
+        rows[16] = list('.KdSssssssssssssssSdK.')
+        rows[17] = list('..KdSsssKKKKKKsssSdK..')
+        rows[18] = list('...KSSssKmmmmKsSSK....')
+    return [''.join(r) for r in rows]
+
+
+def pixel_boss(scale, face='smirk'):
     """The boss from the site's hero game (static/hero.js), sitting on a pile of RAM sticks."""
     from PIL import Image
     src = (ROOT / 'static/hero.js').read_text()
@@ -101,7 +149,10 @@ def pixel_boss(scale):
     pal_src = src[src.index('const BOSS_PAL = {'):src.index('};', src.index('const BOSS_PAL = {'))]
     boss_pal = dict(re.findall(r"(\w): '(#[0-9a-f]{6})'", pal_src)) | {'K': colors['K']}
     stick_pal = {'K': colors['K'], 'a': colors['pcb2'], 'b': colors['pcb1'], 'c': colors['chip'], 'g': colors['gold']}
-    boss, stick = grab('BOSS'), grab('STICK')
+    boss, stick = face_rows(grab('BOSS'), face), grab('STICK')
+    boss_pal['e'] = '#4db8ff'  # tears
+    if face == 'angry':  # red in the face, as in the game
+        boss_pal |= {'s': '#f7b49c', 'S': '#e58f74', 'T': '#d98a70', 'm': '#8f2a22'}
     canvas = Image.new('RGBA', (40, 42), (0, 0, 0, 0))
 
     def put(sprite, x, y, pal):
@@ -110,6 +161,8 @@ def pixel_boss(scale):
                 if ch in pal:
                     canvas.putpixel((x + i, y + j), tuple(int(pal[ch][k:k + 2], 16) for k in (1, 3, 5)) + (255,))
     put(boss, 9, 0, boss_pal)
+    if face == 'angry':  # the cartoon vein on his forehead
+        put(['.r.r.', 'rr.rr', '.....', 'rr.rr', '.r.r.'], 26, 2, {'r': '#e8483c'})
     for r, (sx, n) in enumerate([(0, 3), (3, 2), (7, 1)]):
         for k in range(n):
             put(stick, sx + k * 13, 36 - r * 5, stick_pal)
