@@ -1,7 +1,11 @@
 {
   "ram-altman": {
-    "updated": "2026-11-05",
+    "updated": "2026-11-09",
     "sources": [
+      {
+        "name": "The Next Web",
+        "url": "https://thenextweb.com/news/sam-altman-ram-altman-memory-out-of-context-x"
+      },
       {
         "name": "Windows Report",
         "url": "https://windowsreport.com/sam-altmans-ram-row-takes-a-hilarious-turn-defends-his-stance-and-renames-himself-ram-altman-on-x/"
@@ -13,11 +17,15 @@
       {
         "name": "Digit",
         "url": "https://www.digit.in/news/general/sam-altman-renames-himself-ram-altman-on-x-after-backlash-over-pc-memory-remarks-users-spark-frenzy-with-happy-diwali-wishes.html"
+      },
+      {
+        "name": "디지털투데이",
+        "url": "https://www.digitaltoday.co.kr/news/articleView.html?idxno=712816"
       }
     ],
     "ko": {
       "title": "램 올트먼: 샘 올트먼이 X 이름을 ‘Ram Altman’으로 바꾼 날",
-      "desc": "램 올트먼(Ram Altman)은 샘 올트먼이 PC 램 발언 논란 끝에 X 표시 이름을 바꾼 것입니다. 무슨 일이 있었는지와 오늘 DDR5 램값을 함께 정리했습니다.",
+      "desc": "램 올트먼(램 알트먼, Ram Altman)은 샘 올트먼이 PC 램 발언 논란 끝에 X에서 잠깐 쓴 이름입니다. 무슨 일이 있었는지와 오늘 DDR5 램값을 정리했습니다.",
       "lead": "2026년 11월 4일, 샘 올트먼의 X 프로필 이름이 ‘Ram Altman’, 그러니까 ‘램 올트먼’으로 바뀌었습니다. 램값 때문에 장바구니만 들락날락하던 PC 사용자들에게는 꽤 상징적인 장면입니다.",
       "sections": [
         {
@@ -42,7 +50,8 @@
         {
           "h": "4. 그리고 개명",
           "p": [
-            "한 사용자가 아예 이름을 ‘Ram Altman’으로 바꾸라고 하자, 올트먼은 이를 받아들여 X 표시 이름을 바꿨습니다. 아이디는 그대로 @sama입니다.",
+            "한 사용자가 아예 이름을 ‘Ram Altman’으로 바꾸라고 하자, 올트먼은 이를 받아들여 X 표시 이름을 바꿨습니다. 아이디는 그대로 @sama였습니다.",
+            "다만 오래가지는 않았습니다. 미국 동부 시간 수요일 오전 11시쯤에는 프로필 이름이 다시 ‘Sam Altman’으로 돌아와 있었습니다(비즈니스 인사이더 보도). 램 올트먼은 반나절짜리 이름이었던 셈입니다.",
             "AI 업계에서 가장 바쁜 사람 중 하나가 램 농담에 이름을 걸었다는 것 자체가, 이번 램값 사태가 얼마나 체감되는 문제인지 보여 줍니다."
           ]
         },
@@ -56,7 +65,7 @@
     },
     "en": {
       "title": "Ram Altman: the day Sam Altman renamed himself on X",
-      "desc": "“Ram Altman” is the X display name Sam Altman took after the backlash over his PC RAM remarks. What happened, and what DDR5 RAM costs today.",
+      "desc": "“Ram Altman” was the X display name Sam Altman briefly took after the backlash over his PC RAM remarks. What happened, and what DDR5 RAM costs today.",
       "lead": "On November 4, 2026, Sam Altman’s X display name became “Ram Altman”. For everyone who has been adding and removing DDR5 from a shopping cart for months, it was quite a moment.",
       "sections": [
         {
@@ -82,6 +91,7 @@
           "h": "4. And then the name",
           "p": [
             "When a user suggested he simply rename himself “Ram Altman”, he went along with it and changed his X display name. His handle is still @sama.",
+            "It did not last. By about 11am ET on Wednesday his profile read “Sam Altman” again, Business Insider reported. Ram Altman was a half-day name.",
             "That one of the busiest people in AI put his name on a RAM joke says a lot about how real this price spike feels."
           ]
         },
@@ -95,7 +105,7 @@
     },
     "ja": {
       "title": "ラム・アルトマン：サム・アルトマンがXの名前を「Ram Altman」に変えた日",
-      "desc": "ラム・アルトマン（Ram Altman）は、PCメモリ発言が炎上したサム・アルトマン氏がXで名乗った表示名です。経緯と今日のDDR5相場をまとめました。",
+      "desc": "ラム・アルトマン（Ram Altman）は、PCメモリ発言が炎上したサム・アルトマン氏がXで一時的に名乗った表示名です。経緯と今日のDDR5相場をまとめました。",
       "lead": "2026年11月4日、サム・アルトマンのXの表示名が「Ram Altman」、つまり「ラム・アルトマン」に変わりました。メモリ高騰でカートに入れたり外したりしてきたPCユーザーには、なかなか象徴的な出来事です。",
       "sections": [
         {
@@ -121,6 +131,7 @@
           "h": "4. そして改名",
           "p": [
             "あるユーザーが「いっそRam Altmanに改名したら」と提案すると、アルトマン氏はそれを受け入れてXの表示名を変更しました。ユーザー名は@samaのままです。",
+            "ただし長くは続きませんでした。米東部時間の水曜午前11時ごろには、表示名は「Sam Altman」に戻っていたとBusiness Insiderが報じています。ラム・アルトマンは半日だけの名前でした。",
             "AI業界で最も忙しい人の一人がメモリの冗談に名前を賭けたこと自体、今回の高騰がどれほど身近な問題かを物語っています。"
           ]
         },
@@ -134,7 +145,7 @@
     },
     "de": {
       "title": "Ram Altman: Der Tag, an dem sich Sam Altman auf X umbenannte",
-      "desc": "„Ram Altman“ ist der X-Anzeigename, den Sam Altman nach der Kritik an seinen PC-RAM-Aussagen annahm. Was passiert ist und was DDR5 heute kostet.",
+      "desc": "„Ram Altman“ war der X-Anzeigename, den Sam Altman nach der Kritik an seinen PC-RAM-Aussagen kurz trug. Was passiert ist und was DDR5 heute kostet.",
       "lead": "Am 4. November 2026 hieß Sam Altman auf X plötzlich „Ram Altman“. Für alle, die seit Monaten DDR5 in den Warenkorb legen und wieder herausnehmen, ein ziemlicher Moment.",
       "sections": [
         {
@@ -160,6 +171,7 @@
           "h": "4. Und dann der Name",
           "p": [
             "Als ein Nutzer vorschlug, er solle sich doch gleich „Ram Altman“ nennen, ging er darauf ein und änderte seinen Anzeigenamen auf X. Sein Handle bleibt @sama.",
+            "Lange hielt es nicht: Gegen 11 Uhr (US-Ostküstenzeit) am Mittwoch stand im Profil laut Business Insider wieder „Sam Altman“. Ram Altman war ein Name für einen halben Tag.",
             "Dass einer der beschäftigtsten Menschen der KI-Branche seinen Namen für einen RAM-Witz hergibt, zeigt, wie spürbar diese Preiswelle ist."
           ]
         },
