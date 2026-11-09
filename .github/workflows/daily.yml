@@ -14,6 +14,10 @@ on:
         type: choice
         options: [all, kr, us, de]
         default: all
+      post_x:
+        description: 'Post the US price card to X (@quiteterribleHQ) after collecting'
+        type: boolean
+        default: false
   push:
     branches: [main]
 
@@ -60,6 +64,17 @@ jobs:
           git add -f data/ramprice.sqlite3
           git diff --cached --quiet || git commit -m "data: daily update"
           git push
+      - name: Post today's prices to X
+        # Once a day after the US morning run, only while repository variable X_POSTING is 'on'.
+        if: (github.event.schedule == '40 13 * * *' && vars.X_POSTING == 'on') || inputs.post_x
+        env:
+          X_API_KEY: ${{ secrets.X_API_KEY }}
+          X_API_SECRET: ${{ secrets.X_API_SECRET }}
+          X_ACCESS_TOKEN: ${{ secrets.X_ACCESS_TOKEN }}
+          X_ACCESS_SECRET: ${{ secrets.X_ACCESS_SECRET }}
+        run: |
+          pip install -q pillow
+          python tools/xpost.py --post --card x-card.png || echo "::warning::Posting to X failed, see output above"
       - name: Build site
         # With a custom domain (repository variable CUSTOM_DOMAIN) the site lives at the domain root.
         env:
