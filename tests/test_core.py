@@ -423,11 +423,11 @@ class StaticSite(unittest.TestCase):
     def test_build_writes_every_page_with_base_path_and_data(self):
         from build import build
         import sqlite3, store
-        # Build as of the newest stored Korean price: the test must not depend on how fresh the committed
+        # Build as of the newest stored price: the test must not depend on how fresh the committed
         # data is (2026-11-12: Danawa blocked the runner, prices went stale, this test failed and the
         # daily run stopped before collecting anything, for every market and the news).
         with sqlite3.connect(store.DB_PATH if hasattr(store,'DB_PATH') else Path(__file__).resolve().parent.parent/'data/ramprice.sqlite3') as db:
-            latest=db.execute("SELECT MAX(observed_at) FROM prices WHERE market='KR'").fetchone()[0]
+            latest=db.execute("SELECT MAX(observed_at) FROM prices").fetchone()[0]  # newest of any market
         frozen=store.parse_time(latest)+dt.timedelta(minutes=5) if latest else store.now()
         with tempfile.TemporaryDirectory() as directory, patch('store.now',return_value=frozen), patch('server.now',return_value=frozen):
             out=build(Path(directory)/'dist','/quite-terrible','https://example.github.io')
