@@ -1,4 +1,390 @@
 {
+  "ram-altman-script": {
+    "updated": "2026-11-16",
+    "sources": [
+      {
+        "name": "Tom's Hardware",
+        "url": "https://tomshardware.com/pc-components/ram/spoof-program-monitors-and-emails-your-ram-usage-to-sam-altman-if-under-90-percent-utilization-ram-altman-logs-usage-and-reports-you-for-wasting-memory"
+      },
+      {
+        "name": "Cybernews",
+        "url": "https://cybernews.com/news/ram-altman-script-github/"
+      },
+      {
+        "name": "TweakTown",
+        "url": "https://www.tweaktown.com/news/114579/new-app-monitors-your-ram-usage-and-emails-openais-ceo-to-apologize-when-its-underused/index.html"
+      },
+      {
+        "name": "Dexerto",
+        "url": "https://www.dexerto.com/entertainment/developer-creates-script-to-email-sam-altman-about-his-unused-ram-every-day-3425821/"
+      },
+      {
+        "name": "80 Level",
+        "url": "https://80.lv/articles/developer-builds-script-that-reports-your-pc-s-unused-ram-to-sam-altman-daily"
+      },
+      {
+        "name": "t3n",
+        "url": "https://t3n.de/news/sam-altman-ram-skript-entwickler-protest-1772368"
+      }
+    ],
+    "ko": {
+      "title": "램을 놀리면 샘 올트먼에게 사과 메일이 간다: ‘Ram-Altman’ 스크립트",
+      "desc": "PC 램이 놀고 있으면 매일 샘 올트먼에게 메일을 보내는 장난 프로그램 ‘Ram-Altman’이 나왔습니다. 어떻게 동작하는지, 왜 만들어졌는지 정리했습니다.",
+      "lead": "“개인 PC의 램은 꽤 끔찍한 낭비”라는 말에, 한 개발자가 아주 성실한 답장을 만들었습니다. 내 램이 놀고 있으면 그 사실을 샘 올트먼에게 직접 보고하는 프로그램입니다.",
+      "sections": [
+        {
+          "h": "1. 무엇을 하는 프로그램인가",
+          "p": [
+            "개발자 Iain Kay가 깃허브에 올린 ‘Ram-Altman’은 리눅스용 작은 Bash 스크립트입니다. 몇 분마다 메모리 사용량을 기록하고, 램이 10% 넘게 놀고 있으면 하루에 한 번 샘 올트먼 앞으로 메일을 보냅니다.",
+            "메일 제목과 본문은 미리 준비된 문구 중에서 돌아가며 골라집니다. 내용은 대체로 ‘오늘도 램을 다 쓰지 못해 죄송합니다’에 가깝습니다."
+          ]
+        },
+        {
+          "h": "2. 왜 만들었나",
+          "p": [
+            "올트먼은 팟캐스트에서 개인 PC 속 램은 5% 정도만 쓰인다며, 부족한 메모리가 거기 있는 건 “꽤 끔찍하다”고 말했습니다. 그 뒤 반나절 동안 X 이름을 ‘Ram Altman’으로 바꾸기도 했습니다.",
+            "스크립트 이름도 바로 거기서 왔습니다. 낭비가 그렇게 걱정된다면, 당사자에게 매일 직접 알려 주자는 발상입니다."
+          ]
+        },
+        {
+          "h": "3. 그래도 선은 지켰다",
+          "p": [
+            "스크립트에는 올트먼의 메일 주소가 들어 있지 않습니다. 실제로 보내지 않고 어떤 메일이 갈지 미리 보는 ‘드라이런’ 옵션도 있습니다.",
+            "개발자도 진짜로 남의 메일함을 폭탄처럼 채우지는 말라고 당부했습니다. 메모리 계산은 진짜, 메일은 농담이라는 설명입니다."
+          ]
+        },
+        {
+          "h": "4. 반응",
+          "p": [
+            "Tom's Hardware, TweakTown, Cybernews, Dexerto 같은 해외 IT 매체들이 앞다퉈 다뤘고, 국내외 커뮤니티에서도 크게 퍼졌습니다.",
+            "댓글에는 “오픈AI 창고에서 놀고 있는 램은 누가 보고하나” 같은 반응이 줄을 이었습니다. 웃자고 만든 도구가 램값에 대한 불만을 대신 말해 준 셈입니다."
+          ]
+        },
+        {
+          "h": "5. 저희 생각",
+          "p": [
+            "저희 사이트 이름도 바로 그 “quite terrible”에서 왔으니, 이 스크립트에는 동지애를 느낍니다. 저희는 메일 대신 매일 아침 가격을 기록합니다.",
+            "아래는 오늘 기준 DDR5 최저가입니다. 이 값을 보면 램을 놀리고 싶은 사람은 없을 겁니다."
+          ]
+        }
+      ]
+    },
+    "en": {
+      "title": "Waste your RAM and Sam Altman gets an email: the ‘Ram-Altman’ script",
+      "desc": "A joke Linux script called Ram-Altman emails Sam Altman once a day when your PC leaves RAM unused. How it works and why it exists.",
+      "lead": "Told that RAM in personal PCs is “quite terrible” waste, one developer wrote a very diligent reply: a program that reports your idle memory straight to Sam Altman.",
+      "sections": [
+        {
+          "h": "1. What it does",
+          "p": [
+            "Ram-Altman, published on GitHub by developer Iain Kay, is a small Bash script for Linux. It logs memory use every few minutes and, if more than 10% of your RAM sat unused, sends Sam Altman one email a day.",
+            "Subjects and bodies rotate through prepared templates. Most of them amount to: sorry, I failed to use all my RAM again today."
+          ]
+        },
+        {
+          "h": "2. Why it exists",
+          "p": [
+            "On a podcast Altman said RAM in personal computers is used about 5% of the time and that having scarce memory sit there is “quite terrible”. He then spent half a day calling himself “Ram Altman” on X.",
+            "That is where the name comes from. If the waste worries him so much, why not tell him about it, personally, every day?"
+          ]
+        },
+        {
+          "h": "3. It still knows where the line is",
+          "p": [
+            "The script does not ship with Altman’s email address, and a dry-run option shows what would be sent without sending anything.",
+            "The developer has also asked people not to flood anyone’s inbox. The memory accounting is real; the emails are the joke."
+          ]
+        },
+        {
+          "h": "4. The reaction",
+          "p": [
+            "Tom’s Hardware, TweakTown, Cybernews, Dexerto and many others covered it, and it spread widely on forums and social media.",
+            "Replies quickly asked who reports the RAM sitting idle in OpenAI’s warehouses. A joke tool ended up voicing the frustration about RAM prices."
+          ]
+        },
+        {
+          "h": "5. Our take",
+          "p": [
+            "This site is named after that same “quite terrible”, so we feel a certain kinship. We just log prices every morning instead of sending emails.",
+            "Below are today’s lowest DDR5 prices. Looking at them, nobody wants to waste a single gigabyte."
+          ]
+        }
+      ]
+    },
+    "ja": {
+      "title": "メモリを遊ばせるとサム・アルトマンに謝罪メールが届く：「Ram-Altman」スクリプト",
+      "desc": "PCのメモリが余っていると毎日サム・アルトマン氏にメールを送るジョークプログラム「Ram-Altman」が登場しました。仕組みと誕生の経緯をまとめました。",
+      "lead": "「個人PCのメモリはかなりひどい無駄」という発言に、ある開発者がとても律儀な返事を作りました。メモリが遊んでいると、その事実をサム・アルトマン氏に直接報告するプログラムです。",
+      "sections": [
+        {
+          "h": "1. どんなプログラムか",
+          "p": [
+            "開発者Iain Kay氏がGitHubで公開した「Ram-Altman」は、Linux向けの小さなBashスクリプトです。数分ごとにメモリ使用量を記録し、10%以上が使われていなければ1日1回アルトマン氏宛てにメールを送ります。",
+            "件名と本文は用意された文面から順に選ばれます。中身はおおむね「今日もメモリを使い切れず申し訳ありません」です。"
+          ]
+        },
+        {
+          "h": "2. なぜ作られたのか",
+          "p": [
+            "アルトマン氏はポッドキャストで、個人PCのメモリは5%ほどしか使われず、不足するメモリがそこにあるのは「かなりひどい」と語りました。その後、半日だけXの名前を「Ram Altman」に変えています。",
+            "名前の由来もそこです。そんなに無駄が気になるなら、本人に毎日直接知らせよう、という発想です。"
+          ]
+        },
+        {
+          "h": "3. 一線は守っている",
+          "p": [
+            "スクリプトにアルトマン氏のメールアドレスは含まれていません。実際には送らずに内容だけ確認できる「ドライラン」機能もあります。",
+            "開発者も、本当に他人の受信箱を埋め尽くすのはやめてほしいと呼びかけています。メモリの計測は本物、メールは冗談という位置づけです。"
+          ]
+        },
+        {
+          "h": "4. 反響",
+          "p": [
+            "Tom's Hardware、TweakTown、Cybernews、Dexertoなど海外IT メディアが相次いで取り上げ、SNSや掲示板でも大きく広まりました。",
+            "コメント欄には「OpenAIの倉庫で眠っているメモリは誰が報告するのか」という声が並びました。冗談のツールが、メモリ価格への不満を代弁した形です。"
+          ]
+        },
+        {
+          "h": "5. 私たちの考え",
+          "p": [
+            "当サイトの名前もまさにその「quite terrible」から来ているので、このスクリプトには親近感を覚えます。私たちはメールの代わりに毎朝価格を記録しています。",
+            "以下は本日時点のDDR5最安値です。この値を見れば、メモリを遊ばせたい人はいないでしょう。"
+          ]
+        }
+      ]
+    },
+    "de": {
+      "title": "RAM verschwendet? Dann bekommt Sam Altman eine Mail: das Skript „Ram-Altman“",
+      "desc": "Das Spaß-Skript Ram-Altman schreibt Sam Altman einmal am Tag eine E-Mail, wenn dein PC RAM ungenutzt lässt. Wie es funktioniert und warum es das gibt.",
+      "lead": "Auf die Aussage, RAM in privaten PCs sei „ziemlich schlimm“ verschwendet, hat ein Entwickler eine sehr gewissenhafte Antwort gebaut: ein Programm, das ungenutzten Speicher direkt an Sam Altman meldet.",
+      "sections": [
+        {
+          "h": "1. Was es macht",
+          "p": [
+            "Ram-Altman, von Entwickler Iain Kay auf GitHub veröffentlicht, ist ein kleines Bash-Skript für Linux. Es protokolliert alle paar Minuten die Speichernutzung und schickt Sam Altman einmal am Tag eine E-Mail, wenn mehr als 10 % des RAM ungenutzt blieben.",
+            "Betreff und Text wechseln zwischen vorbereiteten Vorlagen. Meist heißt es sinngemäß: Entschuldigung, ich habe heute wieder nicht meinen ganzen RAM genutzt."
+          ]
+        },
+        {
+          "h": "2. Warum es das gibt",
+          "p": [
+            "In einem Podcast sagte Altman, RAM in privaten Computern werde nur etwa 5 % der Zeit genutzt, und knappen Speicher dort liegen zu haben sei „ziemlich schlimm“. Danach nannte er sich einen halben Tag lang „Ram Altman“ auf X.",
+            "Daher der Name. Wenn ihn die Verschwendung so stört, warum ihm nicht jeden Tag persönlich davon berichten?"
+          ]
+        },
+        {
+          "h": "3. Die Grenze kennt es trotzdem",
+          "p": [
+            "Altmans E-Mail-Adresse ist im Skript nicht enthalten, und ein Testmodus (Dry Run) zeigt nur an, was verschickt würde.",
+            "Der Entwickler bittet außerdem darum, niemandes Postfach zu fluten. Die Speichermessung ist echt, die Mails sind der Witz."
+          ]
+        },
+        {
+          "h": "4. Die Reaktionen",
+          "p": [
+            "Tom’s Hardware, TweakTown, Cybernews, Dexerto, t3n und viele andere berichteten, in Foren und sozialen Netzwerken verbreitete es sich schnell.",
+            "In den Kommentaren fragte man bald, wer eigentlich den RAM meldet, der in den Lagern von OpenAI herumliegt. Ein Spaß-Tool sprach den Frust über RAM-Preise aus."
+          ]
+        },
+        {
+          "h": "5. Unsere Meinung",
+          "p": [
+            "Diese Seite ist nach genau diesem „quite terrible“ benannt, also fühlen wir uns verbunden. Wir verschicken nur keine Mails, sondern notieren jeden Morgen die Preise.",
+            "Unten stehen die heutigen DDR5-Bestpreise. Wer die sieht, will kein einziges Gigabyte verschwenden."
+          ]
+        }
+      ]
+    }
+  },
+  "musk-ram-jab": {
+    "updated": "2026-11-16",
+    "sources": [
+      {
+        "name": "TechRadar",
+        "url": "https://techradar.com/pro/the-people-deserve-to-have-their-ram-too-elon-musk-mocks-openai-sam-altmans-claim-that-people-owning-home-pcs-with-ram-is-terrible"
+      },
+      {
+        "name": "Decrypt",
+        "url": "https://decrypt.co/382345/elon-musk-mocks-sam-altman-over-claim-home-pcs-are-wasting-ram"
+      },
+      {
+        "name": "Cybernews",
+        "url": "https://cybernews.com/tech/altman-musk-dram-data-center-reddit/"
+      },
+      {
+        "name": "PC Games Hardware",
+        "url": "https://www.pcgameshardware.de/RAM-Hardware-154108/News/elon-musk-sam-altman-ram-privat-pcs-reaktion-1558622/"
+      }
+    ],
+    "ko": {
+      "title": "“사람들도 램 가질 자격이 있다”: 일론 머스크의 램 조롱",
+      "desc": "샘 올트먼의 램 발언에 일론 머스크가 영화 밈으로 응수했습니다. 두 사람의 오랜 싸움이 이번엔 램으로 번진 과정을 정리했습니다.",
+      "lead": "램 발언 논란에 가장 신난 사람 중 하나는 일론 머스크였습니다. 그는 영화 장면 하나와 짧은 한마디로, 오랜 라이벌을 또 한 번 놀렸습니다.",
+      "sections": [
+        {
+          "h": "1. 무슨 일이 있었나",
+          "p": [
+            "샘 올트먼은 10월 29일 공개된 팟캐스트 Cheeky Pint에서, 귀한 메모리가 거의 쓰이지 않는 개인 PC에 들어 있는 건 “꽤 끔찍하다”고 말했습니다.",
+            "며칠 뒤 머스크는 X에 밈 하나를 올리며 “The people deserve to have their RAM too!”, 그러니까 “사람들도 자기 램을 가질 자격이 있다!”라고 썼습니다."
+          ]
+        },
+        {
+          "h": "2. 어떤 밈이었나",
+          "p": [
+            "보도에 따르면 밈은 영화 ‘바스터즈: 거친 녀석들’의 한스 란다 대령 장면이었습니다. 숨겨 둔 것을 캐묻는 그 유명한 심문 장면에 “당신, 클라우드에서 램을 숨기고 있지?”라는 문구를 붙였습니다.",
+            "개인 PC에 램을 꽂아 둔 사람을 범인 취급하는 듯한 발언을, 그대로 뒤집어 비꼰 셈입니다."
+          ]
+        },
+        {
+          "h": "3. 오래된 싸움의 새 무대",
+          "p": [
+            "두 사람은 오픈AI를 함께 세웠다가 갈라선 뒤 몇 년째 공개적으로 다퉈 왔습니다. 소송까지 오간 사이라, 이번 램 논쟁도 그 연장선으로 읽혔습니다.",
+            "머스크의 글은 논란을 더 키웠고, 이후 올트먼이 “맥락이 잘렸다”며 짜증을 내는 데까지 이어졌습니다."
+          ]
+        },
+        {
+          "h": "4. 정작 램값은",
+          "p": [
+            "누가 이겼든 램값은 그대로입니다. AI 데이터센터가 메모리를 대량으로 가져가는 한, 소비자용 램이 당장 싸지기는 어렵다는 전망이 많습니다.",
+            "머스크의 회사들도 AI에 메모리를 잔뜩 쓰는 쪽이라, ‘사람들의 램’을 걱정하는 말이 얼마나 진심인지는 각자 판단할 몫입니다."
+          ]
+        },
+        {
+          "h": "5. 저희 생각",
+          "p": [
+            "사람들도 램 가질 자격이 있다는 말에는 저희도 동의합니다. 다만 그 자격을 쓰려면 가격표부터 봐야 합니다.",
+            "아래는 오늘 기준 DDR5 최저가입니다."
+          ]
+        }
+      ]
+    },
+    "en": {
+      "title": "“The people deserve their RAM too”: Elon Musk mocks Sam Altman over RAM",
+      "desc": "Elon Musk answered Sam Altman’s RAM remark with a movie meme. How the two men’s long feud spilled over into memory.",
+      "lead": "One of the people enjoying the RAM controversy most was Elon Musk. With one film still and one line, he mocked his old rival yet again.",
+      "sections": [
+        {
+          "h": "1. What happened",
+          "p": [
+            "On the Cheeky Pint podcast released on October 29, Sam Altman said it was “quite terrible” for scarce memory to sit in personal PCs that barely use it.",
+            "A few days later Musk posted a meme on X with the caption “The people deserve to have their RAM too!”"
+          ]
+        },
+        {
+          "h": "2. The meme",
+          "p": [
+            "According to reports, it used Colonel Hans Landa from Inglourious Basterds, in the famous interrogation scene, captioned along the lines of “You are withholding DRAM from the cloud, are you not?”",
+            "It flipped a remark that seemed to treat people with RAM in their PCs as culprits."
+          ]
+        },
+        {
+          "h": "3. A new stage for an old fight",
+          "p": [
+            "The two co-founded OpenAI, split, and have fought in public for years, including in court. The RAM spat was read as the latest round.",
+            "Musk’s post fuelled the controversy, which ended with Altman complaining that his words had been taken out of context."
+          ]
+        },
+        {
+          "h": "4. Meanwhile, RAM prices",
+          "p": [
+            "Whoever won, prices did not move. As long as AI data centres absorb huge amounts of memory, most forecasts say consumer RAM will not get cheap soon.",
+            "Musk’s own companies are big users of memory for AI too, so how sincere the concern for “the people’s RAM” is, is for readers to judge."
+          ]
+        },
+        {
+          "h": "5. Our take",
+          "p": [
+            "We agree that people deserve their RAM. To exercise that right, though, you have to look at the price tag first.",
+            "Below are today’s lowest DDR5 prices."
+          ]
+        }
+      ]
+    },
+    "ja": {
+      "title": "「人々にもメモリを持つ権利がある」：イーロン・マスク氏のメモリいじり",
+      "desc": "サム・アルトマン氏のメモリ発言に、イーロン・マスク氏が映画のミームで応じました。二人の長い対立がメモリに飛び火した経緯をまとめました。",
+      "lead": "メモリ発言の騒動を一番楽しんでいた一人がイーロン・マスク氏でした。映画のワンシーンと短い一言で、長年のライバルをまたからかいました。",
+      "sections": [
+        {
+          "h": "1. 何があったのか",
+          "p": [
+            "サム・アルトマン氏は10月29日公開のポッドキャスト「Cheeky Pint」で、貴重なメモリがほとんど使われない個人PCにあるのは「かなりひどい」と語りました。",
+            "数日後、マスク氏はXにミームを投稿し「The people deserve to have their RAM too!（人々にもメモリを持つ権利がある！）」と書きました。"
+          ]
+        },
+        {
+          "h": "2. どんなミームだったか",
+          "p": [
+            "報道によると、映画『イングロリアス・バスターズ』のハンス・ランダ大佐の有名な尋問シーンに、「お前はクラウドからDRAMを隠しているな？」という文言を付けたものでした。",
+            "PCにメモリを積んでいる人を犯人扱いするような発言を、そのままひっくり返して皮肉った形です。"
+          ]
+        },
+        {
+          "h": "3. 古い対立の新しい舞台",
+          "p": [
+            "二人はOpenAIを共に設立した後に決別し、訴訟も含めて何年も公の場で争ってきました。今回のメモリ論争もその延長と受け止められました。",
+            "マスク氏の投稿は騒動をさらに大きくし、アルトマン氏が「文脈を切り取られた」と苛立つところまで続きました。"
+          ]
+        },
+        {
+          "h": "4. 肝心のメモリ価格は",
+          "p": [
+            "どちらが勝っても価格は変わりません。AIデータセンターが大量のメモリを吸い上げる限り、消費者向けメモリはすぐには安くならないという見方が大勢です。",
+            "マスク氏の企業もAIでメモリを大量に使う側なので、「人々のメモリ」を心配する言葉がどこまで本気かは、読む人の判断に委ねられます。"
+          ]
+        },
+        {
+          "h": "5. 私たちの考え",
+          "p": [
+            "人々にもメモリを持つ権利があるという点には私たちも賛成です。ただ、その権利を使うにはまず値札を見る必要があります。",
+            "以下は本日時点のDDR5最安値です。"
+          ]
+        }
+      ]
+    },
+    "de": {
+      "title": "„Die Menschen verdienen ihren RAM auch“: Elon Musk spottet über Sam Altman",
+      "desc": "Elon Musk antwortete auf Sam Altmans RAM-Aussage mit einem Film-Meme. Wie der lange Streit der beiden auf Arbeitsspeicher übergriff.",
+      "lead": "Einer, der die RAM-Debatte sichtlich genoss, war Elon Musk. Mit einem Filmstill und einem Satz verspottete er seinen alten Rivalen ein weiteres Mal.",
+      "sections": [
+        {
+          "h": "1. Was passiert ist",
+          "p": [
+            "Im am 29. Oktober veröffentlichten Podcast Cheeky Pint sagte Sam Altman, es sei „ziemlich schlimm“, dass knapper Speicher in privaten PCs steckt, die ihn kaum nutzen.",
+            "Wenige Tage später postete Musk auf X ein Meme mit dem Satz „The people deserve to have their RAM too!“ – die Menschen verdienen ihren RAM auch."
+          ]
+        },
+        {
+          "h": "2. Das Meme",
+          "p": [
+            "Berichten zufolge zeigte es Oberst Hans Landa aus Inglourious Basterds in der berühmten Verhörszene, sinngemäß beschriftet mit „Sie halten DRAM vor der Cloud zurück, nicht wahr?“",
+            "Damit drehte er eine Aussage um, die Menschen mit RAM im PC fast wie Täter behandelte."
+          ]
+        },
+        {
+          "h": "3. Neue Bühne für einen alten Streit",
+          "p": [
+            "Die beiden gründeten OpenAI gemeinsam, trennten sich und streiten seit Jahren öffentlich, auch vor Gericht. Der RAM-Zank galt als nächste Runde.",
+            "Musks Post heizte die Debatte weiter an, bis Altman sich beschwerte, seine Worte seien aus dem Zusammenhang gerissen worden."
+          ]
+        },
+        {
+          "h": "4. Und die RAM-Preise?",
+          "p": [
+            "Egal wer gewann, die Preise blieben. Solange KI-Rechenzentren riesige Mengen Speicher schlucken, wird Consumer-RAM laut den meisten Prognosen nicht bald billig.",
+            "Auch Musks eigene Firmen verbrauchen für KI viel Speicher. Wie ernst die Sorge um „den RAM der Menschen“ gemeint ist, mögen die Leser selbst beurteilen."
+          ]
+        },
+        {
+          "h": "5. Unsere Meinung",
+          "p": [
+            "Dass Menschen ihren RAM verdienen, unterschreiben wir. Wer das Recht nutzen will, muss aber zuerst aufs Preisschild schauen.",
+            "Unten stehen die heutigen DDR5-Bestpreise."
+          ]
+        }
+      ]
+    }
+  },
   "altman-annoyed": {
     "updated": "2026-11-09",
     "sources": [
