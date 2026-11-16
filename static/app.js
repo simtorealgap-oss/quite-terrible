@@ -106,16 +106,18 @@ function chartSvg(points, {key = '', w = 320, h = 110, axes = false, label = ''}
   const X = t => points.length === 1 ? iw - 8 : 4 + (t - t0) / Math.max(1, t1 - t0) * (iw - 12);
   const Y = v => padT + (hi - v) / (hi - lo) * ih;
   const coords = points.map(p => { const t = Date.parse(p.at); return {t, p, x: X(t), y: Y(p.price)}; });
-  // Gaps longer than 36 hours break the line: missing days are never filled in.
-  let line = '', segments = 0;
+  // Days with no record (a gap over 36 hours) are bridged with a dashed segment: the line stays
+  // continuous, but no price is invented for the missing days.
+  let line = '', bridges = '';
   coords.forEach((c, i) => {
-    const gap = i === 0 || c.t - coords[i - 1].t > 36 * 3600000;
-    if (gap) segments += 1;
-    line += `${gap ? 'M' : 'L'}${c.x.toFixed(1)},${c.y.toFixed(1)}`;
+    const gap = i > 0 && c.t - coords[i - 1].t > 36 * 3600000;
+    if (gap) bridges += `M${coords[i - 1].x.toFixed(1)},${coords[i - 1].y.toFixed(1)}L${c.x.toFixed(1)},${c.y.toFixed(1)}`;
+    line += `${i === 0 || gap ? 'M' : 'L'}${c.x.toFixed(1)},${c.y.toFixed(1)}`;
   });
+  const solid = coords.map((c, i) => `${i ? 'L' : 'M'}${c.x.toFixed(1)},${c.y.toFixed(1)}`).join('');
   const last = coords.at(-1);
-  const area = segments === 1 && coords.length > 1
-    ? `<path d="${line}L${last.x.toFixed(1)},${floor}L${coords[0].x.toFixed(1)},${floor}Z" fill="url(#${id}g)"/>` : '';
+  const area = coords.length > 1
+    ? `<path d="${solid}L${last.x.toFixed(1)},${floor}L${coords[0].x.toFixed(1)},${floor}Z" fill="url(#${id}g)"/>` : '';
   // One observation is drawn as a dashed level with a note, not as a lone dot.
   const single = points.length === 1
     ? `<line class="baseline" x1="0" x2="${last.x.toFixed(1)}" y1="${last.y.toFixed(1)}" y2="${last.y.toFixed(1)}"/>`
@@ -132,7 +134,7 @@ function chartSvg(points, {key = '', w = 320, h = 110, axes = false, label = ''}
   const summary = `${label} ${when(points[0].at, false)}–${when(points.at(-1).at, false)}: ${money(Math.min(...prices))}–${money(Math.max(...prices))}`;
   return `<svg class="chart ${direction(changeOver(points))}" viewBox="0 0 ${w} ${h}" data-chart="${id}" data-key="${esc(key)}" role="img" aria-label="${esc(summary)}">`
     + `<defs><linearGradient id="${id}g" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="currentColor" stop-opacity=".22"/><stop offset="1" stop-color="currentColor" stop-opacity="0"/></linearGradient></defs>`
-    + `${grid}${labels}${area}${single}<path class="line" d="${line}"/>`
+    + `${grid}${labels}${area}${single}<path class="line" d="${line}"/>${bridges ? `<path class="line gap-line" d="${bridges}"/>` : ''}`
     + `<circle class="last-halo" cx="${last.x.toFixed(1)}" cy="${last.y.toFixed(1)}" r="8"/><circle class="last-dot" cx="${last.x.toFixed(1)}" cy="${last.y.toFixed(1)}" r="3.5"/>`
     + `<g class="cursor" hidden><line class="cursor-line" y1="${padT}" y2="${floor}"/><circle class="cursor-dot" r="4"/></g></svg>`;
 }
@@ -145,10 +147,9 @@ function sparkSvg(points) {
   let line = '';
   points.forEach((p, i) => {
     const t = Date.parse(p.at);
-    const gap = i === 0 || t - Date.parse(points[i - 1].at) > 36 * 3600000;
     const x = 2 + (t - t0) / Math.max(1, t1 - t0) * (w - 4);
     const y = hi === lo ? h / 2 : 3 + (hi - p.price) / span * (h - 6);
-    line += `${gap ? 'M' : 'L'}${x.toFixed(1)},${y.toFixed(1)}`;
+    line += `${i === 0 ? 'M' : 'L'}${x.toFixed(1)},${y.toFixed(1)}`;  // small sparkline: just joined
   });
   return `<svg class="spark ${direction(changeOver(points))}" viewBox="0 0 ${w} ${h}" aria-hidden="true"><path class="line" d="${line}"/></svg>`;
 }
