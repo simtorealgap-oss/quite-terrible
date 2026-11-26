@@ -37,7 +37,7 @@ class Prices(unittest.TestCase):
         self.assertEqual(self.view()['price'],120000)
 
     def test_stale_only_has_no_current_price(self):
-        save_quotes(self.db,[self.quote(observed_at=stamp(self.at-dt.timedelta(hours=37)))])
+        save_quotes(self.db,[self.quote(observed_at=stamp(self.at-dt.timedelta(days=8)))])  # past the one-week hold
         self.assertIsNone(self.view()['price'])
         self.assertEqual(len(self.view()['history']),1)
 
@@ -79,7 +79,10 @@ class Prices(unittest.TestCase):
         old=stamp(self.at-dt.timedelta(days=3))
         import_feed(self.db,{'observations':[self.quote(observed_at=old)]})
         self.assertEqual(self.view()['observed_at'],old)
-        self.assertIsNone(self.view()['price'])
+        v=self.view()  # the source has nothing newer: held, dated, with no change figures
+        self.assertEqual(v['price'],100000)
+        self.assertTrue(v['offers'][0]['held'])
+        self.assertIsNone(v['change7'])
 
 
 class Providers(unittest.TestCase):

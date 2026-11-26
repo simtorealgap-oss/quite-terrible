@@ -14,6 +14,7 @@ CATALOG = {p['id']: p for p in PRODUCTS}
 UTC = dt.timezone.utc
 # Prices are checked once each morning, so a quote stays current for 36 hours, not 24.
 STALE_SECONDS = 36 * 3600
+HOLD_SECONDS = 7 * 24 * 3600  # a blocked source's last prices stay shown, with their date, for a week
 MARKETS = ('KR', 'US', 'JP', 'DE')
 CURRENCY = {'KR': 'KRW', 'US': 'USD', 'JP': 'JPY', 'DE': 'EUR'}
 CENTS = ('US', 'DE')  # markets whose amounts are stored in cents
@@ -159,7 +160,11 @@ def product_view(db, product, market, at=None):
     offers = []
     for r in latest.values():
         age = (at - parse_time(r['observed_at'])).total_seconds()
-        r['stale'] = age > STALE_SECONDS or r['observed_at'] < newest[r['source']]
+        # When a source itself is blocked (no newer batch at all), its last batch is held for up to
+        # HOLD_SECONDS rather than leaving the market empty; the page states when it was checked.
+        held = age > STALE_SECONDS and (at - parse_time(newest[r['source']])).total_seconds() <= HOLD_SECONDS
+        r['stale'] = (age > STALE_SECONDS and not held) or r['observed_at'] < newest[r['source']]
+        r['held'] = held and not r['stale']
         r['amount'] = minor_to_amount(r['price'], market)
         r['shipping_amount'] = minor_to_amount(r['shipping'], market)
         offers.append(r)
@@ -191,13 +196,13 @@ def product_view(db, product, market, at=None):
     history = list(daily.values())
     best = valid[0] if valid else None
     change = None
-    if best:
+    if best and not best['held']:
         target = at - dt.timedelta(hours=24)
         prior = [p for p in full_history if target - dt.timedelta(hours=12) <= parse_time(p['at']) <= target]
         if prior:
             change = round((minor_to_amount(best['price'], market) / prior[-1]['price'] - 1) * 100, 1)
     change7 = None
-    if best:
+    if best and not best['held']:
         # Compare with the daily close exactly seven days earlier; no close that day means no figure.
         week_ago = (at - dt.timedelta(days=7)).date().isoformat()
         prior = next((p for p in history if p['at'][:10] == week_ago), None)
