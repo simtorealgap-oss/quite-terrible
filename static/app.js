@@ -266,11 +266,9 @@ function renderStatus() {
   const data = state.prices;
   const priced = data.products.filter(p => p.price != null).length;
   const last = data.products.map(p => p.observed_at).filter(Boolean).sort().at(-1);
-  const lastOk = data.runs.map(r => r.succeeded_at).filter(Boolean).sort().at(-1);
-  const failed = data.runs.some(r => r.state === 'error');
   let kind = 'idle', label = T.statusOffline;
   if (data.demo) [kind, label] = ['demo', T.statusDemo];
-  else if (failed) [kind, label] = ['error', fmt('statusError', {time: when(lastOk)})];
+  // A failed check is not shown to readers: the label just says when the prices shown were checked.
   else if (priced) [kind, label] = ['live', fmt('statusLive', {time: when(last)})];
   label += ` · ${T['market' + state.market] || state.market}`;
   $('#price-status').dataset.state = kind;
@@ -489,9 +487,8 @@ function openDetail(id) {
 function renderNews() {
   const {news, runs} = state.news;
   const lastOk = runs.map(r => r.succeeded_at).filter(Boolean).sort().at(-1);
-  const failed = runs.some(r => r.state === 'error');
-  $('#news-status').dataset.state = failed ? 'error' : lastOk ? 'live' : 'idle';
-  $('#news-status-text').textContent = failed ? fmt('newsDelayed', {time: when(lastOk)}) : lastOk ? fmt('newsUpdated', {time: when(lastOk)}) : T.newsPending;
+  $('#news-status').dataset.state = lastOk ? 'live' : 'idle';
+  $('#news-status-text').textContent = lastOk ? fmt('newsUpdated', {time: when(lastOk)}) : T.newsPending;
   $$('#news-category button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.newsCategory === state.newsCategory)));
   const all = news.filter(n => state.newsCategory === 'all' || n.category === state.newsCategory);
   const items = all.slice(0, state.newsLimit);  // a page at a time; "more" opens the next
