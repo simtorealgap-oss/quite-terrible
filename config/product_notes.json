@@ -1,0 +1,464 @@
+{
+ "samsung-ddr5-16": {
+  "ko": [
+   "삼성 DDR5-5600 16GB 단품은 가장 무난한 기본형 램입니다. 다만 한 장만 꽂으면 싱글 채널로 동작하므로, 게임용으로 새로 맞춘다면 같은 제품 두 장으로 32GB 듀얼 채널을 구성하는 것이 일반적입니다. 사무용 PC를 저렴하게 꾸리거나, 이미 꽂혀 있는 16GB 한 장에 짝을 맞춰 줄 때 많이 찾는 제품입니다.",
+   "5600은 초당 5600MT의 전송 속도, CL46은 명령을 받은 뒤 데이터가 나오기까지 걸리는 클럭 수를 뜻합니다. 실제 지연시간으로 환산하면 46×2000÷5600 ≈ 16.4ns로, JEDEC 표준 그대로의 평범한 수치입니다. 삼성은 DRAM 칩을 직접 만드는 회사라 칩 제조사와 모듈 브랜드가 같고, XMP나 EXPO 설정 없이 꽂기만 하면 정격 속도로 동작한다는 점이 장점입니다.",
+   "구매 전에 메인보드가 DDR5용인지 먼저 확인합니다. DDR4 슬롯과는 홈 위치가 달라 물리적으로 들어가지 않습니다. 기존 램과 짝을 맞출 때는 용량과 속도가 같은 제품이 안정적이고, 메인보드 QVL(호환 목록)에 있으면 더 안심할 수 있습니다. 이 페이지의 30일 최저가·최고가 범위에서 오늘 가격이 어디쯤인지 보고 최저가 쪽에 가까울 때 사는 것이 가장 단순한 기준입니다."
+  ],
+  "en": [
+   "The Samsung DDR5-5600 16GB stick is the plain, no-surprises option. On its own it runs in single-channel mode, so for a new gaming build most people buy two of them for a 32GB dual-channel setup. It also makes sense for a budget office PC, or as the matching partner for a 16GB stick you already have.",
+   "5600 is the transfer rate in megatransfers per second, and CL46 is how many clock cycles pass between a request and the first data coming back. Converted to real time that is 46 x 2000 / 5600, roughly 16.4 ns, which is a standard JEDEC figure and nothing more. Samsung makes its own DRAM chips, so the chip maker and the module brand are the same company, and the stick runs at its rated speed without any XMP or EXPO profile.",
+   "Before buying, confirm your motherboard takes DDR5; the notch is in a different place from DDR4, so it will not physically fit a DDR4 slot. When pairing with an existing stick, matching capacity and speed is the safest route, and a listing on your board's QVL (qualified memory list) is a bonus. Use the 30-day low and high on this page to see where today's price sits in that range; buying near the low end is the simplest rule there is."
+  ],
+  "ja": [
+   "Samsung DDR5-5600 16GBの単品は、もっとも無難な定番メモリです。ただし1枚だけではシングルチャネル動作になるため、ゲーム用に新しく組むなら同じ製品を2枚買って32GBのデュアルチャネルにするのが一般的です。安価な事務用PCや、すでに挿さっている16GB 1枚の相方としてもよく選ばれます。",
+   "5600は毎秒5600MTの転送速度、CL46は命令を受けてから最初のデータが出てくるまでのクロック数を表します。実際の遅延時間に直すと46×2000÷5600で約16.4nsで、JEDEC標準どおりのごく普通の値です。SamsungはDRAMチップを自社で製造しているため、チップメーカーとモジュールブランドが同じで、XMPやEXPOを設定しなくても挿すだけで定格速度で動くのが利点です。",
+   "購入前に、マザーボードがDDR5対応かどうかを確認してください。DDR4とは切り欠きの位置が違うため、物理的に挿さりません。既存のメモリと組み合わせる場合は容量と速度をそろえるのが安全で、マザーボードのQVL（動作確認済みリスト）に載っていればなお安心です。このページの30日間の最安値・最高値の幅の中で今日の価格がどのあたりかを確認し、最安値寄りのときに買うのがいちばんシンプルな判断基準です。"
+  ],
+  "de": [
+   "Das Samsung DDR5-5600 Modul mit 16 GB ist die unspektakuläre Standardwahl. Allein betrieben läuft es im Single-Channel-Modus; für einen neuen Gaming-PC kaufen Sie daher meist zwei Stück und kommen so auf 32 GB im Dual-Channel. Sinnvoll ist es auch für einen günstigen Büro-PC oder als passender Partner für ein bereits vorhandenes 16-GB-Modul.",
+   "5600 steht für die Übertragungsrate in Megatransfers pro Sekunde, CL46 für die Anzahl der Takte zwischen Anfrage und ersten Daten. In echte Zeit umgerechnet sind das 46 x 2000 / 5600, also rund 16,4 ns, ein ganz normaler JEDEC-Wert. Samsung fertigt die DRAM-Chips selbst, Chiphersteller und Modulmarke sind hier also identisch, und das Modul läuft ohne XMP- oder EXPO-Profil mit seinem Nenntakt.",
+   "Prüfen Sie vor dem Kauf, ob Ihr Mainboard DDR5 unterstützt; die Kerbe sitzt an einer anderen Stelle als bei DDR4, ein DDR4-Slot nimmt das Modul also gar nicht erst auf. Beim Ergänzen eines vorhandenen Moduls sind gleiche Kapazität und gleicher Takt am sichersten, ein Eintrag in der QVL (Liste getesteter Speicher) Ihres Boards ist ein Pluspunkt. Mit dem 30-Tage-Tief und -Hoch auf dieser Seite sehen Sie, wo der heutige Preis in dieser Spanne liegt; nahe am Tief zu kaufen ist die einfachste Faustregel."
+  ]
+ },
+ "samsung-ddr5-32": {
+  "ko": [
+   "삼성 DDR5-5600 32GB 단품은 한 장으로 32GB를 채우거나, 두 장으로 64GB 듀얼 채널을 만들기 위한 제품입니다. 지금 게임용 PC의 적정 용량은 32GB로 보는 경우가 많지만, 이 단품 한 장만 쓰면 싱글 채널이라 대역폭이 절반이 됩니다. 그래서 게임 위주라면 16GB 두 장, 영상 편집·가상머신·로컬 AI처럼 용량이 먼저인 작업이라면 이 32GB를 두 장 사는 쪽이 맞습니다.",
+   "사양은 16GB 모델과 같은 5600MT/s, CL46으로 지연시간은 약 16.4ns입니다. 칩 한 개당 용량이 큰 고용량 다이를 쓰기 때문에 같은 속도라도 16GB 모듈보다 한 장에 담긴 메모리가 두 배입니다. 삼성이 칩과 모듈을 모두 만드는 순정품이라 별도 오버클럭 프로파일 없이 보드가 지원하는 속도에서 그대로 동작합니다.",
+   "나중에 64GB로 늘릴 계획이라면 처음부터 같은 제품을 두 장 사는 것이 좋습니다. 시간이 지나 같은 모델을 사도 내부 칩이 바뀌어 있을 수 있고, DDR5는 네 슬롯을 다 채우면 속도가 내려가는 보드가 많기 때문입니다. 가격은 이 페이지의 30일 최저가·최고가와 비교해 보고, 두 장을 살 예정이라면 단품 가격의 두 배가 아래쪽 키트 제품과 비교해 어떤지도 함께 확인해 볼 만합니다."
+  ],
+  "en": [
+   "The Samsung DDR5-5600 32GB stick is for filling 32GB with one module or building 64GB dual-channel with two. 32GB is widely seen as the right amount for a gaming PC today, but a single stick means single-channel and half the bandwidth. So for gaming, two 16GB sticks are the better route; for video editing, virtual machines or local AI, where capacity comes first, buy two of these.",
+   "Specs match the 16GB version: 5600 MT/s at CL46, which works out to about 16.4 ns of latency. It uses higher-density DRAM dies, so each stick holds twice the memory at the same speed. Samsung builds both the chips and the module, so it runs at whatever speed your board supports without needing an overclocking profile.",
+   "If you plan to reach 64GB eventually, buy both sticks at once. The same model bought months later may use different chips inside, and many DDR5 boards drop memory speed when all four slots are filled. Compare today's price against the 30-day low and high on this page, and if you are buying two, check how twice the single-stick price compares with the 2x32GB kits tracked on this site."
+  ],
+  "ja": [
+   "Samsung DDR5-5600 32GBの単品は、1枚で32GBを確保するか、2枚で64GBのデュアルチャネルを組むための製品です。今のゲーミングPCでは32GBが適量とされることが多いものの、この単品1枚だけではシングルチャネルとなり帯域が半分になります。ゲーム中心なら16GB×2枚、動画編集や仮想マシン、ローカルAIのように容量優先の用途ならこの32GBを2枚買うのが合っています。",
+   "仕様は16GBモデルと同じ5600MT/s・CL46で、遅延は約16.4nsです。高密度のDRAMダイを使っているため、同じ速度でも1枚あたりの容量が16GBモジュールの2倍になっています。チップもモジュールもSamsung製の純正品なので、オーバークロック用のプロファイルなしでマザーボードが対応する速度でそのまま動作します。",
+   "いずれ64GBに増やすつもりなら、最初から同じ製品を2枚買っておくのがおすすめです。後から同じ型番を買っても中のチップが変わっている場合があり、DDR5は4スロットすべてを埋めると速度が下がるマザーボードが多いためです。価格はこのページの30日間の最安値・最高値と比べ、2枚買う予定なら単品価格の2倍が当サイトで追跡している2×32GBキットと比べてどうかも確認してみてください。"
+  ],
+  "de": [
+   "Das Samsung DDR5-5600 Modul mit 32 GB eignet sich, um mit einem Riegel 32 GB zu erreichen oder mit zweien 64 GB im Dual-Channel aufzubauen. 32 GB gelten heute als passende Menge für einen Gaming-PC, ein einzelnes Modul bedeutet aber Single-Channel und damit halbe Bandbreite. Für Gaming sind zwei 16-GB-Module also die bessere Wahl; für Videoschnitt, virtuelle Maschinen oder lokale KI, wo die Kapazität zählt, nehmen Sie zwei von diesen.",
+   "Die Eckdaten entsprechen der 16-GB-Version: 5600 MT/s bei CL46, was rund 16,4 ns Latenz ergibt. Verbaut sind DRAM-Dies mit höherer Dichte, daher steckt bei gleichem Takt doppelt so viel Speicher auf einem Modul. Chips und Modul stammen beide von Samsung, das Modul läuft ohne Übertaktungsprofil mit dem Takt, den Ihr Board unterstützt.",
+   "Wenn Sie später auf 64 GB gehen möchten, kaufen Sie beide Module gleich zusammen. Dasselbe Modell kann Monate später andere Chips enthalten, und viele DDR5-Boards senken den Speichertakt, sobald alle vier Slots belegt sind. Vergleichen Sie den heutigen Preis mit dem 30-Tage-Tief und -Hoch auf dieser Seite; wenn Sie zwei Stück kaufen, lohnt auch ein Blick, wie der doppelte Einzelpreis gegenüber den hier erfassten 2x32-GB-Kits abschneidet."
+  ]
+ },
+ "hynix-ddr5-16": {
+  "ko": [
+   "SK하이닉스 DDR5-5600 16GB는 국내에서 흔히 '하이닉스 램'으로 불리는 일반형 모듈입니다. 한 장은 싱글 채널이므로 게임용이라면 두 장을 맞춰 32GB 듀얼 채널로 쓰는 경우가 대부분이고, 가벼운 작업용 PC라면 한 장으로 시작해 나중에 한 장을 더하는 방법도 있습니다. 브랜드가 아니라 램 자체가 필요한 사람에게 맞는 제품입니다.",
+   "SK하이닉스는 삼성, 마이크론과 함께 DRAM 칩을 직접 생산하는 회사로, 여러 게이밍 램 브랜드도 하이닉스 칩을 가져다 씁니다. 이 모듈은 오버클럭 프로파일이 없는 표준 제품이라 꽂으면 보드와 CPU가 지원하는 속도로 동작합니다. JEDEC 표준 DDR5-5600의 타이밍은 보통 CL46 수준(약 16.4ns)이지만, 정확한 값은 제품 라벨이나 판매 페이지에서 확인하는 것이 좋습니다.",
+   "CPU가 공식 지원하는 메모리 속도가 5600보다 낮다면 램은 그 속도로 내려서 동작하니, 속도 표기만 보고 비싼 제품을 고를 필요는 없습니다. 기존 램과 섞을 때는 용량·속도를 맞추는 것이 기본입니다. 이 페이지의 30일 최저가·최고가를 보면 지금 가격이 최근 범위의 어느 쪽에 있는지 알 수 있으니, 급하지 않다면 아래쪽에 가까워질 때를 노리는 것이 좋습니다."
+  ],
+  "en": [
+   "The SK hynix DDR5-5600 16GB is a plain, unbranded-style module of the kind many prebuilt PCs ship with. One stick runs single-channel, so gaming builds usually pair two for 32GB dual-channel; a light work PC can start with one and add a second later. It suits anyone who simply needs RAM rather than RGB.",
+   "SK hynix is one of the three big DRAM chip makers alongside Samsung and Micron, and plenty of gaming memory brands use hynix chips on their own modules. This is a standard module with no overclocking profile, so it runs at whatever your board and CPU support. JEDEC-standard DDR5-5600 is typically around CL46 (about 16.4 ns), but check the label or listing for the exact timings.",
+   "If your CPU officially supports a lower memory speed than 5600, the stick simply runs at that lower speed, so there is no point paying extra for a speed rating you cannot use. When mixing with existing memory, match capacity and speed. The 30-day low and high on this page show where today's price sits within the recent range; if you are not in a hurry, aim for when it is near the bottom."
+  ],
+  "ja": [
+   "SK hynix DDR5-5600 16GBは、メーカー製PCにもよく使われる素朴な標準モジュールです。1枚ではシングルチャネルになるので、ゲーム用なら2枚組み合わせて32GBのデュアルチャネルにするのが一般的です。軽作業用PCなら1枚から始めて後で1枚足す方法もあります。光るヒートシンクより、メモリそのものが欲しい人向けです。",
+   "SK hynixはSamsung、Micronと並ぶDRAMチップの三大メーカーで、多くのゲーミングメモリブランドもhynixのチップを採用しています。このモジュールはオーバークロック用プロファイルのない標準品なので、マザーボードとCPUが対応する速度で動作します。JEDEC標準のDDR5-5600はCL46前後（約16.4ns）が一般的ですが、正確なタイミングはラベルや販売ページで確認してください。",
+   "CPUが公式に対応するメモリ速度が5600より低い場合、メモリはその速度に下げて動作します。使えない速度表記のために高い製品を選ぶ必要はありません。既存のメモリと混ぜるときは容量と速度をそろえるのが基本です。このページの30日間の最安値・最高値を見れば今の価格が最近の幅のどのあたりかがわかるので、急がないなら下の方に近づいたときを狙うのがよいでしょう。"
+  ],
+  "de": [
+   "Das SK hynix DDR5-5600 Modul mit 16 GB ist ein schlichtes Standardmodul, wie es auch in vielen Fertig-PCs steckt. Ein einzelnes Modul läuft im Single-Channel, für Gaming werden daher meist zwei zu 32 GB im Dual-Channel kombiniert; ein Arbeits-PC kann mit einem starten und später ein zweites bekommen. Es passt zu allen, die einfach Arbeitsspeicher brauchen und keine RGB-Beleuchtung.",
+   "SK hynix ist neben Samsung und Micron einer der drei großen DRAM-Chiphersteller, und viele Gaming-Speichermarken setzen hynix-Chips auf ihren eigenen Modulen ein. Dieses Modul hat kein Übertaktungsprofil und läuft mit dem Takt, den Board und CPU unterstützen. JEDEC-Standard-DDR5-5600 liegt typischerweise bei etwa CL46 (rund 16,4 ns), die genauen Timings sollten Sie aber auf dem Etikett oder im Angebot prüfen.",
+   "Unterstützt Ihre CPU offiziell nur einen niedrigeren Speichertakt als 5600, läuft das Modul einfach langsamer; für eine Taktangabe, die Sie nicht nutzen können, müssen Sie also nicht mehr bezahlen. Beim Mischen mit vorhandenem Speicher sollten Kapazität und Takt übereinstimmen. Das 30-Tage-Tief und -Hoch auf dieser Seite zeigt, wo der heutige Preis in der jüngsten Spanne liegt; wenn es nicht eilt, warten Sie auf einen Stand nahe am unteren Ende."
+  ]
+ },
+ "hynix-ddr5-32": {
+  "ko": [
+   "SK하이닉스 DDR5-5600 32GB는 한 장에 32GB를 담은 표준 모듈로, 두 장이면 64GB 듀얼 채널이 됩니다. 브라우저 탭 수십 개와 게임, 디스코드를 동시에 띄우는 정도라면 32GB면 충분하지만, 4K 영상 편집이나 도커·가상머신을 여러 개 돌리는 작업, 큰 언어 모델을 CPU 메모리로 돌려 보는 실험에는 64GB가 확실히 여유롭습니다. 한 장만 쓰면 싱글 채널이라는 점은 기억해 두세요.",
+   "칩과 모듈 모두 SK하이닉스가 만든 제품으로, 프로파일 없이 JEDEC 표준 속도로 동작합니다. 16GB 모듈과 같은 5600MT/s이지만 칩 한 개의 용량이 커서 한 장에 두 배의 메모리가 들어갑니다. 정확한 CL 값은 판매 페이지마다 표기가 다를 수 있으니 라벨을 확인하는 것이 좋고, 표준 5600 제품은 대체로 CL46 전후입니다.",
+   "두 장을 살 예정이라면 같은 시기에 같은 판매처에서 사는 편이 안전합니다. 고용량 DDR5 두 장은 처음 부팅할 때 메모리 학습(트레이닝) 때문에 화면이 늦게 뜨는 경우가 있는데, 대부분 정상이니 몇 분은 기다려 보세요. 가격 판단은 이 페이지의 30일 최저가·최고가 범위에 현재가를 대 보는 것으로 충분합니다. AI 데이터센터가 메모리를 쓸어 담는 시절에는 '평소 가격'이라는 개념 자체가 귀하니까요."
+  ],
+  "en": [
+   "The SK hynix DDR5-5600 32GB is a standard module with 32GB on one stick; two of them give you 64GB in dual-channel. For dozens of browser tabs plus a game and Discord, 32GB is plenty, but 4K video editing, several Docker containers or VMs, or experiments running large language models from system RAM are far more comfortable with 64GB. Just remember that one stick alone runs single-channel.",
+   "Both the chips and the module are made by SK hynix, and it runs at JEDEC-standard speed with no profile to enable. It shares the 5600 MT/s rating of the 16GB version but uses larger-capacity chips, so each stick holds twice as much. Exact CL values can be listed differently by different sellers, so check the label; standard 5600 parts are usually around CL46.",
+   "If you intend to buy two, buying them together from the same seller is the safe choice. Two high-capacity DDR5 sticks can take noticeably long on the first boot while the board trains the memory; this is usually normal, so give it a few minutes. For timing, comparing today's price with the 30-day low and high on this page is enough. In an era when AI data centres hoover up memory, a normal price is a rare sighting anyway."
+  ],
+  "ja": [
+   "SK hynix DDR5-5600 32GBは1枚に32GBを載せた標準モジュールで、2枚で64GBのデュアルチャネルになります。ブラウザのタブを数十個開きながらゲームとDiscordを動かす程度なら32GBで十分ですが、4K動画編集やDocker・仮想マシンの多重起動、大規模言語モデルをメインメモリで動かす実験なら64GBのほうが明らかに余裕があります。1枚だけではシングルチャネルになる点は覚えておいてください。",
+   "チップもモジュールもSK hynix製で、プロファイルを設定しなくてもJEDEC標準速度で動作します。16GBモジュールと同じ5600MT/sですが、チップ1個あたりの容量が大きいため、1枚に2倍のメモリが載っています。正確なCL値は販売ページによって表記が異なることがあるのでラベルで確認するのが確実で、標準の5600品はおおむねCL46前後です。",
+   "2枚買う予定なら、同じ時期に同じ販売店で買うのが安全です。大容量のDDR5を2枚挿すと、初回起動時にメモリトレーニングのため画面表示まで時間がかかることがありますが、多くは正常なので数分待ってみてください。買い時の判断は、このページの30日間の最安値・最高値の幅に今日の価格を当てはめれば十分です。AIデータセンターがメモリを買い占める時代、「いつもの価格」はそれ自体が貴重ですから。"
+  ],
+  "de": [
+   "Das SK hynix DDR5-5600 Modul mit 32 GB ist ein Standardmodul mit 32 GB auf einem Riegel; zwei davon ergeben 64 GB im Dual-Channel. Für Dutzende Browser-Tabs plus Spiel und Discord reichen 32 GB, doch 4K-Videoschnitt, mehrere Docker-Container oder VMs und Experimente mit großen Sprachmodellen im Arbeitsspeicher laufen mit 64 GB deutlich entspannter. Denken Sie daran, dass ein einzelnes Modul im Single-Channel läuft.",
+   "Chips und Modul stammen beide von SK hynix, das Modul läuft ohne zu aktivierendes Profil mit JEDEC-Standardtakt. Es hat dieselben 5600 MT/s wie die 16-GB-Version, nutzt aber Chips mit höherer Kapazität, sodass jeder Riegel doppelt so viel Speicher trägt. Die genaue CL-Angabe kann je nach Händler unterschiedlich aufgeführt sein, prüfen Sie daher das Etikett; Standard-5600-Module liegen meist um CL46.",
+   "Wenn Sie zwei Stück kaufen möchten, nehmen Sie beide am besten zusammen beim selben Händler. Zwei DDR5-Module mit hoher Kapazität können beim ersten Start spürbar lange brauchen, weil das Board den Speicher trainiert; das ist meist normal, geben Sie ihm ein paar Minuten. Für den Kaufzeitpunkt genügt der Vergleich des heutigen Preises mit dem 30-Tage-Tief und -Hoch auf dieser Seite. In Zeiten, in denen KI-Rechenzentren Speicher aufsaugen, ist ein normaler Preis ohnehin eine seltene Sichtung."
+  ]
+ },
+ "crucial-ddr5-16": {
+  "ko": [
+   "크루셜 DDR5-5600 16GB는 마이크론의 소비자용 브랜드에서 나온 표준 모듈입니다. 노트북용이 아닌 데스크톱 DIMM이며, 한 장은 싱글 채널이라 게임용이라면 두 장으로 32GB 듀얼 채널을 만드는 것이 보통입니다. 해외 직구나 일본·독일 시장에서도 쉽게 구할 수 있어 나라별 가격을 비교해 보기 좋은 제품이기도 합니다.",
+   "크루셜은 미국 마이크론의 브랜드이고, 마이크론은 삼성·SK하이닉스와 함께 DRAM 칩을 직접 만드는 세 회사 중 하나입니다. 즉 칩 제조사가 자기 칩으로 만든 순정 모듈입니다. 크루셜의 DDR5-5600 표준 모듈은 CL46으로 표기되는 경우가 많고, 이 경우 지연시간은 약 16.4ns입니다. 오버클럭 프로파일 없이 보드가 정한 속도로 동작합니다.",
+   "메인보드가 DDR5인지, 그리고 기존 램이 있다면 같은 용량·속도인지 확인하세요. 해외 가격이 싸 보여도 배송비와 관부가세, 보증 처리 방식까지 더하면 차이가 줄어들 수 있으니 한국 가격과 단순 비교는 주의가 필요합니다. 이 페이지의 30일 최저가·최고가는 나라별로 따로 보이므로, 사려는 시장의 범위 안에서 현재가가 낮은 편인지 판단하면 됩니다."
+  ],
+  "en": [
+   "The Crucial DDR5-5600 16GB is a standard module from Micron's consumer brand. This is a desktop DIMM, not a laptop SO-DIMM, and one stick runs single-channel, so gaming builds normally use two for 32GB dual-channel. It is sold widely in Korea, Japan, the US and Germany, which makes it a handy product for comparing prices across markets.",
+   "Crucial belongs to Micron, one of the three companies that actually manufacture DRAM chips, alongside Samsung and SK hynix. So this is a chip maker's own module built with its own chips. Crucial's standard DDR5-5600 modules are commonly listed at CL46, which works out to about 16.4 ns. There is no overclocking profile; it runs at the speed your board sets.",
+   "Check that your board is DDR5 and, if you are adding to existing RAM, that capacity and speed match. A foreign price that looks cheaper can shrink once shipping, import taxes and warranty handling are included, so compare across countries with care. The 30-day low and high on this page are shown per market, so judge whether today's price is on the low side within the market you are actually buying from."
+  ],
+  "ja": [
+   "Crucial DDR5-5600 16GBは、Micronのコンシューマー向けブランドから出ている標準モジュールです。ノートPC用のSO-DIMMではなくデスクトップ用DIMMで、1枚ではシングルチャネルなので、ゲーム用なら2枚で32GBのデュアルチャネルにするのが普通です。日本・韓国・米国・ドイツのどこでも広く売られているため、国ごとの価格比較にも便利な製品です。",
+   "CrucialはMicronのブランドで、MicronはSamsung、SK hynixと並んでDRAMチップを実際に製造している3社のひとつです。つまりチップメーカーが自社チップで作った純正モジュールです。CrucialのDDR5-5600標準モジュールはCL46と表記されることが多く、その場合の遅延は約16.4nsです。オーバークロック用プロファイルはなく、マザーボードが設定した速度で動作します。",
+   "マザーボードがDDR5対応か、既存メモリがあるなら容量と速度が同じかを確認してください。海外の価格が安く見えても、送料や輸入時の税、保証対応まで含めると差が縮まることがあるので、国をまたいだ比較は慎重に。このページの30日間の最安値・最高値は市場ごとに表示されるので、実際に買う市場の幅の中で今日の価格が安い側かどうかを判断してください。"
+  ],
+  "de": [
+   "Das Crucial DDR5-5600 Modul mit 16 GB ist ein Standardmodul der Endkundenmarke von Micron. Es handelt sich um ein Desktop-DIMM, kein Notebook-SO-DIMM, und ein einzelnes Modul läuft im Single-Channel; für Gaming nimmt man daher üblicherweise zwei für 32 GB im Dual-Channel. Da es in Korea, Japan, den USA und Deutschland breit erhältlich ist, eignet es sich gut für einen Preisvergleich zwischen den Märkten.",
+   "Crucial gehört zu Micron, einem der drei Unternehmen, die neben Samsung und SK hynix DRAM-Chips tatsächlich selbst herstellen. Es ist also ein Modul des Chipherstellers mit eigenen Chips. Die Standard-DDR5-5600-Module von Crucial werden häufig mit CL46 angegeben, was rund 16,4 ns entspricht. Ein Übertaktungsprofil gibt es nicht; das Modul läuft mit dem Takt, den Ihr Board vorgibt.",
+   "Prüfen Sie, ob Ihr Board DDR5 nutzt und ob Kapazität und Takt beim Ergänzen vorhandener Module übereinstimmen. Ein günstiger wirkender Auslandspreis kann nach Versand, Einfuhrabgaben und Garantieabwicklung deutlich schrumpfen, vergleichen Sie Länder also mit Vorsicht. Das 30-Tage-Tief und -Hoch auf dieser Seite wird je Markt angezeigt; beurteilen Sie, ob der heutige Preis in dem Markt, in dem Sie tatsächlich kaufen, eher niedrig liegt."
+  ]
+ },
+ "crucial-ddr5-32": {
+  "ko": [
+   "크루셜 DDR5-5600 32GB 단품은 램 슬롯이 두 개뿐인 미니 ITX나 일부 M-ATX 보드 사용자에게 특히 쓸모가 있습니다. 슬롯이 두 개라면 16GB 두 장으로 시작했다가 늘리려면 전부 바꿔야 하지만, 32GB 한 장으로 시작하면 나중에 한 장만 더해 64GB를 만들 수 있습니다. 다만 한 장 상태에서는 싱글 채널이라 게임 성능이 듀얼 채널보다 손해를 볼 수 있다는 점은 감안해야 합니다.",
+   "마이크론이 자사 칩으로 만든 크루셜 표준 모듈이며, 5600MT/s 정격으로 프로파일 없이 동작합니다. 크루셜 5600 표준 모듈은 CL46으로 표기되는 경우가 많고, 그러면 지연시간은 약 16.4ns입니다. DDR5 모듈에는 전원 관리 칩(PMIC)과 칩 내부 오류 정정(on-die ECC)이 들어 있지만, 이는 서버용 ECC 메모리와는 다른 것이니 ECC 램으로 오해하지 않는 것이 좋습니다.",
+   "나중에 한 장을 더할 계획이라면 같은 모델 번호를 사는 것이 기본이지만, 생산 시기에 따라 칩 구성이 달라질 수 있으니 처음부터 두 장을 사는 쪽이 가장 확실합니다. 보드 QVL에 32GB 모듈이 올라와 있는지도 확인해 보세요. 이 페이지의 30일 최저가·최고가를 보면 최근 한 달 동안 가격이 얼마나 흔들렸는지 알 수 있어, 서둘러야 할지 기다려도 될지 감을 잡는 데 도움이 됩니다."
+  ],
+  "en": [
+   "The Crucial DDR5-5600 32GB single stick is especially useful on Mini-ITX and some Micro-ATX boards with only two memory slots. With two slots, starting on 2x16GB means replacing everything to upgrade, whereas starting with one 32GB stick lets you add a second later for 64GB. The trade-off is that one stick runs single-channel, which can cost some gaming performance compared with dual-channel.",
+   "It is Crucial's standard module built by Micron with Micron chips, rated at 5600 MT/s and running without any profile. Crucial's 5600 standard modules are commonly listed at CL46, which is about 16.4 ns. DDR5 modules carry a power management chip (PMIC) and on-die ECC inside the DRAM chips, but that is not the same as server ECC memory, so do not mistake this for an ECC module.",
+   "If you plan to add a second stick later, buying the same part number is the baseline, but chip configuration can change between production runs, so buying both at once is the surest route. It is also worth checking that 32GB modules appear on your board's QVL. The 30-day low and high on this page show how much the price has moved over the past month, which helps you judge whether to act now or wait."
+  ],
+  "ja": [
+   "Crucial DDR5-5600 32GBの単品は、メモリスロットが2本しかないMini-ITXや一部のMicro-ATXマザーボードで特に役立ちます。2スロットの場合、16GB×2で始めると増設時に全部入れ替えになりますが、32GB 1枚で始めれば後から1枚足して64GBにできます。ただし1枚の状態ではシングルチャネルなので、デュアルチャネルに比べてゲーム性能で不利になる場合がある点は考慮しておきましょう。",
+   "MicronがMicron製チップで作ったCrucialの標準モジュールで、5600MT/s定格でプロファイルなしに動作します。Crucialの5600標準モジュールはCL46と表記されることが多く、その場合の遅延は約16.4nsです。DDR5モジュールには電源管理チップ（PMIC）とチップ内部の誤り訂正（オンダイECC）が入っていますが、これはサーバー用のECCメモリとは別物なので、ECCメモリと勘違いしないようにしてください。",
+   "後から1枚追加する予定なら同じ型番を買うのが基本ですが、生産時期によってチップ構成が変わることがあるので、最初から2枚買うのがもっとも確実です。マザーボードのQVLに32GBモジュールが載っているかも確認しておくとよいでしょう。このページの30日間の最安値・最高値を見れば、この1か月で価格がどれだけ動いたかがわかり、急ぐべきか待ってもよいかの目安になります。"
+  ],
+  "de": [
+   "Das einzelne Crucial DDR5-5600 Modul mit 32 GB ist besonders auf Mini-ITX- und manchen Micro-ATX-Boards mit nur zwei Speicherslots nützlich. Bei zwei Slots müssen Sie nach einem Start mit 2x16 GB zum Aufrüsten alles tauschen, während Sie mit einem 32-GB-Modul später einfach ein zweites für 64 GB ergänzen. Der Haken: Ein einzelnes Modul läuft im Single-Channel, was gegenüber Dual-Channel etwas Gaming-Leistung kosten kann.",
+   "Es ist das Standardmodul von Crucial, von Micron mit Micron-Chips gebaut, mit 5600 MT/s spezifiziert und ohne Profil lauffähig. Die 5600er-Standardmodule von Crucial werden häufig mit CL46 angegeben, das sind rund 16,4 ns. DDR5-Module enthalten einen Spannungsregler-Chip (PMIC) und On-Die-ECC in den DRAM-Chips, das ist jedoch nicht dasselbe wie ECC-Speicher für Server; verwechseln Sie dieses Modul also nicht mit einem ECC-Modul.",
+   "Wenn Sie später ein zweites Modul ergänzen möchten, ist dieselbe Teilenummer die Grundregel, doch die Chipbestückung kann sich zwischen Produktionschargen ändern; beide gleichzeitig zu kaufen ist daher am sichersten. Prüfen Sie auch, ob 32-GB-Module in der QVL Ihres Boards stehen. Das 30-Tage-Tief und -Hoch auf dieser Seite zeigt, wie stark der Preis im letzten Monat geschwankt hat, und hilft bei der Entscheidung, ob Sie jetzt kaufen oder warten."
+  ]
+ },
+ "crucial-ddr5-64": {
+  "ko": [
+   "크루셜 DDR5-5600 64GB 키트는 32GB 두 장이 한 상자에 든 듀얼 채널 세트입니다. 게임만 한다면 과한 용량이지만, 긴 4K 타임라인을 다루는 영상 편집, 여러 가상머신을 동시에 띄우는 개발 환경, 대용량 사진 일괄 처리, 로컬에서 언어 모델을 돌려 보는 용도에는 32GB에서 겪는 스왑과 버벅임을 크게 줄여 줍니다. 오버클럭보다 안정성과 용량이 중요한 작업용 PC에 어울립니다.",
+   "5600MT/s에 CL46이므로 지연시간은 46×2000÷5600 ≈ 16.4ns로 표준 수준입니다. 6000MT/s CL30 게이밍 키트(약 10ns)보다 수치는 느리지만, 렌더링이나 컴파일처럼 용량과 안정성이 우선인 작업에서는 체감 차이가 크지 않은 경우가 많습니다. 마이크론 칩을 쓴 마이크론 모듈이며, EXPO나 XMP를 켤 필요 없이 꽂으면 바로 정격 동작합니다.",
+   "키트는 두 장이 함께 검증된 세트라 낱개 두 장보다 궁합 걱정이 적습니다. 반대로 이 키트에 다른 키트를 더해 네 장 128GB로 만들면 대부분의 보드에서 속도가 내려가고 안정성 확인이 다시 필요하니, 128GB가 목표라면 처음부터 그에 맞는 구성을 찾는 것이 좋습니다. 가격은 이 페이지의 30일 최저가·최고가와 함께, 같은 사이트의 크루셜 32GB 단품 가격 두 배와 비교해 보면 키트가 실제로 이득인지 확인할 수 있습니다."
+  ],
+  "en": [
+   "The Crucial DDR5-5600 64GB kit is a dual-channel set of two 32GB sticks in one box. It is overkill for gaming alone, but for video editing with long 4K timelines, development setups running several VMs at once, batch photo processing or running language models locally, it removes a lot of the swapping and stutter you get at 32GB. It suits a work PC where capacity and stability matter more than overclocking.",
+   "At 5600 MT/s and CL46, latency is 46 x 2000 / 5600, about 16.4 ns, which is standard. On paper that is slower than a 6000 MT/s CL30 gaming kit (about 10 ns), but in capacity-bound work such as rendering or compiling the difference is often small in practice. It is a Micron module with Micron chips and runs at its rated speed straight away, with no EXPO or XMP to enable.",
+   "A kit is a pair tested together, so there is less worry about compatibility than with two separately bought sticks. On the other hand, adding a second kit to reach four sticks and 128GB will lower memory speed on most boards and needs fresh stability checks, so if 128GB is the goal, plan for it from the start. Compare today's price with the 30-day low and high on this page, and with twice the price of the Crucial 32GB single stick tracked here, to see whether the kit is actually the better deal."
+  ],
+  "ja": [
+   "Crucial DDR5-5600 64GBキットは、32GB×2枚が1箱に入ったデュアルチャネルセットです。ゲームだけなら過剰な容量ですが、長い4Kタイムラインを扱う動画編集、複数の仮想マシンを同時に動かす開発環境、大量の写真の一括処理、ローカルでの言語モデル実行などでは、32GBで起きがちなスワップやもたつきを大きく減らせます。オーバークロックより容量と安定性が大事な作業用PCに向いています。",
+   "5600MT/s・CL46なので、遅延は46×2000÷5600で約16.4nsと標準的です。6000MT/s・CL30のゲーミングキット（約10ns）より数値上は遅いものの、レンダリングやコンパイルのように容量と安定性が優先される作業では、体感差は小さいことが多いです。Micron製チップを使ったMicron製モジュールで、EXPOやXMPを有効にしなくても挿すだけで定格動作します。",
+   "キットは2枚一緒に検証されたセットなので、別々に買った2枚より相性の心配が少なくて済みます。逆に、このキットにもう1キット足して4枚128GBにすると、多くのマザーボードで速度が下がり安定性の確認もやり直しになるため、128GBが目標なら最初からそれに合った構成を探すほうがよいでしょう。このページの30日間の最安値・最高値に加え、当サイトのCrucial 32GB単品価格の2倍とも比べると、キットが本当にお得かどうかが確認できます。"
+  ],
+  "de": [
+   "Das Crucial DDR5-5600 Kit mit 64 GB ist ein Dual-Channel-Set aus zwei 32-GB-Modulen in einer Packung. Für reines Gaming ist das zu viel, doch bei Videoschnitt mit langen 4K-Timelines, Entwicklungsumgebungen mit mehreren gleichzeitigen VMs, Stapelverarbeitung von Fotos oder lokal betriebenen Sprachmodellen verschwindet ein Großteil des Auslagerns und Ruckelns, das Sie mit 32 GB erleben. Es passt zu einem Arbeits-PC, bei dem Kapazität und Stabilität wichtiger sind als Übertakten.",
+   "Bei 5600 MT/s und CL46 liegt die Latenz bei 46 x 2000 / 5600, also rund 16,4 ns, ein Standardwert. Auf dem Papier ist das langsamer als ein Gaming-Kit mit 6000 MT/s und CL30 (rund 10 ns), bei kapazitätsgebundenen Aufgaben wie Rendern oder Kompilieren ist der Unterschied in der Praxis aber oft gering. Es ist ein Micron-Modul mit Micron-Chips und läuft sofort mit Nenntakt, ohne dass EXPO oder XMP aktiviert werden muss.",
+   "Ein Kit ist ein gemeinsam getestetes Paar, Sie haben also weniger Kompatibilitätssorgen als mit zwei einzeln gekauften Modulen. Fügen Sie dagegen ein zweites Kit hinzu, um mit vier Modulen auf 128 GB zu kommen, sinkt auf den meisten Boards der Speichertakt und die Stabilität muss neu geprüft werden; wenn 128 GB das Ziel sind, planen Sie das von Anfang an. Vergleichen Sie den heutigen Preis mit dem 30-Tage-Tief und -Hoch auf dieser Seite und mit dem doppelten Preis des hier erfassten Crucial-32-GB-Einzelmoduls, um zu sehen, ob das Kit tatsächlich günstiger ist."
+  ]
+ },
+ "klevv-ddr5-16": {
+  "ko": [
+   "KLEVV DDR5-5600 16GB는 삼성·하이닉스·크루셜 같은 칩 제조사 순정품 대신 모듈 전문 브랜드 제품을 고르고 싶을 때 보는 선택지입니다. 한 장은 싱글 채널이므로 게임용이라면 두 장을 맞춰 32GB로, 문서 작업이나 가벼운 사무용 PC라면 한 장으로도 시작할 수 있습니다. 국내에서는 순정품과 가격을 나란히 놓고 비교하는 사람이 많은 제품입니다.",
+   "KLEVV는 에센코어(Essencore)의 메모리 브랜드로, DRAM 칩을 직접 만들지 않고 칩을 공급받아 모듈을 조립하는 회사입니다. SK하이닉스 칩을 쓰는 제품이 많은 것으로 알려져 있지만, 같은 모델이라도 생산 시기에 따라 칩이 다를 수 있으니 칩 제조사가 중요하다면 판매처의 상세 정보를 확인하세요. 5600MT/s 표준 속도 제품이라 별도 설정 없이 보드가 지원하는 속도로 동작합니다.",
+   "모듈 브랜드 제품은 보증 기간과 국내 A/S 창구가 순정품과 다를 수 있으니 구매 전에 확인해 두면 좋습니다. 방열판이 달린 모델이라면 큰 공랭 쿨러와 높이가 겹치지 않는지도 봐야 합니다. 가격은 이 페이지의 30일 최저가·최고가에 현재가를 대 보고, 순정품 16GB와의 가격 차이가 크지 않다면 보증 조건이 더 나은 쪽을 고르는 것도 방법입니다."
+  ],
+  "en": [
+   "The KLEVV DDR5-5600 16GB is the option to look at when you would rather buy from a dedicated module brand than a chip maker's own stick from Samsung, SK hynix or Crucial. One stick runs single-channel, so for gaming pair two for 32GB; for documents or a light office PC, a single stick is a reasonable start. Buyers often line it up against the chip makers' own modules on price.",
+   "KLEVV is the memory brand of Essencore, a company that does not fabricate DRAM chips but buys them and assembles modules. Many KLEVV products are reported to use SK hynix chips, but the same model can ship with different chips in different production runs, so check the seller's detailed listing if the chip maker matters to you. It is a standard 5600 MT/s part and runs at whatever your board supports without any setup.",
+   "Warranty length and local service channels for module brands can differ from those of the chip makers' own modules, so check them before you buy. If the model you pick has a heat spreader, make sure it will not clash with a large air cooler. Hold today's price up against the 30-day low and high on this page; if the gap to a chip maker's 16GB stick is small, picking the one with better warranty terms is a sensible tiebreaker."
+  ],
+  "ja": [
+   "KLEVV DDR5-5600 16GBは、Samsung・SK hynix・Crucialといったチップメーカー純正品ではなく、モジュール専業ブランドの製品を選びたいときの選択肢です。1枚ではシングルチャネルなので、ゲーム用なら2枚組み合わせて32GBに、文書作業や軽い事務用PCなら1枚から始めることもできます。純正品と価格を並べて比較されることの多い製品です。",
+   "KLEVVはEssencore（エッセンコア）のメモリブランドで、DRAMチップを自社製造せず、チップの供給を受けてモジュールを組み立てている会社です。SK hynixのチップを使う製品が多いとされていますが、同じモデルでも生産時期によってチップが異なる場合があるので、チップメーカーにこだわるなら販売店の詳細情報を確認してください。5600MT/sの標準速度品なので、特別な設定なしにマザーボードが対応する速度で動作します。",
+   "モジュールブランドの製品は、保証期間や国内のサポート窓口が純正品と異なる場合があるので、購入前に確認しておくとよいでしょう。ヒートスプレッダー付きのモデルなら、大型の空冷クーラーと高さが干渉しないかも見ておく必要があります。このページの30日間の最安値・最高値に今日の価格を当てはめ、純正品16GBとの価格差が小さいなら保証条件のよいほうを選ぶのもひとつの方法です。"
+  ],
+  "de": [
+   "Das KLEVV DDR5-5600 Modul mit 16 GB ist die Option, wenn Sie lieber bei einer reinen Modulmarke kaufen als das Originalmodul eines Chipherstellers wie Samsung, SK hynix oder Crucial. Ein einzelnes Modul läuft im Single-Channel; für Gaming kombinieren Sie zwei zu 32 GB, für Büroarbeit oder einen leichten Office-PC ist ein Modul ein vernünftiger Anfang. Viele Käufer stellen es preislich direkt neben die Module der Chiphersteller.",
+   "KLEVV ist die Speichermarke von Essencore, einem Unternehmen, das keine DRAM-Chips fertigt, sondern Chips zukauft und Module montiert. Viele KLEVV-Produkte sollen SK-hynix-Chips verwenden, doch dasselbe Modell kann je nach Produktionscharge andere Chips enthalten; ist Ihnen der Chiphersteller wichtig, prüfen Sie die Detailangaben des Händlers. Es ist ein Standardmodul mit 5600 MT/s und läuft ohne Einstellungen mit dem Takt, den Ihr Board unterstützt.",
+   "Garantiedauer und Serviceweg im eigenen Land können bei Modulmarken anders sein als bei den Originalmodulen der Chiphersteller; prüfen Sie das vor dem Kauf. Hat das gewählte Modell einen Heatspreader, achten Sie darauf, dass er nicht mit einem großen Luftkühler kollidiert. Halten Sie den heutigen Preis gegen das 30-Tage-Tief und -Hoch auf dieser Seite; ist der Abstand zu einem 16-GB-Modul eines Chipherstellers gering, sind bessere Garantiebedingungen ein guter Entscheider."
+  ]
+ },
+ "klevv-ddr5-32": {
+  "ko": [
+   "KLEVV DDR5-5600 32GB 단품은 64GB를 두 장으로 구성하거나, 슬롯이 두 개뿐인 소형 보드에서 업그레이드 여지를 남겨 두고 싶을 때 고려할 만한 제품입니다. 32GB 한 장은 용량은 충분하지만 싱글 채널이라, 게임 성능이 중요하다면 결국 두 장으로 듀얼 채널을 만드는 쪽이 낫습니다. 영상 편집용 PC를 두 단계로 나눠 업그레이드하려는 사람에게 맞습니다.",
+   "모듈 브랜드 KLEVV(에센코어)가 외부에서 공급받은 DRAM 칩으로 만든 32GB 모듈이며, 5600MT/s 표준 속도로 동작합니다. 한 장에 32GB를 담으려면 고용량 칩을 써야 하므로, 같은 브랜드의 16GB 모듈과 칩 구성이 다를 수 있습니다. CL 값이 판매 페이지에 따로 적혀 있지 않다면 표준 DDR5-5600 수준으로 보면 되고, 정확한 값은 제품 라벨이 가장 확실합니다.",
+   "두 장을 살 때는 같은 판매처에서 같은 날 사는 것이 칩 구성을 맞추는 가장 쉬운 방법입니다. 삼성·하이닉스 순정 32GB와 섞어 쓰는 것도 대개 가능하지만, 타이밍이 다르면 보드가 느린 쪽에 맞추므로 굳이 섞을 이유는 없습니다. 이 페이지의 30일 최저가·최고가를 기준으로 현재가가 범위의 어디쯤인지 확인하고, 같은 용량의 다른 브랜드 페이지와도 비교해 보세요."
+  ],
+  "en": [
+   "The KLEVV DDR5-5600 32GB single stick is worth considering for building 64GB from two sticks, or for leaving upgrade room on a small board with only two slots. One 32GB stick gives plenty of capacity but runs single-channel, so if gaming performance matters you will want a second stick for dual-channel in the end. It suits people upgrading a video editing PC in two steps.",
+   "It is a 32GB module from the module brand KLEVV (Essencore), built with DRAM chips sourced from a chip maker, and it runs at the standard 5600 MT/s. Fitting 32GB on one stick requires higher-capacity chips, so the chip configuration can differ from the same brand's 16GB module. If the listing does not state a CL value, treat it as standard DDR5-5600; the label on the module is the most reliable source.",
+   "When buying two, getting both from the same seller on the same day is the easiest way to keep the chips matched. Mixing with a Samsung or SK hynix 32GB stick usually works, but if timings differ the board will run both at the slower setting, so there is little reason to mix. Check where today's price sits relative to the 30-day low and high on this page, and compare with the other brands' 32GB pages on this site."
+  ],
+  "ja": [
+   "KLEVV DDR5-5600 32GBの単品は、2枚で64GBを組みたいときや、2スロットしかない小型マザーボードで増設の余地を残したいときに検討したい製品です。32GB 1枚で容量は十分ですがシングルチャネルなので、ゲーム性能を重視するなら最終的には2枚でデュアルチャネルにしたほうがよいでしょう。動画編集用PCを2段階に分けてアップグレードしたい人に向いています。",
+   "モジュールブランドKLEVV（Essencore）が外部から調達したDRAMチップで作った32GBモジュールで、5600MT/sの標準速度で動作します。1枚に32GBを載せるには大容量チップが必要なため、同じブランドの16GBモジュールとはチップ構成が異なることがあります。販売ページにCL値が書かれていなければ標準的なDDR5-5600と考えてよく、正確な値はモジュールのラベルがもっとも確実です。",
+   "2枚買うなら、同じ販売店で同じ日に買うのがチップ構成をそろえるいちばん簡単な方法です。SamsungやSK hynixの純正32GBと混ぜて使うことも多くの場合は可能ですが、タイミングが違えばマザーボードは遅いほうに合わせるので、あえて混ぜる理由はありません。このページの30日間の最安値・最高値を基準に今日の価格が幅のどこにあるかを確認し、当サイトの他ブランドの32GBページとも比べてみてください。"
+  ],
+  "de": [
+   "Das einzelne KLEVV DDR5-5600 Modul mit 32 GB lohnt sich, wenn Sie 64 GB aus zwei Modulen aufbauen oder auf einem kleinen Board mit nur zwei Slots Platz zum Aufrüsten lassen möchten. Ein 32-GB-Modul bietet reichlich Kapazität, läuft aber im Single-Channel; ist Ihnen Gaming-Leistung wichtig, gehört am Ende ein zweites Modul für Dual-Channel dazu. Es passt zu allen, die einen Videoschnitt-PC in zwei Schritten aufrüsten.",
+   "Es ist ein 32-GB-Modul der Modulmarke KLEVV (Essencore), gebaut mit zugekauften DRAM-Chips, und läuft mit standardmäßigen 5600 MT/s. Für 32 GB auf einem Riegel sind Chips mit höherer Kapazität nötig, die Bestückung kann sich daher vom 16-GB-Modul derselben Marke unterscheiden. Nennt das Angebot keinen CL-Wert, gehen Sie von Standard-DDR5-5600 aus; am verlässlichsten ist das Etikett auf dem Modul.",
+   "Wenn Sie zwei kaufen, ist der Kauf beim selben Händler am selben Tag der einfachste Weg zu gleicher Bestückung. Das Mischen mit einem 32-GB-Modul von Samsung oder SK hynix funktioniert meist, bei abweichenden Timings läuft das Board aber beide mit der langsameren Einstellung, es gibt also wenig Grund dafür. Prüfen Sie, wo der heutige Preis im Verhältnis zum 30-Tage-Tief und -Hoch auf dieser Seite liegt, und vergleichen Sie mit den 32-GB-Seiten der anderen Marken hier."
+  ]
+ },
+ "klevv-ddr5-64": {
+  "ko": [
+   "KLEVV DDR5-6000 64GB 키트는 32GB 두 장을 높은 속도와 낮은 타이밍으로 맞춘 키트로, 용량과 게임 성능을 둘 다 원하는 사람을 위한 제품입니다. 게임을 하면서 방송 송출이나 영상 편집, 로컬 AI 실험까지 한 PC에서 하려는 경우에 잘 맞습니다. 특히 라이젠 7000·9000 시리즈(AM5)에서는 DDR5-6000이 흔히 권장되는 속도라 궁합이 좋습니다.",
+   "6000MT/s에 CL30이면 지연시간은 30×2000÷6000 = 10ns로, 표준 DDR5-5600 CL46(약 16.4ns)보다 훨씬 짧습니다. 다만 이 속도는 기본값이 아니라 BIOS에서 EXPO 또는 XMP 프로파일을 켜야 나오는 값이고, 켜지 않으면 JEDEC 기본 속도로 동작합니다. KLEVV는 칩을 사서 모듈을 만드는 브랜드이므로 칩 제조사는 생산 시기에 따라 다를 수 있습니다.",
+   "구매 전 메인보드 QVL에 이 키트 또는 같은 사양의 64GB(2×32GB) 6000 키트가 있는지 확인하고, BIOS를 최신으로 올린 뒤 EXPO/XMP를 켜는 것을 권합니다. 고용량 고속 키트는 첫 부팅 시 메모리 트레이닝이 길 수 있고, 불안정하면 한 단계 낮은 속도로 내려 쓰는 것도 방법입니다. 이 페이지의 30일 최저가·최고가를 보고 현재가가 범위 아래쪽일 때를 노리되, 5600 64GB 키트와의 가격 차이가 속도 차이만큼의 값어치가 있는지도 따져 보세요."
+  ],
+  "en": [
+   "The KLEVV DDR5-6000 64GB kit pairs two 32GB sticks at a higher speed and tighter timings, for people who want both capacity and gaming performance. It fits a single PC that games while also streaming, editing video or running local AI experiments. DDR5-6000 is a commonly recommended speed for Ryzen 7000 and 9000 series (AM5) systems, so it is a natural match there.",
+   "At 6000 MT/s and CL30, latency is 30 x 2000 / 6000 = 10 ns, much shorter than standard DDR5-5600 CL46 at about 16.4 ns. That speed is not the default, though; you get it by enabling the EXPO or XMP profile in the BIOS, and without it the kit runs at a JEDEC base speed. KLEVV buys chips and builds modules, so the chip maker can vary between production runs.",
+   "Before buying, check your motherboard's QVL for this kit or another 64GB (2x32GB) 6000 kit with the same specs, update the BIOS, and then enable EXPO or XMP. High-capacity, high-speed kits can take a while to train on first boot, and if things are unstable, dropping one speed step is a legitimate fix. Use the 30-day low and high on this page to aim for the lower end of the range, and weigh whether the price gap over a 5600 64GB kit is worth the speed difference to you."
+  ],
+  "ja": [
+   "KLEVV DDR5-6000 64GBキットは、32GB×2枚を高い速度と詰めたタイミングでそろえたキットで、容量とゲーム性能の両方が欲しい人向けの製品です。ゲームをしながら配信や動画編集、ローカルAIの実験まで1台でこなしたい場合によく合います。特にRyzen 7000・9000シリーズ（AM5）ではDDR5-6000がよく推奨される速度なので、相性のよい組み合わせです。",
+   "6000MT/s・CL30なら遅延は30×2000÷6000＝10nsで、標準的なDDR5-5600 CL46（約16.4ns）よりずっと短くなります。ただしこの速度は初期値ではなく、BIOSでEXPOまたはXMPプロファイルを有効にして初めて出るもので、有効にしなければJEDECの基本速度で動作します。KLEVVはチップを調達してモジュールを作るブランドなので、チップメーカーは生産時期によって異なる場合があります。",
+   "購入前にマザーボードのQVLにこのキット、または同じ仕様の64GB（2×32GB）6000キットがあるかを確認し、BIOSを最新にしてからEXPO/XMPを有効にすることをおすすめします。大容量・高速キットは初回起動時のメモリトレーニングが長くなることがあり、不安定なら1段階低い速度に下げて使うのも立派な解決策です。このページの30日間の最安値・最高値を見て幅の下のほうを狙いつつ、5600の64GBキットとの価格差が速度差に見合うかも検討してください。"
+  ],
+  "de": [
+   "Das KLEVV DDR5-6000 Kit mit 64 GB kombiniert zwei 32-GB-Module mit höherem Takt und schärferen Timings und richtet sich an alle, die Kapazität und Gaming-Leistung zugleich wollen. Es passt zu einem PC, der neben dem Spielen auch streamt, Videos schneidet oder lokale KI-Experimente ausführt. DDR5-6000 ist ein häufig empfohlener Takt für Systeme mit Ryzen 7000 und 9000 (AM5), dort ist es also eine naheliegende Wahl.",
+   "Bei 6000 MT/s und CL30 beträgt die Latenz 30 x 2000 / 6000 = 10 ns, deutlich weniger als die rund 16,4 ns von Standard-DDR5-5600 mit CL46. Dieser Takt ist jedoch nicht voreingestellt; Sie erhalten ihn, indem Sie im BIOS das EXPO- oder XMP-Profil aktivieren, ohne läuft das Kit mit einem JEDEC-Basistakt. KLEVV kauft Chips zu und baut Module, der Chiphersteller kann also je nach Charge variieren.",
+   "Prüfen Sie vor dem Kauf die QVL Ihres Mainboards auf dieses Kit oder ein anderes 64-GB-Kit (2x32 GB) mit 6000 und gleichen Daten, aktualisieren Sie das BIOS und aktivieren Sie dann EXPO oder XMP. Kits mit hoher Kapazität und hohem Takt brauchen beim ersten Start mitunter länger für das Speichertraining; bei Instabilität ist eine Taktstufe niedriger eine legitime Lösung. Nutzen Sie das 30-Tage-Tief und -Hoch auf dieser Seite, um das untere Ende der Spanne abzupassen, und wägen Sie ab, ob Ihnen der Aufpreis gegenüber einem 5600er-64-GB-Kit den Geschwindigkeitsunterschied wert ist."
+  ]
+ },
+ "corsair-ddr5-32": {
+  "ko": [
+   "커세어 벤전스 DDR5-6000 32GB 키트는 16GB 두 장으로 구성된, 지금 게임용 PC에서 가장 많이 고르는 조합에 해당하는 제품입니다. 두 장이 한 세트라 처음부터 듀얼 채널로 동작하고, 32GB는 최신 게임과 디스코드, 브라우저를 함께 띄워도 여유가 있는 용량입니다. 새로 PC를 맞추면서 램 고민을 한 번에 끝내고 싶은 사람에게 맞습니다.",
+   "6000MT/s에 CL30이면 지연시간은 30×2000÷6000 = 10ns로, 표준 DDR5-5600 CL46(약 16.4ns)보다 짧습니다. 이 수치는 BIOS에서 XMP(인텔) 또는 EXPO(AMD) 프로파일을 켜야 적용되며, 커세어는 같은 벤전스 이름으로 XMP 버전과 EXPO 버전을 따로 파는 경우가 있으니 모델 번호를 확인하세요. 커세어는 칩을 직접 만들지 않는 모듈 브랜드라, 내부 칩은 하이닉스·삼성·마이크론 중 생산분에 따라 달라질 수 있습니다.",
+   "설치 후 프로파일을 켜지 않으면 비싼 램을 기본 속도로 쓰게 되니, 조립을 마치면 BIOS에서 EXPO/XMP부터 켜는 습관을 들이는 것이 좋습니다. 방열판 높이가 큰 공랭 쿨러와 겹치지 않는지, 보드 QVL에 같은 모델 번호가 있는지도 확인하세요. 가격은 이 페이지의 30일 최저가·최고가를 기준으로 판단하면 되고, 같은 사양인 G.Skill 32GB 6000 키트와 비교해 싼 쪽을 고르는 것도 합리적입니다."
+  ],
+  "en": [
+   "The Corsair Vengeance DDR5-6000 32GB kit is two 16GB sticks, the combination most gaming builds pick today. As a matched pair it runs dual-channel from day one, and 32GB leaves room for a current game alongside Discord and a browser. It suits anyone building a new PC who wants to settle the RAM question in one go.",
+   "At 6000 MT/s and CL30, latency is 30 x 2000 / 6000 = 10 ns, shorter than standard DDR5-5600 CL46 at about 16.4 ns. Those numbers apply only after you enable the XMP (Intel) or EXPO (AMD) profile in the BIOS, and Corsair sometimes sells separate XMP and EXPO versions under the same Vengeance name, so check the part number. Corsair is a module brand that does not make chips, so the DRAM inside can be SK hynix, Samsung or Micron depending on the production run.",
+   "If you never enable the profile, you are running premium RAM at base speed, so make turning on EXPO or XMP the first thing you do in the BIOS after building. Check that the heat spreader height will not clash with a large air cooler and that the exact part number is on your board's QVL. Judge the price against the 30-day low and high on this page, and since the G.Skill 32GB 6000 kit has the same headline specs, simply buying whichever is cheaper is a reasonable approach."
+  ],
+  "ja": [
+   "Corsair Vengeance DDR5-6000 32GBキットは16GB×2枚の構成で、今のゲーミングPCでもっとも選ばれている組み合わせにあたる製品です。2枚1組なので最初からデュアルチャネルで動作し、32GBは最新ゲームとDiscord、ブラウザを同時に開いても余裕のある容量です。新しくPCを組みながら、メモリ選びを一度で終わらせたい人に向いています。",
+   "6000MT/s・CL30なら遅延は30×2000÷6000＝10nsで、標準的なDDR5-5600 CL46（約16.4ns）より短くなります。この数値はBIOSでXMP（Intel）またはEXPO（AMD）プロファイルを有効にして初めて適用され、Corsairは同じVengeanceの名前でXMP版とEXPO版を別々に販売していることがあるので、型番を確認してください。Corsairはチップを製造しないモジュールブランドなので、中のチップはSK hynix・Samsung・Micronのいずれかで、生産ロットによって変わることがあります。",
+   "取り付け後にプロファイルを有効にしなければ、高いメモリを基本速度で使うことになります。組み立てが終わったら、まずBIOSでEXPO/XMPを有効にする習慣をつけましょう。ヒートスプレッダーの高さが大型空冷クーラーと干渉しないか、マザーボードのQVLに同じ型番があるかも確認してください。価格はこのページの30日間の最安値・最高値を基準に判断すればよく、同じ仕様のG.Skill 32GB 6000キットと比べて安いほうを選ぶのも合理的です。"
+  ],
+  "de": [
+   "Das Corsair Vengeance DDR5-6000 Kit mit 32 GB besteht aus zwei 16-GB-Modulen, der Kombination, die heute die meisten Gaming-PCs bekommen. Als abgestimmtes Paar läuft es von Anfang an im Dual-Channel, und 32 GB lassen neben einem aktuellen Spiel auch Discord und Browser Luft. Es passt zu allen, die beim Neubau die Speicherfrage auf einen Schlag erledigen wollen.",
+   "Bei 6000 MT/s und CL30 beträgt die Latenz 30 x 2000 / 6000 = 10 ns, kürzer als die rund 16,4 ns von Standard-DDR5-5600 mit CL46. Diese Werte gelten erst, wenn Sie im BIOS das XMP- (Intel) oder EXPO-Profil (AMD) aktivieren, und Corsair verkauft unter demselben Namen Vengeance mitunter getrennte XMP- und EXPO-Versionen; prüfen Sie also die Teilenummer. Corsair ist eine Modulmarke ohne eigene Chipfertigung, die DRAM-Chips können je nach Charge von SK hynix, Samsung oder Micron stammen.",
+   "Wer das Profil nie aktiviert, betreibt teuren Speicher mit Basistakt; machen Sie das Einschalten von EXPO oder XMP daher zum ersten Schritt im BIOS nach dem Zusammenbau. Prüfen Sie, ob die Höhe des Heatspreaders mit einem großen Luftkühler kollidiert und ob genau diese Teilenummer in der QVL Ihres Boards steht. Beurteilen Sie den Preis anhand des 30-Tage-Tiefs und -Hochs auf dieser Seite; da das G.Skill-Kit mit 32 GB und 6000 dieselben Eckdaten hat, ist es durchaus vernünftig, einfach das günstigere zu nehmen."
+  ]
+ },
+ "corsair-ddr5-64": {
+  "ko": [
+   "커세어 벤전스 DDR5-6000 64GB 키트는 32GB 두 장으로, 게임 성능과 작업 용량을 함께 챙기려는 고급 조립 PC에 어울리는 구성입니다. 게임 중에 OBS로 녹화하거나, 퇴근 후에는 프리미어·다빈치 리졸브로 편집하고 주말에는 로컬 언어 모델을 돌려 보는 식으로 한 대를 여러 용도로 쓰는 사람에게 32GB는 금방 빠듯해집니다. 처음부터 64GB를 두 장으로 채우면 슬롯 두 개가 비어 있어도 속도 손해가 없다는 장점도 있습니다.",
+   "6000MT/s CL30의 지연시간은 10ns로 32GB 키트와 같지만, 장당 32GB라 고용량 칩이 쓰입니다. 표기 속도는 EXPO 또는 XMP를 켰을 때의 값이며, 커세어는 같은 제품군 안에서 인텔용 XMP 모델과 AMD용 EXPO 모델을 구분해 파는 경우가 있습니다. 요즘 보드는 둘 중 어느 프로파일이든 읽는 경우가 많지만, 사용하는 플랫폼에 맞는 쪽을 고르는 것이 가장 마음 편합니다.",
+   "64GB를 네 장(16GB×4)으로 만드는 것보다 이 키트처럼 두 장으로 만드는 편이 DDR5에서는 속도와 안정성 면에서 유리합니다. 키트 두 개를 섞어 128GB로 가는 것은 권하지 않습니다. 구매 전 보드 QVL과 BIOS 버전을 확인하고, 가격은 이 페이지의 30일 최저가·최고가와 같은 사양의 G.Skill 64GB 키트 가격을 함께 보며 판단하세요. 램 값이 이렇게 신경 쓰이게 될 줄은 샘 올트먼도 몰랐을 겁니다."
+  ],
+  "en": [
+   "The Corsair Vengeance DDR5-6000 64GB kit is two 32GB sticks, a fit for high-end builds that want both gaming speed and working capacity. If one PC records with OBS while gaming, edits in Premiere or DaVinci Resolve after work and runs a local language model at the weekend, 32GB gets tight quickly. Reaching 64GB with two sticks also means the two empty slots cost you no speed.",
+   "Latency at 6000 MT/s CL30 is 10 ns, the same as the 32GB kit, but each stick uses higher-capacity chips to hold 32GB. The rated speed applies with EXPO or XMP enabled, and Corsair sometimes sells Intel-oriented XMP and AMD-oriented EXPO models separately within the same line. Many current boards read either profile, but choosing the one that matches your platform is the least stressful option.",
+   "On DDR5, building 64GB from two sticks like this kit is better for speed and stability than using four 16GB sticks. Mixing two kits to reach 128GB is not recommended. Check your board's QVL and BIOS version before buying, and judge the price using both the 30-day low and high on this page and the G.Skill 64GB kit with the same specs. Few people expected to be watching RAM prices this closely, and that probably includes Sam Altman."
+  ],
+  "ja": [
+   "Corsair Vengeance DDR5-6000 64GBキットは32GB×2枚の構成で、ゲーム性能と作業用の容量を両立させたいハイエンド自作PCに似合います。ゲーム中にOBSで録画し、仕事終わりにはPremiereやDaVinci Resolveで編集し、週末にはローカルの言語モデルを動かす、というように1台を何役にも使う人には32GBはすぐに窮屈になります。最初から2枚で64GBを満たせば、空いている2スロットのせいで速度が落ちないという利点もあります。",
+   "6000MT/s・CL30の遅延は10nsで32GBキットと同じですが、1枚32GBにするために大容量チップが使われています。表記速度はEXPOまたはXMPを有効にしたときの値で、Corsairは同じシリーズ内でIntel向けのXMPモデルとAMD向けのEXPOモデルを分けて販売していることがあります。最近のマザーボードはどちらのプロファイルも読めることが多いものの、使うプラットフォームに合ったほうを選ぶのがいちばん安心です。",
+   "DDR5では、64GBを16GB×4枚で組むより、このキットのように2枚で組むほうが速度と安定性の面で有利です。キットを2つ混ぜて128GBにするのはおすすめしません。購入前にマザーボードのQVLとBIOSのバージョンを確認し、価格はこのページの30日間の最安値・最高値と、同じ仕様のG.Skill 64GBキットの価格を合わせて見ながら判断してください。メモリの値段をここまで気にする日が来るとは、サム・アルトマンも思っていなかったでしょう。"
+  ],
+  "de": [
+   "Das Corsair Vengeance DDR5-6000 Kit mit 64 GB besteht aus zwei 32-GB-Modulen und passt zu High-End-Systemen, die Gaming-Tempo und Arbeitskapazität zugleich wollen. Wenn ein PC beim Spielen mit OBS aufnimmt, nach Feierabend in Premiere oder DaVinci Resolve schneidet und am Wochenende ein lokales Sprachmodell betreibt, werden 32 GB schnell knapp. 64 GB mit zwei Modulen bedeutet außerdem, dass die zwei freien Slots keinen Takt kosten.",
+   "Die Latenz bei 6000 MT/s und CL30 beträgt 10 ns, genau wie beim 32-GB-Kit, doch jedes Modul nutzt Chips mit höherer Kapazität für 32 GB. Der angegebene Takt gilt mit aktiviertem EXPO oder XMP, und Corsair verkauft innerhalb derselben Serie mitunter getrennte XMP-Modelle für Intel und EXPO-Modelle für AMD. Viele aktuelle Boards lesen beide Profile, am entspanntesten ist aber die Variante, die zu Ihrer Plattform passt.",
+   "Bei DDR5 sind 64 GB aus zwei Modulen wie bei diesem Kit für Takt und Stabilität günstiger als vier 16-GB-Module. Zwei Kits zu 128 GB zu mischen ist nicht empfehlenswert. Prüfen Sie vor dem Kauf QVL und BIOS-Version Ihres Boards und beurteilen Sie den Preis anhand des 30-Tage-Tiefs und -Hochs auf dieser Seite sowie des G.Skill-64-GB-Kits mit gleichen Daten. Dass man RAM-Preise einmal so genau beobachten würde, hat wohl nicht einmal Sam Altman erwartet."
+  ]
+ },
+ "gskill-ddr5-32": {
+  "ko": [
+   "G.Skill DDR5-6000 32GB 키트는 16GB 두 장으로 된 게이밍 램으로, AMD 라이젠 7000·9000(AM5) 조립 PC에서 특히 자주 보이는 조합입니다. 두 장 세트라 듀얼 채널이 기본이고, 32GB면 최신 게임과 백그라운드 프로그램을 함께 돌리기에 충분합니다. 램에 큰 돈을 쓰지 않으면서도 플랫폼이 잘 받아 주는 속도를 원하는 게이머에게 맞습니다.",
+   "6000MT/s CL30은 지연시간 10ns로, 이 가격대 DDR5에서 흔히 '적정점'으로 꼽히는 조합입니다. G.Skill은 같은 6000 CL30이라도 EXPO 위주 제품군(예: Flare X5, Trident Z5 Neo)과 XMP 위주 제품군(예: Ripjaws S5, Trident Z5)이 나뉘어 있으니, 쓰는 CPU에 맞는 쪽인지 모델명을 보고 확인하는 것이 좋습니다. G.Skill도 칩을 사서 만드는 모듈 브랜드라 내부 칩은 생산분에 따라 다를 수 있습니다.",
+   "설치 후 BIOS에서 EXPO 또는 XMP를 켜야 6000으로 동작합니다. 켠 뒤 부팅이 되지 않으면 대개 보드가 자동으로 기본값으로 돌아오니 당황하지 말고 BIOS를 업데이트한 뒤 다시 시도해 보세요. 이 페이지의 30일 최저가·최고가를 기준으로 현재가 위치를 보고, 사양이 같은 커세어 32GB 6000 키트 페이지와 비교하면 브랜드값을 얼마나 내는지 감이 옵니다."
+  ],
+  "en": [
+   "The G.Skill DDR5-6000 32GB kit is a two-stick 16GB gaming kit, a very common sight in AMD Ryzen 7000 and 9000 (AM5) builds. As a pair it runs dual-channel by default, and 32GB is enough for current games plus whatever runs in the background. It suits gamers who want a speed the platform handles well without spending a fortune on memory.",
+   "6000 MT/s at CL30 means 10 ns of latency, a combination widely regarded as the sweet spot for DDR5 in this class. Even at the same 6000 CL30, G.Skill splits its lines into EXPO-focused ones (for example Flare X5 and Trident Z5 Neo) and XMP-focused ones (for example Ripjaws S5 and Trident Z5), so check the model name matches your CPU platform. G.Skill is also a module brand that buys chips, so the DRAM inside can vary between production runs.",
+   "It runs at 6000 only after you enable EXPO or XMP in the BIOS. If the PC will not boot after enabling it, the board usually falls back to defaults on its own, so do not panic; update the BIOS and try again. Check where today's price sits against the 30-day low and high on this page, and compare with the Corsair 32GB 6000 kit page to see how much you are paying for the brand."
+  ],
+  "ja": [
+   "G.Skill DDR5-6000 32GBキットは16GB×2枚のゲーミングメモリで、AMD Ryzen 7000・9000（AM5）の自作PCで特によく見かける組み合わせです。2枚セットなのでデュアルチャネルが基本で、32GBあれば最新ゲームとバックグラウンドのソフトを一緒に動かすのに十分です。メモリに大金をかけずに、プラットフォームと相性のよい速度が欲しいゲーマーに向いています。",
+   "6000MT/s・CL30は遅延10nsで、このクラスのDDR5ではよく「スイートスポット」とされる組み合わせです。G.Skillは同じ6000 CL30でも、EXPO中心のシリーズ（例：Flare X5、Trident Z5 Neo）とXMP中心のシリーズ（例：Ripjaws S5、Trident Z5）に分かれているので、使うCPUに合ったほうかをモデル名で確認しておきましょう。G.Skillもチップを調達して作るモジュールブランドなので、中のチップは生産ロットによって異なる場合があります。",
+   "取り付け後、BIOSでEXPOまたはXMPを有効にして初めて6000で動作します。有効にしたあと起動しなくても、多くの場合マザーボードが自動的に初期設定に戻るので、慌てずにBIOSを更新してから再挑戦してください。このページの30日間の最安値・最高値で今日の価格の位置を確認し、仕様が同じCorsair 32GB 6000キットのページと比べれば、ブランド料をどれだけ払っているかの感覚がつかめます。"
+  ],
+  "de": [
+   "Das G.Skill DDR5-6000 Kit mit 32 GB ist ein Gaming-Kit aus zwei 16-GB-Modulen und in Systemen mit AMD Ryzen 7000 und 9000 (AM5) besonders häufig anzutreffen. Als Paar läuft es standardmäßig im Dual-Channel, und 32 GB reichen für aktuelle Spiele samt Hintergrundprogrammen. Es passt zu Spielern, die einen Takt wollen, mit dem die Plattform gut zurechtkommt, ohne ein Vermögen für Speicher auszugeben.",
+   "6000 MT/s bei CL30 ergibt 10 ns Latenz, eine Kombination, die in dieser Klasse weithin als Sweet Spot für DDR5 gilt. Auch bei identischem 6000 CL30 teilt G.Skill seine Serien in EXPO-orientierte (etwa Flare X5 und Trident Z5 Neo) und XMP-orientierte (etwa Ripjaws S5 und Trident Z5) auf; prüfen Sie also am Modellnamen, ob es zu Ihrer CPU-Plattform passt. Auch G.Skill ist eine Modulmarke, die Chips zukauft, die DRAM-Bestückung kann je nach Charge variieren.",
+   "Mit 6000 läuft das Kit erst, wenn Sie im BIOS EXPO oder XMP aktivieren. Startet der PC danach nicht, kehrt das Board meist von selbst zu den Standardwerten zurück; also keine Panik, BIOS aktualisieren und erneut versuchen. Prüfen Sie, wo der heutige Preis im Verhältnis zum 30-Tage-Tief und -Hoch auf dieser Seite liegt, und vergleichen Sie mit der Seite des Corsair-Kits mit 32 GB und 6000, um zu sehen, wie viel Sie für die Marke zahlen."
+  ]
+ },
+ "gskill-ddr5-64": {
+  "ko": [
+   "G.Skill DDR5-6000 64GB 키트는 32GB 두 장으로, 게임용 속도를 유지하면서 작업용 용량까지 확보하려는 사람을 위한 제품입니다. 대형 프로젝트를 빌드하는 개발자, 수백 개 레이어를 다루는 그래픽 작업자, 게임 모드 수십 개를 깔아 두는 시뮬레이션 게임 애호가처럼 32GB 사용률이 늘 꽉 차 있는 사람이라면 체감할 수 있는 업그레이드입니다. 반대로 게임만 한다면 32GB 키트로도 충분한 경우가 대부분입니다.",
+   "6000MT/s CL30은 지연시간 10ns로, 같은 용량의 5600 CL46 키트(약 16.4ns)보다 빠른 응답을 보입니다. 장당 32GB의 고용량 모듈이라 같은 속도의 16GB 모듈보다 메모리 컨트롤러에 부담이 조금 더 갈 수 있고, 그래서 BIOS 버전과 QVL 확인이 더 중요합니다. EXPO 모델인지 XMP 모델인지는 제품명과 상자 표기로 확인하세요.",
+   "EXPO/XMP를 켠 뒤에는 메모리 테스트 프로그램으로 한 번쯤 안정성을 확인해 두면, 나중에 원인 모를 프로그램 종료를 겪을 일이 줄어듭니다. 공랭 쿨러를 쓴다면 방열판 높이 간섭도 미리 보세요. 가격은 이 페이지의 30일 최저가·최고가로 지금 위치를 확인하고, 커세어 64GB 6000 키트와 KLEVV 64GB 6000 키트 페이지까지 비교하면 같은 사양에서 가장 싼 선택지를 찾기 쉽습니다."
+  ],
+  "en": [
+   "The G.Skill DDR5-6000 64GB kit is two 32GB sticks for people who want to keep gaming speed while gaining working capacity. If your 32GB is always nearly full, as it tends to be for developers building large projects, artists juggling hundreds of layers, or simulation fans with dozens of mods installed, this is an upgrade you will notice. For gaming alone, a 32GB kit is enough in most cases.",
+   "6000 MT/s at CL30 gives 10 ns latency, a quicker response than a 5600 CL46 kit of the same capacity at about 16.4 ns. Each stick is a high-capacity 32GB module, which can put a little more strain on the CPU's memory controller than 16GB sticks at the same speed, so BIOS version and QVL checks matter more here. Confirm from the product name and box whether you are buying an EXPO or an XMP model.",
+   "After enabling EXPO or XMP, running a memory test once saves you from mysterious application crashes later. If you use an air cooler, check the heat spreader height for clearance too. Use the 30-day low and high on this page to see where the price stands, and compare with the Corsair 64GB 6000 and KLEVV 64GB 6000 kit pages to find the cheapest option at the same specs."
+  ],
+  "ja": [
+   "G.Skill DDR5-6000 64GBキットは32GB×2枚で、ゲーム向けの速度を保ちつつ作業用の容量も確保したい人向けの製品です。大規模プロジェクトをビルドする開発者、何百ものレイヤーを扱うグラフィック作業者、MODを数十個入れたシミュレーションゲーム好きなど、32GBの使用率がいつも満杯に近い人なら体感できるアップグレードです。逆にゲームだけなら、ほとんどの場合32GBキットで十分です。",
+   "6000MT/s・CL30は遅延10nsで、同じ容量の5600 CL46キット（約16.4ns）より速い応答になります。1枚32GBの大容量モジュールなので、同じ速度の16GBモジュールよりCPUのメモリコントローラーへの負担が少し大きくなることがあり、そのぶんBIOSのバージョンとQVLの確認が重要です。EXPOモデルかXMPモデルかは、製品名と箱の表記で確認してください。",
+   "EXPO/XMPを有効にしたあと、メモリテストソフトで一度安定性を確認しておけば、原因不明のアプリ終了に悩まされることが減ります。空冷クーラーを使っているなら、ヒートスプレッダーの高さの干渉も事前に確認しましょう。価格はこのページの30日間の最安値・最高値で今の位置を確認し、Corsair 64GB 6000キットやKLEVV 64GB 6000キットのページとも比べれば、同じ仕様でいちばん安い選択肢が見つけやすくなります。"
+  ],
+  "de": [
+   "Das G.Skill DDR5-6000 Kit mit 64 GB besteht aus zwei 32-GB-Modulen und richtet sich an alle, die Gaming-Tempo behalten und zugleich Arbeitskapazität gewinnen wollen. Wenn Ihre 32 GB ständig fast voll sind, wie bei Entwicklern mit großen Projekten, Grafikern mit Hunderten Ebenen oder Simulationsfans mit Dutzenden Mods, ist das ein spürbares Upgrade. Für reines Gaming genügt in den meisten Fällen ein 32-GB-Kit.",
+   "6000 MT/s bei CL30 ergibt 10 ns Latenz und damit eine schnellere Antwort als ein 5600er-Kit mit CL46 und gleicher Kapazität bei rund 16,4 ns. Jedes Modul ist ein 32-GB-Modul mit hoher Kapazität, das den Speichercontroller der CPU etwas stärker fordern kann als 16-GB-Module mit gleichem Takt; BIOS-Version und QVL sind hier daher wichtiger. Ob Sie ein EXPO- oder XMP-Modell kaufen, sehen Sie am Produktnamen und an der Verpackung.",
+   "Nach dem Aktivieren von EXPO oder XMP erspart Ihnen ein einmaliger Speichertest spätere rätselhafte Programmabstürze. Bei einem Luftkühler prüfen Sie auch die Höhe des Heatspreaders auf Platz. Sehen Sie am 30-Tage-Tief und -Hoch auf dieser Seite, wo der Preis steht, und vergleichen Sie mit den Seiten der 64-GB-6000-Kits von Corsair und KLEVV, um die günstigste Option mit gleichen Daten zu finden."
+  ]
+ },
+ "samsung-ddr4-16": {
+  "ko": [
+   "삼성 DDR4-3200 16GB는 새 PC용이 아니라 이미 DDR4 메인보드를 쓰고 있는 사람을 위한 제품입니다. AM4 보드(라이젠 1000~5000 시리즈)나 DDR4 슬롯이 달린 인텔 12~14세대용 보드에서 램을 늘리거나 교체할 때 고르면 됩니다. DDR4와 DDR5는 홈 위치가 달라 서로의 슬롯에 들어가지 않으므로, 보드 사양표에서 DDR4인지 꼭 확인하세요.",
+   "3200MT/s에 CL22이면 지연시간은 22×2000÷3200 = 13.75ns입니다. JEDEC 표준 DDR4-3200의 평범한 수치로, 꽂기만 하면 별도 설정 없이 동작합니다. 표준 DDR5-5600 CL46(약 16.4ns)보다 지연시간 숫자는 오히려 짧지만, 전송 속도가 낮아 전체 대역폭은 DDR5가 높습니다. 같은 3200이라도 CL16 같은 게이밍 DDR4는 XMP를 켜야 그 타이밍이 나옵니다.",
+   "8GB 한 장이 꽂힌 구형 PC에 이 16GB를 더하면 용량이 서로 달라 일부 영역만 듀얼 채널로 동작하는 비대칭 구성이 되니, 가능하면 같은 용량끼리 두 장을 맞추는 것이 좋습니다. 기존 램이 2666처럼 더 느리다면 두 장 모두 느린 쪽 속도로 맞춰집니다. DDR4는 신제품 생산이 줄어드는 단계라 시장 가격이 예측하기 어렵게 움직일 수 있으니, 이 페이지의 30일 최저가·최고가로 범위를 먼저 확인하고 사는 것이 좋습니다."
+  ],
+  "en": [
+   "The Samsung DDR4-3200 16GB is not for new builds; it is for people already running a DDR4 motherboard. Pick it when expanding or replacing memory on an AM4 board (Ryzen 1000 to 5000 series) or an Intel 12th to 14th gen board with DDR4 slots. DDR4 and DDR5 have their notch in different places and will not fit each other's slots, so confirm DDR4 on your board's spec sheet.",
+   "At 3200 MT/s and CL22, latency is 22 x 2000 / 3200 = 13.75 ns. That is an ordinary JEDEC-standard DDR4-3200 figure, and the stick works as soon as it is installed, with no settings to change. Its latency number is actually shorter than standard DDR5-5600 CL46 at about 16.4 ns, but the lower transfer rate means DDR5 still has more total bandwidth. Gaming DDR4 at the same 3200 with timings like CL16 needs XMP enabled to reach them.",
+   "Adding this 16GB stick to an older PC with a single 8GB stick creates an asymmetric setup where only part of the memory runs dual-channel, so matching two sticks of the same capacity is better where possible. If your existing RAM is slower, say 2666, both sticks will run at the slower speed. DDR4 is winding down in production, so its market price can move unpredictably; check the range with the 30-day low and high on this page before buying."
+  ],
+  "ja": [
+   "Samsung DDR4-3200 16GBは新しいPC向けではなく、すでにDDR4のマザーボードを使っている人のための製品です。AM4マザーボード（Ryzen 1000〜5000シリーズ）や、DDR4スロットを備えたIntel第12〜14世代向けマザーボードでメモリを増設・交換するときに選びます。DDR4とDDR5は切り欠きの位置が違い、互いのスロットには挿さらないので、マザーボードの仕様表でDDR4かどうかを必ず確認してください。",
+   "3200MT/s・CL22なら遅延は22×2000÷3200＝13.75nsです。JEDEC標準のDDR4-3200としてはごく普通の値で、挿すだけで特別な設定なしに動作します。標準的なDDR5-5600 CL46（約16.4ns）より遅延の数値はむしろ短いものの、転送速度が低いため全体の帯域はDDR5のほうが上です。同じ3200でもCL16のようなゲーミングDDR4は、XMPを有効にしないとそのタイミングになりません。",
+   "8GB 1枚が挿さった古いPCにこの16GBを足すと、容量が違うため一部の領域だけがデュアルチャネルになる非対称構成になります。できれば同じ容量どうしの2枚にそろえるのがよいでしょう。既存のメモリが2666のように遅い場合は、2枚とも遅いほうの速度に合わせられます。DDR4は新規生産が縮小している段階で市場価格が読みにくく動くことがあるので、このページの30日間の最安値・最高値で幅を確認してから買うのがおすすめです。"
+  ],
+  "de": [
+   "Das Samsung DDR4-3200 Modul mit 16 GB ist nicht für Neubauten gedacht, sondern für alle, die bereits ein DDR4-Mainboard nutzen. Greifen Sie zu, wenn Sie auf einem AM4-Board (Ryzen 1000 bis 5000) oder einem Board für Intel der 12. bis 14. Generation mit DDR4-Slots Speicher erweitern oder ersetzen. DDR4 und DDR5 haben die Kerbe an unterschiedlichen Stellen und passen nicht in die Slots des jeweils anderen; prüfen Sie DDR4 also im Datenblatt Ihres Boards.",
+   "Bei 3200 MT/s und CL22 beträgt die Latenz 22 x 2000 / 3200 = 13,75 ns. Das ist ein gewöhnlicher JEDEC-Wert für DDR4-3200, und das Modul läuft sofort nach dem Einbau ohne Einstellungen. Die Latenzzahl ist sogar kürzer als die rund 16,4 ns von Standard-DDR5-5600 mit CL46, wegen der geringeren Übertragungsrate hat DDR5 insgesamt aber mehr Bandbreite. Gaming-DDR4 mit gleichem 3200er-Takt und Timings wie CL16 erreicht diese erst mit aktiviertem XMP.",
+   "Ergänzen Sie dieses 16-GB-Modul in einem älteren PC mit einem einzelnen 8-GB-Modul, entsteht eine asymmetrische Bestückung, bei der nur ein Teil des Speichers im Dual-Channel läuft; zwei Module gleicher Kapazität sind daher besser. Ist Ihr vorhandener Speicher langsamer, etwa 2666, laufen beide Module mit dem langsameren Takt. Die DDR4-Produktion läuft aus, der Marktpreis kann sich daher schwer vorhersehbar bewegen; prüfen Sie vor dem Kauf die Spanne anhand des 30-Tage-Tiefs und -Hochs auf dieser Seite."
+  ]
+ },
+ "rtx-5060": {
+  "ko": [
+   "지포스 RTX 5060은 RTX 50 시리즈의 입문형 카드로, 1080p(FHD) 해상도에서 게임을 하려는 사람을 위한 제품입니다. e스포츠 게임이나 가벼운 최신 게임을 FHD로 즐기고, 오래된 GTX 그래픽카드에서 넘어오는 사람에게 현실적인 선택지입니다. 다만 VRAM이 8GB라 최신 대작을 높은 텍스처 옵션으로 돌리거나 1440p 이상을 노린다면 16GB 모델이 있는 RTX 5060 Ti 이상을 보는 것이 좋습니다.",
+   "8GB GDDR7 메모리를 128비트 버스로 연결한 구성입니다. RTX 50 시리즈답게 DLSS 4와 멀티 프레임 생성(Multi Frame Generation)을 지원해, 지원 게임에서는 AI가 프레임을 추가로 만들어 화면을 부드럽게 해 줍니다. 단, 프레임 생성은 기본 프레임이 어느 정도 나와야 효과가 좋고, VRAM 용량 자체를 늘려 주지는 않는다는 점을 기억하세요.",
+   "구매 전 파워 용량과 보조전원 커넥터를 확인하세요. 같은 RTX 5060이라도 제조사 모델마다 요구 커넥터와 권장 파워가 다를 수 있으니 해당 제품 페이지를 보는 것이 정확합니다. 소형 케이스라면 카드 길이와 슬롯 두께도 함께 확인합니다. 가격은 이 페이지의 30일 최저가·최고가로 현재 위치를 보고, 바로 위 RTX 5060 Ti 16GB와의 가격 차이가 VRAM 두 배의 값어치가 있는지 따져 보는 것이 가장 실용적인 판단법입니다."
+  ],
+  "en": [
+   "The GeForce RTX 5060 is the entry card of the RTX 50 series, aimed at gaming at 1080p. It is a realistic choice for esports titles and lighter current games at Full HD, and for people moving up from an older GTX card. With 8GB of VRAM, though, if you want high texture settings in the newest big releases or plan to play at 1440p and above, look at the RTX 5060 Ti, which comes in a 16GB version, or higher.",
+   "It pairs 8GB of GDDR7 with a 128-bit memory bus. As an RTX 50 card it supports DLSS 4 and Multi Frame Generation, where AI generates additional frames in supported games for smoother motion. Keep in mind that frame generation works best when the base frame rate is already reasonable, and it does nothing to increase VRAM capacity.",
+   "Check your power supply wattage and power connector before buying. Required connectors and recommended PSU wattage can vary between board partners' RTX 5060 models, so the specific product page is the accurate source. In a small case, also check card length and slot thickness. Use the 30-day low and high on this page to see where the price stands, then ask whether the gap to the RTX 5060 Ti 16GB is worth doubling your VRAM; that is the most practical way to decide."
+  ],
+  "ja": [
+   "GeForce RTX 5060はRTX 50シリーズのエントリーモデルで、1080p（フルHD）でゲームをしたい人向けの製品です。eスポーツタイトルや軽めの最新ゲームをフルHDで楽しみたい人、古いGTX系グラフィックカードから乗り換える人にとって現実的な選択肢です。ただしVRAMが8GBなので、最新の大作を高いテクスチャ設定で遊びたい、あるいは1440p以上を狙うなら、16GBモデルのあるRTX 5060 Ti以上を検討したほうがよいでしょう。",
+   "8GBのGDDR7メモリを128ビットバスで接続した構成です。RTX 50シリーズとしてDLSS 4とマルチフレーム生成（Multi Frame Generation）に対応し、対応ゲームではAIが追加のフレームを生成して表示をなめらかにします。ただし、フレーム生成は元のフレームレートがある程度出ているほど効果的で、VRAM容量そのものを増やすわけではない点は覚えておいてください。",
+   "購入前に電源容量と補助電源コネクタを確認しましょう。同じRTX 5060でもメーカーのモデルによって必要なコネクタや推奨電源が異なることがあるので、その製品のページを見るのが確実です。小型ケースなら、カードの長さとスロットの厚みもあわせて確認します。価格はこのページの30日間の最安値・最高値で今の位置を見て、すぐ上のRTX 5060 Ti 16GBとの価格差がVRAM 2倍に見合うかを考えるのがいちばん実用的な判断方法です。"
+  ],
+  "de": [
+   "Die GeForce RTX 5060 ist die Einstiegskarte der RTX-50-Serie und zielt auf Gaming in 1080p. Für E-Sport-Titel und leichtere aktuelle Spiele in Full HD sowie für Umsteiger von einer älteren GTX-Karte ist sie eine realistische Wahl. Mit 8 GB VRAM sollten Sie aber, wenn Sie in den neuesten großen Titeln hohe Texturstufen nutzen oder in 1440p und darüber spielen möchten, eher zur RTX 5060 Ti greifen, die es mit 16 GB gibt, oder höher.",
+   "Sie kombiniert 8 GB GDDR7 mit einem 128-Bit-Speicherbus. Als RTX-50-Karte unterstützt sie DLSS 4 und Multi Frame Generation, bei der KI in unterstützten Spielen zusätzliche Bilder für flüssigere Darstellung erzeugt. Beachten Sie, dass Frame Generation am besten funktioniert, wenn die Basis-Bildrate bereits ordentlich ist, und dass sie die VRAM-Kapazität nicht erhöht.",
+   "Prüfen Sie vor dem Kauf Netzteilleistung und Stromanschluss. Benötigte Anschlüsse und empfohlene Netzteilleistung können sich zwischen den RTX-5060-Modellen der Boardpartner unterscheiden, maßgeblich ist daher die Seite des konkreten Produkts. In einem kleinen Gehäuse prüfen Sie zusätzlich Kartenlänge und Slotbreite. Sehen Sie am 30-Tage-Tief und -Hoch auf dieser Seite, wo der Preis steht, und fragen Sie sich, ob Ihnen der Aufpreis zur RTX 5060 Ti 16 GB den doppelten VRAM wert ist; das ist die praktischste Entscheidungshilfe."
+  ]
+ },
+ "rtx-5060ti": {
+  "ko": [
+   "이 페이지에서 추적하는 RTX 5060 Ti는 16GB 모델입니다. 같은 이름의 8GB 모델도 있으니 쇼핑몰에서 검색할 때 용량 표기를 꼭 확인하세요. 16GB 모델은 1080p는 물론 1440p(QHD) 게임에도 여유가 있고, VRAM이 넉넉해 텍스처 옵션을 높이거나 그래픽 모드를 얹기에도 부담이 적습니다. 그래픽카드로 스테이블 디퓨전 같은 이미지 생성 AI를 가볍게 돌려 보려는 사람에게도 가성비 있는 입문용입니다.",
+   "16GB GDDR7을 128비트 버스로 연결한 구성으로, 버스 폭은 RTX 5060과 같지만 용량이 두 배입니다. DLSS 4와 멀티 프레임 생성을 지원하며, 넉넉한 VRAM 덕분에 프레임 생성이나 레이 트레이싱처럼 메모리를 더 쓰는 기능을 켜도 용량 부족에 덜 시달립니다. AI 작업에서는 연산 속도보다 VRAM 용량이 먼저 벽이 되는 경우가 많아, 이 등급에서 16GB라는 점이 이 카드의 가장 큰 특징입니다.",
+   "구매 전 상품명에 16GB가 들어 있는지, 파워 용량과 보조전원 커넥터가 맞는지 확인하세요. 보조전원 구성은 제조사 모델마다 다를 수 있으니 상품 상세 페이지를 기준으로 삼는 것이 정확합니다. 이 페이지의 30일 최저가·최고가로 현재 가격 위치를 확인하고, 아래의 RTX 5060이나 위의 RTX 5070 페이지와 나란히 놓고 보면 내 용도에 맞는 등급을 고르기 쉽습니다."
+  ],
+  "en": [
+   "The RTX 5060 Ti tracked on this page is the 16GB model. An 8GB version shares the same name, so check the memory size in every listing. The 16GB model handles 1080p comfortably and has room for 1440p, and the generous VRAM makes high texture settings and graphics mods less of a squeeze. It is also an affordable entry point for running image-generation AI such as Stable Diffusion on a GPU.",
+   "It connects 16GB of GDDR7 over a 128-bit bus, the same bus width as the RTX 5060 but with twice the capacity. It supports DLSS 4 and Multi Frame Generation, and the extra VRAM means features that use more memory, such as frame generation and ray tracing, are less likely to run into capacity limits. In AI work, VRAM capacity is often the first wall you hit before compute speed, so 16GB at this tier is the card's defining trait.",
+   "Before buying, confirm that the listing says 16GB and that your PSU wattage and power connector fit. Power connector setups can differ between board partners' models, so the product detail page is the accurate reference. Check today's price position against the 30-day low and high on this page, and line it up against the RTX 5060 below and the RTX 5070 above to pick the tier that fits your use."
+  ],
+  "ja": [
+   "このページで追跡しているRTX 5060 Tiは16GBモデルです。同じ名前の8GBモデルもあるので、ショップで検索するときは容量表記を必ず確認してください。16GBモデルは1080pはもちろん1440p（WQHD）のゲームにも余裕があり、VRAMが多いのでテクスチャ設定を上げたりグラフィックMODを入れたりしても窮屈になりにくいです。Stable Diffusionのような画像生成AIをGPUで手軽に試したい人にとっても、コストパフォーマンスのよい入門機です。",
+   "16GBのGDDR7を128ビットバスで接続した構成で、バス幅はRTX 5060と同じですが容量は2倍です。DLSS 4とマルチフレーム生成に対応し、VRAMに余裕があるため、フレーム生成やレイトレーシングのようにメモリを多く使う機能を有効にしても容量不足に悩まされにくくなっています。AI用途では演算速度よりVRAM容量が先に壁になることが多く、このクラスで16GBという点がこのカードの最大の特徴です。",
+   "購入前に、商品名に16GBと入っているか、電源容量と補助電源コネクタが合っているかを確認してください。補助電源の構成はメーカーのモデルごとに異なる場合があるので、商品の詳細ページを基準にするのが確実です。このページの30日間の最安値・最高値で今の価格の位置を確認し、下のRTX 5060や上のRTX 5070のページと並べて見ると、自分の用途に合ったクラスを選びやすくなります。"
+  ],
+  "de": [
+   "Die auf dieser Seite erfasste RTX 5060 Ti ist das 16-GB-Modell. Es gibt eine 8-GB-Version mit demselben Namen, prüfen Sie daher in jedem Angebot die Speichergröße. Das 16-GB-Modell bewältigt 1080p souverän und hat Reserven für 1440p, und der großzügige VRAM macht hohe Texturstufen und Grafik-Mods weniger eng. Außerdem ist es ein günstiger Einstieg, um Bildgenerierungs-KI wie Stable Diffusion auf der GPU auszuprobieren.",
+   "Sie bindet 16 GB GDDR7 über einen 128-Bit-Bus an, also dieselbe Busbreite wie die RTX 5060, aber mit doppelter Kapazität. Sie unterstützt DLSS 4 und Multi Frame Generation, und dank des zusätzlichen VRAM stoßen speicherhungrige Funktionen wie Frame Generation und Raytracing seltener an Kapazitätsgrenzen. Bei KI-Anwendungen ist die VRAM-Größe oft die erste Hürde, noch vor der Rechenleistung; 16 GB in dieser Klasse sind daher das prägende Merkmal der Karte.",
+   "Prüfen Sie vor dem Kauf, ob im Angebot 16 GB steht und ob Netzteilleistung und Stromanschluss passen. Die Stromversorgung kann sich zwischen den Modellen der Boardpartner unterscheiden, maßgeblich ist daher die Detailseite des Produkts. Prüfen Sie die heutige Preislage anhand des 30-Tage-Tiefs und -Hochs auf dieser Seite und stellen Sie sie neben die RTX 5060 darunter und die RTX 5070 darüber, um die passende Klasse für Ihren Einsatz zu wählen."
+  ]
+ },
+ "rtx-5070": {
+  "ko": [
+   "RTX 5070은 1440p(QHD) 해상도에서 높은 옵션으로 게임을 하려는 사람에게 맞는 중급 카드입니다. 고주사율 QHD 모니터를 쓰는 게이머가 가장 많이 고민하는 등급이며, DLSS를 적극적으로 쓰면 일부 게임은 4K에서도 즐길 수 있습니다. 다만 VRAM이 12GB라 몇 년 뒤의 대작이나 4K 고해상도 텍스처까지 생각한다면 16GB인 RTX 5070 Ti와 비교해 볼 가치가 있습니다.",
+   "12GB GDDR7을 192비트 버스로 연결했고, NVIDIA 레퍼런스 기준 그래픽카드 전력(TGP)은 250W, 권장 시스템 파워는 650W입니다. DLSS 4와 멀티 프레임 생성을 지원해 지원 게임에서는 화면 프레임을 크게 끌어올릴 수 있지만, 생성된 프레임은 입력 반응 속도까지 높여 주지는 않으니 경쟁 게임에서는 기본 프레임이 더 중요합니다.",
+   "구매 전 파워가 650W 이상인지, 카드가 요구하는 보조전원(12V-2x6 또는 8핀, 모델마다 다름)을 지원하는지 확인하세요. 제조사 오버클럭 모델은 길이와 두께가 레퍼런스보다 큰 경우가 많아 케이스 장착 가능 길이도 봐야 합니다. 이 페이지의 30일 최저가·최고가로 현재가 위치를 확인하고, RTX 5070 Ti와의 가격 차이가 VRAM 4GB와 성능 차이에 비해 합리적인지 비교해 보세요."
+  ],
+  "en": [
+   "The RTX 5070 is a mid-range card for people who want to play at 1440p with high settings. It is the tier most often weighed by gamers with high-refresh QHD monitors, and with DLSS used aggressively some games are playable at 4K. With 12GB of VRAM, though, if you are thinking about big releases a few years out or 4K high-resolution textures, it is worth comparing against the 16GB RTX 5070 Ti.",
+   "It connects 12GB of GDDR7 over a 192-bit bus, and NVIDIA's reference figures are 250 W total graphics power with a 650 W recommended system power supply. It supports DLSS 4 and Multi Frame Generation, which can raise displayed frame rates sharply in supported games, but generated frames do not improve input responsiveness, so in competitive games the base frame rate matters more.",
+   "Before buying, confirm your PSU is at least 650 W and supplies the power connector the card needs (12V-2x6 or 8-pin, depending on the model). Partner overclocked models are often longer and thicker than the reference design, so check your case's maximum GPU length too. Check where today's price sits against the 30-day low and high on this page, and compare whether the gap to the RTX 5070 Ti is reasonable for 4GB more VRAM and the performance difference."
+  ],
+  "ja": [
+   "RTX 5070は、1440p（WQHD）解像度で高設定のゲームを遊びたい人に合ったミドルレンジのカードです。高リフレッシュレートのWQHDモニターを使うゲーマーがもっとも悩むクラスで、DLSSを積極的に使えば4Kで遊べるゲームもあります。ただしVRAMが12GBなので、数年後の大作や4Kの高解像度テクスチャまで考えるなら、16GBのRTX 5070 Tiと比べてみる価値があります。",
+   "12GBのGDDR7を192ビットバスで接続し、NVIDIAのリファレンス値ではグラフィックスカード電力（TGP）が250W、推奨システム電源が650Wです。DLSS 4とマルチフレーム生成に対応し、対応ゲームでは表示フレームレートを大きく引き上げられますが、生成フレームは入力の反応速度までは改善しないので、対戦ゲームでは元のフレームレートのほうが重要です。",
+   "購入前に、電源が650W以上か、カードが必要とする補助電源（12V-2x6または8ピン、モデルによって異なる）に対応しているかを確認してください。メーカーのOCモデルはリファレンスより長く厚いことが多いので、ケースに入るカード長も確認が必要です。このページの30日間の最安値・最高値で今日の価格の位置を確認し、RTX 5070 Tiとの価格差がVRAM 4GBの差と性能差に見合うかを比べてみてください。"
+  ],
+  "de": [
+   "Die RTX 5070 ist eine Mittelklassekarte für alle, die in 1440p mit hohen Einstellungen spielen wollen. Besitzer von QHD-Monitoren mit hoher Bildwiederholrate wägen diese Klasse am häufigsten ab, und mit konsequentem DLSS-Einsatz sind manche Spiele auch in 4K spielbar. Mit 12 GB VRAM lohnt sich jedoch ein Vergleich mit der RTX 5070 Ti mit 16 GB, wenn Sie an große Titel der kommenden Jahre oder hochaufgelöste 4K-Texturen denken.",
+   "Sie bindet 12 GB GDDR7 über einen 192-Bit-Bus an; NVIDIAs Referenzwerte sind 250 W Grafikkartenleistung (TGP) und ein empfohlenes Systemnetzteil mit 650 W. Sie unterstützt DLSS 4 und Multi Frame Generation, was die angezeigte Bildrate in unterstützten Spielen stark erhöhen kann; generierte Bilder verbessern aber nicht die Eingabereaktion, in kompetitiven Spielen zählt also die Basis-Bildrate mehr.",
+   "Prüfen Sie vor dem Kauf, ob Ihr Netzteil mindestens 650 W liefert und den benötigten Stromanschluss bereitstellt (12V-2x6 oder 8-Pin, je nach Modell). Übertaktete Partnermodelle sind oft länger und dicker als das Referenzdesign, prüfen Sie daher auch die maximale Grafikkartenlänge Ihres Gehäuses. Sehen Sie am 30-Tage-Tief und -Hoch auf dieser Seite, wo der heutige Preis liegt, und vergleichen Sie, ob der Aufpreis zur RTX 5070 Ti für 4 GB mehr VRAM und den Leistungsunterschied angemessen ist."
+  ]
+ },
+ "rtx-5070ti": {
+  "ko": [
+   "RTX 5070 Ti는 1440p 고주사율 게임을 넉넉하게, 4K 게임은 DLSS를 곁들여 현실적으로 노리는 사람을 위한 상위 중급 카드입니다. VRAM이 16GB라 최신 게임의 고해상도 텍스처나 레이 트레이싱 옵션에서 용량 걱정이 적고, 영상 편집이나 AI 이미지 생성 같은 작업에도 여유가 있습니다. RTX 5080은 부담스럽지만 12GB는 아쉬운 사람에게 가장 균형이 좋은 선택지로 꼽히는 등급입니다.",
+   "16GB GDDR7을 256비트 버스로 연결해, 같은 16GB인 RTX 5060 Ti(128비트)보다 메모리 대역폭이 훨씬 넓습니다. NVIDIA 기준 TGP는 300W, 권장 시스템 파워는 750W입니다. DLSS 4와 멀티 프레임 생성을 지원하며, 상위 모델인 RTX 5080과 VRAM 용량과 버스 폭이 같아 고해상도에서 메모리 때문에 밀리는 일은 적습니다.",
+   "구매 전 파워가 750W 이상이고 12V-2x6(16핀) 커넥터를 지원하는지, 아니면 동봉 변환 케이블을 써야 하는지 확인하세요. 변환 케이블을 쓸 때는 끝까지 딸깍 소리가 나게 꽂는 것이 중요합니다. 대부분의 제조사 모델은 길이가 30cm 안팎이거나 그 이상이고 3슬롯 두께인 경우가 많으니 케이스 사양도 확인하세요. 이 페이지의 30일 최저가·최고가로 현재 위치를 보고, RTX 5070과 RTX 5080 페이지와 함께 비교하면 이 등급의 가격이 적절한지 판단하기 쉽습니다."
+  ],
+  "en": [
+   "The RTX 5070 Ti is an upper mid-range card for comfortable high-refresh 1440p gaming and realistic 4K play with DLSS. Its 16GB of VRAM means little worry about capacity with high-resolution textures or ray tracing in current games, and it has headroom for video editing and AI image generation too. For people who find the RTX 5080 too much but 12GB too little, it is often seen as the most balanced tier.",
+   "It connects 16GB of GDDR7 over a 256-bit bus, giving far more memory bandwidth than the 16GB RTX 5060 Ti on its 128-bit bus. NVIDIA's figures are 300 W TGP and a 750 W recommended system power supply. It supports DLSS 4 and Multi Frame Generation, and it shares VRAM capacity and bus width with the RTX 5080 above it, so it rarely falls behind on memory at high resolutions.",
+   "Before buying, check that your PSU is at least 750 W and has a 12V-2x6 (16-pin) connector, or whether you will need the included adapter. If you use the adapter, make sure the plug is pushed all the way in until it clicks. Many partner models are around 30 cm long or longer and often three slots thick, so check your case specs. Use the 30-day low and high on this page for the current position, and compare with the RTX 5070 and RTX 5080 pages to judge whether this tier is priced sensibly."
+  ],
+  "ja": [
+   "RTX 5070 Tiは、1440pの高リフレッシュレートゲームを余裕をもって、4KゲームはDLSSを併用して現実的に狙いたい人向けのアッパーミドルカードです。VRAMが16GBあるので、最新ゲームの高解像度テクスチャやレイトレーシングでも容量の心配が少なく、動画編集やAI画像生成のような作業にも余裕があります。RTX 5080は負担が大きいが12GBでは物足りない、という人にとってもっともバランスのよい選択肢とされるクラスです。",
+   "16GBのGDDR7を256ビットバスで接続しており、同じ16GBのRTX 5060 Ti（128ビット）よりメモリ帯域がはるかに広くなっています。NVIDIAの公表値ではTGPが300W、推奨システム電源が750Wです。DLSS 4とマルチフレーム生成に対応し、上位のRTX 5080とVRAM容量・バス幅が同じなので、高解像度でメモリが原因で見劣りすることは少ないです。",
+   "購入前に、電源が750W以上で12V-2x6（16ピン）コネクタに対応しているか、それとも付属の変換ケーブルを使う必要があるかを確認してください。変換ケーブルを使う場合は、カチッと音がするまで奥までしっかり挿すことが重要です。多くのメーカーモデルは長さ30cm前後かそれ以上で、3スロット厚のものも多いので、ケースの仕様も確認しましょう。このページの30日間の最安値・最高値で今の位置を見て、RTX 5070やRTX 5080のページと合わせて比べると、このクラスの価格が妥当か判断しやすくなります。"
+  ],
+  "de": [
+   "Die RTX 5070 Ti ist eine Karte der oberen Mittelklasse für entspanntes 1440p-Gaming mit hoher Bildwiederholrate und realistisches 4K-Spielen mit DLSS. Dank 16 GB VRAM müssen Sie sich bei hochaufgelösten Texturen oder Raytracing in aktuellen Spielen kaum um die Kapazität sorgen, und auch für Videoschnitt und KI-Bildgenerierung bleibt Luft. Wem die RTX 5080 zu viel und 12 GB zu wenig sind, für den gilt sie oft als die ausgewogenste Klasse.",
+   "Sie bindet 16 GB GDDR7 über einen 256-Bit-Bus an und bietet damit weit mehr Speicherbandbreite als die RTX 5060 Ti mit 16 GB an 128 Bit. NVIDIA nennt 300 W TGP und ein empfohlenes Systemnetzteil mit 750 W. Sie unterstützt DLSS 4 und Multi Frame Generation und teilt VRAM-Kapazität und Busbreite mit der darüber liegenden RTX 5080, fällt bei hohen Auflösungen also selten wegen des Speichers zurück.",
+   "Prüfen Sie vor dem Kauf, ob Ihr Netzteil mindestens 750 W liefert und einen 12V-2x6-Anschluss (16-Pin) hat oder ob Sie den beiliegenden Adapter brauchen. Beim Adapter ist wichtig, dass der Stecker bis zum Einrasten vollständig eingesteckt ist. Viele Partnermodelle sind etwa 30 cm lang oder länger und oft drei Slots dick; prüfen Sie also die Gehäusedaten. Nutzen Sie das 30-Tage-Tief und -Hoch auf dieser Seite für die aktuelle Einordnung und vergleichen Sie mit den Seiten der RTX 5070 und RTX 5080, um zu beurteilen, ob diese Klasse vernünftig bepreist ist."
+  ]
+ },
+ "rtx-5080": {
+  "ko": [
+   "RTX 5080은 4K 게임을 높은 옵션으로 즐기려는 사람, 또는 1440p에서 아주 높은 주사율을 노리는 사람을 위한 상급 카드입니다. RTX 5090은 가격과 전력 모두 부담스럽지만 최상위에 가까운 성능을 원할 때 고르는 자리입니다. 게임과 함께 3D 렌더링, 영상 인코딩 같은 작업도 하는 사람에게도 잘 맞습니다.",
+   "16GB GDDR7을 256비트 버스로 연결했으며, NVIDIA 기준 TGP는 360W, 권장 시스템 파워는 850W입니다. VRAM 용량은 RTX 5070 Ti와 같은 16GB라, 큰 언어 모델이나 대형 3D 장면처럼 용량 자체가 중요한 AI·작업 용도에서는 5070 Ti 대비 이점이 크지 않을 수 있습니다. 반대로 같은 용량에서 연산 성능이 더 필요한 게임과 렌더링에서는 차이가 납니다. DLSS 4와 멀티 프레임 생성도 지원합니다.",
+   "구매 전 파워가 850W 이상이고 12V-2x6 커넥터 또는 그에 맞는 케이블을 갖췄는지 확인하세요. 오래된 파워라면 용량이 충분해도 케이블 구성이 맞지 않을 수 있습니다. 제조사 모델 대부분은 길이가 길고 3슬롯 이상 두께라 케이스 장착 길이와 그래픽카드 처짐 방지 지지대도 고려해야 합니다. 이 페이지의 30일 최저가·최고가로 지금 가격의 위치를 보고, RTX 5070 Ti와의 가격 차이가 내 용도에서 성능 차이만큼 가치가 있는지 따져 보세요."
+  ],
+  "en": [
+   "The RTX 5080 is a high-end card for 4K gaming at high settings, or for chasing very high refresh rates at 1440p. It is the pick when the RTX 5090 is too much in both price and power draw but you still want near-top performance. It also suits people who do 3D rendering or video encoding alongside gaming.",
+   "It connects 16GB of GDDR7 over a 256-bit bus, with NVIDIA's figures at 360 W TGP and an 850 W recommended system power supply. VRAM is the same 16GB as the RTX 5070 Ti, so for AI or work where capacity itself is the limit, such as large language models or big 3D scenes, the advantage over the 5070 Ti may be small. In games and rendering, where more compute at the same capacity helps, the difference shows. It supports DLSS 4 and Multi Frame Generation as well.",
+   "Before buying, check that your PSU is at least 850 W and has a 12V-2x6 connector or a matching cable. An older PSU may have enough wattage but the wrong cable set. Most partner models are long and three or more slots thick, so consider your case's GPU length limit and a support bracket to prevent sag. Use the 30-day low and high on this page to see where the price sits, and weigh whether the gap to the RTX 5070 Ti is worth the performance difference for your use."
+  ],
+  "ja": [
+   "RTX 5080は、4Kゲームを高設定で楽しみたい人や、1440pで非常に高いリフレッシュレートを狙う人向けのハイエンドカードです。RTX 5090は価格も消費電力も負担が大きいが、最上位に近い性能が欲しいというときに選ぶ位置づけです。ゲームに加えて3Dレンダリングや動画エンコードのような作業もする人にもよく合います。",
+   "16GBのGDDR7を256ビットバスで接続し、NVIDIAの公表値ではTGPが360W、推奨システム電源が850Wです。VRAM容量はRTX 5070 Tiと同じ16GBなので、大規模言語モデルや大きな3Dシーンのように容量そのものが重要なAI・作業用途では、5070 Tiに対する利点は大きくない場合があります。逆に、同じ容量でより多くの演算性能が必要なゲームやレンダリングでは差が出ます。DLSS 4とマルチフレーム生成にも対応しています。",
+   "購入前に、電源が850W以上で12V-2x6コネクタまたはそれに対応するケーブルを備えているかを確認してください。古い電源だと、容量は足りてもケーブル構成が合わないことがあります。メーカーモデルの多くは長く、3スロット以上の厚みがあるので、ケースに入るカード長や、たわみ防止のサポートステイも考慮しましょう。このページの30日間の最安値・最高値で今の価格の位置を見て、RTX 5070 Tiとの価格差が自分の用途で性能差に見合うかを検討してください。"
+  ],
+  "de": [
+   "Die RTX 5080 ist eine High-End-Karte für 4K-Gaming mit hohen Einstellungen oder für sehr hohe Bildwiederholraten in 1440p. Sie ist die Wahl, wenn Ihnen die RTX 5090 bei Preis und Leistungsaufnahme zu viel ist, Sie aber trotzdem Leistung nahe der Spitze wollen. Sie passt auch zu allen, die neben dem Spielen 3D-Rendering oder Videokodierung betreiben.",
+   "Sie bindet 16 GB GDDR7 über einen 256-Bit-Bus an; NVIDIA nennt 360 W TGP und ein empfohlenes Systemnetzteil mit 850 W. Der VRAM entspricht mit 16 GB dem der RTX 5070 Ti; bei KI- oder Arbeitslasten, bei denen die Kapazität selbst die Grenze ist, etwa große Sprachmodelle oder umfangreiche 3D-Szenen, kann der Vorteil gegenüber der 5070 Ti daher klein ausfallen. In Spielen und beim Rendern, wo mehr Rechenleistung bei gleicher Kapazität hilft, zeigt sich der Unterschied. DLSS 4 und Multi Frame Generation werden ebenfalls unterstützt.",
+   "Prüfen Sie vor dem Kauf, ob Ihr Netzteil mindestens 850 W liefert und einen 12V-2x6-Anschluss oder ein passendes Kabel bietet. Ein älteres Netzteil kann genug Leistung, aber die falschen Kabel haben. Die meisten Partnermodelle sind lang und drei oder mehr Slots dick; berücksichtigen Sie die maximale Grafikkartenlänge Ihres Gehäuses und eine Stütze gegen Durchhängen. Sehen Sie am 30-Tage-Tief und -Hoch auf dieser Seite, wo der Preis liegt, und wägen Sie ab, ob der Aufpreis zur RTX 5070 Ti für Ihren Einsatz den Leistungsunterschied wert ist."
+  ]
+ },
+ "rtx-5090": {
+  "ko": [
+   "RTX 5090은 현재 지포스 라인업의 최상위 카드로, 4K 고주사율 게임에서 타협하고 싶지 않은 사람과 32GB VRAM이 필요한 크리에이터·AI 개발자를 위한 제품입니다. 게임만 놓고 보면 대부분의 사람에게 과한 카드이지만, 로컬에서 큰 언어 모델이나 이미지·영상 생성 모델을 돌리는 사람에게는 VRAM 32GB가 다른 지포스 카드로는 대체하기 어려운 이유가 됩니다. 메모리가 '꽤 끔찍하게' 비싼 시대에 메모리를 가장 많이 얹은 게이밍 카드라는 점도 아이러니합니다.",
+   "32GB GDDR7을 512비트 버스로 연결해 RTX 50 시리즈 중 메모리 대역폭이 가장 넓습니다. NVIDIA 기준 TGP는 575W, 권장 시스템 파워는 1000W입니다. DLSS 4와 멀티 프레임 생성을 지원하며, AI 작업에서는 16GB 카드에 들어가지 않던 모델을 한 장에 올릴 수 있다는 점이 가장 큰 차이입니다.",
+   "구매 전 1000W 이상 파워와 12V-2x6 커넥터(또는 ATX 3.1 규격 대응 케이블)를 갖췄는지 확인하고, 커넥터는 끝까지 단단히 꽂아야 합니다. NVIDIA 파운더스 에디션은 2슬롯이지만 제조사 모델은 대부분 길고 두꺼워 케이스 공간과 공기 흐름도 함께 고려해야 합니다. 출시 이후 공급이 들쭉날쭉했던 제품이라 시장마다 가격 차이가 클 수 있으니, 이 페이지에서 나라별 30일 최저가·최고가를 함께 보고 판단하세요."
+  ],
+  "en": [
+   "The RTX 5090 is the top card in the current GeForce lineup, for people who refuse to compromise on high-refresh 4K gaming and for creators and AI developers who need 32GB of VRAM. For gaming alone it is more than most people need, but for running large language models or image and video generation models locally, 32GB of VRAM is a reason no other GeForce card can easily replace. There is some irony in the gaming card with the most memory arriving in an era when memory is, to borrow a phrase, quite terrible on price.",
+   "It connects 32GB of GDDR7 over a 512-bit bus, the widest memory bandwidth in the RTX 50 series. NVIDIA's figures are 575 W TGP and a 1000 W recommended system power supply. It supports DLSS 4 and Multi Frame Generation, and in AI work the biggest difference is being able to load models on a single card that would not fit on a 16GB card.",
+   "Before buying, confirm a PSU of at least 1000 W with a 12V-2x6 connector (or an ATX 3.1-compliant cable), and seat the connector firmly all the way in. The NVIDIA Founders Edition is a two-slot card, but most partner models are long and thick, so consider case space and airflow together. Supply of this card has been uneven since launch and prices can differ widely between markets, so look at the 30-day low and high for each country on this page before deciding."
+  ],
+  "ja": [
+   "RTX 5090は現在のGeForceラインナップの最上位カードで、4Kの高リフレッシュレートゲームで妥協したくない人や、32GBのVRAMが必要なクリエイター・AI開発者向けの製品です。ゲームだけならほとんどの人には過剰ですが、大規模言語モデルや画像・動画生成モデルをローカルで動かす人にとっては、VRAM 32GBがほかのGeForceカードでは代わりにくい理由になります。メモリが「かなりひどい」値段の時代に、もっとも多くのメモリを積んだゲーミングカードというのも皮肉な話です。",
+   "32GBのGDDR7を512ビットバスで接続し、RTX 50シリーズでもっとも広いメモリ帯域を持ちます。NVIDIAの公表値ではTGPが575W、推奨システム電源が1000Wです。DLSS 4とマルチフレーム生成に対応し、AI用途では16GBのカードには載らなかったモデルを1枚に載せられる点がいちばんの違いです。",
+   "購入前に、1000W以上の電源と12V-2x6コネクタ（またはATX 3.1対応ケーブル）を備えているかを確認し、コネクタは奥までしっかり挿してください。NVIDIAのFounders Editionは2スロットですが、メーカーモデルの多くは長く厚いので、ケースのスペースとエアフローもあわせて考える必要があります。発売以来供給が不安定だった製品で、市場ごとの価格差が大きくなることがあるため、このページで国別の30日間の最安値・最高値を見比べてから判断してください。"
+  ],
+  "de": [
+   "Die RTX 5090 ist die Spitzenkarte des aktuellen GeForce-Angebots, für alle, die bei 4K-Gaming mit hoher Bildwiederholrate keine Kompromisse wollen, und für Kreative und KI-Entwickler, die 32 GB VRAM brauchen. Nur zum Spielen ist sie für die meisten überdimensioniert, doch wer große Sprachmodelle oder Bild- und Videogenerierungsmodelle lokal betreibt, findet in 32 GB VRAM einen Grund, den keine andere GeForce-Karte so leicht ersetzt. Eine gewisse Ironie hat es schon, dass die Gaming-Karte mit dem meisten Speicher in einer Zeit erscheint, in der Speicher preislich, frei zitiert, ziemlich schrecklich ist.",
+   "Sie bindet 32 GB GDDR7 über einen 512-Bit-Bus an und bietet die höchste Speicherbandbreite der RTX-50-Serie. NVIDIA nennt 575 W TGP und ein empfohlenes Systemnetzteil mit 1000 W. Sie unterstützt DLSS 4 und Multi Frame Generation; bei KI-Anwendungen ist der größte Unterschied, dass Modelle auf eine einzige Karte passen, die auf einer 16-GB-Karte keinen Platz hätten.",
+   "Stellen Sie vor dem Kauf sicher, dass Sie ein Netzteil mit mindestens 1000 W und 12V-2x6-Anschluss (oder ATX-3.1-konformem Kabel) haben, und stecken Sie den Stecker fest und vollständig ein. Die NVIDIA Founders Edition ist eine Zwei-Slot-Karte, die meisten Partnermodelle sind jedoch lang und dick; berücksichtigen Sie Gehäuseplatz und Luftstrom gemeinsam. Die Verfügbarkeit dieser Karte schwankte seit dem Marktstart, und die Preise können sich zwischen den Märkten stark unterscheiden; vergleichen Sie daher vor der Entscheidung das 30-Tage-Tief und -Hoch je Land auf dieser Seite."
+  ]
+ }
+}

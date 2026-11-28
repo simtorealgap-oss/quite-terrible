@@ -8,6 +8,8 @@ import os
 from pathlib import Path
 
 GUIDES = json.loads((Path(__file__).resolve().parent / 'config/guides.json').read_text())
+_NOTES = Path(__file__).resolve().parent / 'config/product_notes.json'
+NOTES = json.loads(_NOTES.read_text()) if _NOTES.exists() else {}
 
 KST = dt.timezone(dt.timedelta(hours=9))
 CATEGORY_NAMES = {'ko': {'ram': '메모리', 'gpu': '그래픽카드'}, 'en': {'ram': 'Memory', 'gpu': 'Graphics cards'},
@@ -153,6 +155,7 @@ def seo_context(lang, page, strings, products, base='', site='', product_id=None
         extra['productCategory'] = CATEGORY_NAMES[lang][p['category']]
         extra['productStatic'] = product_static(p, lang, strings, currency)
         extra['productFacts'] = product_facts(p, lang, strings, money) if has_price else ''
+        extra['productNotes'] = product_notes(p, lang, strings, money)
         extra['relatedLinks'] = ''.join(
             f'<li><a href="{html.escape(base)}{page_path(lang, "product", q["id"])}"><span>{html.escape(name_of(q, lang))}</span>'
             f'<b>{html.escape(money(q.get("price")))}</b></a></li>' for q in products if q['id'] != product_id)
@@ -162,6 +165,9 @@ def seo_context(lang, page, strings, products, base='', site='', product_id=None
             {'@type': 'ListItem', 'position': 2, 'name': name, 'item': absolute(path)}]})
 
     head = []
+    if page == 'news':
+        # Headlines link out to other sites; the page stays for readers but is kept out of search results.
+        head.append('<meta name="robots" content="noindex, follow">')
     for name, env in (('google-site-verification', 'GOOGLE_SITE_VERIFICATION'), ('naver-site-verification', 'NAVER_SITE_VERIFICATION')):
         if os.getenv(env):
             head.append(f'<meta name="{name}" content="{html.escape(os.environ[env])}">')
@@ -243,6 +249,22 @@ def product_facts(p, lang, strings, money):
             f'<dl class="facts-list">{items}</dl><p class="facts-text">{html.escape(text)}</p></section>')
 
 
+def product_notes(p, lang, strings, money):
+    """Our own buying notes for the product (config/product_notes.json), plus where today's price sits
+    in its 30-day range, computed from the recorded prices."""
+    paras = (NOTES.get(p['id']) or {}).get(lang) or []
+    if not paras:
+        return ''
+    out = [f'<p>{html.escape(x)}</p>' for x in paras]
+    low, high, price = p.get('low30'), p.get('high30'), p.get('price')
+    if price is not None and low is not None and high is not None and high > low:
+        pos = round((price - low) / (high - low) * 100)
+        key = 'notesRangeLow' if pos <= 33 else 'notesRangeHigh' if pos >= 67 else 'notesRangeMid'
+        out.append(f'<p class="facts-text">{html.escape(strings[key].format(low=money(low), high=money(high), pos=pos))}</p>')
+    return (f'<section class="panel notes"><h2>{html.escape(strings["notesTitle"].format(name=name_of(p, lang)))}</h2>'
+            + ''.join(out) + '</section>')
+
+
 SOURCES = {'danawa': ('srcDanawa', 'danawaGo'), 'kakaku': ('srcKakaku', 'kakakuGo')}
 
 
@@ -280,7 +302,7 @@ def product_static(p, lang, strings, currency='KRW'):
 
 def sitemap(site, base, products, langs=LANGS, lastmod=None, available=None):
     lastmod = lastmod or dt.date.today().isoformat()
-    pages = ([('prices', None), ('news', None), ('about', None), ('guides', None), ('privacy', None)] + [('guide', s) for s in guide_slugs()]
+    pages = ([('prices', None), ('about', None), ('guides', None), ('privacy', None)] + [('guide', s) for s in guide_slugs()]
              + [('product', p['id']) for p in products])
     out = ['<?xml version="1.0" encoding="UTF-8"?>',
            '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">']

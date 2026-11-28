@@ -767,6 +767,1586 @@
       ]
     }
   },
+  "how-to-choose-ddr5": {
+    "updated": "2026-11-28",
+    "sources": [
+      {
+        "name": "Tom's Hardware — AMD Confirms DDR5-6000 RAM Is The Sweet Spot For Ryzen 7000 CPUs",
+        "url": "https://www.tomshardware.com/news/amd-confirms-ddr5-6000-ram-is-the-sweet-spot-for-ryzen-7000-cpus"
+      },
+      {
+        "name": "Intel — Core Ultra 9 285K specifications",
+        "url": "https://www.intel.com/content/www/us/en/products/sku/241060/specifications.html"
+      },
+      {
+        "name": "Kingston — Desktop/Notebook memory technical support",
+        "url": "https://kingston.com/en/support/technical/products/desktop-notebook-memory"
+      }
+    ],
+    "ko": {
+      "title": "DDR5 램 고르는 법: 용량·구성·속도·CL·EXPO 순서대로",
+      "desc": "데스크톱용 DDR5를 살 때 확인할 것을 순서대로 정리했습니다. 16·32·64GB 용량, 1개와 2개 키트(듀얼 채널), 5600과 6000 속도, CL, EXPO·XMP, AM5·인텔 플랫폼 차이, QVL 확인, 키트를 섞지 말아야 하는 이유까지.",
+      "lead": "DDR5 상품 목록을 열면 용량, 속도, CL, EXPO, XMP 같은 숫자와 약어가 한꺼번에 쏟아집니다. 다행히 데스크톱용 램은 정해진 순서대로 몇 가지만 고르면 됩니다. 용량을 먼저 정하고, 몇 개짜리로 살지 정한 다음, 속도와 타이밍을 고르고, 마지막으로 내 메인보드와 맞는지 확인합니다.",
+      "sections": [
+        {
+          "h": "1단계: 용량부터 정합니다 — 16GB, 32GB, 64GB",
+          "p": [
+            "16GB는 웹 서핑·문서 작업·가벼운 게임에는 아직 충분히 돌아갑니다. 하지만 최신 게임 하나에 브라우저와 메신저를 함께 띄우면 여유가 거의 남지 않습니다. 나중에 슬롯을 채워 늘리는 것보다 처음부터 넉넉하게 사는 편이 대부분 더 싸고 안정적입니다.",
+            "32GB(16GB×2)는 지금 새로 맞추는 게임용·일반용 PC에서 가장 무난한 선택입니다. 게임, 방송, 가벼운 영상 편집까지 대부분 감당합니다. 64GB(32GB×2)는 4K 영상 편집, 가상 머신 여러 대, 로컬 AI 모델처럼 램을 실제로 많이 쓰는 작업이 있을 때 의미가 있습니다.",
+            "DDR5에는 24GB·48GB처럼 2의 거듭제곱이 아닌 용량도 있습니다. 24GB×2(48GB) 키트는 32GB로는 아쉽고 64GB는 과한 분께 좋은 중간값입니다. 최신 메인보드는 대부분 인식하지만, 오래된 BIOS에서는 문제가 생길 수 있으니 조립 전에 BIOS를 최신으로 올려 두는 것이 좋습니다."
+          ]
+        },
+        {
+          "h": "2단계: 1개보다 2개짜리 키트 — 듀얼 채널",
+          "p": [
+            "일반 데스크톱 CPU는 메모리 채널이 두 개입니다. 램을 한 개만 꽂으면 그중 하나만 쓰기 때문에, 같은 32GB라도 32GB×1보다 16GB×2의 이론 대역폭이 두 배입니다. DDR5 모듈은 내부가 32비트 서브채널 두 개로 나뉘어 있지만, 그렇다고 한 개만으로 듀얼 채널이 되는 것은 아닙니다.",
+            "내장 그래픽으로 쓰는 PC라면 이 차이가 더 큽니다. 내장 그래픽은 시스템 램을 그래픽 메모리로 쓰기 때문에, 램 대역폭이 곧 그래픽 성능의 한계가 됩니다.",
+            "4개를 꽂는 구성은 신중하게 고르세요. DDR5는 채널당 모듈이 두 개(2DPC)가 되면 메모리 컨트롤러의 부담이 커져, 안정적으로 쓸 수 있는 속도가 크게 내려가는 경우가 많습니다. AMD도 AM5에서는 4개보다 2개 구성을 권장해 왔습니다. 64GB가 필요하다면 16GB×4보다 32GB×2가 낫습니다."
+          ]
+        },
+        {
+          "h": "3단계: 속도 — 5600과 6000 사이에서",
+          "p": [
+            "DDR5 속도는 MT/s(초당 전송 횟수)로 표시합니다. 쇼핑몰에는 ‘6000MHz’처럼 적혀 있는 경우가 많지만 같은 숫자를 가리킵니다. 흔히 보이는 값은 4800, 5600, 6000, 6400입니다.",
+            "5600은 라이젠 9000 시리즈와 인텔 13·14세대 같은 CPU가 공식 지원하는 속도라, 별도 설정 없이 꽂기만 해도 그 속도로 동작하는 경우가 많습니다. 6000 이상은 램에 저장된 프로필(EXPO 또는 XMP)을 BIOS에서 켜야 표기된 속도가 나옵니다.",
+            "7200, 8000처럼 더 빠른 제품은 CPU 안의 메모리 컨트롤러와 메인보드 품질을 많이 탑니다. 일반 사용자에게는 체감 성능보다 안정성 문제가 먼저 찾아오는 구간이라, 특별한 이유가 없다면 6000~6400 범위에서 멈추는 것이 현실적입니다."
+          ]
+        },
+        {
+          "h": "4단계: CL(타이밍) — 낮을수록 좋지만 속도와 함께 봅니다",
+          "p": [
+            "CL(CAS 레이턴시)은 읽기 명령을 보낸 뒤 데이터가 나오기까지 걸리는 클럭 수입니다. 같은 속도라면 CL이 낮을수록 빠릅니다. DDR5-6000이라면 CL30, CL32, CL36이 흔합니다.",
+            "속도가 다른 제품끼리는 CL 숫자만 비교하면 안 됩니다. 실제 지연시간은 CL×2000÷MT/s(나노초)로 계산합니다. DDR5-6000 CL30은 10ns, CL36은 12ns입니다. 계산법과 예시는 ‘램 속도와 레이턴시’ 글에 따로 정리했습니다.",
+            "가격 차이가 크지 않다면 6000 CL30~32 키트가 AM5와 인텔 양쪽에서 무난합니다. 차이가 크다면 CL36을 골라도 게임에서 큰 손해는 아닙니다. 낮은 CL을 위해 큰 웃돈을 내기보다 용량을 확보하는 편이 대부분 더 낫습니다."
+          ]
+        },
+        {
+          "h": "5단계: EXPO와 XMP, 그리고 플랫폼별 메모",
+          "p": [
+            "XMP는 인텔이, EXPO는 AMD가 만든 메모리 프로필 규격입니다. 램 안에 ‘이 속도·이 타이밍·이 전압으로 돌려도 된다’는 설정이 저장돼 있고, BIOS에서 켜면 그대로 적용됩니다. 끄면 램은 JEDEC 기본 속도로 동작합니다. 많은 메인보드가 상대 규격 프로필도 읽어 들이지만, AMD에서는 EXPO, 인텔에서는 XMP 표기 제품이 설정이 덜 번거롭습니다. 제조사들은 프로필 사용을 기본 사양을 넘는 동작으로 안내하니, 보증 조건도 한 번 읽어 두세요.",
+            "AM5(라이젠 7000·9000): AMD는 DDR5-6000을 ‘스위트 스폿’으로 꼽았습니다. 이 근처에서 메모리 클럭과 메모리 컨트롤러 클럭을 1:1로 맞추기 쉬워 지연과 안정성의 균형이 좋기 때문입니다. 이보다 훨씬 빠른 속도는 1:2 모드로 넘어가면서 오히려 지연이 늘 수 있습니다.",
+            "인텔: 12~14세대는 메인보드가 DDR4용인지 DDR5용인지부터 확인하세요. 같은 CPU라도 보드에 따라 둘 중 하나만 씁니다. 코어 울트라 200S 시리즈는 인텔 공식 사양상 DDR5-6400까지 지원하며(채널당 모듈 1개 기준), 클럭 드라이버가 들어간 CUDIMM 모듈도 쓸 수 있습니다."
+          ]
+        },
+        {
+          "h": "6단계: QVL 확인, 그리고 키트를 섞지 않기",
+          "p": [
+            "QVL(Qualified Vendor List)은 메인보드 제조사가 직접 테스트한 램 목록입니다. 메인보드 제품 페이지의 지원(Support) 메뉴에서 메모리 지원 목록을 열고, 사려는 램의 정확한 부품 번호와 속도, 몇 개 구성으로 테스트했는지를 확인합니다. 목록에 없다고 안 되는 것은 아니지만, 목록에 있으면 문제가 생길 확률이 확실히 낮습니다.",
+            "서로 다른 키트를 섞는 것은 피하세요. 같은 모델명이라도 생산 시기에 따라 안에 든 메모리 칩이 달라질 수 있고, 프로필 타이밍도 다를 수 있습니다. 섞으면 가장 느린 설정에 맞춰지거나 부팅 자체가 불안정해집니다. 제조사가 2개·4개를 한 상자에 묶어 파는 이유가 바로 이 칩 매칭입니다.",
+            "나중에 늘릴 계획이 있다면, 처음부터 원하는 총 용량을 2개짜리 키트로 사는 것이 가장 확실합니다. 16GB×2를 쓰다가 같은 제품을 하나 더 사서 4개로 만드는 방식은 앞에서 말한 속도 저하와 호환 문제가 한꺼번에 올 수 있습니다."
+          ]
+        },
+        {
+          "h": "저희 생각",
+          "p": [
+            "정리하면 새 데스크톱의 기본값은 DDR5-6000, 32GB(16GB×2) 키트, CL30~36, 그리고 내 CPU에 맞는 프로필(AMD는 EXPO, 인텔은 XMP)입니다. 작업에 따라 용량만 올리면 됩니다.",
+            "이 사이트는 DDR5 16GB와 32GB 키트의 최저가를 매일 기록합니다. 사양을 정했다면 30일 범위에서 지금 가격이 어디쯤인지 보고 결정하세요. 샘 올트먼은 PC 램을 ‘quite terrible’하다고 했지만, 적어도 고르는 순서만큼은 그렇게 끔찍하지 않습니다."
+          ]
+        }
+      ]
+    },
+    "en": {
+      "title": "How to choose DDR5 RAM: capacity, kit, speed, CL and EXPO in order",
+      "desc": "What to check when buying DDR5 for a desktop, step by step: 16, 32 or 64 GB, one stick vs a two-stick kit (dual channel), 5600 vs 6000, CL, EXPO and XMP, AM5 and Intel notes, the board's QVL, and why you shouldn't mix kits.",
+      "lead": "Open any DDR5 listing and you get a wall of numbers and acronyms: capacity, speed, CL, EXPO, XMP. Fortunately, desktop RAM comes down to a few decisions made in the right order. Settle capacity first, then how many sticks, then speed and timings, and finally check that it matches your motherboard.",
+      "sections": [
+        {
+          "h": "Step 1: capacity — 16, 32 or 64 GB",
+          "p": [
+            "16 GB still handles browsing, office work and lighter games. Run a current game alongside a browser and a chat app, though, and there is very little headroom left. Buying enough up front is usually cheaper and more stable than filling empty slots later.",
+            "32 GB (2×16 GB) is the safe default for a new gaming or general-purpose PC today. It covers gaming, streaming and light video editing. 64 GB (2×32 GB) makes sense when you have work that genuinely uses memory: 4K editing, several virtual machines, or running AI models locally.",
+            "DDR5 also comes in non-power-of-two sizes such as 24 GB and 48 GB. A 2×24 GB (48 GB) kit is a good middle ground if 32 GB feels tight and 64 GB feels excessive. Recent boards generally recognise them, but older BIOS versions can misbehave, so update the BIOS before you build."
+          ]
+        },
+        {
+          "h": "Step 2: a two-stick kit beats one stick — dual channel",
+          "p": [
+            "Mainstream desktop CPUs have two memory channels. With a single stick only one channel is used, so 2×16 GB has twice the theoretical bandwidth of 1×32 GB for the same capacity. Each DDR5 module is internally split into two 32-bit sub-channels, but that does not make one stick a dual-channel setup.",
+            "The gap matters even more if you use integrated graphics. The iGPU uses system RAM as video memory, so memory bandwidth effectively caps graphics performance.",
+            "Think twice about four sticks. With DDR5, two modules per channel (2DPC) put far more load on the memory controller, and the speed you can run stably often drops a lot. AMD has recommended two-module setups over four on AM5. If you need 64 GB, 2×32 GB is better than 4×16 GB."
+          ]
+        },
+        {
+          "h": "Step 3: speed — somewhere between 5600 and 6000",
+          "p": [
+            "DDR5 speed is given in MT/s (mega-transfers per second). Shops often write ‘6000 MHz’, but they mean the same number. Common values are 4800, 5600, 6000 and 6400.",
+            "5600 is officially supported by CPUs such as the Ryzen 9000 series and Intel's 13th and 14th gen, so on those it often runs at rated speed with no setup at all. Kits rated 6000 and above only reach that speed once you enable the stored profile (EXPO or XMP) in the BIOS.",
+            "Faster kits such as 7200 or 8000 depend heavily on the CPU's memory controller and the quality of the motherboard. For most people that is where stability problems arrive before any noticeable gain, so unless you have a specific reason, stopping at 6000–6400 is the practical choice."
+          ]
+        },
+        {
+          "h": "Step 4: CL (timings) — lower is better, but read it with the speed",
+          "p": [
+            "CL (CAS latency) is the number of clock cycles between a read command and the data coming back. At the same speed, lower CL is faster. For DDR5-6000, CL30, CL32 and CL36 are common.",
+            "Across different speeds, comparing CL alone is misleading. Real latency is CL × 2000 ÷ MT/s, in nanoseconds. DDR5-6000 CL30 is 10 ns; CL36 is 12 ns. We walk through the maths in our separate RAM speed and latency guide.",
+            "If the price gap is small, a 6000 CL30–32 kit is a safe pick on both AM5 and Intel. If the gap is large, CL36 costs you little in games. Spending the difference on capacity is usually better than paying a big premium for a lower CL."
+          ]
+        },
+        {
+          "h": "Step 5: EXPO and XMP, plus platform notes",
+          "p": [
+            "XMP is Intel's memory-profile standard and EXPO is AMD's. The module stores a tested speed, timings and voltage, and enabling the profile in the BIOS applies them. With it off, the RAM runs at its JEDEC default. Many boards can read the other vendor's profile, but an EXPO kit on AMD or an XMP kit on Intel is less fiddly. Manufacturers describe profiles as running beyond base spec, so it is worth reading your warranty terms.",
+            "AM5 (Ryzen 7000 and 9000): AMD named DDR5-6000 the ‘sweet spot’. Around that speed the memory clock and memory-controller clock run 1:1 easily, which balances latency and stability. Much faster kits push the controller into a 1:2 ratio, which can actually add latency.",
+            "Intel: for 12th to 14th gen, first check whether your motherboard is a DDR4 or a DDR5 board — the same CPU uses one or the other depending on the board. Intel's spec for the Core Ultra 200S series lists DDR5-6400 (one module per channel), and these chips also accept CUDIMMs, newer modules with an onboard clock driver."
+          ]
+        },
+        {
+          "h": "Step 6: check the QVL, and don't mix kits",
+          "p": [
+            "The QVL (Qualified Vendor List) is the list of memory your motherboard maker actually tested. Find it under Support on the board's product page and look for the exact part number, the speed, and how many modules it was tested with. A kit missing from the list may still work, but one on the list is clearly less likely to cause trouble.",
+            "Avoid mixing different kits. Even under the same model name, the memory chips inside can change between production runs, and the profile timings can differ. Mixed sticks either fall back to the slowest common settings or make booting unreliable. That chip matching is exactly why makers sell two- and four-stick kits in one box.",
+            "If you plan to expand later, buying your target capacity as a two-stick kit from day one is the surest route. Running 2×16 GB and then adding another identical pair to make four sticks can bring the speed drop and compatibility issues described above all at once."
+          ]
+        },
+        {
+          "h": "Our take",
+          "p": [
+            "In short, the default for a new desktop is a DDR5-6000, 32 GB (2×16 GB) kit at CL30–36, with the profile that matches your CPU (EXPO for AMD, XMP for Intel). Raise the capacity if your work needs it.",
+            "This site records the lowest DDR5 16 GB and 32 GB kit prices every day. Once you have settled the spec, check where today's price sits in its 30-day range. Sam Altman may call PC RAM ‘quite terrible’, but choosing it, at least, doesn't have to be."
+          ]
+        }
+      ]
+    },
+    "ja": {
+      "title": "DDR5メモリの選び方:容量・構成・速度・CL・EXPOを順番に",
+      "desc": "デスクトップ用DDR5を買うときに確認することを順番にまとめました。16・32・64GBの容量、1枚と2枚組(デュアルチャネル)、5600と6000、CL、EXPO・XMP、AM5とインテルの違い、QVLの確認、キットを混ぜてはいけない理由まで。",
+      "lead": "DDR5の商品一覧を開くと、容量・速度・CL・EXPO・XMPといった数字と略語が一度に並びます。それでもデスクトップ用メモリは、決まった順番でいくつか選ぶだけで済みます。まず容量、次に何枚組にするか、それから速度とタイミング、最後にマザーボードとの相性を確認します。",
+      "sections": [
+        {
+          "h": "ステップ1:まず容量を決めます — 16GB・32GB・64GB",
+          "p": [
+            "16GBはウェブ閲覧や事務作業、軽いゲームならまだ十分に動きます。ただ、最新のゲームにブラウザやチャットアプリを同時に開くと、余裕はほとんど残りません。あとから空きスロットを埋めるより、最初から十分な量を買う方がたいてい安く、安定します。",
+            "32GB(16GB×2)は、いま新しく組むゲーム用・一般用PCで最も無難な選択です。ゲーム、配信、軽い動画編集までおおむね対応できます。64GB(32GB×2)は、4K動画編集や複数の仮想マシン、ローカルAIモデルなど、実際にメモリを多く使う作業があるときに意味があります。",
+            "DDR5には24GBや48GBのように2のべき乗でない容量もあります。24GB×2(48GB)のキットは、32GBでは足りないが64GBは多すぎるという方に良い中間点です。最近のマザーボードはほぼ認識しますが、古いBIOSでは不具合が出ることがあるため、組み立て前にBIOSを最新にしておくと安心です。"
+          ]
+        },
+        {
+          "h": "ステップ2:1枚より2枚組 — デュアルチャネル",
+          "p": [
+            "一般的なデスクトップCPUはメモリチャネルが2つあります。1枚だけ挿すとそのうち1つしか使わないため、同じ32GBでも32GB×1より16GB×2の方が理論帯域は2倍になります。DDR5モジュールは内部で32ビットのサブチャネル2つに分かれていますが、1枚でデュアルチャネルになるわけではありません。",
+            "内蔵グラフィックスを使うPCでは、この差がさらに大きくなります。内蔵GPUはシステムメモリをグラフィックスメモリとして使うため、メモリ帯域がそのままグラフィックス性能の上限になります。",
+            "4枚挿しは慎重に選んでください。DDR5ではチャネルあたり2枚(2DPC)になるとメモリコントローラーの負担が増え、安定して動く速度が大きく下がることがよくあります。AMDもAM5では4枚より2枚構成を推奨してきました。64GBが必要なら、16GB×4より32GB×2の方が良い選択です。"
+          ]
+        },
+        {
+          "h": "ステップ3:速度 — 5600と6000のあいだで",
+          "p": [
+            "DDR5の速度はMT/s(1秒あたりの転送回数)で表します。ショップでは「6000MHz」と書かれていることが多いですが、同じ数字を指しています。よく見かけるのは4800、5600、6000、6400です。",
+            "5600はRyzen 9000シリーズやインテル第13・14世代などが公式にサポートする速度なので、設定なしで挿すだけでその速度で動くことが多いです。6000以上の製品は、メモリに保存されたプロファイル(EXPOまたはXMP)をBIOSで有効にして初めて表記どおりの速度になります。",
+            "7200や8000のような高速品は、CPU内のメモリコントローラーとマザーボードの品質に大きく左右されます。一般の利用者にとっては体感できる向上より先に安定性の問題が来る領域なので、特別な理由がなければ6000~6400で止めるのが現実的です。"
+          ]
+        },
+        {
+          "h": "ステップ4:CL(タイミング) — 低いほど良いが、速度と一緒に見ます",
+          "p": [
+            "CL(CASレイテンシ)は、読み出し命令を出してからデータが返ってくるまでのクロック数です。同じ速度ならCLが低いほど速くなります。DDR5-6000ならCL30、CL32、CL36がよく見られます。",
+            "速度が違う製品同士では、CLの数字だけを比べても意味がありません。実際の遅延はCL×2000÷MT/s(ナノ秒)で計算します。DDR5-6000 CL30は10ns、CL36は12nsです。計算方法と例は「メモリの速度とレイテンシ」の記事で詳しく説明しています。",
+            "価格差が小さければ、6000 CL30~32のキットがAM5でもインテルでも無難です。差が大きければCL36でもゲームでの損はわずかです。低いCLのために大きく上乗せするより、その分を容量に回す方がたいてい賢明です。"
+          ]
+        },
+        {
+          "h": "ステップ5:EXPOとXMP、そしてプラットフォーム別メモ",
+          "p": [
+            "XMPはインテル、EXPOはAMDが作ったメモリプロファイルの規格です。モジュールの中に「この速度・タイミング・電圧で動かしてよい」という設定が保存されており、BIOSで有効にするとそのまま適用されます。無効ならJEDECの標準速度で動作します。多くのマザーボードは相手側の規格も読み込めますが、AMDならEXPO、インテルならXMP表記の製品の方が手間がかかりません。メーカーはプロファイルの使用を標準仕様を超える動作と説明しているので、保証条件も一度確認しておきましょう。",
+            "AM5(Ryzen 7000・9000):AMDはDDR5-6000を「スイートスポット」と位置づけました。この付近ではメモリクロックとメモリコントローラーのクロックを1:1にしやすく、遅延と安定性のバランスが良いためです。それよりかなり速い設定では1:2モードに移り、かえって遅延が増えることがあります。",
+            "インテル:第12~14世代では、まずマザーボードがDDR4用かDDR5用かを確認してください。同じCPUでもボードによってどちらか一方しか使えません。Core Ultra 200Sシリーズはインテルの公式仕様でDDR5-6400(チャネルあたり1枚の場合)まで対応し、クロックドライバー内蔵のCUDIMMも使えます。"
+          ]
+        },
+        {
+          "h": "ステップ6:QVLを確認し、キットは混ぜない",
+          "p": [
+            "QVL(Qualified Vendor List)は、マザーボードメーカーが実際にテストしたメモリの一覧です。マザーボードの製品ページの「サポート」からメモリ対応リストを開き、買おうとしている製品の正確な型番、速度、何枚構成でテストされたかを確認します。リストにないから動かないわけではありませんが、載っていれば問題が起きる確率は確実に下がります。",
+            "異なるキットを混ぜるのは避けてください。同じ型番でも生産時期によって中のメモリチップが変わることがあり、プロファイルのタイミングも異なる場合があります。混ぜると最も遅い設定に合わせられるか、起動自体が不安定になります。メーカーが2枚・4枚を1箱にまとめて売るのは、まさにこのチップの組み合わせのためです。",
+            "あとで増設する予定があるなら、最初から目標の総容量を2枚組キットで買うのが最も確実です。16GB×2を使っていて同じ製品をもう1組足して4枚にする方法は、前述の速度低下と相性問題がまとめて来ることがあります。"
+          ]
+        },
+        {
+          "h": "私たちの考え",
+          "p": [
+            "まとめると、新しいデスクトップの基本はDDR5-6000、32GB(16GB×2)キット、CL30~36、そしてCPUに合ったプロファイル(AMDはEXPO、インテルはXMP)です。作業に応じて容量だけ増やせば十分です。",
+            "このサイトはDDR5 16GBと32GBキットの最安値を毎日記録しています。仕様が決まったら、30日間の範囲の中でいまの価格がどのあたりかを見てから決めてください。サム・アルトマンはPCのメモリを「quite terrible」と言いましたが、少なくとも選び方はそこまでひどくありません。"
+          ]
+        }
+      ]
+    },
+    "de": {
+      "title": "DDR5-RAM richtig auswählen: Kapazität, Kit, Takt, CL und EXPO der Reihe nach",
+      "desc": "Was Sie beim Kauf von DDR5 für einen Desktop-PC prüfen sollten, Schritt für Schritt: 16, 32 oder 64 GB, ein Modul oder ein Zweier-Kit (Dual Channel), 5600 oder 6000, CL, EXPO und XMP, Hinweise zu AM5 und Intel, die QVL des Mainboards und warum Sie Kits nicht mischen sollten.",
+      "lead": "Wer eine DDR5-Produktliste öffnet, sieht eine Wand aus Zahlen und Abkürzungen: Kapazität, Takt, CL, EXPO, XMP. Zum Glück lässt sich Desktop-RAM auf wenige Entscheidungen in der richtigen Reihenfolge reduzieren. Zuerst die Kapazität, dann die Anzahl der Module, danach Takt und Timings – und zum Schluss die Prüfung, ob alles zum Mainboard passt.",
+      "sections": [
+        {
+          "h": "Schritt 1: Kapazität – 16, 32 oder 64 GB",
+          "p": [
+            "16 GB reichen weiterhin für Surfen, Büroarbeit und leichtere Spiele. Läuft aber ein aktuelles Spiel neben Browser und Chat-App, bleibt kaum Reserve. Gleich ausreichend zu kaufen ist meist günstiger und stabiler, als später freie Slots zu bestücken.",
+            "32 GB (2×16 GB) sind heute die sichere Standardwahl für einen neuen Gaming- oder Alltags-PC. Damit sind Spielen, Streamen und leichter Videoschnitt abgedeckt. 64 GB (2×32 GB) lohnen sich, wenn Sie wirklich speicherhungrige Arbeit haben: 4K-Schnitt, mehrere virtuelle Maschinen oder lokale KI-Modelle.",
+            "DDR5 gibt es auch in Größen, die keine Zweierpotenz sind, etwa 24 und 48 GB. Ein 2×24-GB-Kit (48 GB) ist ein guter Mittelweg, wenn 32 GB knapp und 64 GB übertrieben wirken. Aktuelle Mainboards erkennen diese Module in der Regel, ältere BIOS-Versionen können aber Probleme machen – aktualisieren Sie das BIOS daher vor dem Zusammenbau."
+          ]
+        },
+        {
+          "h": "Schritt 2: Zweier-Kit statt Einzelmodul – Dual Channel",
+          "p": [
+            "Gängige Desktop-CPUs haben zwei Speicherkanäle. Mit nur einem Modul wird nur einer davon genutzt; 2×16 GB bieten daher bei gleicher Kapazität die doppelte theoretische Bandbreite wie 1×32 GB. Jedes DDR5-Modul ist intern zwar in zwei 32-Bit-Subkanäle geteilt, ein einzelnes Modul ergibt dadurch aber noch keinen Dual-Channel-Betrieb.",
+            "Bei integrierter Grafik ist der Unterschied noch größer. Die iGPU nutzt den Arbeitsspeicher als Grafikspeicher, die Speicherbandbreite begrenzt also direkt die Grafikleistung.",
+            "Überlegen Sie sich vier Module gut. Bei DDR5 belasten zwei Module pro Kanal (2DPC) den Speichercontroller deutlich stärker, und der stabil erreichbare Takt sinkt oft spürbar. AMD empfiehlt auf AM5 seit jeher zwei statt vier Module. Brauchen Sie 64 GB, sind 2×32 GB besser als 4×16 GB."
+          ]
+        },
+        {
+          "h": "Schritt 3: Takt – irgendwo zwischen 5600 und 6000",
+          "p": [
+            "Der DDR5-Takt wird in MT/s (Megatransfers pro Sekunde) angegeben. Händler schreiben oft „6000 MHz“, meinen aber dieselbe Zahl. Üblich sind 4800, 5600, 6000 und 6400.",
+            "5600 wird offiziell von CPUs wie der Ryzen-9000-Serie und Intels 13. und 14. Generation unterstützt; dort läuft der Speicher oft ohne jede Einstellung mit diesem Takt. Kits ab 6000 erreichen ihren Nenntakt erst, wenn Sie das gespeicherte Profil (EXPO oder XMP) im BIOS aktivieren.",
+            "Schnellere Kits mit 7200 oder 8000 hängen stark vom Speichercontroller der CPU und von der Qualität des Mainboards ab. Für die meisten Nutzer kommen dort zuerst Stabilitätsprobleme und erst danach spürbare Vorteile. Ohne besonderen Grund ist 6000–6400 daher die vernünftige Obergrenze."
+          ]
+        },
+        {
+          "h": "Schritt 4: CL (Timings) – niedriger ist besser, aber nur zusammen mit dem Takt",
+          "p": [
+            "Die CL (CAS-Latenz) ist die Anzahl der Taktzyklen zwischen einem Lesebefehl und den gelieferten Daten. Bei gleichem Takt ist eine niedrigere CL schneller. Für DDR5-6000 sind CL30, CL32 und CL36 üblich.",
+            "Zwischen unterschiedlichen Taktraten führt ein reiner CL-Vergleich in die Irre. Die echte Latenz beträgt CL × 2000 ÷ MT/s in Nanosekunden. DDR5-6000 CL30 ergibt 10 ns, CL36 ergibt 12 ns. Die Rechnung erklären wir ausführlich in unserem Ratgeber zu RAM-Takt und Latenz.",
+            "Ist der Preisunterschied gering, ist ein 6000er-Kit mit CL30–32 auf AM5 und Intel eine sichere Wahl. Ist er groß, kostet Sie CL36 in Spielen wenig. Das gesparte Geld steckt man meist besser in Kapazität als in einen hohen Aufpreis für eine niedrigere CL."
+          ]
+        },
+        {
+          "h": "Schritt 5: EXPO und XMP – und Hinweise zur Plattform",
+          "p": [
+            "XMP ist der Profilstandard von Intel, EXPO der von AMD. Auf dem Modul sind geprüfter Takt, Timings und Spannung gespeichert; aktivieren Sie das Profil im BIOS, werden sie übernommen. Ohne Profil läuft der Speicher mit dem JEDEC-Standardtakt. Viele Mainboards lesen auch das Profil des jeweils anderen Herstellers, doch ein EXPO-Kit auf AMD bzw. ein XMP-Kit auf Intel macht weniger Umstände. Die Hersteller bezeichnen Profile als Betrieb oberhalb der Basisspezifikation – ein Blick in die Garantiebedingungen lohnt sich.",
+            "AM5 (Ryzen 7000 und 9000): AMD hat DDR5-6000 als „Sweet Spot“ bezeichnet. In diesem Bereich lassen sich Speichertakt und Takt des Speichercontrollers problemlos im Verhältnis 1:1 betreiben, was Latenz und Stabilität gut ausbalanciert. Deutlich schnellere Kits zwingen den Controller in ein 1:2-Verhältnis, was die Latenz sogar erhöhen kann.",
+            "Intel: Prüfen Sie bei der 12. bis 14. Generation zuerst, ob Ihr Mainboard für DDR4 oder DDR5 ausgelegt ist – dieselbe CPU nutzt je nach Board das eine oder das andere. Für die Core-Ultra-200S-Serie nennt Intel offiziell DDR5-6400 (ein Modul pro Kanal); diese CPUs unterstützen außerdem CUDIMMs, neuere Module mit eigenem Clock-Treiber."
+          ]
+        },
+        {
+          "h": "Schritt 6: QVL prüfen – und Kits nicht mischen",
+          "p": [
+            "Die QVL (Qualified Vendor List) ist die Liste der Speichermodule, die der Mainboard-Hersteller tatsächlich getestet hat. Sie finden sie im Support-Bereich der Produktseite des Boards. Suchen Sie dort nach der exakten Teilenummer, dem Takt und der Anzahl der getesteten Module. Ein Kit, das fehlt, kann trotzdem funktionieren – eines, das gelistet ist, macht aber deutlich seltener Ärger.",
+            "Mischen Sie keine unterschiedlichen Kits. Selbst unter demselben Modellnamen können sich die verbauten Speicherchips zwischen Produktionschargen ändern, und die Profil-Timings können abweichen. Gemischte Module laufen dann mit den langsamsten gemeinsamen Einstellungen oder booten unzuverlässig. Genau wegen dieser Chip-Abstimmung verkaufen Hersteller Zweier- und Vierer-Kits in einer Packung.",
+            "Wenn Sie später aufrüsten möchten, ist es am sichersten, die Zielkapazität gleich als Zweier-Kit zu kaufen. Wer erst 2×16 GB betreibt und dann ein weiteres identisches Paar ergänzt, riskiert die oben beschriebenen Taktverluste und Kompatibilitätsprobleme auf einmal."
+          ]
+        },
+        {
+          "h": "Unsere Einschätzung",
+          "p": [
+            "Kurz gesagt: Der Standard für einen neuen Desktop ist ein DDR5-6000-Kit mit 32 GB (2×16 GB), CL30–36 und dem passenden Profil für Ihre CPU (EXPO bei AMD, XMP bei Intel). Erhöhen Sie nur die Kapazität, wenn Ihre Arbeit es verlangt.",
+            "Diese Seite erfasst täglich die niedrigsten Preise für DDR5-Kits mit 16 und 32 GB. Sobald die Spezifikation feststeht, sehen Sie nach, wo der heutige Preis in der 30-Tage-Spanne liegt. Sam Altman mag PC-RAM „quite terrible“ nennen – die Auswahl muss es jedenfalls nicht sein."
+          ]
+        }
+      ]
+    }
+  },
+  "ram-speed-and-latency": {
+    "updated": "2026-11-28",
+    "sources": [
+      {
+        "name": "Crucial — RAM speed vs CAS latency",
+        "url": "https://www.crucial.com/usa/en/ram-speed-vs-cas-latency"
+      },
+      {
+        "name": "Kingston — CAS latency (CL) and RAM timings explained",
+        "url": "https://www.kingston.com/en/blog/gaming/cas-latency-cl-ram-timing-explained"
+      },
+      {
+        "name": "Corsair — Is speed or latency more important when choosing RAM?",
+        "url": "https://www.corsair.com/ch/ru/explorer/diy-builder/memory/is-speed-or-latency-more-important-when-choosing-ram"
+      }
+    ],
+    "ko": {
+      "title": "램 속도(MT/s)와 CL, 실제 지연시간은 이렇게 계산합니다",
+      "desc": "MT/s와 MHz의 차이, CL의 뜻, 실제 지연시간(ns) = CL×2000÷MT/s 계산법을 예시로 정리했습니다. DDR5-5600 CL46, DDR5-6000 CL30, DDR4-3200 CL22를 직접 비교하고, 게임과 작업에서 무엇이 중요한지 설명합니다.",
+      "lead": "램 상자에는 ‘6000’ 같은 큰 숫자와 ‘CL30’ 같은 작은 숫자가 함께 적혀 있습니다. 큰 숫자는 높을수록, 작은 숫자는 낮을수록 좋다는 것까지는 알려져 있지만, 둘이 서로 다른 제품에서 엇갈릴 때는 어떻게 비교해야 할지 막막합니다. 간단한 계산 하나면 정리됩니다.",
+      "sections": [
+        {
+          "h": "MT/s와 MHz: 같은 숫자, 다른 이름",
+          "p": [
+            "DDR은 Double Data Rate의 줄임말로, 클럭 한 번에 데이터를 두 번 보냅니다. 그래서 DDR5-6000의 실제 메모리 클럭은 3000MHz이고, 초당 전송 횟수가 6000백만 번, 즉 6000MT/s입니다. 쇼핑몰의 ‘6000MHz’ 표기는 엄밀히는 틀린 단위지만 같은 제품을 가리킵니다.",
+            "그래서 CPU-Z 같은 프로그램에서 메모리 클럭이 3000MHz 근처로 표시돼도 고장이 아닙니다. 표기된 숫자의 절반이 나오면 정상입니다. 윈도우 작업 관리자는 보통 전송 속도(MT/s) 기준 숫자를 보여 줍니다.",
+            "이 숫자가 높을수록 같은 시간에 더 많은 데이터를 옮길 수 있습니다. 이것이 대역폭이고, 속도 숫자가 직접 결정하는 것은 바로 이 부분입니다."
+          ]
+        },
+        {
+          "h": "CL은 ‘클럭 몇 번’이지 시간이 아닙니다",
+          "p": [
+            "CL(CAS Latency)은 읽기 명령을 보낸 뒤 첫 데이터가 나오기까지 기다리는 클럭 수입니다. CL30이면 30클럭을 기다린다는 뜻입니다. 상자에 적힌 30-36-36-76 같은 숫자열의 첫 번째가 CL이고, 나머지(tRCD, tRP, tRAS)도 같은 방식의 클럭 수입니다.",
+            "중요한 점은 클럭 한 번의 길이가 속도에 따라 달라진다는 것입니다. 속도가 빠른 램은 클럭 한 번이 짧기 때문에, CL 숫자가 커도 실제로 기다리는 시간은 비슷하거나 더 짧을 수 있습니다. DDR4에서 DDR5로 넘어오며 CL 숫자가 크게 늘었지만 실제 지연이 그만큼 늘지 않은 이유가 이것입니다.",
+            "그래서 속도가 같은 제품끼리는 CL만 비교해도 되지만, 속도가 다른 제품끼리는 반드시 시간(나노초)으로 바꿔서 비교해야 합니다."
+          ]
+        },
+        {
+          "h": "계산법: 실제 지연시간(ns) = CL × 2000 ÷ MT/s",
+          "p": [
+            "클럭 한 번의 길이는 실제 클럭(MT/s의 절반)의 역수입니다. 이를 나노초로 바꾸면 2000÷MT/s가 되고, 여기에 CL을 곱하면 첫 데이터까지의 시간이 나옵니다. 계산기 하나면 충분합니다.",
+            "예를 들어 보겠습니다. DDR4-3200 CL22는 22×2000÷3200 = 13.75ns입니다. DDR5-5600 CL46은 46×2000÷5600 ≈ 16.4ns입니다. DDR5-6000 CL30은 30×2000÷6000 = 10.0ns입니다. 참고로 DDR5-6000 CL36은 12.0ns, DDR4-3200 CL16은 10.0ns입니다.",
+            "결과가 흥미롭습니다. 별도 설정 없이 쓰는 기본형 DDR5-5600 CL46은 속도 숫자가 훨씬 높은데도 첫 데이터까지의 시간은 DDR4-3200 CL22보다 깁니다. 반면 DDR5-6000 CL30은 지연에서도 DDR4-3200 CL22를 앞서고, 대역폭에서는 크게 앞섭니다. 같은 DDR5라도 어떤 제품이냐에 따라 체감이 달라질 수 있는 이유입니다."
+          ]
+        },
+        {
+          "h": "대역폭: 속도 숫자가 하는 일",
+          "p": [
+            "이론상 최대 대역폭은 MT/s × 8바이트(64비트 채널 하나 기준)로 계산합니다. DDR4-3200은 채널당 25.6GB/s, 듀얼 채널이면 51.2GB/s입니다. DDR5-5600은 44.8GB/s, 듀얼 채널 89.6GB/s이고, DDR5-6000은 48GB/s, 듀얼 채널 96GB/s입니다. 실제 측정값은 이보다 낮지만 비율은 비슷하게 유지됩니다.",
+            "지연시간과 대역폭은 서로 다른 일을 합니다. 지연시간은 흩어진 작은 데이터를 자주 가져올 때, 대역폭은 큰 데이터를 연속으로 옮길 때 중요합니다. 하나만 보고 판단하면 반쪽짜리 비교가 됩니다.",
+            "또 하나 알아 둘 점은 위에서 계산한 값이 램 칩 자체의 지연이라는 것입니다. CPU가 실제로 메모리를 기다리는 시간은 메모리 컨트롤러와 내부 연결을 거치기 때문에 이 값보다 몇 배 깁니다. 그래서 몇 ns 차이가 그대로 몇 퍼센트 성능 차이로 이어지지는 않습니다."
+          ]
+        },
+        {
+          "h": "게임에서는 무엇이 중요할까",
+          "p": [
+            "게임은 대체로 지연시간에 민감한 편입니다. 특히 해상도를 낮추고 높은 프레임을 노리는 경쟁 게임처럼 CPU가 병목인 상황에서 램 차이가 드러납니다. 반대로 4K처럼 그래픽카드가 한계인 상황에서는 램 속도와 타이밍 차이가 거의 묻힙니다.",
+            "CPU 캐시가 큰 제품(예: 3D V-Cache가 들어간 라이젠 X3D)은 메모리까지 가는 일이 줄어들어 램 차이에 덜 민감합니다. 반대로 내장 그래픽으로 게임을 한다면 대역폭이 곧 그래픽 성능이라 빠른 램의 효과가 큽니다.",
+            "현실적인 결론은 이렇습니다. 게임용이라면 지연이 10~12ns 정도 나오는 DDR5-6000 CL30~36 범위가 가격 대비 무난하고, 그보다 낮은 CL을 위해 큰 웃돈을 낼 이유는 크지 않습니다."
+          ]
+        },
+        {
+          "h": "작업용이라면: 용량 > 대역폭 > 지연",
+          "p": [
+            "영상 인코딩, 압축, 렌더링, 과학 계산, 그리고 CPU로 돌리는 로컬 AI 모델처럼 큰 데이터를 계속 흘려보내는 작업은 대역폭의 영향을 더 받습니다. 이런 작업에서는 CL보다 MT/s와 듀얼 채널 구성이 먼저입니다.",
+            "하지만 어떤 작업이든 가장 큰 차이를 만드는 것은 용량입니다. 램이 모자라 디스크의 페이지 파일을 쓰기 시작하면, 어떤 타이밍 차이보다도 훨씬 큰 속도 저하가 옵니다. 32GB CL36이 16GB CL30보다 훨씬 빠르게 느껴지는 상황은 흔합니다.",
+            "그러니 순서는 용량을 먼저 맞추고, 그다음 듀얼 채널과 적당한 속도(DDR5라면 6000 안팎), 마지막으로 남는 예산이 있을 때 낮은 CL을 고르는 것입니다."
+          ]
+        },
+        {
+          "h": "저희 생각",
+          "p": [
+            "속도와 CL이 다른 두 제품을 비교할 때는 CL×2000÷MT/s로 나노초를 구하고, 그다음 가격을 보면 됩니다. 1~2ns 차이에 큰돈을 쓰기보다 용량을 챙기는 편이 대부분의 사용자에게 이득입니다.",
+            "이 사이트는 DDR5와 DDR4 주요 용량의 최저가를 매일 기록합니다. 계산으로 후보를 두세 개로 좁혔다면, 30일 범위와 7일 변동을 보고 그중 지금 덜 비싼 쪽을 고르세요."
+          ]
+        }
+      ]
+    },
+    "en": {
+      "title": "RAM speed (MT/s) vs CL: how to work out real latency",
+      "desc": "MT/s vs MHz, what CL means, and how to calculate true latency in nanoseconds (CL × 2000 ÷ MT/s), with DDR5-5600 CL46, DDR5-6000 CL30 and DDR4-3200 CL22 compared side by side — and what actually matters for gaming and for work.",
+      "lead": "A RAM box carries a big number like ‘6000’ and a small one like ‘CL30’. Most people know the big one should be high and the small one low, but when two kits trade off against each other it is hard to tell which is quicker. One simple calculation sorts it out.",
+      "sections": [
+        {
+          "h": "MT/s and MHz: same number, different label",
+          "p": [
+            "DDR stands for Double Data Rate: data moves twice per clock cycle. So DDR5-6000 actually runs its memory clock at 3000 MHz and performs 6,000 million transfers per second — 6000 MT/s. Shops that write ‘6000 MHz’ are using the wrong unit, but they mean the same kit.",
+            "That is why tools such as CPU-Z show a memory clock of around 3000 MHz for a 6000 kit. Half the advertised number is normal, not a fault. Windows Task Manager usually shows the transfer-rate figure.",
+            "The higher this number, the more data moves in the same time. That is bandwidth, and bandwidth is what the speed figure directly controls."
+          ]
+        },
+        {
+          "h": "CL is a count of clock cycles, not a time",
+          "p": [
+            "CL (CAS latency) is how many clock cycles pass between a read command and the first data arriving. CL30 means waiting 30 cycles. In a timing string such as 30-36-36-76, CL is the first number; the others (tRCD, tRP, tRAS) are cycle counts too.",
+            "The catch is that the length of one cycle depends on the speed. Faster memory has shorter cycles, so a larger CL can mean the same or even less actual waiting. That is why CL figures jumped from DDR4 to DDR5 without real latency rising by the same amount.",
+            "So between kits of the same speed you can compare CL directly, but between different speeds you must convert to time in nanoseconds."
+          ]
+        },
+        {
+          "h": "The formula: true latency (ns) = CL × 2000 ÷ MT/s",
+          "p": [
+            "One cycle lasts the inverse of the real clock (half the MT/s figure). Converted to nanoseconds that is 2000 ÷ MT/s; multiply by CL and you get the time to the first data. A phone calculator is all you need.",
+            "Some examples. DDR4-3200 CL22: 22 × 2000 ÷ 3200 = 13.75 ns. DDR5-5600 CL46: 46 × 2000 ÷ 5600 ≈ 16.4 ns. DDR5-6000 CL30: 30 × 2000 ÷ 6000 = 10.0 ns. For reference, DDR5-6000 CL36 is 12.0 ns and DDR4-3200 CL16 is 10.0 ns.",
+            "The result is worth noticing. A plain DDR5-5600 CL46 kit running without a profile has a much bigger speed number yet takes longer to deliver its first data than DDR4-3200 CL22. DDR5-6000 CL30, meanwhile, beats DDR4-3200 CL22 on latency and is far ahead on bandwidth. Two DDR5 kits can feel quite different."
+          ]
+        },
+        {
+          "h": "Bandwidth: what the speed number does",
+          "p": [
+            "Theoretical peak bandwidth is MT/s × 8 bytes per 64-bit channel. DDR4-3200 gives 25.6 GB/s per channel, 51.2 GB/s in dual channel. DDR5-5600 gives 44.8 GB/s (89.6 GB/s dual), and DDR5-6000 gives 48 GB/s (96 GB/s dual). Measured figures come in lower, but the ratios hold roughly.",
+            "Latency and bandwidth do different jobs. Latency matters when the CPU fetches many small, scattered pieces of data; bandwidth matters when it streams large blocks. Looking at only one gives half a comparison.",
+            "Also keep in mind that the figure above is the latency of the memory chips themselves. The time the CPU actually waits includes the memory controller and on-chip interconnect and is several times longer. A few nanoseconds of difference therefore does not translate one-to-one into percentage performance."
+          ]
+        },
+        {
+          "h": "What matters in games",
+          "p": [
+            "Games lean towards latency sensitivity, and memory differences show most when the CPU is the bottleneck — lower resolutions and high frame rates, as in competitive shooters. When the graphics card is the limit, as at 4K, speed and timing differences largely disappear.",
+            "CPUs with a large cache (for example AMD's X3D chips with 3D V-Cache) go out to memory less often and are less sensitive to RAM. If you game on integrated graphics, however, bandwidth is your graphics performance and fast RAM helps a lot.",
+            "The practical conclusion: for gaming, DDR5-6000 at CL30–36, roughly 10–12 ns, is the sensible value range, and there is little reason to pay a big premium for an even lower CL."
+          ]
+        },
+        {
+          "h": "For work: capacity, then bandwidth, then latency",
+          "p": [
+            "Video encoding, compression, rendering, scientific computing and local AI models running on the CPU all stream large amounts of data and lean more on bandwidth. For those, MT/s and a dual-channel setup come before CL.",
+            "Whatever the workload, though, capacity makes the biggest difference. Once RAM runs out and Windows starts using the page file on disk, the slowdown dwarfs any timing difference. A 32 GB CL36 system feeling far quicker than a 16 GB CL30 one is a common sight.",
+            "So the order is: get the capacity right, then dual channel and a sensible speed (around 6000 for DDR5), and only then spend leftover budget on lower CL."
+          ]
+        },
+        {
+          "h": "Our take",
+          "p": [
+            "When two kits differ in both speed and CL, work out the nanoseconds with CL × 2000 ÷ MT/s, then look at the price. For most people, capacity is a better use of money than one or two nanoseconds.",
+            "This site records the lowest prices for the main DDR5 and DDR4 capacities every day. Once the maths has narrowed your list to two or three kits, check the 30-day range and the 7-day change and pick whichever is currently less overpriced."
+          ]
+        }
+      ]
+    },
+    "ja": {
+      "title": "メモリの速度(MT/s)とCL:実際の遅延はこう計算します",
+      "desc": "MT/sとMHzの違い、CLの意味、実際の遅延(ns)=CL×2000÷MT/sの計算方法を例とともに解説。DDR5-5600 CL46、DDR5-6000 CL30、DDR4-3200 CL22を比べ、ゲームと作業で何が重要かを説明します。",
+      "lead": "メモリの箱には「6000」のような大きな数字と「CL30」のような小さな数字が並んでいます。大きい方は高いほど、小さい方は低いほど良いことは知られていますが、2つの製品で両者が食い違うと、どちらが速いのか判断しにくくなります。簡単な計算ひとつで整理できます。",
+      "sections": [
+        {
+          "h": "MT/sとMHz:同じ数字、違う呼び方",
+          "p": [
+            "DDRはDouble Data Rateの略で、1クロックで2回データを送ります。そのためDDR5-6000の実際のメモリクロックは3000MHzで、1秒あたりの転送回数が6000百万回、つまり6000MT/sです。ショップの「6000MHz」表記は厳密には単位の誤りですが、同じ製品を指しています。",
+            "このため、CPU-Zなどのソフトでメモリクロックが3000MHz前後と表示されても故障ではありません。表記の半分が出ていれば正常です。Windowsのタスクマネージャーは通常、転送速度の数字を表示します。",
+            "この数字が高いほど、同じ時間により多くのデータを運べます。これが帯域幅で、速度の数字が直接決めるのはこの部分です。"
+          ]
+        },
+        {
+          "h": "CLは「クロック数」であって時間ではありません",
+          "p": [
+            "CL(CASレイテンシ)は、読み出し命令を出してから最初のデータが届くまでに待つクロック数です。CL30なら30クロック待つという意味です。箱に書かれた30-36-36-76のような数列の最初がCLで、残り(tRCD、tRP、tRAS)も同じくクロック数です。",
+            "重要なのは、1クロックの長さが速度によって変わることです。速いメモリは1クロックが短いため、CLの数字が大きくても実際の待ち時間は同じか、むしろ短いことがあります。DDR4からDDR5に移ってCLの数字が大きく増えたのに、実際の遅延がそれほど増えていないのはこのためです。",
+            "つまり、同じ速度の製品同士ならCLだけで比べられますが、速度が違う製品同士は必ず時間(ナノ秒)に換算して比べる必要があります。"
+          ]
+        },
+        {
+          "h": "計算式:実際の遅延(ns)= CL × 2000 ÷ MT/s",
+          "p": [
+            "1クロックの長さは実際のクロック(MT/sの半分)の逆数です。これをナノ秒にすると2000÷MT/sになり、CLを掛けると最初のデータまでの時間が求まります。電卓ひとつで十分です。",
+            "例を見てみましょう。DDR4-3200 CL22は22×2000÷3200=13.75ns。DDR5-5600 CL46は46×2000÷5600≈16.4ns。DDR5-6000 CL30は30×2000÷6000=10.0nsです。参考までに、DDR5-6000 CL36は12.0ns、DDR4-3200 CL16は10.0nsです。",
+            "結果は興味深いものです。プロファイルなしで使う標準的なDDR5-5600 CL46は、速度の数字がはるかに大きいのに、最初のデータまでの時間はDDR4-3200 CL22より長くなります。一方DDR5-6000 CL30は、遅延でもDDR4-3200 CL22を上回り、帯域では大きく引き離します。同じDDR5でも製品によって体感が変わりうる理由です。"
+          ]
+        },
+        {
+          "h": "帯域幅:速度の数字が担う役割",
+          "p": [
+            "理論上の最大帯域幅はMT/s×8バイト(64ビットチャネル1つあたり)で計算します。DDR4-3200はチャネルあたり25.6GB/s、デュアルチャネルで51.2GB/s。DDR5-5600は44.8GB/s(デュアルで89.6GB/s)、DDR5-6000は48GB/s(デュアルで96GB/s)です。実測値はこれより低くなりますが、比率はおおむね保たれます。",
+            "遅延と帯域は別の仕事をしています。遅延は散らばった小さなデータを頻繁に取りに行くときに、帯域は大きなデータを連続して運ぶときに効きます。片方だけで判断すると半分しか比べていないことになります。",
+            "もうひとつ、上で計算した値はメモリチップ自体の遅延だという点も覚えておいてください。CPUが実際に待つ時間はメモリコントローラーや内部接続を経由するため、この値の数倍になります。数nsの差がそのまま数%の性能差になるわけではありません。"
+          ]
+        },
+        {
+          "h": "ゲームで重要なのは?",
+          "p": [
+            "ゲームはどちらかといえば遅延に敏感です。特に解像度を下げて高フレームレートを狙う対戦ゲームのように、CPUがボトルネックになる場面でメモリの差が現れます。反対に4KのようにGPUが限界の場面では、速度やタイミングの差はほとんど埋もれます。",
+            "キャッシュの大きいCPU(例:3D V-Cache搭載のRyzen X3D)はメモリまで取りに行く回数が減るため、メモリの差に鈍感です。逆に内蔵グラフィックスでゲームをするなら、帯域がそのままグラフィックス性能なので、速いメモリの効果は大きくなります。",
+            "現実的な結論として、ゲーム用ならおよそ10~12nsになるDDR5-6000 CL30~36がコストパフォーマンスの良い範囲で、それより低いCLのために大きく上乗せする理由はあまりありません。"
+          ]
+        },
+        {
+          "h": "作業用なら:容量 > 帯域 > 遅延",
+          "p": [
+            "動画エンコード、圧縮、レンダリング、科学計算、CPUで動かすローカルAIモデルなど、大きなデータを流し続ける作業は帯域の影響を強く受けます。こうした作業ではCLよりMT/sとデュアルチャネル構成が先です。",
+            "ただ、どんな作業でも最大の差を生むのは容量です。メモリが足りずディスク上のページファイルを使い始めると、どんなタイミングの差よりはるかに大きな速度低下が起きます。32GB CL36の方が16GB CL30よりずっと快適に感じる場面はよくあります。",
+            "順番としては、まず容量を確保し、次にデュアルチャネルと適切な速度(DDR5なら6000前後)、最後に予算が余ればCLの低い製品を選ぶ、です。"
+          ]
+        },
+        {
+          "h": "私たちの考え",
+          "p": [
+            "速度とCLが異なる2つの製品を比べるときは、CL×2000÷MT/sでナノ秒を求め、そのあとで価格を見ましょう。1~2nsの差に大金をかけるより、容量を確保する方がほとんどの人にとって得です。",
+            "このサイトはDDR5とDDR4の主な容量の最安値を毎日記録しています。計算で候補を2~3個に絞ったら、30日間の範囲と7日間の変動を見て、いま割高でない方を選んでください。"
+          ]
+        }
+      ]
+    },
+    "de": {
+      "title": "RAM-Takt (MT/s) und CL: So berechnen Sie die echte Latenz",
+      "desc": "MT/s und MHz, die Bedeutung der CL und die Berechnung der echten Latenz in Nanosekunden (CL × 2000 ÷ MT/s) – mit DDR5-5600 CL46, DDR5-6000 CL30 und DDR4-3200 CL22 im direkten Vergleich, und was in Spielen und bei der Arbeit wirklich zählt.",
+      "lead": "Auf einer RAM-Verpackung stehen eine große Zahl wie „6000“ und eine kleine wie „CL30“. Die meisten wissen, dass die große hoch und die kleine niedrig sein sollte. Widersprechen sich die Werte zweier Kits, ist aber schwer zu sagen, welches schneller ist. Eine einfache Rechnung schafft Klarheit.",
+      "sections": [
+        {
+          "h": "MT/s und MHz: dieselbe Zahl, anderes Etikett",
+          "p": [
+            "DDR steht für Double Data Rate: Pro Taktzyklus werden Daten zweimal übertragen. DDR5-6000 arbeitet daher mit einem tatsächlichen Speichertakt von 3000 MHz und schafft 6000 Millionen Übertragungen pro Sekunde – 6000 MT/s. Händler, die „6000 MHz“ schreiben, verwenden streng genommen die falsche Einheit, meinen aber dasselbe Kit.",
+            "Deshalb zeigen Programme wie CPU-Z bei einem 6000er-Kit einen Speichertakt von etwa 3000 MHz an. Die Hälfte der beworbenen Zahl ist normal und kein Defekt. Der Windows-Task-Manager zeigt in der Regel die Übertragungsrate.",
+            "Je höher diese Zahl, desto mehr Daten werden in derselben Zeit bewegt. Das ist die Bandbreite – und genau sie wird von der Taktangabe direkt bestimmt."
+          ]
+        },
+        {
+          "h": "Die CL ist eine Anzahl von Takten, keine Zeit",
+          "p": [
+            "Die CL (CAS-Latenz) gibt an, wie viele Taktzyklen zwischen einem Lesebefehl und dem ersten gelieferten Datum vergehen. CL30 bedeutet 30 Takte Wartezeit. In einer Timing-Angabe wie 30-36-36-76 ist die CL die erste Zahl; die übrigen (tRCD, tRP, tRAS) sind ebenfalls Taktzahlen.",
+            "Der Haken: Die Dauer eines Takts hängt vom Tempo ab. Schnellerer Speicher hat kürzere Takte, eine höhere CL kann also gleich lange oder sogar kürzere Wartezeit bedeuten. Deshalb sind die CL-Werte von DDR4 zu DDR5 stark gestiegen, ohne dass die echte Latenz im selben Maß zugenommen hat.",
+            "Bei Kits mit gleichem Takt können Sie die CL also direkt vergleichen – bei unterschiedlichem Takt müssen Sie in Nanosekunden umrechnen."
+          ]
+        },
+        {
+          "h": "Die Formel: echte Latenz (ns) = CL × 2000 ÷ MT/s",
+          "p": [
+            "Ein Takt dauert den Kehrwert des echten Takts (der Hälfte der MT/s-Angabe). In Nanosekunden sind das 2000 ÷ MT/s; multipliziert mit der CL ergibt sich die Zeit bis zum ersten Datum. Ein Taschenrechner genügt.",
+            "Einige Beispiele: DDR4-3200 CL22: 22 × 2000 ÷ 3200 = 13,75 ns. DDR5-5600 CL46: 46 × 2000 ÷ 5600 ≈ 16,4 ns. DDR5-6000 CL30: 30 × 2000 ÷ 6000 = 10,0 ns. Zum Vergleich: DDR5-6000 CL36 kommt auf 12,0 ns, DDR4-3200 CL16 auf 10,0 ns.",
+            "Das Ergebnis ist bemerkenswert. Ein einfaches DDR5-5600-CL46-Kit ohne Profil hat zwar die viel größere Taktzahl, liefert das erste Datum aber später als DDR4-3200 CL22. DDR5-6000 CL30 dagegen schlägt DDR4-3200 CL22 bei der Latenz und liegt bei der Bandbreite weit vorn. Zwei DDR5-Kits können sich also deutlich unterschiedlich anfühlen."
+          ]
+        },
+        {
+          "h": "Bandbreite: wofür die Taktzahl sorgt",
+          "p": [
+            "Die theoretische Spitzenbandbreite beträgt MT/s × 8 Byte pro 64-Bit-Kanal. DDR4-3200 liefert 25,6 GB/s pro Kanal, 51,2 GB/s im Dual Channel. DDR5-5600 kommt auf 44,8 GB/s (89,6 GB/s im Dual Channel), DDR5-6000 auf 48 GB/s (96 GB/s). Gemessene Werte liegen darunter, die Verhältnisse bleiben aber ungefähr erhalten.",
+            "Latenz und Bandbreite erfüllen verschiedene Aufgaben. Die Latenz zählt, wenn die CPU viele kleine, verstreute Datenstücke holt; die Bandbreite, wenn große Blöcke am Stück übertragen werden. Wer nur eines betrachtet, vergleicht nur die Hälfte.",
+            "Bedenken Sie außerdem, dass der oben berechnete Wert die Latenz der Speicherchips selbst ist. Die Zeit, die die CPU tatsächlich wartet, schließt Speichercontroller und interne Verbindungen ein und ist um ein Mehrfaches länger. Ein paar Nanosekunden Unterschied ergeben also nicht eins zu eins Prozentpunkte an Leistung."
+          ]
+        },
+        {
+          "h": "Was in Spielen zählt",
+          "p": [
+            "Spiele reagieren eher auf Latenz, und Speicherunterschiede zeigen sich vor allem, wenn die CPU limitiert – bei niedriger Auflösung und hohen Bildraten wie in kompetitiven Shootern. Limitiert dagegen die Grafikkarte, etwa in 4K, verschwinden Takt- und Timing-Unterschiede weitgehend.",
+            "CPUs mit großem Cache (zum Beispiel AMDs X3D-Modelle mit 3D V-Cache) greifen seltener auf den Arbeitsspeicher zu und reagieren weniger empfindlich auf RAM. Wer dagegen mit integrierter Grafik spielt, für den ist Bandbreite gleich Grafikleistung – schneller RAM hilft dann viel.",
+            "Das praktische Fazit: Für Spiele ist DDR5-6000 mit CL30–36, also etwa 10–12 ns, der vernünftige Preis-Leistungs-Bereich. Für eine noch niedrigere CL einen hohen Aufpreis zu zahlen, lohnt sich selten."
+          ]
+        },
+        {
+          "h": "Für die Arbeit: Kapazität vor Bandbreite vor Latenz",
+          "p": [
+            "Video-Encoding, Kompression, Rendering, wissenschaftliche Berechnungen und lokale KI-Modelle auf der CPU schieben große Datenmengen durch und hängen stärker an der Bandbreite. Dort kommen MT/s und Dual Channel vor der CL.",
+            "Bei jeder Arbeit macht aber die Kapazität den größten Unterschied. Geht der RAM aus und Windows lagert in die Auslagerungsdatei auf dem Datenträger aus, ist der Einbruch größer als jeder Timing-Unterschied. Dass sich ein System mit 32 GB CL36 deutlich flotter anfühlt als eines mit 16 GB CL30, ist keine Seltenheit.",
+            "Die Reihenfolge lautet also: Kapazität sichern, dann Dual Channel und ein vernünftiger Takt (bei DDR5 um 6000), und erst danach übriges Budget in eine niedrigere CL stecken."
+          ]
+        },
+        {
+          "h": "Unsere Einschätzung",
+          "p": [
+            "Unterscheiden sich zwei Kits in Takt und CL, berechnen Sie die Nanosekunden mit CL × 2000 ÷ MT/s und schauen erst dann auf den Preis. Für die meisten Nutzer ist mehr Kapazität besser angelegtes Geld als ein oder zwei Nanosekunden.",
+            "Diese Seite erfasst täglich die niedrigsten Preise für die gängigen DDR5- und DDR4-Kapazitäten. Hat die Rechnung Ihre Auswahl auf zwei oder drei Kits eingegrenzt, sehen Sie sich die 30-Tage-Spanne und die 7-Tage-Veränderung an und nehmen das, was gerade weniger überteuert ist."
+          ]
+        }
+      ]
+    }
+  },
+  "how-much-ram-do-i-need": {
+    "updated": "2026-11-28",
+    "sources": [
+      {
+        "name": "Microsoft Learn (TechNet Wiki archive) — Out of system committed memory",
+        "url": "https://learn.microsoft.com/en-us/archive/technet-wiki/2248.perfguide-out-of-system-committed-memory"
+      },
+      {
+        "name": "Wikipedia — Commit charge",
+        "url": "https://en.wikipedia.org/wiki/Commit_charge"
+      }
+    ],
+    "ko": {
+      "title": "램은 몇 GB가 필요할까? 용도별 권장 용량과 부족 신호 확인법",
+      "desc": "사무·인터넷, 게임, 방송, 영상 편집, 가상 머신, 로컬 AI(LLM)까지 용도별로 필요한 램 용량을 정리했습니다. 왜 지금은 32GB가 기본 선택인지, 윈도우 작업 관리자에서 램 부족을 확인하는 방법도 설명합니다.",
+      "lead": "램은 부족하면 확실히 느려지지만, 남는다고 더 빨라지지는 않습니다. 그래서 ‘많을수록 좋다’보다 ‘내 작업에 모자라지 않을 만큼’이 정답에 가깝습니다. 용도별 기준과 함께, 지금 쓰는 PC가 실제로 부족한지 확인하는 방법을 정리했습니다.",
+      "sections": [
+        {
+          "h": "먼저 한눈에 보는 기준",
+          "p": [
+            "사무·인터넷·학습용은 16GB, 게임은 32GB, 게임 방송도 32GB, 영상 편집은 32GB에서 시작해 4K 이상이면 64GB, 가상 머신을 여러 대 돌린다면 64GB 이상이 무난한 출발점입니다. 로컬 AI 모델은 돌리려는 모델 크기에 따라 계산해야 합니다.",
+            "이 기준은 ‘당장 돌아가는 최소치’가 아니라 몇 년 쓰는 동안 답답하지 않을 정도를 목표로 잡은 값입니다. 프로그램과 웹 페이지는 해마다 조금씩 더 많은 메모리를 쓰는 쪽으로 움직여 왔습니다.",
+            "또 하나, 용량은 가능하면 같은 크기 두 개(예: 16GB×2)로 맞추세요. 듀얼 채널로 동작해 같은 용량이라도 대역폭이 두 배가 됩니다."
+          ]
+        },
+        {
+          "h": "사무·인터넷·학습용: 16GB",
+          "p": [
+            "문서 작업, 웹 서핑, 동영상 강의, 화상 회의 정도라면 16GB면 충분합니다. 윈도우 11 자체의 최소 사양은 훨씬 낮지만, 최소 사양은 ‘켜진다’는 뜻이지 ‘쾌적하다’는 뜻이 아닙니다.",
+            "이 용도에서 램을 가장 많이 먹는 것은 대개 브라우저입니다. 탭 하나하나가 별도 프로세스로 돌기 때문에 탭을 수십 개 열어 두는 습관이 있다면 8GB에서는 탭이 자꾸 새로 고쳐지고, 16GB에서도 여유가 줄어듭니다. 브라우저와 램의 관계는 ‘크롬 탭과 램’ 글에 따로 정리했습니다.",
+            "8GB 제품은 아직 팔리지만, 새로 산다면 권하지 않습니다. 특히 내장 그래픽 PC는 램 일부를 그래픽 메모리로 떼어 주기 때문에 실제로 쓸 수 있는 양이 표기보다 적습니다."
+          ]
+        },
+        {
+          "h": "게임과 게임 방송: 32GB",
+          "p": [
+            "최신 게임의 권장 사양에는 16GB가 가장 흔하게 적혀 있고, 일부 대작은 32GB를 적기도 합니다. 문제는 게임만 켜 두는 사람이 드물다는 점입니다. 디스코드, 브라우저, 런처, 녹화 프로그램까지 함께 돌리면 16GB는 빠듯해지고, 끊김이나 로딩 지연으로 나타납니다.",
+            "방송을 한다면 OBS 같은 방송 프로그램, 채팅 창, 알림 위젯이 더해집니다. 32GB면 게임과 방송을 한 PC에서 돌려도 여유가 있습니다.",
+            "헷갈리기 쉬운 점이 하나 있습니다. 그래픽카드의 VRAM과 시스템 램은 다른 메모리입니다. VRAM이 모자라면 일부 데이터가 시스템 램으로 넘어가지만, 그 경로는 훨씬 느려서 프레임이 떨어집니다. 시스템 램을 늘려도 VRAM 부족은 해결되지 않습니다."
+          ]
+        },
+        {
+          "h": "영상 편집·사진·3D: 32~64GB",
+          "p": [
+            "1080p 영상 편집과 사진 보정은 32GB면 대부분 쾌적합니다. 편집 프로그램은 미리보기와 캐시에 램을 적극적으로 쓰기 때문에, 같은 작업이라도 램이 넉넉하면 타임라인 탐색이 부드러워집니다.",
+            "4K 이상, 여러 카메라를 동시에 쓰는 편집, 효과와 합성을 많이 쓰는 작업, 고해상도 사진 수백 장을 한 번에 다루는 작업이라면 64GB가 확실한 차이를 만듭니다. 편집 프로그램 제조사들도 4K 이상 작업에는 32GB 이상을 권장하는 경우가 많습니다.",
+            "3D 렌더링은 장면 크기에 따라 다릅니다. CPU 렌더링은 장면 전체가 시스템 램에 올라가야 하고, GPU 렌더링은 VRAM이 먼저 한계가 됩니다. 작업 중 메모리 사용량을 한 번 확인해 보고 결정하는 것이 가장 정확합니다."
+          ]
+        },
+        {
+          "h": "가상 머신과 로컬 AI(LLM): 계산해서 정합니다",
+          "p": [
+            "가상 머신은 계산이 간단합니다. 동시에 켜 둘 가상 머신에 할당할 램을 모두 더하고, 그 위에 호스트 윈도우가 쓸 8~16GB를 얹으면 됩니다. 8GB짜리 가상 머신 두 대를 상시 돌린다면 32GB는 빠듯하고 64GB가 편합니다.",
+            "로컬 AI 모델은 모델 파일 크기가 기준입니다. 대략 ‘매개변수 수(십억) × 양자화 비트 수 ÷ 8’ GB에 대화 길이에 따른 여유분이 더해집니다. 예를 들어 80억(8B) 매개변수 모델을 4비트로 줄이면 약 4GB에 여유분이 붙고, 700억(70B) 모델은 4비트로도 35GB를 넘습니다.",
+            "가장 빠른 것은 모델 전체를 그래픽카드 VRAM에 올리는 것입니다. VRAM에 다 들어가지 않으면 나머지를 시스템 램에서 돌리는데, 이때 속도는 램 대역폭에 묶여 크게 느려집니다. 큰 모델을 CPU와 램으로 돌릴 생각이라면 64GB가 출발점이고, 96~128GB가 편합니다."
+          ]
+        },
+        {
+          "h": "램이 부족하다는 신호: 작업 관리자 보는 법",
+          "p": [
+            "Ctrl+Shift+Esc로 작업 관리자를 열고 ‘성능’ 탭의 ‘메모리’를 누릅니다. ‘사용 중’은 지금 실제로 쓰이는 램, ‘사용 가능’은 바로 쓸 수 있는 양입니다. ‘캐시됨’은 윈도우가 남는 램을 파일 캐시로 쓰고 있다는 뜻이라 높아도 문제가 아닙니다. 하드웨어 예약은 내장 그래픽 등에 떼어 준 양입니다.",
+            "더 중요한 것은 ‘커밋됨’입니다. ‘20/37GB’처럼 두 숫자로 표시되며, 앞은 프로그램들에 약속된 메모리, 뒤는 실제 램과 페이지 파일을 더한 한도입니다. 평소 작업 중 앞 숫자가 설치된 램 용량을 자주 넘는다면, 윈도우가 디스크의 페이지 파일에 기대고 있다는 뜻입니다. 한도에 닿으면 프로그램이 멈추거나 ‘메모리 부족’ 경고가 뜹니다.",
+            "체감 신호도 있습니다. 창을 전환할 때마다 잠깐 멈추고, 브라우저 탭이 다시 로딩되고, 무거운 작업 중 디스크 사용률이 치솟는다면 램 부족을 의심할 만합니다. 평소 작업을 다 켠 상태에서 ‘사용 중’이 늘 90% 근처라면 증설을 고려할 때입니다."
+          ]
+        },
+        {
+          "h": "왜 지금은 32GB가 기본일까 — 저희 생각",
+          "p": [
+            "32GB가 기본 선택이 된 이유는 세 가지입니다. 게임과 브라우저가 쓰는 메모리가 꾸준히 늘었고, DDR5는 16GB 모듈이 사실상 가장 작은 주력 크기라 16GB×2가 자연스러운 구성이며, 나중에 램을 늘리려면 키트를 섞는 문제 때문에 결국 전체를 바꾸게 되는 경우가 많습니다. 처음부터 32GB를 사 두는 쪽이 오래 쓰기에 덜 번거롭습니다.",
+            "샘 올트먼은 PC 램을 ‘quite terrible’하다고 했지만, 정말 끔찍한 건 램이 모자라서 탭이 새로 고쳐지는 순간입니다. 필요한 용량을 정했다면 이 사이트의 DDR5 16GB·32GB 키트 차트에서 30일 범위를 확인하고, 지금 가격이 그 안에서 어디쯤인지 보고 결정하세요."
+          ]
+        }
+      ]
+    },
+    "en": {
+      "title": "How much RAM do you need? Recommended capacity by use, and signs you're running out",
+      "desc": "RAM capacity by use case — office and browsing, gaming, streaming, video editing, virtual machines and local AI (LLMs) — why 32 GB is the common pick now, and how to spot a RAM shortage in Windows Task Manager.",
+      "lead": "Too little RAM definitely slows a PC down, but spare RAM doesn't make it faster. So the right answer is less ‘more is better’ and more ‘enough that your work never runs short’. Here are sensible amounts by use, plus how to check whether the PC you have is actually short.",
+      "sections": [
+        {
+          "h": "The quick answer",
+          "p": [
+            "Office, browsing and study: 16 GB. Gaming: 32 GB. Gaming plus streaming: 32 GB. Video editing: start at 32 GB, 64 GB for 4K and up. Several virtual machines: 64 GB or more. Local AI models: calculate from the model size you want to run.",
+            "These are not the minimum that boots; they are aimed at staying comfortable for a few years of use. Applications and web pages have steadily drifted towards using more memory each year.",
+            "One more thing: where possible, make up the capacity from two identical sticks (for example 2×16 GB). That runs in dual channel and doubles bandwidth at the same capacity."
+          ]
+        },
+        {
+          "h": "Office, browsing and study: 16 GB",
+          "p": [
+            "For documents, web browsing, online lectures and video calls, 16 GB is plenty. Windows 11's own minimum is much lower, but a minimum spec means ‘it starts’, not ‘it is pleasant to use’.",
+            "In this kind of use, the browser is usually the biggest consumer. Each tab runs as its own process, so if you keep dozens of tabs open, 8 GB means tabs constantly reloading and even 16 GB gets tighter. We cover browsers and RAM separately in our Chrome tabs article.",
+            "8 GB machines are still sold, but we would not buy one new. PCs using integrated graphics carve part of the RAM off as video memory, so the usable amount is smaller than the label."
+          ]
+        },
+        {
+          "h": "Gaming and streaming: 32 GB",
+          "p": [
+            "Recommended specs for current games most often list 16 GB, and some big releases list 32 GB. The issue is that few people run only the game. Add Discord, a browser, launchers and a recorder, and 16 GB gets tight, showing up as stutter and slow loading.",
+            "Streaming adds broadcasting software such as OBS, a chat window and alert widgets. With 32 GB you can game and stream from one PC with room to spare.",
+            "One common confusion: the graphics card's VRAM and system RAM are separate memories. When VRAM runs out, some data spills into system RAM, but that path is far slower and frame rates drop. Adding system RAM does not fix a VRAM shortage."
+          ]
+        },
+        {
+          "h": "Video editing, photos and 3D: 32–64 GB",
+          "p": [
+            "1080p editing and photo work are comfortable on 32 GB in most cases. Editors use RAM aggressively for previews and caches, so the same project scrubs more smoothly when there is plenty available.",
+            "For 4K and above, multicam edits, heavy effects and compositing, or batches of hundreds of high-resolution photos, 64 GB makes a clear difference. Editing software makers commonly recommend 32 GB or more for 4K work.",
+            "3D rendering depends on scene size. CPU rendering needs the whole scene in system RAM; GPU rendering hits the VRAM limit first. Checking memory use during a real project is the most reliable way to decide."
+          ]
+        },
+        {
+          "h": "Virtual machines and local AI (LLMs): do the maths",
+          "p": [
+            "For virtual machines the arithmetic is simple: add up the RAM assigned to every VM you run at the same time, then add 8–16 GB for the host Windows. Two 8 GB VMs running all day make 32 GB tight and 64 GB comfortable.",
+            "For local AI models, the model's size is the guide. Roughly, it is (parameters in billions × quantisation bits ÷ 8) GB, plus headroom that grows with context length. An 8-billion-parameter model quantised to 4 bits is about 4 GB plus headroom; a 70B model is over 35 GB even at 4 bits.",
+            "The fastest setup holds the whole model in the graphics card's VRAM. Whatever does not fit runs from system RAM, where speed is bound by memory bandwidth and drops sharply. If you plan to run large models on CPU and RAM, 64 GB is the starting point and 96–128 GB is comfortable."
+          ]
+        },
+        {
+          "h": "Signs you're out of RAM: reading Task Manager",
+          "p": [
+            "Press Ctrl+Shift+Esc, open the Performance tab and choose Memory. ‘In use’ is RAM actually in use right now; ‘Available’ is what can be handed out immediately. ‘Cached’ is spare RAM Windows is using as file cache, so a high number there is not a problem. ‘Hardware reserved’ is memory set aside for things such as integrated graphics.",
+            "The more telling figure is ‘Committed’, shown as two numbers such as 20/37 GB. The first is memory promised to programs; the second is the limit, physical RAM plus the page file. If the first number regularly exceeds your installed RAM during normal work, Windows is leaning on the page file on disk. When it reaches the limit, programs can freeze or you get low-memory warnings.",
+            "There are felt signs too: a pause every time you switch windows, browser tabs reloading, and disk activity spiking during heavy work all point to a shortage. If ‘In use’ sits near 90% with your usual apps open, it is time to consider an upgrade."
+          ]
+        },
+        {
+          "h": "Why 32 GB is the default now — our take",
+          "p": [
+            "Three reasons. Games and browsers keep using more memory; with DDR5, 16 GB is effectively the smallest mainstream module, which makes 2×16 GB the natural configuration; and upgrading later often means replacing everything anyway, because mixing kits is unreliable. Buying 32 GB from the start is simply less hassle over the life of the PC.",
+            "Sam Altman called PC RAM ‘quite terrible’, but what is truly terrible is a browser tab reloading because you ran out. Once you have decided on a capacity, look at the 30-day range on this site's DDR5 16 GB and 32 GB kit charts and see where today's price sits before you buy."
+          ]
+        }
+      ]
+    },
+    "ja": {
+      "title": "メモリは何GB必要?用途別のおすすめ容量と不足のサイン",
+      "desc": "事務・ネット、ゲーム、配信、動画編集、仮想マシン、ローカルAI(LLM)まで、用途別に必要なメモリ容量をまとめました。いま32GBが定番になった理由と、Windowsのタスクマネージャーでメモリ不足を確認する方法も解説します。",
+      "lead": "メモリは足りないと確実に遅くなりますが、余っていても速くはなりません。ですから「多いほど良い」より「自分の作業で不足しない量」が正解に近いと言えます。用途別の目安と、いま使っているPCが本当に不足しているかを確かめる方法をまとめました。",
+      "sections": [
+        {
+          "h": "まずは早見表",
+          "p": [
+            "事務・ネット・学習用は16GB、ゲームは32GB、ゲーム配信も32GB、動画編集は32GBから始めて4K以上なら64GB、仮想マシンを複数動かすなら64GB以上が無難な出発点です。ローカルAIモデルは、動かしたいモデルのサイズから計算する必要があります。",
+            "この目安は「とりあえず動く最低限」ではなく、数年使う間に窮屈にならない量を狙ったものです。アプリやウェブページは、年々少しずつ多くのメモリを使う方向に進んできました。",
+            "もうひとつ、容量はできるだけ同じ容量2枚(例:16GB×2)でそろえてください。デュアルチャネルで動作し、同じ容量でも帯域が2倍になります。"
+          ]
+        },
+        {
+          "h": "事務・ネット・学習用:16GB",
+          "p": [
+            "文書作成、ウェブ閲覧、オンライン講義、ビデオ会議程度なら16GBで十分です。Windows 11自体の最小要件はずっと低いですが、最小要件は「起動する」という意味であって「快適」という意味ではありません。",
+            "この用途で最もメモリを使うのはたいていブラウザです。タブ1つ1つが別のプロセスとして動くため、数十個のタブを開いたままにする習慣があると、8GBではタブが何度も再読み込みされ、16GBでも余裕が減ります。ブラウザとメモリの関係は「Chromeのタブとメモリ」の記事で別にまとめています。",
+            "8GBの製品はまだ売られていますが、新しく買うならおすすめしません。特に内蔵グラフィックスのPCはメモリの一部をグラフィックス用に割り当てるため、実際に使える量は表記より少なくなります。"
+          ]
+        },
+        {
+          "h": "ゲームとゲーム配信:32GB",
+          "p": [
+            "最新ゲームの推奨スペックには16GBと書かれていることが最も多く、一部の大作は32GBと書いています。問題は、ゲームだけを起動している人が少ないことです。Discord、ブラウザ、ランチャー、録画ソフトまで一緒に動かすと16GBは窮屈になり、カクつきや読み込みの遅れとして表れます。",
+            "配信をするなら、OBSなどの配信ソフト、チャット欄、通知ウィジェットが加わります。32GBあればゲームと配信を1台のPCで動かしても余裕があります。",
+            "混同しやすい点がひとつあります。グラフィックカードのVRAMとシステムメモリは別のメモリです。VRAMが足りなくなると一部のデータがシステムメモリにあふれますが、その経路はずっと遅く、フレームレートが落ちます。システムメモリを増やしてもVRAM不足は解決しません。"
+          ]
+        },
+        {
+          "h": "動画編集・写真・3D:32~64GB",
+          "p": [
+            "1080pの動画編集や写真補正は、32GBあればほとんどの場合快適です。編集ソフトはプレビューやキャッシュにメモリを積極的に使うため、同じ作業でもメモリに余裕があるとタイムラインの操作が滑らかになります。",
+            "4K以上、複数カメラの同時編集、エフェクトや合成を多用する作業、高解像度の写真を数百枚まとめて扱う作業なら、64GBがはっきりとした差を生みます。編集ソフトのメーカーも、4K以上の作業には32GB以上を推奨していることが多いです。",
+            "3Dレンダリングはシーンの大きさによります。CPUレンダリングではシーン全体がシステムメモリに載る必要があり、GPUレンダリングではVRAMが先に限界になります。実際の作業中のメモリ使用量を一度確認してから決めるのが最も確実です。"
+          ]
+        },
+        {
+          "h": "仮想マシンとローカルAI(LLM):計算で決めます",
+          "p": [
+            "仮想マシンの計算は簡単です。同時に起動しておく仮想マシンに割り当てるメモリをすべて足し、そこにホストのWindowsが使う8~16GBを上乗せします。8GBの仮想マシン2台を常に動かすなら、32GBは窮屈で64GBなら快適です。",
+            "ローカルAIモデルはモデルのサイズが基準です。おおよそ「パラメータ数(十億)×量子化ビット数÷8」GBに、会話の長さに応じた余裕が加わります。例えば80億(8B)パラメータのモデルを4ビットにすると約4GBに余裕分が加わり、700億(70B)のモデルは4ビットでも35GBを超えます。",
+            "最も速いのは、モデル全体をグラフィックカードのVRAMに載せることです。VRAMに収まらない分はシステムメモリで動かしますが、その場合の速度はメモリ帯域に縛られ大きく落ちます。大きなモデルをCPUとメモリで動かすつもりなら、64GBが出発点で、96~128GBあると快適です。"
+          ]
+        },
+        {
+          "h": "メモリ不足のサイン:タスクマネージャーの見方",
+          "p": [
+            "Ctrl+Shift+Escでタスクマネージャーを開き、「パフォーマンス」タブの「メモリ」を選びます。「使用中」はいま実際に使われているメモリ、「利用可能」はすぐに割り当てられる量です。「キャッシュ済み」はWindowsが余ったメモリをファイルキャッシュとして使っている分なので、多くても問題ありません。「ハードウェア予約済み」は内蔵グラフィックスなどに割り当てられた量です。",
+            "より重要なのは「コミット済み」です。「20/37GB」のように2つの数字で表示され、前の数字はプログラムに約束されたメモリ、後ろの数字は物理メモリとページファイルを足した上限です。普段の作業中に前の数字が搭載メモリ容量をたびたび超えるなら、Windowsがディスク上のページファイルに頼っているということです。上限に達するとプログラムが固まったり、メモリ不足の警告が出たりします。",
+            "体感でわかるサインもあります。ウィンドウを切り替えるたびに一瞬止まる、ブラウザのタブが再読み込みされる、重い作業中にディスク使用率が跳ね上がる。いつものアプリをすべて開いた状態で「使用中」が常に90%前後なら、増設を考える時期です。"
+          ]
+        },
+        {
+          "h": "なぜいまは32GBが基本なのか — 私たちの考え",
+          "p": [
+            "理由は3つあります。ゲームやブラウザが使うメモリが着実に増えてきたこと、DDR5では16GBモジュールが事実上最小の主力サイズなので16GB×2が自然な構成になること、そしてあとから増やそうとするとキットの混在問題で結局すべて交換することが多いことです。最初から32GBにしておく方が、長く使ううえで手間がかかりません。",
+            "サム・アルトマンはPCのメモリを「quite terrible」と言いましたが、本当にひどいのはメモリ不足でタブが再読み込みされる瞬間です。必要な容量が決まったら、このサイトのDDR5 16GB・32GBキットのチャートで30日間の範囲を確認し、いまの価格がその中のどのあたりかを見てから決めてください。"
+          ]
+        }
+      ]
+    },
+    "de": {
+      "title": "Wie viel RAM brauche ich? Empfohlene Kapazität je nach Nutzung – und Anzeichen für zu wenig Speicher",
+      "desc": "RAM-Kapazität nach Einsatzzweck – Büro und Surfen, Gaming, Streaming, Videoschnitt, virtuelle Maschinen und lokale KI (LLMs) –, warum 32 GB heute die übliche Wahl sind und wie Sie im Windows-Task-Manager erkennen, dass der Speicher knapp wird.",
+      "lead": "Zu wenig RAM bremst einen PC spürbar aus, überschüssiger RAM macht ihn aber nicht schneller. Die richtige Antwort lautet daher weniger „je mehr, desto besser“ als „genug, dass Ihre Arbeit nie an die Grenze stößt“. Hier finden Sie sinnvolle Größen je nach Nutzung und erfahren, wie Sie prüfen, ob Ihr PC tatsächlich zu wenig hat.",
+      "sections": [
+        {
+          "h": "Die kurze Antwort",
+          "p": [
+            "Büro, Surfen und Lernen: 16 GB. Gaming: 32 GB. Gaming mit Streaming: 32 GB. Videoschnitt: ab 32 GB, für 4K und mehr 64 GB. Mehrere virtuelle Maschinen: 64 GB oder mehr. Lokale KI-Modelle: anhand der gewünschten Modellgröße berechnen.",
+            "Das sind keine Mindestwerte zum Starten, sondern Größen, mit denen Sie einige Jahre bequem arbeiten können. Anwendungen und Webseiten verbrauchen seit Jahren tendenziell immer etwas mehr Speicher.",
+            "Noch ein Punkt: Stellen Sie die Kapazität nach Möglichkeit aus zwei gleichen Modulen zusammen (zum Beispiel 2×16 GB). So läuft der Speicher im Dual Channel und bietet bei gleicher Kapazität die doppelte Bandbreite."
+          ]
+        },
+        {
+          "h": "Büro, Surfen und Lernen: 16 GB",
+          "p": [
+            "Für Dokumente, Surfen, Online-Vorlesungen und Videokonferenzen reichen 16 GB völlig. Die Mindestanforderung von Windows 11 liegt zwar deutlich niedriger, doch Mindestanforderung heißt „startet“, nicht „läuft angenehm“.",
+            "Größter Verbraucher ist hier meist der Browser. Jeder Tab läuft als eigener Prozess; wer Dutzende Tabs offen hält, erlebt mit 8 GB ständig neu ladende Tabs, und selbst 16 GB werden knapper. Mehr dazu in unserem Artikel über Chrome-Tabs und RAM.",
+            "Rechner mit 8 GB werden noch verkauft, als Neukauf empfehlen wir sie aber nicht. Bei integrierter Grafik wird zudem ein Teil des RAM als Grafikspeicher abgezweigt, nutzbar ist also weniger als angegeben."
+          ]
+        },
+        {
+          "h": "Gaming und Streaming: 32 GB",
+          "p": [
+            "In den empfohlenen Systemanforderungen aktueller Spiele stehen am häufigsten 16 GB, bei manchen großen Titeln 32 GB. Das Problem: Kaum jemand lässt nur das Spiel laufen. Kommen Discord, Browser, Launcher und Aufnahmesoftware hinzu, werden 16 GB knapp – spürbar an Rucklern und langsamen Ladezeiten.",
+            "Beim Streaming kommen Software wie OBS, ein Chatfenster und Benachrichtigungs-Widgets dazu. Mit 32 GB können Sie auf einem PC spielen und streamen und haben noch Reserven.",
+            "Eine häufige Verwechslung: Der VRAM der Grafikkarte und der Arbeitsspeicher sind getrennte Speicher. Ist der VRAM voll, weichen Daten teilweise in den Arbeitsspeicher aus – dieser Weg ist aber viel langsamer, die Bildrate sinkt. Mehr Arbeitsspeicher behebt einen VRAM-Mangel nicht."
+          ]
+        },
+        {
+          "h": "Videoschnitt, Fotos und 3D: 32–64 GB",
+          "p": [
+            "Schnitt in 1080p und Fotobearbeitung laufen mit 32 GB in den meisten Fällen flüssig. Schnittprogramme nutzen RAM intensiv für Vorschau und Cache; mit reichlich Speicher lässt sich dasselbe Projekt geschmeidiger durchscrollen.",
+            "Bei 4K und mehr, Multicam-Schnitt, vielen Effekten und Compositing oder Hunderten hochauflösender Fotos auf einmal machen 64 GB einen deutlichen Unterschied. Hersteller von Schnittsoftware empfehlen für 4K-Arbeit häufig 32 GB oder mehr.",
+            "Beim 3D-Rendering kommt es auf die Szene an. CPU-Rendering braucht die ganze Szene im Arbeitsspeicher, beim GPU-Rendering ist zuerst der VRAM die Grenze. Am verlässlichsten entscheiden Sie, wenn Sie den Speicherverbrauch während eines echten Projekts beobachten."
+          ]
+        },
+        {
+          "h": "Virtuelle Maschinen und lokale KI (LLMs): rechnen Sie nach",
+          "p": [
+            "Bei virtuellen Maschinen ist die Rechnung einfach: Addieren Sie den RAM aller gleichzeitig laufenden VMs und rechnen Sie 8–16 GB für das Host-Windows hinzu. Zwei VMs mit je 8 GB im Dauerbetrieb machen 32 GB knapp und 64 GB bequem.",
+            "Bei lokalen KI-Modellen ist die Modellgröße der Maßstab. Grob gilt: (Parameter in Milliarden × Quantisierungsbits ÷ 8) GB, plus Reserve, die mit der Kontextlänge wächst. Ein Modell mit 8 Milliarden Parametern in 4 Bit belegt etwa 4 GB plus Reserve; ein 70B-Modell liegt selbst in 4 Bit über 35 GB.",
+            "Am schnellsten ist es, das ganze Modell im VRAM der Grafikkarte zu halten. Was nicht hineinpasst, läuft aus dem Arbeitsspeicher – dann bestimmt die Speicherbandbreite das Tempo, und es wird deutlich langsamer. Wer große Modelle auf CPU und RAM betreiben will, startet bei 64 GB; bequem sind 96–128 GB."
+          ]
+        },
+        {
+          "h": "Anzeichen für RAM-Mangel: den Task-Manager lesen",
+          "p": [
+            "Drücken Sie Strg+Umschalt+Esc, öffnen Sie die Registerkarte „Leistung“ und wählen Sie „Arbeitsspeicher“. „In Verwendung“ ist der aktuell genutzte RAM, „Verfügbar“ das, was sofort vergeben werden kann. „Im Cache“ ist freier RAM, den Windows als Dateicache nutzt – ein hoher Wert ist dort kein Problem. „Für Hardware reserviert“ ist Speicher, der etwa für die integrierte Grafik abgezweigt wird.",
+            "Aussagekräftiger ist „Zugesichert“, angezeigt als zwei Zahlen wie 20/37 GB. Die erste ist der Speicher, der Programmen zugesagt wurde; die zweite das Limit aus physischem RAM plus Auslagerungsdatei. Liegt die erste Zahl bei normaler Arbeit regelmäßig über Ihrem eingebauten RAM, stützt sich Windows auf die Auslagerungsdatei auf dem Datenträger. Wird das Limit erreicht, können Programme einfrieren oder Warnungen zu wenig Arbeitsspeicher erscheinen.",
+            "Es gibt auch spürbare Anzeichen: ein kurzes Stocken bei jedem Fensterwechsel, neu ladende Browser-Tabs und hochschnellende Datenträgeraktivität bei schwerer Arbeit deuten auf Mangel hin. Steht „In Verwendung“ mit Ihren üblichen Programmen dauerhaft bei etwa 90 %, ist es Zeit für eine Aufrüstung."
+          ]
+        },
+        {
+          "h": "Warum 32 GB heute der Standard sind – unsere Einschätzung",
+          "p": [
+            "Drei Gründe: Spiele und Browser brauchen stetig mehr Speicher; bei DDR5 sind 16 GB praktisch die kleinste gängige Modulgröße, sodass 2×16 GB die natürliche Bestückung ist; und späteres Aufrüsten endet wegen unzuverlässig gemischter Kits oft ohnehin mit dem Austausch aller Module. Gleich 32 GB zu kaufen, erspart über die Lebensdauer des PCs schlicht Aufwand.",
+            "Sam Altman nannte PC-RAM „quite terrible“ – wirklich schlimm ist aber ein Browser-Tab, der neu lädt, weil der Speicher voll ist. Wenn Sie sich für eine Kapazität entschieden haben, sehen Sie sich auf dieser Seite die 30-Tage-Spanne der DDR5-Kits mit 16 und 32 GB an und prüfen Sie vor dem Kauf, wo der heutige Preis liegt."
+          ]
+        }
+      ]
+    }
+  },
+  "gpu-buying-checklist": {
+    "updated": "2026-11-28",
+    "sources": [
+      {
+        "name": "Corsair Help — What PSU should I buy for my Nvidia RTX 5000 series GPU?",
+        "url": "https://help.corsair.com/hc/en-us/articles/32465644341265-What-Power-Supply-Unit-PSU-should-I-buy-for-my-Nvidia-RTX-5000-series-GPU"
+      },
+      {
+        "name": "NVIDIA — DLSS 4 Introduces Multi Frame Generation",
+        "url": "https://www.nvidia.com/en-us/geforce/news/dlss4-multi-frame-generation-ai-innovations"
+      },
+      {
+        "name": "Corsair — How much VRAM is enough?",
+        "url": "https://corsair.com/explorer/gamer/gaming-pcs/how-much-vram-is-enough"
+      }
+    ],
+    "ko": {
+      "title": "RTX 50 그래픽카드 사기 전 체크리스트 7가지",
+      "desc": "RTX 50 시리즈를 사기 전에 확인할 것: 목표 해상도와 주사율, VRAM 용량, 파워 용량과 12V-2x6 커넥터, 케이스 길이와 슬롯 두께, CPU 병목, DLSS 4에서 RTX 50 전용인 기능, 새 제품과 중고 중 무엇을 살지까지.",
+      "lead": "그래픽카드는 PC 부품 중 가장 비싸고, 사고 나서 ‘안 들어간다’ ‘파워가 모자란다’는 걸 알게 되면 가장 곤란한 부품이기도 합니다. 결제 버튼을 누르기 전에 아래 일곱 가지만 차례로 확인하면 대부분의 실수를 피할 수 있습니다.",
+      "sections": [
+        {
+          "h": "1. 해상도와 주사율부터 정합니다",
+          "p": [
+            "어떤 카드를 살지는 모니터가 정합니다. 1080p 144Hz, 1440p 165Hz, 4K 120Hz처럼 내 모니터의 해상도와 주사율을 먼저 적어 두세요. 같은 카드라도 1080p에서는 남고 4K에서는 모자랄 수 있습니다.",
+            "RTX 50 라인업은 대체로 5060·5060 Ti가 1080p, 5070·5070 Ti가 1440p, 5080·5090이 4K를 겨냥한 구성입니다. 물론 게임마다 요구하는 성능이 크게 달라서, 내가 주로 하는 게임의 리뷰 결과를 내 해상도 기준으로 확인하는 것이 가장 정확합니다.",
+            "모니터를 곧 바꿀 계획이 있다면 바꿀 모니터를 기준으로 고르세요. 그래픽카드는 모니터보다 먼저 한계에 닿는 경우가 많습니다."
+          ]
+        },
+        {
+          "h": "2. VRAM: 8GB, 12GB, 16GB, 32GB",
+          "p": [
+            "RTX 50 시리즈의 VRAM은 5060이 8GB, 5060 Ti가 8GB와 16GB 두 가지, 5070이 12GB, 5070 Ti와 5080이 16GB, 5090이 32GB입니다. 5060 Ti는 이름이 같아도 용량이 두 가지라, 상품명에서 꼭 확인해야 합니다.",
+            "대략적인 기준은 1440p에서 12GB가 하한, 16GB가 여유 있는 값이고, 4K에서는 16GB 이상입니다. 레이 트레이싱, 고해상도 텍스처, 프레임 생성은 모두 VRAM을 더 씁니다. VRAM이 부족하면 평균 프레임보다 순간 끊김(1% 저점)이 먼저 나빠지고, 텍스처가 흐릿하게 나오기도 합니다.",
+            "게임 외에 로컬 AI 모델이나 3D 렌더링을 할 계획이라면 VRAM이 성능보다 먼저 한계가 됩니다. 이런 용도라면 같은 가격대에서 VRAM이 많은 쪽을 우선하세요."
+          ]
+        },
+        {
+          "h": "3. 파워: 용량과 12V-2x6 커넥터",
+          "p": [
+            "NVIDIA가 권장하는 시스템 전체 파워 용량은 RTX 5090이 1000W, 5080이 850W, 5070 Ti가 750W입니다. 이 값은 일반적인 CPU를 함께 쓴다는 가정이라, 전력 소모가 큰 CPU를 쓰거나 오버클럭 제품을 산다면 한 단계 위를 고려하세요. 정확한 값은 사려는 제조사 제품 페이지에 적혀 있습니다.",
+            "RTX 50 시리즈의 상당수는 16핀 12V-2x6 커넥터로 전원을 받습니다. 12VHPWR을 개선한 규격으로, 끝까지 꽂히지 않으면 카드가 전력을 제한하도록 감지 핀이 짧아졌습니다. ATX 3.0·3.1 파워의 전용 케이블을 쓰는 것이 가장 깔끔하고, 구형 파워라면 카드에 동봉된 8핀 변환 젠더를 씁니다.",
+            "어떤 경우든 커넥터는 ‘딸깍’ 소리가 날 때까지 틈 없이 끝까지 꽂고, 커넥터 바로 앞에서 케이블을 급하게 꺾지 마세요. 하위 모델 중에는 기존 8핀 커넥터를 쓰는 제품도 있으니 내 파워에 맞는 케이블이 있는지 확인합니다."
+          ]
+        },
+        {
+          "h": "4. 케이스: 길이, 두께, 그리고 케이블 공간",
+          "p": [
+            "제품 페이지의 카드 길이(mm)와 케이스 사양의 ‘그래픽카드 최대 길이’를 비교하세요. 전면에 라디에이터나 두꺼운 팬을 달았다면 그만큼 공간이 줄어듭니다. 고급형 제품은 300mm가 넘는 경우가 흔합니다.",
+            "두께도 봐야 합니다. 2.5~3.5슬롯을 차지하는 카드는 아래쪽 PCIe 슬롯이나 M.2 방열판을 가릴 수 있습니다. 카드 높이(폭)가 크면 옆판과의 사이에 전원 케이블을 꺾을 공간이 모자라, 앞에서 말한 무리한 꺾임이 생기기 쉽습니다.",
+            "무거운 카드는 시간이 지나면 처질 수 있으니, 동봉된 지지대가 있다면 처음부터 다는 것이 좋습니다. RTX 50은 PCIe 5.0 카드지만 PCIe 4.0 슬롯에서도 정상 동작합니다."
+          ]
+        },
+        {
+          "h": "5. CPU 병목 확인",
+          "p": [
+            "그래픽카드가 아무리 빨라도 CPU가 프레임을 충분히 준비하지 못하면 성능이 나오지 않습니다. 특히 1080p에서 높은 주사율을 노릴 때 오래된 CPU와 상위 카드를 짝지으면, 비싼 카드의 성능을 상당 부분 남기게 됩니다.",
+            "지금 PC로 확인하는 방법이 있습니다. 게임 중 성능 오버레이로 GPU 사용률을 보세요. GPU 사용률이 계속 크게 낮고 CPU 코어 일부가 꽉 차 있다면 CPU가 한계입니다. 이 상태에서는 그래픽카드를 바꿔도 프레임이 기대만큼 오르지 않습니다.",
+            "또 RTX 5060 Ti 같은 일부 하위 모델은 PCIe x8로 연결됩니다. PCIe 3.0 메인보드에서는 대역폭이 절반이 되고, VRAM이 부족해 시스템 램을 오갈 때 그 영향이 커질 수 있습니다. 오래된 메인보드라면 리뷰에서 PCIe 세대별 결과를 확인해 보세요."
+          ]
+        },
+        {
+          "h": "6. DLSS 4: 무엇이 RTX 50 전용인가",
+          "p": [
+            "DLSS 4의 핵심 기능 중 ‘멀티 프레임 생성’은 RTX 50 시리즈 전용입니다. 실제로 그린 프레임 사이에 AI가 만든 프레임을 여러 장 끼워 넣어 화면상의 프레임 수를 크게 늘립니다. 반면 트랜스포머 모델 기반의 업스케일링(슈퍼 레졸루션)과 레이 리컨스트럭션은 이전 RTX 카드에서도 쓸 수 있습니다.",
+            "프레임 생성은 화면을 부드럽게 만들지만, 조작 반응 속도까지 그만큼 빨라지지는 않습니다. 원래 프레임이 낮은 상태에서 켜면 입력 지연이 느껴질 수 있어, 기본 프레임이 어느 정도 나오는 상태에서 쓰는 것이 좋습니다. 또 게임이 지원해야 쓸 수 있습니다.",
+            "그래서 카드끼리 비교할 때는 프레임 생성을 끈 성능(또는 업스케일링만 켠 성능)을 먼저 보고, 멀티 프레임 생성 수치는 지원 게임에서 얻는 보너스로 생각하는 편이 안전합니다."
+          ]
+        },
+        {
+          "h": "7. 새 제품 vs 중고, 그리고 저희 생각",
+          "p": [
+            "중고는 싸지만 확인할 것이 많습니다. 보증이 남아 있는지, 다음 구매자에게 넘어가는지(제조사와 지역마다 다름), 채굴이나 AI 작업처럼 오래 고부하로 쓰였는지, 전원 커넥터 주변에 그을림이나 변형이 없는지, 직접 게임을 돌려 확인할 수 있는지를 따져 보세요. 영수증이 없는 고가 카드는 피하는 것이 좋습니다.",
+            "이 사이트는 여러 판매처에서 팔리는 새 제품의 최저가만 기록합니다. 중고·리퍼·대여 매물은 빼고 집계하니, 중고 시세를 볼 때 ‘새 제품은 지금 얼마인가’의 기준선으로 쓰면 됩니다. 새 제품 최저가와 차이가 작다면 보증이 있는 새 제품이 대체로 낫습니다.",
+            "체크리스트를 다 통과했다면 남은 것은 가격입니다. RTX 5060 Ti부터 5080까지의 30일 범위와 7일 변동을 보고, 지금 가격이 그 안에서 어디쯤인지 확인한 뒤 결정하세요."
+          ]
+        }
+      ]
+    },
+    "en": {
+      "title": "RTX 50 buying checklist: 7 things to check before you buy a graphics card",
+      "desc": "What to check before buying an RTX 50 series card: target resolution and refresh rate, VRAM, PSU wattage and the 12V-2x6 connector, case length and slot thickness, CPU bottlenecks, which DLSS 4 features are RTX 50-only, and new vs used.",
+      "lead": "The graphics card is the most expensive part of a PC, and the most awkward one to discover ‘doesn't fit’ or ‘needs a bigger PSU’ after the fact. Work through the seven checks below before you press the buy button and you avoid most of the usual mistakes.",
+      "sections": [
+        {
+          "h": "1. Start with resolution and refresh rate",
+          "p": [
+            "Your monitor decides which card you need. Write down its resolution and refresh rate first — 1080p 144 Hz, 1440p 165 Hz, 4K 120 Hz and so on. The same card can have headroom at 1080p and fall short at 4K.",
+            "Broadly, the RTX 50 line-up positions the 5060 and 5060 Ti for 1080p, the 5070 and 5070 Ti for 1440p, and the 5080 and 5090 for 4K. Games vary enormously in what they demand, though, so the most reliable check is reviews of the games you actually play, at your resolution.",
+            "If you plan to change monitor soon, choose for the new one. Graphics cards usually run out of headroom before monitors do."
+          ]
+        },
+        {
+          "h": "2. VRAM: 8, 12, 16 or 32 GB",
+          "p": [
+            "RTX 50 VRAM: the 5060 has 8 GB; the 5060 Ti comes in 8 GB and 16 GB versions; the 5070 has 12 GB; the 5070 Ti and 5080 have 16 GB; the 5090 has 32 GB. Because the 5060 Ti shares one name across two capacities, check the listing carefully.",
+            "A rough guide: at 1440p, 12 GB is the floor and 16 GB is comfortable; at 4K, 16 GB or more. Ray tracing, high-resolution textures and frame generation all use extra VRAM. When VRAM runs out, stutter (1% lows) gets worse before average frame rates do, and textures can load blurry.",
+            "If you also plan to run local AI models or do 3D rendering, VRAM becomes the limit before raw performance does. For those uses, favour the card with more VRAM at a given price."
+          ]
+        },
+        {
+          "h": "3. Power: wattage and the 12V-2x6 connector",
+          "p": [
+            "NVIDIA's recommended total system PSU is 1000 W for the RTX 5090, 850 W for the 5080 and 750 W for the 5070 Ti. Those figures assume a typical CPU, so step up if you run a power-hungry CPU or buy a factory-overclocked card. The exact figure is on the product page of the card you buy.",
+            "Many RTX 50 cards take power through the 16-pin 12V-2x6 connector, a revision of 12VHPWR with shorter sense pins so the card limits power if the plug is not fully seated. A native cable from an ATX 3.0 or 3.1 PSU is the cleanest option; with an older PSU, use the 8-pin adapter that comes with the card.",
+            "Either way, push the plug in fully until it clicks with no gap, and don't bend the cable sharply right at the connector. Some lower-end models use traditional 8-pin connectors, so check that your PSU has the right cables."
+          ]
+        },
+        {
+          "h": "4. Case: length, thickness and cable room",
+          "p": [
+            "Compare the card length (in mm) on the product page with your case's maximum GPU length. A front radiator or thick fans reduce that space. Premium models often exceed 300 mm.",
+            "Thickness matters too. A card taking 2.5 to 3.5 slots can cover lower PCIe slots or M.2 heatsinks. A tall card also leaves little room between it and the side panel to route the power cable, which is how those sharp bends happen.",
+            "Heavy cards can sag over time, so if a support bracket is included, fit it from the start. RTX 50 cards are PCIe 5.0 but work normally in PCIe 4.0 slots."
+          ]
+        },
+        {
+          "h": "5. Check for a CPU bottleneck",
+          "p": [
+            "However fast the graphics card, it cannot perform if the CPU can't prepare frames quickly enough. Pairing a high-end card with an old CPU, especially for high-refresh 1080p, leaves much of the expensive card's performance unused.",
+            "You can check on your current PC. Watch GPU utilisation in a performance overlay while gaming. If GPU usage stays well below full while some CPU cores are pegged, the CPU is the limit — and a new graphics card won't raise frame rates as much as you'd hope.",
+            "Also note that some lower-end models, such as the RTX 5060 Ti, use a PCIe x8 link. On a PCIe 3.0 motherboard that halves the bandwidth, and the effect can grow when the card runs out of VRAM and has to reach into system RAM. With an older board, look for reviews that test by PCIe generation."
+          ]
+        },
+        {
+          "h": "6. DLSS 4: what is RTX 50-only",
+          "p": [
+            "DLSS 4's Multi Frame Generation is exclusive to the RTX 50 series. It inserts several AI-generated frames between rendered ones, multiplying the on-screen frame rate. The transformer-model upscaling (Super Resolution) and Ray Reconstruction, by contrast, also work on earlier RTX cards.",
+            "Frame generation makes motion smoother but does not make the game respond faster to the same degree. Switched on from a low base frame rate it can feel laggy, so it works best when the base frame rate is already reasonable. Games also have to support it.",
+            "So when comparing cards, look first at performance without frame generation (or with upscaling only), and treat Multi Frame Generation numbers as a bonus in supported games."
+          ]
+        },
+        {
+          "h": "7. New vs used — and our take",
+          "p": [
+            "Used cards are cheaper but need more checking: is warranty left, does it transfer to a second owner (this varies by brand and region), was the card run hard for mining or AI work, are there scorch marks or deformation around the power connector, and can you see it running a game before paying? Avoid high-end cards without a receipt.",
+            "This site records only the lowest price for new cards across several retailers; used, refurbished and rental listings are excluded. Use it as the ‘what does new cost right now’ baseline when you look at used prices. If the gap to the lowest new price is small, a new card with full warranty is usually the better deal.",
+            "Once the checklist is clear, what's left is the price. Look at the 30-day range and 7-day change for the RTX 5060 Ti through the 5080, see where today's price sits, and decide."
+          ]
+        }
+      ]
+    },
+    "ja": {
+      "title": "RTX 50グラフィックカードを買う前のチェックリスト7項目",
+      "desc": "RTX 50シリーズを買う前に確認すること:目標の解像度とリフレッシュレート、VRAM容量、電源容量と12V-2x6コネクタ、ケースの長さとスロット厚、CPUボトルネック、DLSS 4でRTX 50専用の機能、新品と中古のどちらを買うかまで。",
+      "lead": "グラフィックカードはPCパーツの中で最も高価で、買ったあとに「入らない」「電源が足りない」と気づくと最も困るパーツでもあります。購入ボタンを押す前に、以下の7項目を順に確認すれば、よくある失敗の大半を避けられます。",
+      "sections": [
+        {
+          "h": "1. まず解像度とリフレッシュレートを決めます",
+          "p": [
+            "どのカードを買うかはモニターが決めます。1080p 144Hz、1440p 165Hz、4K 120Hzのように、モニターの解像度とリフレッシュレートをまず書き出してください。同じカードでも1080pでは余り、4Kでは足りないことがあります。",
+            "RTX 50のラインナップは、おおむね5060・5060 Tiが1080p、5070・5070 Tiが1440p、5080・5090が4Kを狙った構成です。ただしゲームごとに求める性能は大きく違うので、よく遊ぶゲームのレビューを自分の解像度で確認するのが最も確実です。",
+            "近いうちにモニターを替える予定があるなら、新しいモニターを基準に選びましょう。グラフィックカードはモニターより先に限界を迎えることが多いからです。"
+          ]
+        },
+        {
+          "h": "2. VRAM:8GB・12GB・16GB・32GB",
+          "p": [
+            "RTX 50シリーズのVRAMは、5060が8GB、5060 Tiが8GBと16GBの2種類、5070が12GB、5070 Tiと5080が16GB、5090が32GBです。5060 Tiは同じ名前で容量が2種類あるため、商品名で必ず確認してください。",
+            "おおよその目安は、1440pでは12GBが下限で16GBなら余裕があり、4Kでは16GB以上です。レイトレーシング、高解像度テクスチャ、フレーム生成はいずれもVRAMを多く使います。VRAMが足りなくなると、平均フレームレートより先に瞬間的なカクつき(1%Low)が悪化し、テクスチャがぼやけて表示されることもあります。",
+            "ゲーム以外にローカルAIモデルや3Dレンダリングを行う予定なら、性能より先にVRAMが限界になります。そうした用途では、同じ価格帯でVRAMが多い方を優先してください。"
+          ]
+        },
+        {
+          "h": "3. 電源:容量と12V-2x6コネクタ",
+          "p": [
+            "NVIDIAが推奨するシステム全体の電源容量は、RTX 5090が1000W、5080が850W、5070 Tiが750Wです。これは一般的なCPUと組み合わせる前提の値なので、消費電力の大きいCPUを使う場合やオーバークロックモデルを買う場合は一段上を検討してください。正確な値は購入するメーカーの製品ページに記載されています。",
+            "RTX 50シリーズの多くは16ピンの12V-2x6コネクタで電源を受けます。12VHPWRを改良した規格で、奥まで挿さっていないとカードが電力を制限するよう検知ピンが短くなっています。ATX 3.0・3.1電源の専用ケーブルを使うのが最もすっきりしており、古い電源ならカードに付属する8ピン変換アダプターを使います。",
+            "いずれの場合も、コネクタは「カチッ」と音がするまで隙間なく奥まで挿し、コネクタのすぐ手前でケーブルを急に曲げないでください。下位モデルには従来の8ピンコネクタを使う製品もあるので、手持ちの電源に合うケーブルがあるか確認しましょう。"
+          ]
+        },
+        {
+          "h": "4. ケース:長さ、厚み、そしてケーブルの空間",
+          "p": [
+            "製品ページのカード長(mm)と、ケース仕様の「グラフィックカード最大長」を比べてください。前面にラジエーターや厚いファンを付けている場合は、その分スペースが減ります。上位モデルでは300mmを超えるのも珍しくありません。",
+            "厚みも確認が必要です。2.5~3.5スロットを占めるカードは、下のPCIeスロットやM.2ヒートシンクを覆うことがあります。カードの高さ(幅)が大きいと、サイドパネルとの間で電源ケーブルを曲げる余裕がなくなり、先ほど述べた無理な曲げが起きやすくなります。",
+            "重いカードは時間とともに垂れ下がることがあるので、サポートステイが付属していれば最初から取り付けると安心です。RTX 50はPCIe 5.0のカードですが、PCIe 4.0スロットでも正常に動作します。"
+          ]
+        },
+        {
+          "h": "5. CPUボトルネックの確認",
+          "p": [
+            "グラフィックカードがどれほど速くても、CPUがフレームを十分に準備できなければ性能は出ません。特に1080pで高リフレッシュレートを狙うとき、古いCPUと上位カードを組み合わせると、高価なカードの性能のかなりの部分を使い残すことになります。",
+            "今のPCで確認する方法があります。ゲーム中にパフォーマンスオーバーレイでGPU使用率を見てください。GPU使用率がずっと大きく下回っていて、CPUコアの一部が張り付いているなら、CPUが限界です。この状態ではグラフィックカードを替えても、フレームレートは期待ほど上がりません。",
+            "また、RTX 5060 Tiなど一部の下位モデルはPCIe x8で接続されます。PCIe 3.0のマザーボードでは帯域が半分になり、VRAM不足でシステムメモリとやり取りするときにその影響が大きくなることがあります。古いマザーボードなら、PCIe世代別の結果を載せたレビューを確認しましょう。"
+          ]
+        },
+        {
+          "h": "6. DLSS 4:RTX 50専用なのはどれか",
+          "p": [
+            "DLSS 4の中心機能のうち「マルチフレーム生成」はRTX 50シリーズ専用です。実際に描画したフレームの間にAIが作ったフレームを複数挟み込み、画面上のフレーム数を大きく増やします。一方、トランスフォーマーモデルによるアップスケーリング(超解像)とレイ再構成は、以前のRTXカードでも使えます。",
+            "フレーム生成は動きを滑らかにしますが、操作への反応までそれだけ速くなるわけではありません。元のフレームレートが低い状態で有効にすると入力遅延を感じることがあるため、基本のフレームレートがある程度出ている状態で使うのが良いでしょう。また、ゲーム側の対応が必要です。",
+            "そのため、カードを比較するときはフレーム生成を切った性能(またはアップスケーリングのみの性能)をまず見て、マルチフレーム生成の数値は対応ゲームで得られるボーナスと考えるのが安全です。"
+          ]
+        },
+        {
+          "h": "7. 新品か中古か、そして私たちの考え",
+          "p": [
+            "中古は安いものの、確認すべきことが多くあります。保証が残っているか、次の購入者に引き継げるか(メーカーや地域で異なります)、マイニングやAI作業で長時間高負荷で使われていないか、電源コネクタ周辺に焦げや変形がないか、購入前にゲームを動かして確認できるか。レシートのない高額カードは避けた方が無難です。",
+            "このサイトは、複数の販売店で売られている新品の最安値だけを記録しています。中古・リファービッシュ・レンタルは除外しているので、中古相場を見るときの「新品はいまいくらか」という基準線として使ってください。新品最安値との差が小さいなら、保証のある新品の方がたいてい得です。",
+            "チェックリストをすべて通過したら、残るは価格です。RTX 5060 Tiから5080までの30日間の範囲と7日間の変動を見て、いまの価格がその中のどのあたりかを確認してから決めてください。"
+          ]
+        }
+      ]
+    },
+    "de": {
+      "title": "RTX 50 kaufen: 7 Punkte, die Sie vor dem Grafikkartenkauf prüfen sollten",
+      "desc": "Was Sie vor dem Kauf einer RTX-50-Karte prüfen sollten: Zielauflösung und Bildwiederholrate, VRAM, Netzteilleistung und 12V-2x6-Stecker, Gehäuselänge und Slotbreite, CPU-Limit, welche DLSS-4-Funktionen RTX 50 vorbehalten sind, sowie neu oder gebraucht.",
+      "lead": "Die Grafikkarte ist das teuerste Teil eines PCs – und das unangenehmste, wenn sich nach dem Kauf herausstellt, dass sie nicht passt oder das Netzteil zu schwach ist. Gehen Sie die folgenden sieben Punkte durch, bevor Sie auf „Kaufen“ klicken, und Sie vermeiden die meisten typischen Fehler.",
+      "sections": [
+        {
+          "h": "1. Zuerst Auflösung und Bildwiederholrate",
+          "p": [
+            "Welche Karte Sie brauchen, bestimmt Ihr Monitor. Notieren Sie zuerst Auflösung und Bildwiederholrate – 1080p mit 144 Hz, 1440p mit 165 Hz, 4K mit 120 Hz und so weiter. Dieselbe Karte kann in 1080p Reserven haben und in 4K zu schwach sein.",
+            "Grob positioniert NVIDIA die RTX 5060 und 5060 Ti für 1080p, die 5070 und 5070 Ti für 1440p und die 5080 und 5090 für 4K. Spiele unterscheiden sich aber enorm in ihren Anforderungen; am verlässlichsten sind Tests der Spiele, die Sie tatsächlich spielen, in Ihrer Auflösung.",
+            "Planen Sie bald einen neuen Monitor, wählen Sie die Karte für diesen. Grafikkarten stoßen meist früher an ihre Grenzen als Monitore."
+          ]
+        },
+        {
+          "h": "2. VRAM: 8, 12, 16 oder 32 GB",
+          "p": [
+            "VRAM der RTX-50-Serie: Die 5060 hat 8 GB, die 5060 Ti gibt es mit 8 und mit 16 GB, die 5070 hat 12 GB, die 5070 Ti und die 5080 haben 16 GB, die 5090 hat 32 GB. Da die 5060 Ti unter einem Namen mit zwei Speichergrößen verkauft wird, sollten Sie das Angebot genau lesen.",
+            "Als grobe Richtschnur: In 1440p sind 12 GB die Untergrenze und 16 GB komfortabel, in 4K sollten es 16 GB oder mehr sein. Raytracing, hochauflösende Texturen und Frame Generation belegen zusätzlichen VRAM. Wird er knapp, verschlechtern sich zuerst die Ruckler (1%-Lows) und erst danach die Durchschnitts-FPS; Texturen können zudem unscharf nachladen.",
+            "Wollen Sie auch lokale KI-Modelle betreiben oder 3D rendern, wird der VRAM vor der Rechenleistung zur Grenze. Bevorzugen Sie dann bei gleichem Preis die Karte mit mehr VRAM."
+          ]
+        },
+        {
+          "h": "3. Strom: Netzteilleistung und der 12V-2x6-Stecker",
+          "p": [
+            "NVIDIA empfiehlt für das Gesamtsystem 1000 W bei der RTX 5090, 850 W bei der 5080 und 750 W bei der 5070 Ti. Diese Werte gehen von einer üblichen CPU aus; bei einem stromhungrigen Prozessor oder einer werksübertakteten Karte sollten Sie eine Stufe höher planen. Den genauen Wert finden Sie auf der Produktseite der jeweiligen Karte.",
+            "Viele RTX-50-Karten werden über den 16-poligen 12V-2x6-Anschluss versorgt, eine Überarbeitung von 12VHPWR mit kürzeren Sense-Pins, damit die Karte die Leistung drosselt, wenn der Stecker nicht vollständig sitzt. Am saubersten ist ein natives Kabel eines ATX-3.0- oder 3.1-Netzteils; bei älteren Netzteilen nutzen Sie den mitgelieferten 8-Pin-Adapter.",
+            "Stecken Sie den Stecker in jedem Fall vollständig und ohne Spalt ein, bis er einrastet, und knicken Sie das Kabel nicht direkt am Stecker. Manche kleinere Modelle nutzen klassische 8-Pin-Anschlüsse – prüfen Sie, ob Ihr Netzteil die passenden Kabel hat."
+          ]
+        },
+        {
+          "h": "4. Gehäuse: Länge, Breite und Platz für Kabel",
+          "p": [
+            "Vergleichen Sie die Kartenlänge (in mm) auf der Produktseite mit der maximalen Grafikkartenlänge Ihres Gehäuses. Ein Radiator oder dicke Lüfter in der Front verringern diesen Platz. Premium-Modelle sind oft länger als 300 mm.",
+            "Auch die Breite zählt. Eine Karte mit 2,5 bis 3,5 Slots kann darunterliegende PCIe-Steckplätze oder M.2-Kühler verdecken. Eine hohe Karte lässt zudem wenig Raum bis zum Seitenteil, um das Stromkabel zu führen – genau so entstehen scharfe Knicke.",
+            "Schwere Karten können mit der Zeit durchhängen; liegt eine Stütze bei, montieren Sie sie gleich. RTX-50-Karten sind PCIe-5.0-Karten, laufen aber auch in PCIe-4.0-Steckplätzen normal."
+          ]
+        },
+        {
+          "h": "5. Auf ein CPU-Limit prüfen",
+          "p": [
+            "Egal wie schnell die Grafikkarte ist: Kann die CPU nicht genug Bilder vorbereiten, kommt die Leistung nicht an. Wer eine High-End-Karte mit einer alten CPU kombiniert, besonders für 1080p mit hoher Bildrate, verschenkt einen großen Teil der teuren Karte.",
+            "Sie können das am aktuellen PC prüfen. Beobachten Sie im Spiel die GPU-Auslastung in einem Performance-Overlay. Bleibt sie deutlich unter Volllast, während einige CPU-Kerne am Anschlag sind, limitiert die CPU – dann steigt die Bildrate mit einer neuen Grafikkarte weniger als erhofft.",
+            "Beachten Sie außerdem, dass einige kleinere Modelle wie die RTX 5060 Ti mit PCIe x8 angebunden sind. Auf einem PCIe-3.0-Mainboard halbiert sich dadurch die Bandbreite, und der Effekt kann zunehmen, wenn der VRAM ausgeht und auf den Arbeitsspeicher zugegriffen wird. Bei älteren Boards lohnen Tests, die nach PCIe-Generation unterscheiden."
+          ]
+        },
+        {
+          "h": "6. DLSS 4: Was der RTX 50 vorbehalten ist",
+          "p": [
+            "Multi Frame Generation, ein Kernstück von DLSS 4, gibt es nur auf der RTX-50-Serie. Dabei werden zwischen gerenderten Bildern mehrere KI-generierte Bilder eingefügt, was die angezeigte Bildrate vervielfacht. Das Upscaling mit dem Transformer-Modell (Super Resolution) und Ray Reconstruction funktionieren dagegen auch auf älteren RTX-Karten.",
+            "Frame Generation macht Bewegungen flüssiger, verbessert die Reaktionszeit aber nicht im selben Maß. Aus einer niedrigen Grundbildrate heraus kann sie sich träge anfühlen; sie wirkt am besten, wenn die Basis-FPS schon ordentlich sind. Außerdem muss das Spiel sie unterstützen.",
+            "Vergleichen Sie Karten daher zuerst ohne Frame Generation (oder nur mit Upscaling) und betrachten Sie Werte mit Multi Frame Generation als Bonus in unterstützten Spielen."
+          ]
+        },
+        {
+          "h": "7. Neu oder gebraucht – und unsere Einschätzung",
+          "p": [
+            "Gebrauchte Karten sind günstiger, verlangen aber mehr Prüfung: Besteht noch Garantie, geht sie auf einen Zweitbesitzer über (das hängt von Hersteller und Region ab), lief die Karte lange unter Volllast für Mining oder KI, gibt es Brandspuren oder Verformungen am Stromanschluss, und können Sie sie vor dem Bezahlen in einem Spiel laufen sehen? Hochpreisige Karten ohne Rechnung meiden Sie besser.",
+            "Diese Seite erfasst nur den niedrigsten Neupreis über mehrere Händler; gebrauchte, generalüberholte und Mietangebote sind ausgeschlossen. Nutzen Sie sie als Basislinie „was kostet neu gerade“, wenn Sie Gebrauchtpreise ansehen. Ist der Abstand zum niedrigsten Neupreis gering, ist eine neue Karte mit voller Garantie meist das bessere Geschäft.",
+            "Ist die Checkliste abgehakt, bleibt der Preis. Sehen Sie sich die 30-Tage-Spanne und die 7-Tage-Veränderung von der RTX 5060 Ti bis zur 5080 an, prüfen Sie, wo der heutige Preis liegt, und entscheiden Sie dann."
+          ]
+        }
+      ]
+    }
+  },
+  "when-to-buy-ram-gpu": {
+    "updated": "2026-11-28",
+    "ko": {
+      "title": "램·그래픽카드 언제 사야 할까? 가격 차트 읽는 법",
+      "desc": "이 사이트의 가격 차트를 읽는 방법: ‘새 제품 최저가’의 뜻, 30일 최저·최고와 범위 막대, 24시간·7일 변동, 한 판매처만의 반짝 특가를 빼는 이유, 바닥을 쫓지 않는 법, 세대 교체 시기에 주의할 점까지.",
+      "lead": "램과 그래픽카드 가격은 매일 조금씩 움직입니다. 그 움직임을 맞히는 방법은 없지만, 지금 가격이 최근과 비교해 싼 편인지 비싼 편인지는 알 수 있습니다. 이 글은 이 사이트의 차트에 나오는 숫자가 무엇을 뜻하는지, 그리고 그 숫자로 구매 시점을 어떻게 판단하면 좋은지 정리한 것입니다. 투자 이야기가 아니라, 필요한 부품을 덜 비싸게 사는 이야기입니다.",
+      "sections": [
+        {
+          "h": "이 사이트의 가격은 무엇을 뜻하나",
+          "p": [
+            "차트의 가격은 그 제품군에서 그날 찾은 ‘새 제품 최저가’입니다. 예를 들어 RTX 5070 차트는 특정 브랜드 한 모델이 아니라, 여러 제조사의 RTX 5070 카드 중 가장 싼 새 제품의 가격입니다. DDR5 32GB 키트도 마찬가지로 조건에 맞는 데스크톱용 키트 중 최저가입니다.",
+            "중고, 리퍼, 대여, 노트북용 램, 부품용 매물은 처음부터 뺍니다. 가격이 싸 보여도 같은 물건이 아니기 때문입니다. 가격은 하루 한 번 같은 시각에 기록하므로, 차트의 점 하나는 ‘그날 아침의 최저가’입니다.",
+            "그래서 이 숫자는 ‘지금 새 제품을 사려면 최소 얼마가 드는가’의 기준선으로 쓰는 것이 맞습니다. 원하는 특정 모델은 이보다 비쌀 수 있고, 상세 화면에서 판매처별 가격을 따로 확인할 수 있습니다."
+          ]
+        },
+        {
+          "h": "30일 최저·최고와 범위 막대 읽기",
+          "p": [
+            "표의 ‘30일 범위’ 막대는 최근 30일 동안의 최저가와 최고가를 양 끝에 두고, 오늘 가격이 그 사이 어디에 있는지 점으로 보여 줍니다. 점이 왼쪽 끝에 가까우면 최근 한 달 중 싼 편, 오른쪽 끝에 가까우면 비싼 편입니다.",
+            "이것은 상대적인 위치일 뿐입니다. 한 달 내내 가격이 오르기만 했다면 ‘30일 중 싼 편’도 석 달 전보다는 비쌀 수 있습니다. 그래서 차트를 90일로 바꿔 더 긴 흐름을 함께 보는 것이 좋습니다.",
+            "범위의 폭도 정보입니다. 최저와 최고가 거의 붙어 있다면 가격이 안정된 상태라 며칠 기다려도 크게 달라지지 않을 가능성이 높고, 폭이 넓다면 판매처 재고나 공급 사정에 따라 크게 흔들리고 있다는 뜻입니다."
+          ]
+        },
+        {
+          "h": "24시간·7일 변동은 이렇게 봅니다",
+          "p": [
+            "24시간 변동은 어제 아침과 오늘 아침의 차이입니다. 최저가를 내던 판매처 한 곳의 재고가 떨어지기만 해도 하루 사이에 숫자가 튈 수 있어서, 하루 변동만 보고 판단하는 것은 위험합니다.",
+            "7일 변동은 한 주의 방향을 보여 줍니다. 7일 변동과 차트의 기울기가 몇 주째 같은 쪽을 가리킨다면 일시적인 흔들림보다는 흐름에 가깝습니다. 반대로 하루 튀었다가 다음 날 제자리로 돌아오는 모양은 대부분 재고 사정입니다.",
+            "정리하면, 하루 숫자는 ‘오늘 무슨 일이 있었나’, 7일 숫자는 ‘요즘 어느 쪽으로 가나’, 30일·90일 차트는 ‘지금이 최근 기준으로 어디쯤인가’를 알려 줍니다. 세 가지를 함께 보면 됩니다."
+          ]
+        },
+        {
+          "h": "한 판매처만의 반짝 특가를 빼는 이유",
+          "p": [
+            "가끔 한 판매처가 다른 곳보다 훨씬 싼 가격을 몇 시간만 내걸 때가 있습니다. 수량이 몇 개뿐이거나, 특정 카드·쿠폰 조건이 붙었거나, 금방 품절되는 경우가 대부분입니다. 이런 가격을 그대로 기록하면 차트에 깊은 골이 생기고, 그 가격을 기다리는 사람은 오래 헛걸음을 하게 됩니다.",
+            "그래서 이 사이트는 같은 칩의 다른 제품들보다 한 곳만 동떨어지게 싼 매물을 최저가에서 뺍니다. 예를 들어 한국 시세에서는 최저가가 두 번째로 싼 제품보다 15% 넘게 싸면 일시적인 한 곳 특가로 보고 제외하고, 판매처가 너무 적은 상품도 제외합니다.",
+            "물론 그런 특가를 직접 잡을 수 있다면 좋은 일입니다. 다만 차트의 목적은 ‘보통 사람이 오늘 실제로 살 수 있는 가격’을 보여 주는 것이라, 특가는 운이 좋을 때의 보너스로 생각하는 편이 맞습니다."
+          ]
+        },
+        {
+          "h": "바닥을 쫓지 마세요",
+          "p": [
+            "가장 싼 날은 지나고 나서야 보입니다. 차트에서 바닥처럼 보이는 지점도 당시에는 ‘더 내려갈지도 모르는’ 날이었습니다. 완벽한 바닥을 기다리다 보면 필요한 부품 없이 몇 주, 몇 달을 보내게 됩니다.",
+            "현실적인 방법은 목표 가격을 미리 정해 두는 것입니다. 예를 들어 ‘30일 범위의 아래쪽 3분의 1 안에 들어오면 산다’처럼 기준을 정하면, 매일 차트를 보며 고민할 필요가 줄어듭니다. 지금 PC가 고장 났거나 당장 작업이 막혀 있다면, 기다리는 동안 잃는 시간도 비용이라는 점을 함께 따져 보세요.",
+            "또 판매처의 반품·가격 보호 정책도 확인해 두면 좋습니다. 일부 판매처는 구매 후 일정 기간 안에 가격이 내리면 차액을 돌려주거나 반품을 받아 줍니다. 이런 정책이 있다면 ‘사고 나서 내려가면 어쩌나’ 하는 부담이 줄어듭니다."
+          ]
+        },
+        {
+          "h": "세대 교체와 할인 시즌",
+          "p": [
+            "새 세대 제품이 나오면 이전 세대가 무조건 싸질 것 같지만, 실제로는 재고가 빠르게 줄면서 가격이 버티거나 오히려 오르는 경우도 있습니다. 반대로 새 제품은 출시 직후 물량이 적어 한동안 비싸게 팔리기도 합니다. 출시 소식이 있다고 해서 가격이 어느 쪽으로 갈지는 미리 알 수 없습니다.",
+            "램 가격은 그래픽카드와 사정이 또 다릅니다. 메모리 칩 공급과 데이터센터 수요에 크게 좌우되기 때문에, 몇 달 단위로 같은 방향으로 움직이는 경우가 많습니다. 그 배경은 ‘램값이 왜 오를까’ 글에 정리해 두었습니다.",
+            "블랙프라이데이 같은 할인 시즌에는 행사가가 붙지만, 행사 전에 정가를 올려 두는 경우도 있습니다. 할인율보다 차트의 실제 가격을 보세요. 최근 30일·90일 기록과 비교하면 ‘진짜 할인’인지 바로 보입니다."
+          ]
+        },
+        {
+          "h": "저희 생각",
+          "p": [
+            "이 사이트의 숫자는 미래를 알려 주지 않습니다. 대신 ‘지금 가격이 최근 기준으로 어디쯤인가’를 정직하게 보여 줍니다. 필요한 부품을 정했고, 그 가격이 최근 범위의 아래쪽에 있다면 그때가 꽤 괜찮은 구매 시점입니다.",
+            "샘 올트먼이 PC 램을 ‘quite terrible’하다고 했을 때도 램값은 매일 아침 그냥 기록됐습니다. 저희도 그렇게 계속 기록하겠습니다. 결정은 여러분이, 숫자는 저희가 챙기겠습니다."
+          ]
+        }
+      ]
+    },
+    "en": {
+      "title": "When to buy RAM or a graphics card: how to read our price charts",
+      "desc": "How to read the price charts on this site: what ‘lowest new price’ means, the 30-day low, high and range bar, 24-hour and 7-day changes, why a single shop's flash deal is left out, why not to chase the bottom, and what to watch around new-generation launches.",
+      "lead": "RAM and graphics card prices move a little every day. There is no way to predict those moves, but you can tell whether today's price is cheap or expensive compared with recently. This guide explains what the numbers on our charts mean and how to use them to time a purchase. It is not about investing; it is about paying less for a part you actually need.",
+      "sections": [
+        {
+          "h": "What the price on this site means",
+          "p": [
+            "The price on each chart is the ‘lowest new price’ we found for that product group that day. The RTX 5070 chart, for example, is not one brand's model; it is the cheapest new RTX 5070 card from any maker. The DDR5 32 GB kit chart is likewise the cheapest qualifying desktop kit.",
+            "Used, refurbished, rental, laptop memory and for-parts listings are excluded from the start. They may look cheaper, but they are not the same product. Prices are recorded once a day at the same time, so each point on the chart is ‘that morning's lowest price’.",
+            "So treat the number as a baseline: the minimum it costs to buy new right now. The specific model you want may cost more, and the detail view lists prices by retailer."
+          ]
+        },
+        {
+          "h": "Reading the 30-day low, high and range bar",
+          "p": [
+            "The ‘30-day range’ bar in the table puts the lowest and highest prices of the last 30 days at each end and marks today's price with a dot. Near the left end means cheap for the past month; near the right end means expensive.",
+            "It is only a relative position. If prices rose all month, ‘cheap for the last 30 days’ can still be dearer than three months ago. Switching the chart to 90 days to see the longer trend is a good habit.",
+            "The width of the range is information too. If low and high are almost touching, prices are stable and waiting a few days is unlikely to change much. A wide range means the price is swinging with retailer stock or supply."
+          ]
+        },
+        {
+          "h": "How to read the 24-hour and 7-day changes",
+          "p": [
+            "The 24-hour change is the difference between yesterday morning and this morning. A single retailer that had the lowest price running out of stock is enough to make it jump, so judging on one day's change is risky.",
+            "The 7-day change shows the direction of the week. If it and the slope of the chart have pointed the same way for several weeks, that looks more like a trend than noise. A spike one day that returns to normal the next is usually just stock.",
+            "In short: the daily number tells you what happened today, the 7-day number which way things are heading lately, and the 30- and 90-day charts where today sits against the recent past. Read all three together."
+          ]
+        },
+        {
+          "h": "Why a single shop's flash deal is left out",
+          "p": [
+            "Now and then one retailer posts a price far below everyone else for a few hours. Usually there are only a handful of units, a specific card or coupon is required, or it sells out almost immediately. Recording that price as-is would carve a deep notch into the chart and send people waiting a long time for a price that was never really available.",
+            "So this site leaves out a listing that is far cheaper than every other product with the same chip. In our Korean data, for example, if the cheapest listing is more than 15% below the second cheapest, we treat it as a passing one-store deal and exclude it; listings from too few retailers are excluded too.",
+            "If you manage to catch such a deal yourself, great. But the chart's job is to show the price an ordinary buyer can actually pay today, so think of flash deals as a lucky bonus, not a target."
+          ]
+        },
+        {
+          "h": "Don't chase the bottom",
+          "p": [
+            "The cheapest day only becomes visible afterwards. What looks like the bottom on a chart was, at the time, a day when the price ‘might still go lower’. Waiting for the perfect bottom can mean weeks or months without the part you need.",
+            "A practical approach is to set a target in advance — for instance, ‘buy when it enters the bottom third of the 30-day range’. That removes the daily agonising. If your PC has died or your work is blocked, remember that the time you lose waiting is a cost too.",
+            "It also helps to check the retailer's return and price-protection policies. Some will refund the difference or accept a return if the price drops within a set period after purchase. Where that exists, the fear of ‘what if it drops after I buy’ shrinks."
+          ]
+        },
+        {
+          "h": "Generation launches and sale seasons",
+          "p": [
+            "You might expect the previous generation to get cheaper as soon as a new one launches, but stock often dries up and prices hold or even rise. New products, meanwhile, can sell above list for a while because early supply is thin. A launch announcement alone does not tell you which way prices will go.",
+            "RAM behaves differently from graphics cards. Because it depends heavily on memory-chip supply and data-centre demand, it often moves in the same direction for months at a time. We explain the background in our article on why RAM prices rise.",
+            "Sale events such as Black Friday bring promotional prices, but sometimes the regular price was raised beforehand. Look at the actual price on the chart rather than the discount percentage; comparing it with the last 30 and 90 days shows at once whether the deal is real."
+          ]
+        },
+        {
+          "h": "Our take",
+          "p": [
+            "The numbers on this site do not tell the future. What they do show, honestly, is where today's price sits against the recent past. If you have chosen the part you need and its price is in the lower part of its recent range, that is a perfectly good time to buy.",
+            "When Sam Altman called PC RAM ‘quite terrible’, RAM prices were simply recorded the next morning, as usual. We will keep doing exactly that. You make the decision; we keep the numbers."
+          ]
+        }
+      ]
+    },
+    "ja": {
+      "title": "メモリ・グラフィックカードはいつ買う?価格チャートの読み方",
+      "desc": "このサイトの価格チャートの読み方:「新品最安値」の意味、30日間の最安・最高と範囲バー、24時間・7日間の変動、1店舗だけの一時的な特価を除外する理由、底値を追わない考え方、世代交代の時期の注意点まで。",
+      "lead": "メモリとグラフィックカードの価格は毎日少しずつ動いています。その動きを当てる方法はありませんが、いまの価格が最近と比べて安いか高いかは分かります。この記事では、このサイトのチャートに出てくる数字が何を意味するのか、そしてその数字で購入のタイミングをどう判断すればよいかをまとめました。投資の話ではなく、必要なパーツを少しでも安く買うための話です。",
+      "sections": [
+        {
+          "h": "このサイトの価格が意味するもの",
+          "p": [
+            "チャートの価格は、その製品グループでその日に見つけた「新品最安値」です。たとえばRTX 5070のチャートは特定ブランドの1モデルではなく、各メーカーのRTX 5070カードのうち最も安い新品の価格です。DDR5 32GBキットも同様に、条件に合うデスクトップ用キットの最安値です。",
+            "中古、リファービッシュ、レンタル、ノートPC用メモリ、ジャンク品は最初から除外しています。安く見えても同じ商品ではないからです。価格は1日1回同じ時刻に記録するので、チャートの点1つは「その日の朝の最安値」です。",
+            "ですから、この数字は「いま新品を買うには最低いくらかかるか」の基準線として使うのが適切です。欲しい特定のモデルはこれより高いことがあり、詳細画面で販売店ごとの価格を別に確認できます。"
+          ]
+        },
+        {
+          "h": "30日間の最安・最高と範囲バーの読み方",
+          "p": [
+            "表の「30日間の範囲」バーは、直近30日間の最安値と最高値を両端に置き、今日の価格がその間のどこにあるかを点で示します。点が左端に近ければ最近1か月の中で安い方、右端に近ければ高い方です。",
+            "これはあくまで相対的な位置です。1か月ずっと値上がりしていたなら、「30日の中では安い方」でも3か月前よりは高いことがあります。チャートを90日表示に切り替えて、より長い流れも一緒に見るのがおすすめです。",
+            "範囲の幅も情報です。最安と最高がほぼくっついていれば価格は安定していて、数日待っても大きくは変わらない可能性が高く、幅が広ければ販売店の在庫や供給の状況で大きく揺れているということです。"
+          ]
+        },
+        {
+          "h": "24時間・7日間の変動の見方",
+          "p": [
+            "24時間の変動は、昨日の朝と今日の朝の差です。最安値を出していた販売店1か所の在庫が切れるだけでも1日で数字が跳ねることがあるため、1日の変動だけで判断するのは危険です。",
+            "7日間の変動は、その週の方向を示します。7日間の変動とチャートの傾きが数週間にわたって同じ方向を指しているなら、一時的な揺れというより流れに近いと言えます。逆に、1日跳ねて翌日元に戻る形はたいてい在庫の事情です。",
+            "まとめると、1日の数字は「今日何があったか」、7日の数字は「最近どちらに向かっているか」、30日・90日のチャートは「いまが最近の基準でどのあたりか」を教えてくれます。3つを合わせて見てください。"
+          ]
+        },
+        {
+          "h": "1店舗だけの一時的な特価を除外する理由",
+          "p": [
+            "ときどき、ある販売店だけがほかよりずっと安い価格を数時間だけ出すことがあります。数量がわずかだったり、特定のカードやクーポンが条件だったり、すぐに売り切れたりする場合がほとんどです。こうした価格をそのまま記録するとチャートに深い谷ができ、その価格を待つ人は長く空振りすることになります。",
+            "そのため、このサイトでは同じチップのほかの製品より1か所だけ飛び抜けて安い出品を最安値から除外しています。たとえば韓国の価格では、最安値が2番目に安い製品より15%以上安ければ一時的な1店舗の特価とみなして除外し、販売店が少なすぎる商品も除外しています。",
+            "もちろん、そうした特価を自分でつかめるなら良いことです。ただ、チャートの目的は「普通の人が今日実際に買える価格」を示すことなので、特価は運が良いときのボーナスと考える方が適切です。"
+          ]
+        },
+        {
+          "h": "底値を追わないでください",
+          "p": [
+            "最も安い日は、過ぎてから初めて分かります。チャートで底のように見える地点も、当時は「まだ下がるかもしれない」日でした。完璧な底値を待っていると、必要なパーツがないまま数週間、数か月を過ごすことになります。",
+            "現実的な方法は、目標価格をあらかじめ決めておくことです。たとえば「30日間の範囲の下から3分の1に入ったら買う」のように基準を決めれば、毎日チャートを見て悩む必要が減ります。いまPCが壊れている、あるいは作業が止まっているなら、待っている間に失う時間もコストだという点も考えてください。",
+            "販売店の返品・価格保証の方針も確認しておくと良いでしょう。購入後一定期間内に値下がりすれば差額を返金したり、返品を受け付けたりする店もあります。そうした方針があれば「買ったあとに下がったらどうしよう」という不安は小さくなります。"
+          ]
+        },
+        {
+          "h": "世代交代とセールの時期",
+          "p": [
+            "新世代の製品が出れば旧世代は必ず安くなりそうに思えますが、実際には在庫が急速に減って価格が持ちこたえたり、かえって上がったりすることもあります。一方、新製品は発売直後の供給が少なく、しばらく高めに売られることもあります。発売のニュースだけでは、価格がどちらに動くかは事前に分かりません。",
+            "メモリの価格はグラフィックカードとはまた事情が異なります。メモリチップの供給とデータセンターの需要に大きく左右されるため、数か月単位で同じ方向に動くことが多くあります。その背景は「メモリ価格はなぜ上がるのか」の記事にまとめています。",
+            "ブラックフライデーのようなセール時期にはセール価格が付きますが、セール前に通常価格を引き上げておく場合もあります。割引率よりチャートの実際の価格を見てください。直近30日・90日の記録と比べれば、「本当の値引き」かどうかがすぐに分かります。"
+          ]
+        },
+        {
+          "h": "私たちの考え",
+          "p": [
+            "このサイトの数字は未来を教えてくれません。その代わり、「いまの価格が最近の基準でどのあたりか」を正直に示します。必要なパーツが決まっていて、その価格が最近の範囲の下の方にあるなら、それは十分に良い買い時です。",
+            "サム・アルトマンがPCのメモリを「quite terrible」と言ったときも、メモリの価格は翌朝いつもどおり記録されました。私たちもそうして記録を続けます。決めるのは皆さん、数字は私たちが用意します。"
+          ]
+        }
+      ]
+    },
+    "de": {
+      "title": "Wann RAM oder Grafikkarte kaufen? So lesen Sie unsere Preisdiagramme",
+      "desc": "So lesen Sie die Preisdiagramme dieser Seite: was „niedrigster Neupreis“ bedeutet, 30-Tage-Tief, -Hoch und Spannenbalken, 24-Stunden- und 7-Tage-Veränderung, warum Blitzangebote einzelner Händler herausfallen, warum Sie nicht dem Tiefpunkt hinterherjagen sollten und worauf Sie bei Generationswechseln achten.",
+      "lead": "RAM- und Grafikkartenpreise bewegen sich täglich ein wenig. Vorhersagen lassen sich diese Bewegungen nicht, aber Sie können erkennen, ob der heutige Preis im Vergleich zu den letzten Wochen günstig oder teuer ist. Dieser Ratgeber erklärt, was die Zahlen in unseren Diagrammen bedeuten und wie Sie damit den Kaufzeitpunkt wählen. Es geht nicht ums Investieren, sondern darum, für ein Bauteil, das Sie wirklich brauchen, weniger zu bezahlen.",
+      "sections": [
+        {
+          "h": "Was der Preis auf dieser Seite bedeutet",
+          "p": [
+            "Der Preis in jedem Diagramm ist der „niedrigste Neupreis“, den wir an diesem Tag für die Produktgruppe gefunden haben. Das Diagramm der RTX 5070 zeigt also nicht das Modell einer bestimmten Marke, sondern die günstigste neue RTX-5070-Karte irgendeines Herstellers. Beim DDR5-Kit mit 32 GB ist es entsprechend das günstigste passende Desktop-Kit.",
+            "Gebrauchte, generalüberholte, Miet- und Notebook-Module sowie Bastlerware sind von vornherein ausgeschlossen. Sie mögen billiger aussehen, sind aber nicht dasselbe Produkt. Die Preise werden einmal täglich zur gleichen Uhrzeit erfasst; jeder Punkt im Diagramm ist also „der niedrigste Preis an diesem Morgen“.",
+            "Verstehen Sie die Zahl daher als Basislinie: das Minimum, das ein Neukauf gerade kostet. Das konkrete Modell, das Sie möchten, kann teurer sein; die Detailansicht listet die Preise nach Händlern auf."
+          ]
+        },
+        {
+          "h": "30-Tage-Tief, -Hoch und den Spannenbalken lesen",
+          "p": [
+            "Der Balken „30-Tage-Spanne“ in der Tabelle setzt den niedrigsten und den höchsten Preis der letzten 30 Tage an die Enden und markiert den heutigen Preis mit einem Punkt. Nahe am linken Ende heißt günstig für den letzten Monat, nahe am rechten Ende teuer.",
+            "Das ist nur eine relative Position. Sind die Preise den ganzen Monat gestiegen, kann „günstig für 30 Tage“ immer noch teurer sein als vor drei Monaten. Es lohnt sich, das Diagramm auf 90 Tage umzuschalten und den längeren Verlauf mitzulesen.",
+            "Auch die Breite der Spanne ist eine Information. Liegen Tief und Hoch fast aufeinander, ist der Preis stabil, und ein paar Tage Warten ändern wahrscheinlich wenig. Eine breite Spanne bedeutet, dass der Preis mit Lagerbeständen oder Angebot stark schwankt."
+          ]
+        },
+        {
+          "h": "So lesen Sie die 24-Stunden- und 7-Tage-Veränderung",
+          "p": [
+            "Die 24-Stunden-Veränderung ist der Unterschied zwischen gestern Morgen und heute Morgen. Schon wenn der Händler mit dem niedrigsten Preis ausverkauft ist, kann sie springen – eine Entscheidung nur auf Basis eines Tages ist daher riskant.",
+            "Die 7-Tage-Veränderung zeigt die Richtung der Woche. Zeigen sie und die Steigung des Diagramms über mehrere Wochen in dieselbe Richtung, ist das eher ein Trend als Rauschen. Ein Ausschlag an einem Tag, der am nächsten wieder verschwindet, hat meist mit Lagerbeständen zu tun.",
+            "Kurz gesagt: Die Tageszahl sagt, was heute passiert ist, die 7-Tage-Zahl, wohin es zuletzt geht, und die 30- und 90-Tage-Diagramme, wo der heutige Preis im Vergleich zur jüngeren Vergangenheit steht. Lesen Sie alle drei zusammen."
+          ]
+        },
+        {
+          "h": "Warum Blitzangebote einzelner Händler herausfallen",
+          "p": [
+            "Hin und wieder bietet ein einzelner Händler für ein paar Stunden einen Preis weit unter allen anderen an. Meist gibt es nur wenige Stück, eine bestimmte Karte oder ein Gutschein ist Voraussetzung, oder das Angebot ist fast sofort ausverkauft. Würde man diesen Preis unverändert erfassen, entstünde eine tiefe Kerbe im Diagramm – und Käufer würden lange auf einen Preis warten, der nie wirklich verfügbar war.",
+            "Diese Seite lässt daher ein Angebot weg, das weit unter allen anderen Produkten mit demselben Chip liegt. In unseren koreanischen Daten etwa gilt: Liegt das günstigste Angebot mehr als 15 % unter dem zweitgünstigsten, werten wir es als vorübergehendes Einzelangebot und schließen es aus; Angebote mit zu wenigen Händlern fallen ebenfalls heraus.",
+            "Wenn Sie ein solches Angebot selbst erwischen, umso besser. Das Diagramm soll aber zeigen, was ein normaler Käufer heute tatsächlich bezahlen kann. Betrachten Sie Blitzangebote also als glücklichen Bonus, nicht als Ziel."
+          ]
+        },
+        {
+          "h": "Jagen Sie nicht dem Tiefpunkt hinterher",
+          "p": [
+            "Den günstigsten Tag erkennt man erst im Nachhinein. Was im Diagramm wie der Tiefpunkt aussieht, war damals ein Tag, an dem der Preis „vielleicht noch fällt“. Wer auf das perfekte Tief wartet, verbringt womöglich Wochen oder Monate ohne das benötigte Bauteil.",
+            "Praktischer ist ein vorab festgelegtes Ziel – etwa „kaufen, sobald der Preis im unteren Drittel der 30-Tage-Spanne liegt“. Das erspart das tägliche Grübeln. Ist Ihr PC defekt oder Ihre Arbeit blockiert, bedenken Sie, dass auch die Wartezeit Kosten verursacht.",
+            "Hilfreich ist auch ein Blick auf Rückgabe- und Preisgarantie-Regeln der Händler. Manche erstatten die Differenz oder nehmen die Ware zurück, wenn der Preis innerhalb einer bestimmten Frist nach dem Kauf sinkt. Gibt es so etwas, wird die Sorge „was, wenn es nach dem Kauf billiger wird“ deutlich kleiner."
+          ]
+        },
+        {
+          "h": "Generationswechsel und Rabattzeiten",
+          "p": [
+            "Man könnte erwarten, dass die alte Generation billiger wird, sobald eine neue erscheint. Oft gehen aber die Bestände rasch zurück, und die Preise halten sich oder steigen sogar. Neue Produkte wiederum werden wegen knapper Anfangsmengen eine Zeit lang über dem Listenpreis verkauft. Eine Ankündigung allein verrät nicht, in welche Richtung sich die Preise bewegen.",
+            "RAM verhält sich anders als Grafikkarten. Da er stark vom Angebot an Speicherchips und von der Nachfrage der Rechenzentren abhängt, bewegt er sich oft monatelang in dieselbe Richtung. Die Hintergründe erklären wir in unserem Artikel, warum RAM-Preise steigen.",
+            "Aktionen wie der Black Friday bringen Sonderpreise, manchmal wurde der reguläre Preis aber vorher angehoben. Achten Sie auf den tatsächlichen Preis im Diagramm statt auf den Rabatt in Prozent; der Vergleich mit den letzten 30 und 90 Tagen zeigt sofort, ob es ein echtes Angebot ist."
+          ]
+        },
+        {
+          "h": "Unsere Einschätzung",
+          "p": [
+            "Die Zahlen auf dieser Seite sagen nicht die Zukunft voraus. Sie zeigen aber ehrlich, wo der heutige Preis im Vergleich zur jüngeren Vergangenheit steht. Haben Sie das benötigte Bauteil gewählt und liegt sein Preis im unteren Teil der jüngsten Spanne, ist das ein durchaus guter Kaufzeitpunkt.",
+            "Als Sam Altman PC-RAM „quite terrible“ nannte, wurden die RAM-Preise am nächsten Morgen einfach wie immer erfasst. Genau so machen wir weiter. Die Entscheidung treffen Sie – die Zahlen liefern wir."
+          ]
+        }
+      ]
+    }
+  },
+  "install-ram-guide": {
+    "updated": "2026-11-28",
+    "sources": [
+      {
+        "name": "Crucial — DDR5 systems may require memory ‘training’",
+        "url": "https://uk.crucial.com/support/articles-faq-memory/ddr5-memory-training"
+      },
+      {
+        "name": "Corsair — Which RAM slots should I use?",
+        "url": "https://corsair.com/explorer/diy-builder/memory/which-ram-slots-should-i-use"
+      },
+      {
+        "name": "PassMark — MemTest86",
+        "url": "https://memtest86.com"
+      }
+    ],
+    "ko": {
+      "title": "램 장착하고 EXPO·XMP 안전하게 켜는 법",
+      "desc": "데스크톱 램을 직접 장착하는 순서: 정전기 대비, A2·B2 슬롯, 끝까지 꽂는 법, DDR5 첫 부팅이 오래 걸리는 메모리 트레이닝, BIOS에서 EXPO·XMP 켜기, 작업 관리자·CPU-Z로 속도 확인, 안정성 테스트, 부팅이 안 될 때 CMOS 초기화까지.",
+      "lead": "램 장착은 PC 조립에서 가장 쉬운 작업으로 꼽히지만, 실제로는 ‘슬롯을 잘못 골라서’ ‘끝까지 안 꽂혀서’ ‘첫 부팅에 화면이 안 나와서 당황해 전원을 꺼서’ 문제가 자주 생깁니다. 처음부터 순서대로 하면 10분이면 끝나는 일입니다.",
+      "sections": [
+        {
+          "h": "1. 준비: 전원과 정전기",
+          "p": [
+            "PC를 끄고, 파워 뒷면 스위치를 내리거나 전원 케이블을 뽑습니다. 그다음 전원 버튼을 몇 초 눌러 남은 전기를 빼 둡니다. 메인보드의 대기 전원이 살아 있는 상태에서 램을 꽂거나 빼면 안 됩니다.",
+            "정전기는 눈에 보이지 않게 부품을 상하게 할 수 있습니다. 작업 전에 케이스의 도색되지 않은 금속 부분을 만져 몸의 정전기를 빼고, 카펫 위나 털옷 차림은 피하세요. 손목 접지 밴드가 있다면 쓰는 것이 가장 좋습니다.",
+            "램은 양쪽 가장자리를 잡고, 금색 단자와 칩은 만지지 않습니다. 메인보드 설명서도 옆에 펴 두세요. 슬롯 순서와 디버그 LED 위치가 거기에 나와 있습니다."
+          ]
+        },
+        {
+          "h": "2. 어느 슬롯에 꽂을까: A2와 B2",
+          "p": [
+            "슬롯이 네 개인 메인보드에 램 두 개를 꽂는다면, 대부분 A2와 B2 슬롯이 정답입니다. 보통 CPU에서 두 번째와 네 번째 슬롯이며, 슬롯 옆에 작게 인쇄돼 있습니다. 메인보드 신호 배선이 이 두 슬롯 기준으로 설계된 경우가 많아, 여기에 꽂아야 듀얼 채널이 되고 높은 속도에서도 안정적입니다.",
+            "램이 하나뿐이라면 설명서가 권하는 슬롯(대개 A2)에, 네 개라면 모두 채웁니다. A1·B1에 두 개를 꽂아도 부팅은 되는 경우가 많지만, 같은 채널(A1·A2)에 두 개를 몰아 꽂으면 싱글 채널로 동작하니 주의하세요.",
+            "메인보드마다 예외가 있으니 최종 판단은 설명서의 메모리 장착 표로 합니다. 슬롯이 두 개뿐인 메인보드는 그냥 둘 다 쓰면 됩니다."
+          ]
+        },
+        {
+          "h": "3. 꽂는 법: 생각보다 세게, 끝까지",
+          "p": [
+            "슬롯 끝의 걸쇠를 엽니다. 요즘 메인보드는 한쪽만 열리는 경우가 많습니다. 램 단자의 홈이 가운데에서 살짝 벗어나 있으니, 슬롯의 돌기와 방향을 맞춰 봅니다. 방향이 반대면 들어가지 않으니 억지로 누르지 마세요.",
+            "방향이 맞으면 램 위쪽 양 끝을 엄지로 잡고, 수직으로 고르게 눌러 ‘딸깍’ 소리와 함께 걸쇠가 닫힐 때까지 밀어 넣습니다. 처음 해 보는 분들이 예상보다 훨씬 힘이 들어서 중간에 멈추는 경우가 많고, 이게 ‘램 인식 안 됨’의 흔한 원인입니다.",
+            "다 꽂은 뒤 옆에서 보면 램 두 개의 높이가 똑같아야 하고, 단자가 보이지 않아야 합니다. 큰 공랭 쿨러를 쓴다면 쿨러 팬이 램 위를 덮어 높은 방열판과 부딪치지 않는지도 확인하세요."
+          ]
+        },
+        {
+          "h": "4. 첫 부팅: 화면이 안 나와도 기다리세요",
+          "p": [
+            "DDR5 시스템은 첫 부팅 때 ‘메모리 트레이닝’을 합니다. 메인보드와 CPU의 메모리 컨트롤러가 이 램에 맞는 신호 설정을 찾는 과정으로, 이 동안 화면이 검게 나오거나 메인보드의 DRAM 표시등이 켜진 채로 몇 분 동안 아무 반응이 없을 수 있습니다.",
+            "걸리는 시간은 메인보드와 용량, 모듈 수에 따라 다르며, 대용량이나 네 개 구성이라면 더 길어집니다. 이때 고장인 줄 알고 전원을 끄면 트레이닝이 처음부터 다시 시작되니, 디버그 LED가 계속 바뀌거나 켜져 있는 동안에는 최소 몇 분은 기다리세요.",
+            "트레이닝은 첫 부팅, CMOS 초기화 후, 메모리 설정을 바꾼 뒤에 다시 일어납니다. 한 번 끝나고 나면 이후 부팅은 평소처럼 빨라집니다. AMD 메인보드에는 다음 부팅부터 트레이닝 결과를 재사용하는 ‘Memory Context Restore’ 같은 옵션이 있기도 합니다."
+          ]
+        },
+        {
+          "h": "5. BIOS에서 EXPO·XMP 켜기",
+          "p": [
+            "처음 부팅에 성공하면 램은 기본 속도(대개 DDR5-4800 또는 5600)로 돌고 있습니다. 상자에 적힌 6000 같은 속도를 쓰려면 프로필을 켜야 합니다. 그 전에 메인보드 BIOS를 최신 버전으로 업데이트해 두면 메모리 호환성이 좋아지는 경우가 많습니다.",
+            "부팅 중 Delete 키(일부 제품은 F2)를 눌러 BIOS에 들어가, EXPO 또는 XMP 항목을 찾습니다. 제조사마다 이름과 위치가 다르지만 대개 첫 화면이나 오버클럭(OC)·Ai Tweaker 메뉴에 있습니다. ‘Profile 1’을 고르고 F10으로 저장 후 재부팅합니다.",
+            "설정을 바꿨으니 메모리 트레이닝이 한 번 더 일어날 수 있습니다. 다시 몇 분 기다리면 됩니다. 프로필 사용은 제조사가 정한 기본 사양을 넘는 동작으로 분류되니, 이상이 생기면 언제든 끄고 기본 속도로 돌아갈 수 있다는 점만 기억해 두세요."
+          ]
+        },
+        {
+          "h": "6. 속도 확인과 안정성 테스트",
+          "p": [
+            "윈도우에서 작업 관리자(Ctrl+Shift+Esc) → 성능 → 메모리를 열면 ‘속도’와 ‘사용된 슬롯’이 보입니다. 속도가 6000 근처(MT/s)이고 슬롯이 2/4로 나오면 정상입니다. CPU-Z의 Memory 탭에서는 DRAM Frequency가 표기 속도의 절반(6000이면 약 3000MHz)으로 나오는 것이 정상이고, SPD 탭에서 각 슬롯의 램 정보와 프로필을 볼 수 있습니다.",
+            "속도가 맞다고 안정적인 것은 아닙니다. 부팅용 USB로 돌리는 MemTest86이나 Memtest86+로 전체 패스를 한 번 이상 돌리거나, 윈도우에서 돌리는 TestMem5 같은 램 테스트 프로그램을 몇 시간 돌려 보세요. 오류는 단 하나라도 나오면 불합격입니다.",
+            "오류가 나오면 우선 프로필을 끄고 기본 속도에서 같은 테스트를 돌려 봅니다. 기본 속도에서도 오류가 난다면 램이나 슬롯 문제일 수 있어 한 개씩 따로 테스트하고, 기본 속도에서는 괜찮다면 속도를 한 단계 낮추거나(예: 6000 → 5600) BIOS를 업데이트해 봅니다."
+          ]
+        },
+        {
+          "h": "7. 부팅이 안 될 때, 그리고 저희 생각",
+          "p": [
+            "몇 분을 기다려도 화면이 안 나오면, 전원을 완전히 끄고 램을 다시 꽂아 봅니다. 그래도 안 되면 램을 하나만 A2에 꽂아 부팅해 보세요. 하나씩 바꿔 꽂아 보면 문제가 램인지 슬롯인지 가릴 수 있습니다. 메인보드의 DRAM LED가 계속 켜져 있다면 램 쪽 문제라는 신호입니다.",
+            "EXPO·XMP를 켠 뒤 부팅이 안 된다면 CMOS를 초기화합니다. 후면 단자의 Clear CMOS 버튼을 누르거나, 설명서에 나온 CLR_CMOS 점퍼를 단락시키거나, 전원을 뽑은 상태에서 코인 배터리를 몇 분 빼 두면 BIOS 설정이 기본값으로 돌아갑니다. 많은 메인보드는 부팅 실패가 반복되면 스스로 안전 설정으로 되돌리기도 합니다.",
+            "램은 꽂는 것보다 확인하는 데 시간이 더 걸리는 부품입니다. 샘 올트먼이 PC 램을 ‘quite terrible’하다고 했던 것도, 어쩌면 첫 부팅 트레이닝을 5분 동안 지켜본 직후였을지 모릅니다. 장착 전이라면 이 사이트의 DDR5 키트 차트에서 30일 범위를 확인해 보세요."
+          ]
+        }
+      ]
+    },
+    "en": {
+      "title": "How to install RAM and enable EXPO or XMP safely",
+      "desc": "Installing desktop RAM step by step: static precautions, slots A2 and B2, seating modules fully, DDR5 memory training on first boot, enabling EXPO or XMP in the BIOS, checking speed in Task Manager and CPU-Z, stability testing, and a CMOS reset if it won't boot.",
+      "lead": "Installing RAM is often called the easiest job in a PC build, yet problems come up all the time: the wrong slots, a stick not fully seated, or a nervous power-off when the first boot shows a black screen. Done in order, it is a ten-minute job.",
+      "sections": [
+        {
+          "h": "1. Preparation: power and static",
+          "p": [
+            "Shut the PC down and switch off the PSU at the back or unplug the power cable. Then hold the power button for a few seconds to drain residual charge. Never insert or remove RAM while the board still has standby power.",
+            "Static can damage parts invisibly. Before you start, touch a bare metal part of the case to discharge yourself, and avoid working on carpet or in a wool jumper. An anti-static wrist strap is best if you have one.",
+            "Hold modules by their edges and don't touch the gold contacts or the chips. Keep the motherboard manual open next to you; it shows the slot order and where the debug LEDs are."
+          ]
+        },
+        {
+          "h": "2. Which slots: A2 and B2",
+          "p": [
+            "For two sticks on a four-slot motherboard, A2 and B2 are almost always the right slots. They are usually the second and fourth from the CPU, and the labels are printed next to the slots. Board signal routing is often designed around these two, so using them gives you dual channel and better stability at high speeds.",
+            "With a single stick, use the slot the manual recommends (usually A2); with four, fill them all. Two sticks in A1 and B1 often still boot, but putting both in the same channel (A1 and A2) leaves you in single channel.",
+            "Boards have exceptions, so the memory population table in the manual is the final word. On a two-slot board, simply use both."
+          ]
+        },
+        {
+          "h": "3. Seating: firmer than you think, all the way",
+          "p": [
+            "Open the latches at the slot end — many modern boards only latch on one side. The notch in the module's contacts sits slightly off-centre; line it up with the key in the slot. If it's the wrong way round it won't go in, so don't force it.",
+            "Once aligned, put your thumbs on both top corners and press straight down evenly until the latch closes with a click. First-timers are often surprised by how much force it takes and stop halfway, which is a common cause of ‘RAM not detected’.",
+            "Afterwards, look from the side: both sticks should sit at exactly the same height with no contacts visible. If you use a large air cooler, check that its fan doesn't collide with tall heat spreaders."
+          ]
+        },
+        {
+          "h": "4. First boot: wait, even if the screen stays black",
+          "p": [
+            "DDR5 systems perform ‘memory training’ on first boot. The motherboard and the CPU's memory controller search for signal settings that suit your modules, and during that time the screen can stay black, or the board's DRAM LED can stay lit, for several minutes with no other sign of life.",
+            "How long it takes depends on the board, the capacity and the number of modules; large kits and four-stick setups take longer. If you power off thinking something is broken, training starts again from scratch, so while the debug LEDs are lit or changing, give it at least several minutes.",
+            "Training happens again after a CMOS reset or a change to memory settings. Once it is done, later boots are back to normal speed. Some AMD boards offer an option such as Memory Context Restore that reuses the training result on subsequent boots."
+          ]
+        },
+        {
+          "h": "5. Enabling EXPO or XMP in the BIOS",
+          "p": [
+            "After a successful first boot, the RAM runs at its default speed (usually DDR5-4800 or 5600). To get the speed on the box, such as 6000, you need to enable the profile. Updating the motherboard BIOS first often improves memory compatibility.",
+            "Press Delete during boot (F2 on some boards) to enter the BIOS and look for EXPO or XMP. The name and location vary by manufacturer, but it is usually on the main screen or under an overclocking or ‘Ai Tweaker’ menu. Choose ‘Profile 1’, save with F10 and reboot.",
+            "Because you changed settings, memory training may run once more; just wait again. Using a profile counts as running beyond the manufacturer's base spec, so remember you can always switch it off and return to default speed if something goes wrong."
+          ]
+        },
+        {
+          "h": "6. Check the speed and test stability",
+          "p": [
+            "In Windows, open Task Manager (Ctrl+Shift+Esc) → Performance → Memory and look at ‘Speed’ and ‘Slots used’. Around 6000 MT/s and 2 of 4 slots means all is well. In CPU-Z's Memory tab, DRAM Frequency should read half the rated speed (about 3000 MHz for a 6000 kit); the SPD tab shows each module and its profiles.",
+            "The right speed doesn't guarantee stability. Run at least one full pass of MemTest86 or Memtest86+ from a bootable USB, or run a Windows-based tester such as TestMem5 for a few hours. A single error is a fail.",
+            "If you get errors, first disable the profile and repeat the test at default speed. Errors at default speed point to a faulty module or slot, so test sticks one at a time. If default speed is clean, drop one speed step (for example 6000 to 5600) or update the BIOS."
+          ]
+        },
+        {
+          "h": "7. If it won't boot — and our take",
+          "p": [
+            "If the screen stays black after several minutes, power off completely and reseat the RAM. If that fails, boot with a single stick in A2. Swapping sticks and slots one at a time tells you whether the problem is a module or a slot. A DRAM LED that stays lit is the board telling you the issue is memory.",
+            "If it won't boot after enabling EXPO or XMP, reset the CMOS: press the Clear CMOS button on the rear I/O, short the CLR_CMOS jumper as shown in the manual, or, with the power disconnected, remove the coin battery for a few minutes. The BIOS returns to defaults. Many boards also fall back to safe settings on their own after repeated failed boots.",
+            "RAM takes longer to verify than to install. Perhaps Sam Altman called PC RAM ‘quite terrible’ right after watching five minutes of first-boot memory training. If you haven't bought yet, check the 30-day range on this site's DDR5 kit charts first."
+          ]
+        }
+      ]
+    },
+    "ja": {
+      "title": "メモリの取り付けとEXPO・XMPを安全に有効にする方法",
+      "desc": "デスクトップ用メモリを自分で取り付ける手順:静電気対策、A2・B2スロット、奥まで挿す方法、DDR5の初回起動が長いメモリトレーニング、BIOSでEXPO・XMPを有効にする方法、タスクマネージャーとCPU-Zでの速度確認、安定性テスト、起動しないときのCMOSクリアまで。",
+      "lead": "メモリの取り付けはPC組み立てで最も簡単な作業と言われますが、実際には「スロットを間違えた」「奥まで挿さっていなかった」「初回起動で画面が出ず、慌てて電源を切った」といったトラブルがよく起きます。最初から順番どおりに進めれば、10分で終わる作業です。",
+      "sections": [
+        {
+          "h": "1. 準備:電源と静電気",
+          "p": [
+            "PCをシャットダウンし、電源ユニット背面のスイッチを切るか電源ケーブルを抜きます。そのあと電源ボタンを数秒押して残った電気を抜いておきます。マザーボードに待機電力が残った状態でメモリを抜き挿ししてはいけません。",
+            "静電気は目に見えない形でパーツを傷めることがあります。作業前にケースの塗装されていない金属部分に触れて体の静電気を逃がし、カーペットの上やウールの服での作業は避けてください。静電気防止リストバンドがあれば使うのが最善です。",
+            "メモリは両端を持ち、金色の端子やチップには触れないようにします。マザーボードの説明書も手元に開いておきましょう。スロットの順番やデバッグLEDの位置が載っています。"
+          ]
+        },
+        {
+          "h": "2. どのスロットに挿すか:A2とB2",
+          "p": [
+            "4スロットのマザーボードに2枚挿すなら、ほとんどの場合A2とB2が正解です。通常CPUから2番目と4番目のスロットで、スロットの横に小さく印刷されています。マザーボードの配線がこの2スロットを基準に設計されていることが多く、ここに挿すとデュアルチャネルになり、高速設定でも安定します。",
+            "1枚だけなら説明書が推奨するスロット(たいていA2)に、4枚なら全部埋めます。A1・B1に2枚挿しても起動することは多いですが、同じチャネル(A1・A2)に2枚まとめて挿すとシングルチャネルで動作するので注意してください。",
+            "マザーボードごとに例外があるので、最終的な判断は説明書のメモリ取り付け表で行います。2スロットしかないマザーボードなら、両方使えば大丈夫です。"
+          ]
+        },
+        {
+          "h": "3. 挿し方:思ったより強く、奥まで",
+          "p": [
+            "スロット端のラッチを開きます。最近のマザーボードは片側だけ開くタイプが多いです。メモリ端子の切り欠きは中央から少しずれているので、スロットの突起と向きを合わせます。向きが逆なら入らないので、無理に押し込まないでください。",
+            "向きが合ったら、メモリ上部の両端を親指で押さえ、垂直に均等に押して「カチッ」と音がしてラッチが閉じるまで押し込みます。初めての方は予想以上に力が必要なことに驚いて途中で止めてしまうことが多く、これが「メモリが認識されない」のよくある原因です。",
+            "挿し終えたら横から見て、2枚の高さがぴったりそろい、端子が見えていないことを確認します。大型の空冷クーラーを使う場合は、クーラーのファンが背の高いヒートスプレッダーとぶつからないかも確認しましょう。"
+          ]
+        },
+        {
+          "h": "4. 初回起動:画面が出なくても待ってください",
+          "p": [
+            "DDR5のシステムは初回起動時に「メモリトレーニング」を行います。マザーボードとCPUのメモリコントローラーが、そのメモリに合う信号設定を探す処理で、その間は画面が真っ黒のままだったり、マザーボードのDRAMランプが点灯したまま数分間反応がなかったりします。",
+            "かかる時間はマザーボード、容量、枚数によって異なり、大容量や4枚構成ではさらに長くなります。故障だと思って電源を切るとトレーニングが最初からやり直しになるので、デバッグLEDが点灯または変化している間は、少なくとも数分は待ってください。",
+            "トレーニングは初回起動のほか、CMOSクリア後やメモリ設定を変えたあとにも再び行われます。一度終われば、以降の起動はいつもどおり速くなります。AMDのマザーボードには、次回以降トレーニング結果を再利用する「Memory Context Restore」のようなオプションがある場合もあります。"
+          ]
+        },
+        {
+          "h": "5. BIOSでEXPO・XMPを有効にする",
+          "p": [
+            "初回起動に成功した時点では、メモリは標準速度(たいていDDR5-4800または5600)で動いています。箱に書かれた6000のような速度を使うには、プロファイルを有効にする必要があります。その前にマザーボードのBIOSを最新版に更新しておくと、メモリの互換性が良くなることが多いです。",
+            "起動中にDeleteキー(一部の製品はF2)を押してBIOSに入り、EXPOまたはXMPの項目を探します。メーカーによって名前や場所は違いますが、たいてい最初の画面か、オーバークロック(OC)やAi Tweakerのメニューにあります。「Profile 1」を選び、F10で保存して再起動します。",
+            "設定を変えたので、メモリトレーニングがもう一度行われることがあります。また数分待てば大丈夫です。プロファイルの使用はメーカーが定めた標準仕様を超える動作に分類されるので、異常があればいつでも無効にして標準速度に戻せることを覚えておいてください。"
+          ]
+        },
+        {
+          "h": "6. 速度の確認と安定性テスト",
+          "p": [
+            "Windowsでタスクマネージャー(Ctrl+Shift+Esc)→パフォーマンス→メモリを開くと、「速度」と「使用されているスロット」が表示されます。速度が6000(MT/s)前後で、スロットが2/4なら正常です。CPU-ZのMemoryタブではDRAM Frequencyが表記速度の半分(6000なら約3000MHz)と表示されるのが正常で、SPDタブで各スロットのメモリ情報とプロファイルを確認できます。",
+            "速度が合っていても安定しているとは限りません。起動用USBで動かすMemTest86やMemtest86+で全パスを1回以上回すか、Windows上で動くTestMem5のようなメモリテストを数時間回してみてください。エラーが1つでも出れば不合格です。",
+            "エラーが出たら、まずプロファイルを無効にして標準速度で同じテストを行います。標準速度でもエラーが出るならメモリかスロットの問題の可能性があるので1枚ずつテストし、標準速度で問題がなければ速度を1段階下げる(例:6000→5600)か、BIOSを更新してみます。"
+          ]
+        },
+        {
+          "h": "7. 起動しないとき、そして私たちの考え",
+          "p": [
+            "数分待っても画面が出なければ、電源を完全に切ってメモリを挿し直します。それでもだめなら、メモリを1枚だけA2に挿して起動してみてください。1枚ずつ入れ替えて試せば、問題がメモリなのかスロットなのかを切り分けられます。マザーボードのDRAMランプが点灯し続けているなら、メモリ側の問題というサインです。",
+            "EXPO・XMPを有効にしたあと起動しなくなったら、CMOSクリアを行います。背面端子のClear CMOSボタンを押す、説明書にあるCLR_CMOSジャンパーをショートさせる、または電源を抜いた状態でボタン電池を数分外すと、BIOS設定が初期値に戻ります。多くのマザーボードは起動失敗が続くと自動的に安全な設定へ戻すこともあります。",
+            "メモリは挿すより確認する方に時間がかかるパーツです。サム・アルトマンがPCのメモリを「quite terrible」と言ったのも、もしかすると初回起動のトレーニングを5分間見守った直後だったのかもしれません。購入前なら、このサイトのDDR5キットのチャートで30日間の範囲を確認してみてください。"
+          ]
+        }
+      ]
+    },
+    "de": {
+      "title": "RAM einbauen und EXPO oder XMP sicher aktivieren",
+      "desc": "Desktop-RAM Schritt für Schritt einbauen: Schutz vor statischer Aufladung, Steckplätze A2 und B2, Module vollständig einrasten, DDR5-Speichertraining beim ersten Start, EXPO oder XMP im BIOS aktivieren, Takt im Task-Manager und in CPU-Z prüfen, Stabilitätstest und CMOS-Reset, wenn der PC nicht startet.",
+      "lead": "Der RAM-Einbau gilt als einfachster Schritt beim PC-Bau, und doch geht oft etwas schief: falsche Steckplätze, ein nicht ganz eingerastetes Modul oder ein hastiges Abschalten, weil der erste Start nur einen schwarzen Bildschirm zeigt. In der richtigen Reihenfolge ist es eine Sache von zehn Minuten.",
+      "sections": [
+        {
+          "h": "1. Vorbereitung: Strom und statische Aufladung",
+          "p": [
+            "Fahren Sie den PC herunter und schalten Sie das Netzteil hinten aus oder ziehen Sie das Stromkabel. Halten Sie dann den Einschaltknopf einige Sekunden gedrückt, um Restladung abzubauen. Bauen Sie RAM nie ein oder aus, solange das Mainboard noch Standby-Strom hat.",
+            "Statische Aufladung kann Bauteile unbemerkt beschädigen. Berühren Sie vor der Arbeit ein unlackiertes Metallteil des Gehäuses, um sich zu entladen, und arbeiten Sie nicht auf Teppich oder im Wollpullover. Ideal ist ein Antistatik-Armband, falls vorhanden.",
+            "Fassen Sie Module an den Kanten an und berühren Sie weder die goldenen Kontakte noch die Chips. Legen Sie das Mainboard-Handbuch aufgeschlagen bereit; dort stehen die Steckplatz-Reihenfolge und die Position der Debug-LEDs."
+          ]
+        },
+        {
+          "h": "2. Welche Steckplätze: A2 und B2",
+          "p": [
+            "Bei zwei Modulen auf einem Board mit vier Steckplätzen sind A2 und B2 fast immer richtig. Meist sind das der zweite und vierte Slot von der CPU aus; die Bezeichnungen sind neben den Slots aufgedruckt. Die Signalführung des Boards ist oft auf diese beiden ausgelegt – dort erhalten Sie Dual Channel und bessere Stabilität bei hohen Taktraten.",
+            "Ein einzelnes Modul gehört in den vom Handbuch empfohlenen Slot (meist A2); bei vier Modulen werden alle belegt. Zwei Module in A1 und B1 starten oft ebenfalls, stecken beide aber im selben Kanal (A1 und A2), läuft der Speicher nur im Single Channel.",
+            "Es gibt Ausnahmen je nach Board; maßgeblich ist die Bestückungstabelle im Handbuch. Bei einem Board mit nur zwei Steckplätzen nutzen Sie einfach beide."
+          ]
+        },
+        {
+          "h": "3. Einsetzen: fester als gedacht, ganz hinein",
+          "p": [
+            "Öffnen Sie die Verriegelungen am Slotende – viele aktuelle Boards haben nur noch auf einer Seite eine. Die Kerbe in der Kontaktleiste sitzt leicht außermittig; richten Sie sie an der Nase im Slot aus. Andersherum passt das Modul nicht hinein, also nicht mit Gewalt drücken.",
+            "Ist es richtig ausgerichtet, legen Sie die Daumen auf beide oberen Ecken und drücken gleichmäßig senkrecht nach unten, bis die Verriegelung hörbar einrastet. Wer das zum ersten Mal macht, ist oft überrascht, wie viel Kraft nötig ist, und hört auf halbem Weg auf – eine häufige Ursache für „RAM wird nicht erkannt“.",
+            "Prüfen Sie danach von der Seite: Beide Module müssen exakt gleich hoch sitzen, Kontakte dürfen nicht sichtbar sein. Bei einem großen Luftkühler kontrollieren Sie außerdem, dass dessen Lüfter nicht mit hohen Heatspreadern kollidiert."
+          ]
+        },
+        {
+          "h": "4. Erster Start: warten, auch wenn der Bildschirm schwarz bleibt",
+          "p": [
+            "DDR5-Systeme führen beim ersten Start ein „Speichertraining“ durch. Mainboard und Speichercontroller der CPU suchen dabei Signaleinstellungen, die zu Ihren Modulen passen. Währenddessen kann der Bildschirm mehrere Minuten schwarz bleiben oder die DRAM-LED des Boards leuchten, ohne dass sonst etwas passiert.",
+            "Wie lange das dauert, hängt von Board, Kapazität und Modulanzahl ab; große Kits und Bestückungen mit vier Modulen brauchen länger. Schalten Sie in der Annahme eines Defekts ab, beginnt das Training von vorn. Solange die Debug-LEDs leuchten oder wechseln, warten Sie also mindestens einige Minuten.",
+            "Das Training läuft auch nach einem CMOS-Reset oder einer Änderung der Speichereinstellungen erneut. Danach starten Sie wieder gewohnt schnell. Manche AMD-Boards bieten eine Option wie Memory Context Restore, die das Trainingsergebnis bei späteren Starts wiederverwendet."
+          ]
+        },
+        {
+          "h": "5. EXPO oder XMP im BIOS aktivieren",
+          "p": [
+            "Nach dem ersten erfolgreichen Start läuft der RAM mit Standardtakt (meist DDR5-4800 oder 5600). Für den Takt auf der Verpackung, etwa 6000, müssen Sie das Profil aktivieren. Ein vorheriges BIOS-Update verbessert häufig die Speicherkompatibilität.",
+            "Drücken Sie beim Start die Entf-Taste (bei manchen Boards F2), um ins BIOS zu gelangen, und suchen Sie nach EXPO oder XMP. Name und Ort unterscheiden sich je nach Hersteller; meist findet sich die Option auf der Startseite oder in einem Übertaktungsmenü wie „Ai Tweaker“. Wählen Sie „Profile 1“, speichern Sie mit F10 und starten Sie neu.",
+            "Da Sie Einstellungen geändert haben, kann das Speichertraining erneut laufen – einfach wieder warten. Ein Profil gilt als Betrieb oberhalb der Basisspezifikation des Herstellers; denken Sie daran, dass Sie es bei Problemen jederzeit ausschalten und zum Standardtakt zurückkehren können."
+          ]
+        },
+        {
+          "h": "6. Takt prüfen und Stabilität testen",
+          "p": [
+            "Öffnen Sie in Windows den Task-Manager (Strg+Umschalt+Esc) → Leistung → Arbeitsspeicher und achten Sie auf „Geschwindigkeit“ und „Verwendete Steckplätze“. Etwa 6000 MT/s und 2 von 4 Steckplätzen bedeuten: alles in Ordnung. In CPU-Z zeigt der Reiter „Memory“ als DRAM Frequency die Hälfte des Nenntakts (rund 3000 MHz bei einem 6000er-Kit); der Reiter „SPD“ zeigt jedes Modul und seine Profile.",
+            "Der richtige Takt garantiert noch keine Stabilität. Lassen Sie mindestens einen vollständigen Durchlauf von MemTest86 oder Memtest86+ von einem bootfähigen USB-Stick laufen oder nutzen Sie einige Stunden lang einen Windows-Tester wie TestMem5. Schon ein einziger Fehler bedeutet: nicht bestanden.",
+            "Treten Fehler auf, deaktivieren Sie zuerst das Profil und wiederholen den Test mit Standardtakt. Gibt es auch dort Fehler, deutet das auf ein defektes Modul oder einen defekten Slot hin – testen Sie die Module einzeln. Ist der Standardtakt fehlerfrei, gehen Sie eine Taktstufe zurück (etwa von 6000 auf 5600) oder aktualisieren das BIOS."
+          ]
+        },
+        {
+          "h": "7. Wenn der PC nicht startet – und unsere Einschätzung",
+          "p": [
+            "Bleibt der Bildschirm auch nach einigen Minuten schwarz, schalten Sie komplett ab und setzen den RAM neu ein. Hilft das nicht, starten Sie mit einem einzelnen Modul in A2. Durch Tauschen von Modulen und Slots finden Sie heraus, ob ein Modul oder ein Steckplatz das Problem ist. Eine dauerhaft leuchtende DRAM-LED ist der Hinweis des Boards, dass es am Speicher liegt.",
+            "Startet der PC nach dem Aktivieren von EXPO oder XMP nicht mehr, setzen Sie das CMOS zurück: Drücken Sie die Clear-CMOS-Taste am rückseitigen I/O-Panel, überbrücken Sie den CLR_CMOS-Jumper laut Handbuch oder entfernen Sie bei getrenntem Stromkabel die Knopfzelle für einige Minuten. Das BIOS kehrt dann zu den Standardwerten zurück. Viele Boards wechseln nach wiederholten Fehlstarts auch selbstständig zu sicheren Einstellungen.",
+            "RAM zu prüfen dauert länger, als ihn einzubauen. Vielleicht nannte Sam Altman PC-RAM „quite terrible“, nachdem er fünf Minuten lang dem Speichertraining beim ersten Start zugesehen hatte. Falls Sie noch nicht gekauft haben, sehen Sie sich zuerst die 30-Tage-Spanne in den DDR5-Kit-Diagrammen dieser Seite an."
+          ]
+        }
+      ]
+    }
+  },
   "why-ram-prices-rise": {
     "updated": "2026-11-01",
     "ko": {
