@@ -58,7 +58,8 @@ def build(out, base='', site=''):
     base, site = base.rstrip('/'), site.rstrip('/')
     by_lang = {lang: seo_products(lang) for lang in LANGS}  # prices baked into pages for search engines
     products = by_lang['ko']['products']
-    # Each language shows only the products its market has a price for; the others get no page at all.
+    # Each language lists and indexes only the products its market has a price for. The others still get
+    # a page (buying notes, no price) marked noindex, so a product whose price lapses for a day is not a 404.
     priced = {lang: {p['id'] for p in by_lang[lang]['products'] if p.get('price') is not None} for lang in LANGS}
     if out.exists():
         shutil.rmtree(out)
@@ -73,8 +74,6 @@ def build(out, base='', site=''):
             target.parent.mkdir(parents=True, exist_ok=True)
             target.write_text(render_page(lang, 'guide', None, base=base, static=True, site=site, product=slug, products=by_lang[lang]))
         for p in PRODUCTS:
-            if p['id'] not in priced[lang]:
-                continue
             target = out / lang / p['id'] / 'index.html'
             target.parent.mkdir(parents=True, exist_ok=True)
             target.write_text(render_page(lang, 'product', None, base=base, static=True, site=site, product=p['id'],

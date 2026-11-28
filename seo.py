@@ -165,6 +165,8 @@ def seo_context(lang, page, strings, products, base='', site='', product_id=None
             {'@type': 'ListItem', 'position': 2, 'name': name, 'item': absolute(path)}]})
 
     head = []
+    if page == 'product' and by_id[product_id].get('price') is None:
+        head.append('<meta name="robots" content="noindex, follow">')  # no price today: kept out of search
     if page == 'news':
         # Headlines link out to other sites; the page stays for readers but is kept out of search results.
         head.append('<meta name="robots" content="noindex, follow">')
